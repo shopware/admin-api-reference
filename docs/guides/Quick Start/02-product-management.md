@@ -213,6 +213,8 @@ Cross-selling features product recommendations and interesting contents to achie
   }
 ```
 
+//To add the parameters if the above mentioned way is right
+
 ## Price
 
 A particular products's price can be updated or a [price rule can also be created](https://shopware.stoplight.io/docs/admin-api/ZG9jOjEyMzA4NTUy-product-data#quantity-and-rule-price-structure).
@@ -239,3 +241,5 @@ To update price for a particular product, use the below endpoint:
     ]
 }
 }
+
+//To add the parameters if the above mentioned way is right
