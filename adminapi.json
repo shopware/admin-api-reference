@@ -1462,6 +1462,48 @@
           }
         }
       }
+    },
+    "/_action/product-customer-price": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Bulk edit custom prices",
+        "description": "An emulation of Sync API implementation",
+        "operationId": "customPriceImport",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CustomPricingUpsertOperation"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CustomPricingDeleteOperation"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns a JSON result containing information about the updated entities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomPricingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -11603,6 +11645,233 @@
               "enableUrlFeature": {
                 "type": "boolean",
                 "description": "State of the `urlFeature` setting."
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingResponse": {
+        "type": "object",
+        "required": [
+          "success",
+          "data"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "entities",
+                      "errors"
+                    ],
+                    "properties": {
+                      "entities": {
+                        "type": "array",
+                        "maxItems": 1,
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{32}$"
+                        }
+                      },
+                      "errors": {
+                        "type": "array",
+                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "extensions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingDeleteOperation": {
+        "type": "object",
+        "required": [
+          "action",
+          "payload"
+        ],
+        "properties": {
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "delete"
+            ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "productIds"
+              ],
+              "properties": {
+                "productIds": {
+                  "type": "array",
+                  "description": "An array of product entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                "customerId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerGroupId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingPrice": {
+        "type": "object",
+        "description": "An extended schema for the Custom Price 'price' column (as opposed to ProductPrice 'price' column)",
+        "required": [
+          "quantityStart",
+          "price"
+        ],
+        "properties": {
+          "quantityStart": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "quantityEnd": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "price": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "This field should house all the normal facets of the `product_price`.`price` column",
+              "required": [
+                "currencyId",
+                "gross",
+                "net",
+                "linked"
+              ],
+              "properties": {
+                "currencyId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "gross": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "net": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "linked": {
+                  "type": "boolean"
+                },
+                "listPrice": {
+                  "type": "object",
+                  "properties": {
+                    "gross": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "net": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "linked": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "regulationPrice": {
+                  "type": "object",
+                  "properties": {
+                    "gross": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "net": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "linked": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingUpsertOperation": {
+        "type": "object",
+        "required": [
+          "action",
+          "payload"
+        ],
+        "properties": {
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "upsert"
+            ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "productId",
+                "prices"
+              ],
+              "description": "A definition almost symmetric with Sync API payload",
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "This parameter should be specified, or 'customerGroupId', not both",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerGroupId": {
+                  "type": "string",
+                  "description": "This parameter should be specified, or 'customerId', not both",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "price": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomPricingPrice"
+                  }
+                }
               }
             }
           }
