@@ -94,7 +94,7 @@
           {
             "name": "fileType",
             "in": "query",
-            "description": "Filetype of the document beeing created",
+            "description": "Filetype of the document being created",
             "schema": {
               "type": "string",
               "default": "pdf"
@@ -166,7 +166,7 @@
           "Document Management"
         ],
         "summary": "Upload a file for a document",
-        "description": "Uploads a file for a document. This prevents the document from beeing dynamically generated and delivers the uploaded file instead, when the document is downloaded.\n\nNote:\n* The document is required to be `static`\n* A document can only have one media file\n\nThe are two methods of providing a file to this route:\n * Use a typical file upload and provide the file in the request\n * Fetch the file from an url. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.\nTo use file upload via url, the content type has to be `application/json` and the parameter `url` has to be provided.",
+        "description": "Uploads a file for a document. This prevents the document from being dynamically generated and delivers the uploaded file instead, when the document is downloaded.\n\nNote:\n* The document is required to be `static`\n* A document can only have one media file\n\nThe are two methods of providing a file to this route:\n * Use a typical file upload and provide the file in the request\n * Fetch the file from an url. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.\nTo use file upload via url, the content type has to be `application/json` and the parameter `url` has to be provided.",
         "operationId": "uploadToDocument",
         "parameters": [
           {
@@ -919,7 +919,7 @@
         "operationId": "index",
         "responses": {
           "204": {
-            "description": "Returns a no content response indicating that the indexing progress startet."
+            "description": "Returns a no content response indicating that the indexing progress started."
           }
         }
       }
@@ -1158,7 +1158,7 @@
           {
             "name": "single-operation",
             "in": "header",
-            "description": "Controls weather the data is written at once or in seperate transactions.\n- `true`: Data will be written in a single transaction",
+            "description": "Controls weather the data is written at once or in separate transactions.\n- `true`: Data will be written in a single transaction",
             "schema": {
               "type": "boolean",
               "default": false
@@ -1191,7 +1191,7 @@
                   ],
                   "properties": {
                     "action": {
-                      "description": "The action indicates what should happen with the provided payload.\n* `upsert`: The Sync API does not differ between create and update operations,\nbut always performs an upsert operation. During an upsert, the system checks whether the entity already exists in the\nsystem and updates it if an identifier has been passed, otherwise a new entity is created with this identifier.\n* `delete`: Deletes entites with the provided identifiers",
+                      "description": "The action indicates what should happen with the provided payload.\n* `upsert`: The Sync API does not differ between create and update operations,\nbut always performs an upsert operation. During an upsert, the system checks whether the entity already exists in the\nsystem and updates it if an identifier has been passed, otherwise a new entity is created with this identifier.\n* `delete`: Deletes entities with the provided identifiers",
                       "type": "string",
                       "enum": [
                         "upsert",
@@ -1225,7 +1225,7 @@
                 "schema": {
                   "properties": {
                     "data": {
-                      "description": "Object with information about the updated entites",
+                      "description": "Object with information about the updated entities",
                       "type": "object"
                     },
                     "success": {
@@ -1247,7 +1247,7 @@
           "System Operations"
         ],
         "summary": "Consume messages from the message queue.",
-        "description": "This route can be used to consume messenges from the message queue. It is intended to be used if\nno cronjob is configured to consume messages regulary.",
+        "description": "This route can be used to consume messages from the message queue. It is intended to be used if\nno cronjob is configured to consume messages regularly.",
         "operationId": "consumeMessages",
         "requestBody": {
           "required": true,
@@ -1394,7 +1394,7 @@
                     "default": "core"
                   },
                   "limit": {
-                    "description": "Limit the amout of migrations to be executed. By default, there is no limit.",
+                    "description": "Limit the amount of migrations to be executed. By default, there is no limit.",
                     "type": "integer"
                   },
                   "until": {
@@ -1443,7 +1443,7 @@
                     ]
                   },
                   "limit": {
-                    "description": "Limit the amout of migrations to be executed. By default, there is no limit.",
+                    "description": "Limit the amount of migrations to be executed. By default, there is no limit.",
                     "type": "integer"
                   },
                   "until": {
