@@ -2364,10 +2364,7 @@
       },
       "CategoryTag": {
         "description": "Added since version: 6.0.0.0",
-        "required": [
-          "categoryId",
-          "tagId"
-        ],
+        "type": "object",
         "properties": {
           "id": {
             "type": "string",
@@ -2390,9 +2387,15 @@
           },
           "tag": {
             "$ref": "#/components/schemas/Tag"
+          },
+          "": {
+            "type": "string"
           }
         },
-        "type": "object"
+        "required": [
+          "categoryId",
+          "tagId"
+        ]
       },
       "CmsBlock": {
         "description": "Added since version: 6.0.0.0",

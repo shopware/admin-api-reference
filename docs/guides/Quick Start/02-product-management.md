@@ -14,7 +14,6 @@ To start easy, below is a sample request to create a product with simple data fr
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    {
     "name": "test",
     "productNumber": "random",
     "stock": 10,
@@ -27,7 +26,7 @@ To start easy, below is a sample request to create a product with simple data fr
             "linked" : false
         }
     ]
-}
+      }
     }
   }
 ```
@@ -52,7 +51,6 @@ A simple category entry.
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    {
     "displayNestedProducts": true,
     "type": "product",
     "productAssignmentType": "product",
@@ -72,12 +70,12 @@ A simple category entry.
       "type": "boolean"
     },
     "type": {
-      "description": "Type of category - `folder`, `list`, `page` ",
+      "description": "Type of category - `folder`, `link`, `page` ",
       "type": "string",
       "Example": " `product`, `category` "
     },
     "productAssignmentType": {
-      "description": "accepts two values `product`, `product-stream` for products added explicitly and added via Dynamic product group respectively",
+      "description": "Accepts values `product`, `product-stream` for products added explicitly and added via   Dynamic product group respectively",
       "type": "string"
     },
     "name": {
@@ -95,14 +93,13 @@ Every product must be assigned to a category for its display. It can be explicit
 ```json http
 {
   "method": "PATCH",
-  "url": "https://test-myshop.swstage.store/api/category/a11d11c732d54debad6da3b38ad07b11",
+  "url": "https://localhost/api/category/a11d11c732d54debad6da3b38ad07b11",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    {
     "id": "a11d11c732d54debad6da3b38ad07b11",
     "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
     "productAssignmentType": "product_stream",
@@ -126,7 +123,7 @@ Every product must be assigned to a category for its display. It can be explicit
       "type": "string",
     },
     "productAssignmentType": {
-      "description": "accepts two values `product`, `product-stream` for products added explicitly and added via Dynamic product group respectively",
+      "description": "Accepts values `product`, `product-stream` for products added explicitly and added via Dynamic product group respectively",
       "type": "string"
     },
     "productStreamId": {
@@ -151,7 +148,6 @@ Reviews are comments that stands as a means to evaluate products by buyers. This
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    {
     "productId": "a55ca50a2cef46d5b11a12c4b4614988",
     "salesChannelId": "98432def39fc4624b33213a56b8c944d",
     "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b",
@@ -191,7 +187,6 @@ Reviews are comments that stands as a means to evaluate products by buyers. This
 }
 ```
 
-
 ## Cross selling
 
 Cross-selling features product recommendations and interesting contents to achieve an optimal shopping experience in the shop.
@@ -206,7 +201,6 @@ Cross-selling features product recommendations and interesting contents to achie
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-   {
         "name": "testcase1",
         "position": 1,
         "sortBy": "name",
@@ -215,14 +209,15 @@ Cross-selling features product recommendations and interesting contents to achie
         "active": true,
         "limit": 24,
         "productId": "a55ca50a2cef46d5b11a12c4b4614988"
-}
     }
   }
 ```
 
 ## Price
 
-A particular products's price can be updated and a [price rule can also be created](https://shopware.stoplight.io/docs/admin-api/ZG9jOjEyMzA4NTUy-product-data#quantity-and-rule-price-structure)
+A particular products's price can be updated or a [price rule can also be created](https://shopware.stoplight.io/docs/admin-api/ZG9jOjEyMzA4NTUy-product-data#quantity-and-rule-price-structure).
+
+To update price for a particular product, use the below endpoint:
 
 ```json http
 {
@@ -234,8 +229,6 @@ A particular products's price can be updated and a [price rule can also be creat
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-   {
-    {
     "price": [
         {
             "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
@@ -246,4 +239,3 @@ A particular products's price can be updated and a [price rule can also be creat
     ]
 }
 }
-    }
