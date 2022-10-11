@@ -33,13 +33,28 @@ To start easy, below is a sample request to create a product with simple data fr
 
 ```json json_schema
 {
-  "$ref": "../../../adminapi.json#/components/schemas/Product"
+  "type": "object",
+  "description": "Parameters for category creation",
+    "name": {
+      "description": "Name of the product",
+      "type": "string",
+      "Example": " `product`, `category` "
+    },
+    "productAssignmentType": {
+      "description": "Accepts values `product`, `product-stream` for products added explicitly and added via   Dynamic product group respectively",
+      "type": "string"
+    },
+    "name": {
+      "description": "Name of the category to be created",
+      "type": "string"
+    }
+  }
 }
 ```
 
 ## Category
 
-A simple category entry.
+All products are categoried in the catelog. Below is a sample request to create a category entry.
 
 ```json http
 {
@@ -70,7 +85,7 @@ A simple category entry.
       "type": "boolean"
     },
     "type": {
-      "description": "Type of category - `folder`, `link`, `page` ",
+      "description": "Types of category - `folder`, `link`, `page` ",
       "type": "string",
       "Example": " `product`, `category` "
     },

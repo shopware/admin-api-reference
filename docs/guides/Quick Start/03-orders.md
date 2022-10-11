@@ -27,9 +27,10 @@ You can create orders manually in admin panel o record orders that are made outs
     "orderDateTime": "2021-05-31T14:13:14.866+00:00",
     "currencyFactor": 1.0,
     "stateId": "a75eb89b4abe41f9bade83b2f07d874e"
-}
-    }
+   }
   }
+}
+``` 
 
 ## order line item
 
@@ -47,6 +48,7 @@ To fetch line items for a particular order
   "body": {
     }
   }
+```
 
 Once an order is created it status is associated with order, payment, and delivery.
 
@@ -66,6 +68,7 @@ On creation of a new order, the order state by default is set to open. Order sta
   "body": {
     }
   }
+```
 
 The `state_machine_transition` is a collection of all defined transitioned defined.
 
@@ -100,6 +103,7 @@ A cancelled order cannot change to in-progress state unless it is reopened again
   "body": {
     }
   }
+```  
 
   
 
