@@ -1,3 +1,7 @@
+---
+stoplight-id: 81c08910b8cc6
+---
+
 # Sales Channel
 
 The sales channels represent the interface from your administration to the storefront. You can create your own sales channel for each channel you want to use to sell your products. 

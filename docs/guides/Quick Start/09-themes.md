@@ -1,3 +1,7 @@
+---
+stoplight-id: 3b4f25dbb4149
+---
+
 # Theme
 
 A Theme gives you the ability to change the visual appearance of the storefront via styling the SCSS/CSS and adjusting twig templates. 

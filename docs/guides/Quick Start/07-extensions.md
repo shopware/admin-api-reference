@@ -1,3 +1,7 @@
+---
+stoplight-id: 367bdf49aa59a
+---
+
 # Extensions
 
 ## Adding extensions
@@ -33,9 +37,7 @@ To get a particular app then use the below endpoint:
 }
 ```
 
-
 To install a particular app:
-
 
 ```json http
 {

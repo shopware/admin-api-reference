@@ -126,7 +126,7 @@ You can create customer group and assign it to the standard Customer Group of th
       "registrationTitle": "Common customer base",
       "registrationIntroduction": "xyz",
       "registrationOnlyCompanyRegistration": false,
-      "registrationSeoMetaDescription": "https://docs.shopware.com/en/shopware-6-en/settings/customergroups",
+      "registrationSeoMetaDescription": "../settings/merchants",
     }
 }
 ```
