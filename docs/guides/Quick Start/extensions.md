@@ -1,3 +1,7 @@
+---
+stoplight-id: bb568cddd88c3
+---
+
 # Extensions
 
 ## Adding extensions

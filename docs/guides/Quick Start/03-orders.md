@@ -7,7 +7,7 @@ POST /api/search/order
 ```
 ## Create order
 
-You can create orders manually in admin panel o record orders that are made outside of Shopware or to send customer invoices.
+You can create orders manually in admin panel to record orders that are made outside of Shopware or to send customer invoices.
 
 ```json http
 {
@@ -19,7 +19,6 @@ You can create orders manually in admin panel o record orders that are made outs
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-   {
     "billingAddressId": "c90e05c82c5a4457844cba7403c7ef96",
     "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b",
@@ -32,27 +31,66 @@ You can create orders manually in admin panel o record orders that are made outs
 }
 ``` 
 
-## order line item
+```json json_schema
+{
+  "type": "object",
+  "description": "Parameters for order creation",
+  "properties": {
+    "billingAddressId": {
+      "description": "ID of the billing address",
+      "type": "string"
+    },
+    "currencyId": {
+      "description": "ID of the currency to which the price belongs",
+      "type": "string"
+    },
+    "languageId": {
+      "description": "Unique ID of language",
+      "type": "string"
+    },
+    "salesChannelId": {
+      "description": "Unique ID of defined sales channel",
+      "type": "string"
+    },
+    "orderDateTime": {
+      "description": "Timestamp of the order placed.",
+      "type": "string"
+    },
+    "currencyFactor": {
+      "description": "Rate factor for currencies",
+      "type": "string"
+    },
+    "stateId": {
+      "description": "Unique ID of transition state as defined by state machine",
+      "type": "string"
+      }
+  }
+}
+```
 
-To fetch line items for a particular order
+## Order line item
+
+An order can be have more other items of `tyep` product, promotion, credit, custom. To fetch line items for a particular order, try the below API request:
 
 ```json http
 {
   "method": "get",
-  "url": "http://localhost/api/_action/order/558efc15fe604829b4d0607df75187e0/state/complete",
+  "url": "http://localhost/api/order/558efc15fe604829b4d0607df75187e0/line-item",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "Authorization": "Bearer Your_API_Key"
-  },
-  "body": {
-    }
+  }
   }
 ```
 
-Once an order is created it status is associated with order, payment, and delivery.
+Once an order is created, it is associated with order, payment, and delivery. These are the transitions. More details are mentioned below:
 
 ## Order transitions
+
+Every order in Shopware has three state machines `order.state`, `order_delivery.state`, `order_transaction.state` that holds the status of order, delivery and payment status respectively. The `state_machine_transition` is a collection of all defined transitioned defined.
+
+The `transition` method handles the order transition from one state to another.
 
 On creation of a new order, the order state by default is set to open. Order status can be transitioned among `cancel`, `complete`, `reopen`, `process` as shown below:
 
@@ -66,42 +104,40 @@ On creation of a new order, the order state by default is set to open. Order sta
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    }
   }
 ```
-
-The `state_machine_transition` is a collection of all defined transitioned defined.
-
 A cancelled order cannot change to in-progress state unless it is reopened again.
 
-## Order delivery & DELIVERY POSITION
+## Order delivery
+
+The order delivery state represents the state of the delivery. `reopen`, `ship`, `ship_partially`, `cancel`, `retour`,
+`retour_partially` are the states by order delivery.
 
 ```json http
 {
   "method": "post",
-  "url": "http://localhost/api/_action/order_delivery/558efc15fe604829b4d0607df75187e0/state/complete",
+  "url": "http://localhost/api/_action/order_delivery/558efc15fe604829b4d0607df75187e0/state/fail",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "Authorization": "Bearer Your_API_Key"
-  },
-  "body": {
-    }
   }
+}
+```
 
 ## Order transaction
 
+The order delivery state represents the state of the delivery. `open`, `fail`, `authorize`, `refund_partially`, `refund`, `do_pay`, `paid`, `paid_partially`, `remind`, `cancel` are the states by order delivery.
+
 ```json http
 {
   "method": "post",
-  "url": "http://localhost/api/_action/order_transaction/558efc15fe604829b4d0607df75187e0/state/complete",
+  "url": "http://localhost/api/_action/order_transaction/558efc15fe604829b4d0607df75187e0/state/open",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "Authorization": "Bearer Your_API_Key"
-  },
-  "body": {
-    }
+  }
   }
 ```  
 

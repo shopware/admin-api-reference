@@ -31,6 +31,41 @@ Also, to create a new layout, fetch `/api/app-system/cms/blocks` to know the lay
   }
 ```
 
+```json json_schema
+{
+  "type": "object",
+  "description": "Parameters for product creation",
+  "properties": {
+    "name": {
+      "description": "Name of the layout",
+      "type": "string"
+    },
+    "type": {
+      "description": " Possible types are `listing page`, `shop page`, `Static page`, `Product page`",
+      "type": "string"
+    },
+    "sections": {
+      "position":{
+      "description": "The position of the section",
+      "type": "integer"
+    },
+    "type": {
+      "description": "ID of [tax](../../../adminapi.json/components/schemas/Tax)",
+      "type": "string"
+    },
+      "sizingMode": {
+      "description": "Id of [currency](../../../adminapi.json/components/schemas/Currency)",
+      "type": "string"
+      },
+      "pageId": {
+      "description": "Unique Id of the page",
+      "type": "string"
+      }
+    }
+  }
+}
+```
+
 ## Add a block
 
 ```json http

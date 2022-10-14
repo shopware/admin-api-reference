@@ -8,9 +8,9 @@ One can obtain a list of customers using `/api/search/customer`. Individual cust
 | Customer address | `/api/customer/{customer_id}/{default _billing/shipping_address}` |
 | Customer orders | `/api/customer/{customer_id}/order-customers` |
 | Group | `/api/customer/{customer_id}/group` |
-| Payment method | `/api/customer/{customer_id}/default-payment-method` |
-| Payment method | `/api/customer/{customer_id}/sales-channel` |
-| Payment method | `/api/customer/{customer_id}/language` |
+| Customer payment method | `/api/customer/{customer_id}/default-payment-method` |
+| Customer sales channel | `/api/customer/{customer_id}/sales-channel` |
+| Customer language | `/api/customer/{customer_id}/language` |
 
 ## Customer creation with simple payload
 
@@ -24,7 +24,6 @@ One can obtain a list of customers using `/api/search/customer`. Individual cust
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    {
     "groupId": "cfbd5018d38d41d8adca10d94fc8bdd6",
     "defaultPaymentMethodId": "754b5604da514b6d9845385aafd1ed19",
     "salesChannelId": "98432def39fc4624b33213a56b8c944d",
@@ -34,11 +33,55 @@ One can obtain a list of customers using `/api/search/customer`. Individual cust
     "firstName": "Dennis",
     "lastName": "Rock",
     "email": "SW20025@example.com"
-}
   }
 }
 ```
-You can all create customers with all the essential details. Look at the [customer schema](https://shopware.stoplight.io/docs/admin-api/c2NoOjE0MzUxMjI0-customer) for rest of the details.
+
+```json json_schema
+{
+  "type": "object",
+  "description": "Parameters for customer creation",
+  "properties": {
+    "groupId": {
+      "description": "ID of the customer group",
+      "type": "string"
+    },
+    "defaultPaymentMethodId": {
+      "description": "ID of defauly payment method",
+      "type": "string"
+    },
+    "salesChannelId": {
+      "description": "Unique ID of defined sales channel",
+      "type": "string"
+    },
+    "defaultBillingAddressId": {
+      "description": "ID of default billing address.",
+      "type": "string"
+    },
+    "defaultShippingAddressId": {
+      "description": "ID of default shipping address",
+      "type": "string"
+    },
+    "customerNumber": {
+      "description": "Unique number assigned to the customer",
+      "type": "string"
+      },
+      "firstName": {
+      "description": "First name of customer",
+      "type": "string"
+    },
+    "lastName": {
+      "description": "Lat name of customer",
+      "type": "string"
+    },
+    "email": {
+      "description": "email address of customer",
+      "type": "string"
+    }
+  }
+}
+```
+You can all create customers with all the essential details. Look at the [customer schema](../../../adminapi.json/components/schemas/Customer) for rest of the details.
 
 ## Create customer groups
 
