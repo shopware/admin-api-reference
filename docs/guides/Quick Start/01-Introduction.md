@@ -20,19 +20,17 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
 
     * Price
 
-* Orders & shipping
+* Orders
 
-    * Order transaction
-
-    * Delivery & Delivery position
+    * Order
 
     * Line item
 
-    * Shipping (method, shipping price, tags)
+    * Order tarnsactions
 
 * Customer
 
-    * Customer creation & recovery
+    * Customer creation and groups
 
 * Content
 
@@ -44,12 +42,6 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
 
 * Themes
 
-  * landing page
-  
-  * Media
-  
-  * Sales channel
-
 * Marketing
 
     * Document types
@@ -58,13 +50,7 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
 
 * Extension
 
-    * Apps
-
-    * Plugins
-
 * Sales channels
-
-* Cache and indexer management
 
 * SEO
 

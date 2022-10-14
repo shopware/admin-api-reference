@@ -54,28 +54,28 @@ To start easy, below is a sample request to create a product with simple data fr
     },
     "price": []
       "currencyId": {
-      "description": "Id of [currency](../../../adminapi.json/components/schemas/Currency)",
+      "description": "ID of [currency](../../../adminapi.json/components/schemas/Currency)",
       "type": "string"
       },
       "gross": {
-      "description": "gross price of a product",
+      "description": "Gross price of a product",
       "type": "string"
       },
       "net": {
-      "description": "net price of a product",
+      "description": "Net price of a product",
       "type": "string"
       },
       "linked": {
-      "description": "checks if net price needs to be calculated based on tax and gross price of a product",
+      "description": "Checks if net price needs to be calculated based on tax and gross price of a product",
       "type": "boolean"
       }
   }
 }
 ```
 
-Here `linked` parameter takes boolean values. This signifies if `priceForCurrency.linked` is set to true then net price is calculated from the gross price based on tax type by calculatePrice() method.
+The `Productfeatureset` is a default template that extends from `productEntity` to insert all information for a new product.
 
-`Productfeatureset` is a default template that extends from `productEntity` to insert all information for a new product.
+Here `linked` parameter takes boolean values. This signifies if `priceForCurrency.linked` is set to true then net price is calculated from the gross price based on tax type by `calculatePrice()` method.
 
 The following payload examples contain UUIDs for various entities such as currencies, tax rates, manufacturers or properties. These IDs are different on each system and must be adjusted accordingly.
 
@@ -237,7 +237,7 @@ The `product.categories` association contains the assignment of products and the
 
 ## Product reviews
 
-Reviews are comments that stands as a means to evaluate products by buyers. This below API adds a product review against a particular product as shown below:
+Reviews are comments that stand as a means to evaluate products by buyers. This below API adds a product review against a particular product as shown below:
 
 ```json http
 {
@@ -328,7 +328,7 @@ Cross-selling features product recommendations and interesting contents to achie
       "type": "integer",
     },
     "sortBy": {
-      "description": "sort criteria by `name`, `price`",
+      "description": "Sort criteria by `name`, `price`",
       "type": "string"
     },
     "sortDirection": {
@@ -340,7 +340,7 @@ Cross-selling features product recommendations and interesting contents to achie
       "type": "string"
     },
     "active": {
-      "description": "when active is `true`, product recommendation is visible",
+      "description": "When active is `true`, product recommendation is visible",
       "type": "boolean"
     },
     "limit": {
@@ -394,7 +394,7 @@ To update price for a particular product, use the below endpoint:
 ```json json_schema
 {
   "type": "object",
-  "description": "Parameters for product creation",
+  "description": "Parameters for price updation",
   "properties": {
     "price": []
       "currencyId": {

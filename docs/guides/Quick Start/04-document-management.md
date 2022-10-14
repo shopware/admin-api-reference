@@ -1,6 +1,10 @@
 # Overview
 
-One can use documents to send invoive, delivery note, packing slips, etc. Already defined document types can be fetched from `/api/document-type` endpoint. 
+One can use documents to send invoive, delivery note, packing slips, etc. Already defined document types can be fetched from 
+
+``` markdown
+GET /api/document-type
+```
 
 ## Creating a document type
 
@@ -16,21 +20,32 @@ You can create a document by its purpose - for example, a note for returned item
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    {
     "name": "return note",
     "technicalName": "return-note"
 }
     }
   }
 ```
+If documents are assigned to `global` types then they can be used on any channel. This can be defined in `document_base_config` entity as shown below: 
 
-Reponse `204`
+```json http
+{
+  "method": "post",
+  "url": "http://localhost/api/document-base-config",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer Your_API_Key"
+  },
+  "body": {
+    "documentTypeId": "9cc669c406b441e1b7af035552db138f",
+    "name": "return note",
+    "global": true
+}
+  }
+```
 
-These documents can further be defined for particular orders.
-
-The above mentioned documents are global types and have predefined format. These can further be customised to use as per the requirement.
-
-The below endpoint creates a document of invoice type for a particular order.
+These documents are interfaced for order entity as well. The below endpoint creates a document of invoice type for a particular order.
 
 ```json http
 {
@@ -40,10 +55,7 @@ The below endpoint creates a document of invoice type for a particular order.
     "Content-Type": "application/json",
     "Accept": "application/json",
     "Authorization": "Bearer Your_API_Key"
-  },
-  "body": {
-    
-    }
+  }
   }
 ```
 ## Download a document
@@ -56,28 +68,6 @@ The below endpoint creates a document of invoice type for a particular order.
     "Content-Type": "application/json",
     "Accept": "application/json",
     "Authorization": "Bearer Your_API_Key"
-  },
-  "body": {
-    
-    }
   }
+}
 
-  Path Parameters
-deepLinkCode
-string
-required
-A unique hash code which was generated when the document was created.
-
-documentId
-string
-required
-Identifier of the document to be downloaded.
-
-Match pattern: `^[0-9a-f]{32}$`
-Query Parameters
-download
-boolean
-This parameter controls the Content-Disposition header. If set to true the header will be set to attachment else inline.
-
-Default:
-false

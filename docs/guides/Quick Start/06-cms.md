@@ -1,8 +1,16 @@
+---
+stoplight-id: bce44edeecdd5
+---
+
 # CMS
 
 CMS system is referred to as "Shopping Experiences" built upon pages or layouts which can be reused and dynamically hydrated based on their assignments to categories or other entities.
 
-To fetch a list of existing CMS layout post the `/api/search/cms-page` endpoint.
+To fetch a list of existing CMS layouts, 
+
+```
+POST /api/search/cms-page
+```
 
 Also, to create a new layout, fetch `/api/app-system/cms/blocks` to know the layout types.
 

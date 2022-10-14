@@ -1,3 +1,7 @@
+---
+stoplight-id: cd9ace3c97fe2
+---
+
 # Customer Data
 
 One can obtain a list of customers using `/api/search/customer`. Individual customer details can be obtained using `GET` method from the following endpoints :
@@ -81,9 +85,11 @@ One can obtain a list of customers using `/api/search/customer`. Individual cust
   }
 }
 ```
-You can all create customers with all the essential details. Look at the [customer schema](../../../adminapi.json/components/schemas/Customer) for rest of the details.
+You can create customers with all the essential details. Look at the [customer schema](../../../adminapi.json/components/schemas/Customer) for rest of the details.
 
 ## Create customer groups
+
+Create customer group to create a completely new customer group
 
 ```json http
 {
@@ -95,34 +101,32 @@ You can all create customers with all the essential details. Look at the [custom
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    {
         "name": "premium"
-}
   }
 }
 ```
 
 ## CustomerGroupRegistrationSalesChannels
 
-## Customer Recovery
-
-Deleted customers can be recovered using `/api/customer-recovery` endpoint. This endpoint accepts only `GET` and `POST` methods.
+You can create customer group and assign it to the standard Customer Group of the sales channel. 
 
 ```json http
 {
   "method": "post",
-  "url": "http://localhost/api/customer-recovery",
+  "url": "http://localhost/api/customer-group",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    {
-    "hash": "null",
-    "customerId": "1749398c90654000af6877ccd691e3c8"
-}
-  }
+      "name": "Regular Grp",
+      "displayGross": true,
+      "registrationActive": true,
+      "registrationTitle": "Common customer base",
+      "registrationIntroduction": "xyz",
+      "registrationOnlyCompanyRegistration": false,
+      "registrationSeoMetaDescription": "https://docs.shopware.com/en/shopware-6-en/settings/customergroups",
+    }
 }
 ```
-

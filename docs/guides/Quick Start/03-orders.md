@@ -2,7 +2,7 @@
 
 A list of all customer orders are obtained using the route:
 
-```
+``` markdown
 POST /api/search/order
 ```
 ## Create order
@@ -53,7 +53,7 @@ You can create orders manually in admin panel to record orders that are made out
       "type": "string"
     },
     "orderDateTime": {
-      "description": "Timestamp of the order placed.",
+      "description": "Timestamp of the order placed",
       "type": "string"
     },
     "currencyFactor": {
@@ -70,7 +70,7 @@ You can create orders manually in admin panel to record orders that are made out
 
 ## Order line item
 
-An order can be have more other items of `tyep` product, promotion, credit, custom. To fetch line items for a particular order, try the below API request:
+An order can be have more other items or child items of `type` : `product`, `promotion`, `credit` or `custom`. To fetch line items for a particular order, try the below API request:
 
 ```json http
 {
@@ -84,9 +84,11 @@ An order can be have more other items of `tyep` product, promotion, credit, cust
   }
 ```
 
-Once an order is created, it is associated with order, payment, and delivery. These are the transitions. More details are mentioned below:
+Every order created is associted with order, payment, and delivery transitions. More details are mentioned below:
 
 ## Order transitions
+
+### Order
 
 Every order in Shopware has three state machines `order.state`, `order_delivery.state`, `order_transaction.state` that holds the status of order, delivery and payment status respectively. The `state_machine_transition` is a collection of all defined transitioned defined.
 
@@ -108,10 +110,10 @@ On creation of a new order, the order state by default is set to open. Order sta
 ```
 A cancelled order cannot change to in-progress state unless it is reopened again.
 
-## Order delivery
+### Order delivery
 
 The order delivery state represents the state of the delivery. `reopen`, `ship`, `ship_partially`, `cancel`, `retour`,
-`retour_partially` are the states by order delivery.
+`retour_partially` are the states associated with order delivery.
 
 ```json http
 {
@@ -125,9 +127,9 @@ The order delivery state represents the state of the delivery. `reopen`, `ship`,
 }
 ```
 
-## Order transaction
+### Order transaction
 
-The order delivery state represents the state of the delivery. `open`, `fail`, `authorize`, `refund_partially`, `refund`, `do_pay`, `paid`, `paid_partially`, `remind`, `cancel` are the states by order delivery.
+The order transaction state represents the state of the payment. `open`, `fail`, `authorize`, `refund_partially`, `refund`, `do_pay`, `paid`, `paid_partially`, `remind`, `cancel` are the states associated with order transaction.
 
 ```json http
 {

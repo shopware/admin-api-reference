@@ -35,8 +35,6 @@ To undestand the entire structure of a theme then fetch `/api/_action/theme/fc48
   }
 ```
 
-
-
 ```json http
 {
   "method": "post",
