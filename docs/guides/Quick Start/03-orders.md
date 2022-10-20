@@ -88,11 +88,11 @@ Every order created is associted with order, payment, and delivery transitions. 
 
 ## Order transitions
 
-### Order
-
 Every order in Shopware has three state machines `order.state`, `order_delivery.state`, `order_transaction.state` that holds the status of order, delivery and payment status respectively. The `state_machine_transition` is a collection of all defined transitioned defined.
 
 The `transition` method handles the order transition from one state to another.
+
+### Order
 
 On creation of a new order, the order state by default is set to open. Order status can be transitioned among `cancel`, `complete`, `reopen`, `process` as shown below:
 
