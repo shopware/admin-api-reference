@@ -11760,8 +11760,16 @@
             "format": "int64"
           },
           "quantityEnd": {
-            "type": "integer",
-            "format": "int64"
+            "oneOf": [
+              {
+                "type": "integer",
+                "format": "int64",
+                "minimum": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "price": {
             "type": "array",
