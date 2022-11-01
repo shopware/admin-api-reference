@@ -143,6 +143,20 @@ The order transaction state represents the state of the payment. `open`, `fail`,
   }
 ```  
 
+## Refund Payment
+
+[Initiating and capturing payment is handled by store-api](https://shopware.stoplight.io/docs/store-api/8218801e50fe5-handling-the-payment), whereas payment refund is dealt by the admin-api.
+
+Refund payment method can be called only for transactions that are claimed to be successful. The payment can either be completely or partially refunded.
+
+Generally, refunds are linked to a specific transaction ID or order ID. A refund can have multiple positions, with different order line items and amounts. To allow easy refund handling, have your payment handler implement the `RefundPaymentHandlerInterface`. This validates the legitimacy of the refund and call the PSP to refund the given transaction.
+
+Use the Refund API `/api/_action/order_transaction_capture_refund/{refundId}` endpoint to refund payments. You usually need the `refundId` and `context`. The refundId is the id of the `OrderTransactionCaptureRefund` entity, which the payment plugin has created before.
+
+When you refund a payment, the Refunds API creates an object that provides refund details — the information on the amount, the referenced capture and, if provided, a reason and specific positions which items are being refunded. Once the refund is successfull, the `stateHandler` changes the state to *complete*.
+
+In case of refund failures, `RefundException` will handle it.
+
   
 
 
