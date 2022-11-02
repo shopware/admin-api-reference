@@ -86,7 +86,7 @@ An order can be have more other items or child items of `type` : `product`, `pro
 
 Every order created is associted with order, payment, and delivery transitions. More details are mentioned below:
 
-## Order transitions
+## Order state handling
 
 Every order in Shopware has three state machines `order.state`, `order_delivery.state`, `order_transaction.state` that holds the status of order, delivery and payment status respectively. The `state_machine_transition` is a collection of all defined transitioned defined.
 
