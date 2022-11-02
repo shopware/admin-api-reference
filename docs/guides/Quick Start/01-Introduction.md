@@ -34,7 +34,7 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
 
 * Content
 
-    * CMS PAGES (sec, blocks, slots)
+    * CMS pages (sections, blocks, slots)
 
     * CMS Extension plugin (Scroll navigation, Block visibility, Quick view)
 
