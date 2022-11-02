@@ -26,7 +26,7 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
 
     * Line item
 
-    * Order tarnsactions
+    * Order transactions
 
 * Customer
 
