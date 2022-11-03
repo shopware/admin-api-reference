@@ -153,7 +153,7 @@ Generally, refunds are linked to a specific order transaction capture ID. A refu
 
 Use the Refund API `/api/_action/order_transaction_capture_refund/{refundId}` endpoint to refund payments. You usually need the `refundId` and `context`. The refundId is the id of the `OrderTransactionCaptureRefund` entity, which the payment plugin has created before, and will be forwarded to your RefundHandler implementation.
 
-When you refund a payment, the Refunds API creates an object that provides refund details — the information on the amount, the referenced capture and, if provided, a reason and specific positions which items are being refunded. Once the refund is successfull, the `stateHandler` changes the state to *complete*.
+When you refund a payment, the API will change the refund state to *complete*. If you want to fail the refund in your RefundHandler implementation, simply throw a `RefundException`, and the state of the refund will transition to *fail*. 
 
 In case of refund failures, `RefundException` will handle it.
 
