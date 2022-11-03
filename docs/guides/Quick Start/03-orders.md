@@ -149,22 +149,10 @@ The order transaction state represents the state of the payment. `open`, `fail`,
 
 Refund payment method can be called only for transactions that are claimed to be successful. The payment can either be completely or partially refunded.
 
-Generally, refunds are linked to a specific order transaction capture ID. A refund can have multiple positions, with different order line items and amounts. To allow easy refund handling, have your payment handler implement the `RefundPaymentHandlerInterface`. Your RefundHandler implementation will be called with the `refundId` where you can call your PSP or similar.
+Generally, refunds are linked to a specific order transaction capture ID. A refund can have multiple positions, with different order line items and amounts. To allow easy refund handling, have your payment handler implement the `RefundPaymentHandlerInterface`. Your RefundHandler implementation will be called with the `refundId` to call your PSP or similar.
 
 Use the Refund API `/api/_action/order_transaction_capture_refund/{refundId}` endpoint to refund payments. You usually need the `refundId` and `context`. The refundId is the id of the `OrderTransactionCaptureRefund` entity, which the payment plugin has created before, and will be forwarded to your RefundHandler implementation.
 
-When you refund a payment, the API will change the refund state to *complete*. If you want to fail the refund in your RefundHandler implementation, simply throw a `RefundException`, and the state of the refund will transition to *fail*. 
-
-In case of refund failures, `RefundException` will handle it.
-
+When you refund a payment, the API will change the refund state to *complete*. If you want to fail the refund in your RefundHandler implementation, simply throw a `RefundException`, and the state of the refund will transition to *fail*.
   
-
-
-
-
-
-
-
-
-
-
+> Your payment extensions must write its own captures and refunds into the order_transaction_capture and order_transaction_capture_refund tables respectively before calling the refund handler as this is not carried out by the Shopware Core.
