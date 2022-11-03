@@ -151,7 +151,7 @@ Refund payment method can be called only for transactions that are claimed to be
 
 Generally, refunds are linked to a specific order transaction capture ID. A refund can have multiple positions, with different order line items and amounts. To allow easy refund handling, have your payment handler implement the `RefundPaymentHandlerInterface`. Your RefundHandler implementation will be called with the `refundId` where you can call your PSP or similar.
 
-Use the Refund API `/api/_action/order_transaction_capture_refund/{refundId}` endpoint to refund payments. You usually need the `refundId` and `context`. The refundId is the id of the `OrderTransactionCaptureRefund` entity, which the payment plugin has created before.
+Use the Refund API `/api/_action/order_transaction_capture_refund/{refundId}` endpoint to refund payments. You usually need the `refundId` and `context`. The refundId is the id of the `OrderTransactionCaptureRefund` entity, which the payment plugin has created before, and will be forwarded to your RefundHandler implementation.
 
 When you refund a payment, the Refunds API creates an object that provides refund details — the information on the amount, the referenced capture and, if provided, a reason and specific positions which items are being refunded. Once the refund is successfull, the `stateHandler` changes the state to *complete*.
 
