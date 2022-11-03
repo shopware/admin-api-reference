@@ -149,7 +149,7 @@ The order transaction state represents the state of the payment. `open`, `fail`,
 
 Refund payment method can be called only for transactions that are claimed to be successful. The payment can either be completely or partially refunded.
 
-Generally, refunds are linked to a specific transaction ID or order ID. A refund can have multiple positions, with different order line items and amounts. To allow easy refund handling, have your payment handler implement the `RefundPaymentHandlerInterface`. This validates the legitimacy of the refund and call the PSP to refund the given transaction.
+Generally, refunds are linked to a specific order transaction capture ID. A refund can have multiple positions, with different order line items and amounts. To allow easy refund handling, have your payment handler implement the `RefundPaymentHandlerInterface`. Your RefundHandler implementation will be called with the `refundId` where you can call your PSP or similar.
 
 Use the Refund API `/api/_action/order_transaction_capture_refund/{refundId}` endpoint to refund payments. You usually need the `refundId` and `context`. The refundId is the id of the `OrderTransactionCaptureRefund` entity, which the payment plugin has created before.
 
