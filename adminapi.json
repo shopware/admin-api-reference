@@ -11720,30 +11720,35 @@
           "payload": {
             "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
             "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "productIds"
-              ],
-              "properties": {
-                "productIds": {
-                  "type": "array",
-                  "description": "An array of product entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                "customerId": {
+            "anyOf": [
+              {
+                "title": "productIds",
+                "type": "array",
+                "description": "An array of product entity UUIDs",
+                "items": {
                   "type": "string",
                   "pattern": "^[0-9a-f]{32}$"
-                },
-                "customerGroupId": {
+                }
+              },
+              {
+                "title": "customerIds",
+                "type": "array",
+                "description": "An array of customer entity UUIDs",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                }
+              },
+              {
+                "title": "customerGroupIds",
+                "type": "array",
+                "description": "An array of customerGroup entity UUIDs",
+                "items": {
                   "type": "string",
                   "pattern": "^[0-9a-f]{32}$"
                 }
               }
-            }
+            ]
           }
         }
       },
