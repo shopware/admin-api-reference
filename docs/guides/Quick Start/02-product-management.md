@@ -1,8 +1,20 @@
-# Product
+# Product Overview
+
+This section explains the handling of the product data structure.
 
 To start easy, below is a sample request to create a product with simple data from its complex API schema.
 
-## Create a new product with simple payload
+## Create a new product with a simple payload
+
+A product has only a handful of required fields:
+
+* name [string]
+* productNumber [string]
+* taxId [string]
+* price [object]
+* stock [int]
+
+The smallest required payload for a product can therefore be as follows:
 
 ```json http
 {
@@ -66,7 +78,7 @@ To start easy, below is a sample request to create a product with simple data fr
       "type": "string"
       },
       "linked": {
-      "description": "Checks if net price needs to be calculated based on tax and gross price of a product",
+      "description": "If set to true, net price is automatically calculated based on gross price and stored tax rate",
       "type": "boolean"
       }
   }
@@ -75,18 +87,20 @@ To start easy, below is a sample request to create a product with simple data fr
 
 The `Productfeatureset` is a default template that extends from `productEntity` to insert all information for a new product.
 
-Here `linked` parameter takes boolean values. This signifies if `priceForCurrency.linked` is set to true then net price is calculated from the gross price based on tax type by `calculatePrice()` method.
+Here `linked` parameter takes boolean values. This signifies that if `priceForCurrency.linked` is true, the net price is calculated from the gross price based on tax type by the `calculatePrice()` method.
 
-The following payload examples contain UUIDs for various entities such as currencies, tax rates, manufacturers or properties. These IDs are different on each system and must be adjusted accordingly.
+The following payload examples contain UUIDs for various entities such as currencies, tax rates, manufacturers, or properties. These IDs are different on each system and must be adjusted accordingly.
 
 ## Category
 
-All products are categoried in the catelog. Below is a sample request to create a category entry.
+All products are categorized in the catalogue. 
+
+Below is a sample request to create a category:
 
 ```json http
 {
   "method": "post",
-  "url": "http://localhost/api/category/bda4b60e845240b2b9d6b60e71196e14/products",
+  "url": "http://localhost/api/category",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -94,10 +108,9 @@ All products are categoried in the catelog. Below is a sample request to create 
   },
   "body": {
     "displayNestedProducts": true,
-    "type": "product",
+    "type": "page",
     "productAssignmentType": "product",
-    "name": "Main navigation"
-    }
+    "name": "Home"
     }
   }
 ```
@@ -117,7 +130,7 @@ All products are categoried in the catelog. Below is a sample request to create 
       "Example": " `product`, `category` "
     },
     "productAssignmentType": {
-      "description": "Accepts values `product`, `product-stream` for products added explicitly and added via   Dynamic product group respectively",
+      "description": "Accepts values `product`, `product-stream` for products added explicitly and added via Dynamic product group respectively",
       "type": "string"
     },
     "name": {
@@ -130,7 +143,13 @@ All products are categoried in the catelog. Below is a sample request to create 
 
 ## Product assignment
 
-Every product must be assigned to a category for its display. It can be explicitly assiged or can be assigned as Dynamic Product Group to a category.
+Every product must be assigned to a category for its display. It can be explicitly assigned or can be assigned as a Dynamic Product Group to a category.
+
+Let us assign the test product to the *Home* category created earlier:
+
+```text
+PATCH https://localhost/api/category/{category-id}
+```
 
 ```json http
 {
@@ -142,13 +161,10 @@ Every product must be assigned to a category for its display. It can be explicit
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    "id": "a11d11c732d54debad6da3b38ad07b11",
-    "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-    "productAssignmentType": "product",
-    "productId": "89a367082c0d48c88f59424a8bb0265b"
-}
-    }
+    "productAssignmentType": "product_stream",
+    "productStreamId": "bca25935854b4a0181681c81bcacd7ba"
   }
+}
 ```
 
 ```json json_schema
@@ -160,16 +176,12 @@ Every product must be assigned to a category for its display. It can be explicit
       "description": "Unique ID of category",
       "type": "string"
     },
-    "versionId": {
-      "description": "",
-      "type": "string",
-    },
-    "productAssignmentType": {
+  "productAssignmentType": {
       "description": "Accepts values `product`, `product-stream` for products added explicitly and added via Dynamic product group respectively",
       "type": "string"
     },
-    "productId": {
-      "description": "Unique ID product",
+  "productStreamId": {
+      "description": "Unique ID Dynamic product group",
       "type": "string"
     }
   }
@@ -233,7 +245,7 @@ To delete several assignments at once, the `/_action/sync` route can be used:
 
 ### `CategoriesRo` Association
 
-The `product.categories` association contains the assignment of products and their categories. This table is not queried in the storefront, because all products of subcategories should be displayed in listings as well. Therefore there is another association: `product.categoriesRo`. This association is read-only and is filled automatically by the system. This table contains all assigned categories of the product as well as all parent categories.
+The `product.categories` association contains the assignment of products and their categories. This table is not queried in the storefront because all products of subcategories should be displayed in listings as well. Therefore there is another association: `product.categoriesRo`. This association is read-only and is filled automatically by the system. This table contains all assigned categories of the product as well as all parent categories.
 
 ## Product reviews
 
@@ -254,9 +266,8 @@ Reviews are comments that stand as a means to evaluate products by buyers. This 
     "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b",
     "title": "Ice Cream Scoop",
     "content": "Very Good"
-}
-    }
   }
+}
 ```
 
 ```json json_schema
@@ -288,30 +299,34 @@ Reviews are comments that stand as a means to evaluate products by buyers. This 
 }
 ```
 
-## Cross selling
+## Cross-selling
 
-Cross-selling features product recommendations and interesting contents to achieve an optimal shopping experience in the shop.
+Cross-selling features product recommendations and interesting content to achieve an optimal shopping experience in the shop.
+
+```text
+POST /api/product/{product-id}/cross-sellings
+```
 
 ```json http
 {
   "method": "post",
-  "url": "https://localhost/api/product/04d0107ac065458da3a0fe0b9f9bc58c/cross-sellings",
+  "url": "https://localhost/api/product/a55ca50a2cef46d5b11a12c4b4614988/cross-sellings",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-        "name": "sample_review",
-        "position": 1,
-        "sortBy": "name",
-        "sortDirection": "ASC",
-        "type": "productList",
-        "active": true,
-        "limit": 24,
-        "productId": "a55ca50a2cef46d5b11a12c4b4614988"
-    }
+    "name": "sample_review",
+    "type": "productStream",
+    "position": 1,
+    "sortBy": "name",
+    "sortDirection": "ASC",
+    "active": true,
+    "limit": 24,
+    "productId": "bca25935854b4a0181681c81bcacd7ba"
   }
+}
 ```
 
 ```json json_schema
@@ -320,13 +335,17 @@ Cross-selling features product recommendations and interesting contents to achie
   "description": "Parameters for product reviews",
   "properties": {
     "name": {
-      "description": "Name of the cross selling ",
+      "description": "Name of the cross-selling ",
+      "type": "string"
+    },
+    "type": {
+      "description": "Accepts `productList` or `productStream` type",
       "type": "string"
     },
     "position": {
-      "description": "Position of the product list to be displayed. Accepts values greater than 1. When only one product list is to be displayed, the default position taken is 1",
+      "description": "Position of the product to be displayed in the list. It accepts values greater than 1. When only one product list is to be displayed, the default position taken is 1",
       "type": "integer",
-    },
+    },    
     "sortBy": {
       "description": "Sort criteria by `name`, `price`",
       "type": "string"
@@ -334,11 +353,7 @@ Cross-selling features product recommendations and interesting contents to achie
     "sortDirection": {
       "description": "Sorting can be ` ASC` or `DSC`",
       "type": "string"
-    },
-    "type": {
-      "description": "Accepts `product` or `product-stream` type",
-      "type": "string"
-    },
+    },    
     "active": {
       "description": "When active is `true`, product recommendation is visible",
       "type": "boolean"
@@ -357,7 +372,7 @@ Cross-selling features product recommendations and interesting contents to achie
 
 ## Price
 
-A particular products's price can be fetched, updated or a [price rule can also be created](https://shopware.stoplight.io/docs/admin-api/ZG9jOjEyMzA4NTUy-product-data#quantity-and-rule-price-structure).
+A particular product's price can be fetched, updated or a [price rule can be created](https://shopware.stoplight.io/docs/admin-api/ZG9jOjEyMzA4NTUy-product-data#quantity-and-rule-price-structure).
 
 Price handling is one of the edge cases in the product data structure. There are three different prices for a product, which can be queried via API:
 
@@ -365,14 +380,18 @@ Price handling is one of the edge cases in the product data structure. There are
 * `product.prices`
 * `product.listingPrices`
 
-Only the first two can be written via API \(`product.price`, `product.prices`\). The `product.price` is the "simple" price of a product. It does not contain any quantity information nor is it bound to any `rule`.
+Only the first two can be written via API \(`product.price`, `product.prices`\). The `product.price` is the "simple" price of a product. It does not contain quantity information, nor is it bound to any `rule`.
 
-To update price for a particular product, use the below endpoint:
+To update the price for a particular product, use the below endpoint:
+
+```text
+PATCH /api/product/{product-id}
+```
 
 ```json http
 {
   "method": "patch",
-  "url": "https://localhost/api/product/04d0107ac065458da3a0fe0b9f9bc58c",
+  "url": "https://localhost/api/product/a55ca50a2cef46d5b11a12c4b4614988",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -410,14 +429,16 @@ To update price for a particular product, use the below endpoint:
       "type": "string"
       },
       "linked": {
-      "description": "This is a flag for the administration. If it is set to `true`, the gross or net counterpart is calculated when a price is entered in the administration.",
+      "description": "If set to true, net price is automatically calculated based on gross price and stored tax rate.",
       "type": "boolean"
       }
   }
 }
 ```
 
-Within the price, the different currency prices are available. Each of these currency prices include properties `currencyId`, `gross`, `net`, `linked`.
+### Currency price structure
+
+Within the price, different currency prices are available. Each of these currency prices include properties `currencyId`, `gross`, `net`, `linked`.
 
 To define prices for a product in different currencies, this is an exemplary payload:
 
@@ -455,7 +476,7 @@ To define prices for a product in different currencies, this is an exemplary pay
 
 ### Quantity and rule price structure
 
-As an extension to the `product.price` there are `product.prices`. These are prices that are bound to a `rule`. Rules \(`rule` entity\) are prioritised. If there are several rules for a customer, the customer will see the rule price with the highest priority. In addition to the dependency on a rule, a quantity discount can be defined using these prices.
+As an extension to the `product.price`, there is` product.prices`. These are prices that are bound to a `rule`. Rules \(`rule` entity\) are prioritised. If there are several rules for a customer, the customer will see the rule price with the highest priority. In addition to the dependency on a rule, a quantity discount can be defined using these prices.
 
 Each price in `product.prices` has the following properties:
 
@@ -516,7 +537,7 @@ To define prices for a rule including a quantity discount, this is an exemplary 
 
 ### Listing price handling
 
-The third price property that is available on the product is the `product.listingPrices`. These prices are determined automatically by the system. The price ranges for the corresponding product are available here. The prices are determined on the base of all variants of prices that could be displayed to the customer in the shop.
+The third price property available on the product is the `product.listingPrices`. These prices are determined automatically by the system. The price ranges for the corresponding product are available here. The prices are determined on the base of all variants of prices that could be displayed to the customer in the shop.
 
 Each price within this object contains the following properties:
 
