@@ -14,7 +14,7 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
 
     * Dynamic product groups
 
-    * Reviews
+    * Product Reviews
 
     * Cross-selling
 
@@ -22,31 +22,27 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
 
 * Orders
 
-    * Order
+    * Create order
 
     * Line item
 
-    * Order transactions
+    * Order state handling
+    
+    * Refund Payment
 
 * Customer
 
-    * Customer creation and groups
+    * Customer creation 
 
-* Content
+    * Customer groups
 
-    * CMS pages (sections, blocks, slots)
+* CMS handling
 
-    * CMS Extension plugin (Scroll navigation, Block visibility, Quick view)
-
-    * Media
+* Media handling
 
 * Themes
 
-* Marketing
-
-    * Document types
-
-    * Promotion
+* Document management
 
 * Extension
 
