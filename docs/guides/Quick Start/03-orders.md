@@ -1,13 +1,46 @@
 # Order Overview
 
-A list of all customer orders are obtained using the route:
+The order resource enables merchants to process orders they receive from customers.
+
+You can use the orders resource to do the following:
+
+* Retrieve orders and their line-items
+* Create dummy orders 
+* Update order statuses
+* Manage returns
+
+## Retrieve Orders
+
+A list of all customer orders is obtained using the route:
 
 ``` markdown
 POST /api/search/order
 ```
-## Create order
 
-You can create orders manually in admin panel to record orders that are made outside of Shopware or to send customer invoices.
+### Order line-items
+
+An order can have more other items or child items of `type` : `product`, `promotion`, `credit` or `custom`. To fetch line items for a particular order, try the below route:
+
+```text
+GET /api/order/{order-id}/line-item
+```
+Sample API request:
+
+```json http
+{
+  "method": "get",
+  "url": "http://localhost/api/order/558efc15fe604829b4d0607df75187e0/line-item",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer Your_API_Key"
+  }
+  }
+```
+
+## Create an order
+
+You can create orders manually in the admin panel to record orders made outside of Shopware or send customer invoices.
 
 ```json http
 {
@@ -68,33 +101,19 @@ You can create orders manually in admin panel to record orders that are made out
 }
 ```
 
-## Order line item
-
-An order can be have more other items or child items of `type` : `product`, `promotion`, `credit` or `custom`. To fetch line items for a particular order, try the below API request:
-
-```json http
-{
-  "method": "get",
-  "url": "http://localhost/api/order/558efc15fe604829b4d0607df75187e0/line-item",
-  "headers": {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
-  }
-  }
-```
-
-Every order created is associted with order, payment, and delivery transitions. More details are mentioned below:
+Orders created are associated with payment and delivery transitions. The following section provides you with more details.
 
 ## Order state handling
 
-Every order in Shopware has three state machines `order.state`, `order_delivery.state`, `order_transaction.state` that holds the status of order, delivery and payment status respectively. The `state_machine_transition` is a collection of all defined transitioned defined.
+Every order in Shopware has three state machines, `order.state`, `order_delivery.state`, `order_transaction.state`, that holds the status of an order, delivery, and payment status, respectively. The `state_machine_transition` is a collection of all defined transitions defined.
 
 The `transition` method handles the order transition from one state to another.
 
 ### Order
 
-On creation of a new order, the order state by default is set to open. Order status can be transitioned among `cancel`, `complete`, `reopen`, `process` as shown below:
+On creating a new order, the order state is set to *open* by default. Order state can be transitioned among `cancel`, `complete`, `reopen`, and `process`. 
+
+Below is a sample request to change the state of order to *complete*:
 
 ```json http
 {
@@ -108,12 +127,13 @@ On creation of a new order, the order state by default is set to open. Order sta
   "body": {
   }
 ```
-A cancelled order cannot change to in-progress state unless it is reopened again.
+A *canceled* order cannot change to an *in-progress* state unless it is reopened again.
 
 ### Order delivery
 
-The order delivery state represents the state of the delivery. `reopen`, `ship`, `ship_partially`, `cancel`, `retour`,
-`retour_partially` are the states associated with order delivery.
+The order delivery state represents the state of the delivery. `reopen`, `ship`, `ship_partially`, `cancel`, `retour`, and `retour_partially` are the states associated with order delivery.
+
+Below is a sample request that sets the delivery state to *fail*:
 
 ```json http
 {
@@ -129,7 +149,9 @@ The order delivery state represents the state of the delivery. `reopen`, `ship`,
 
 ### Order transaction
 
-The order transaction state represents the state of the payment. `open`, `fail`, `authorize`, `refund_partially`, `refund`, `do_pay`, `paid`, `paid_partially`, `remind`, `cancel` are the states associated with order transaction.
+The order transaction state represents the state of the payment. `open`, `fail`, `authorize`, `refund_partially`, `refund`, `do_pay`, `paid`, `paid_partially`, `remind`,  and `cancel` are the states associated with order transaction.
+
+Below is a sample request that sets the payment state to *open*:
 
 ```json http
 {
@@ -145,14 +167,16 @@ The order transaction state represents the state of the payment. `open`, `fail`,
 
 ## Refund Payment
 
-[Initiating and capturing payment is handled by store-api](https://shopware.stoplight.io/docs/store-api/8218801e50fe5-handling-the-payment), whereas payment refund is dealt by the admin-api.
+[Initiating and capturing payment is handled by store-api](https://shopware.stoplight.io/docs/store-api/8218801e50fe5-handling-the-payment), whereas the admin API deals with refund payment.
 
-Refund payment method can be called only for transactions that are claimed to be successful. The payment can either be completely or partially refunded.
+The refund payment method can be called only for transactions that are claimed to be successful. 
 
-Generally, refunds are linked to a specific order transaction capture ID. A refund can have multiple positions, with different order line items and amounts. To allow easy refund handling, have your payment handler implement the `RefundPaymentHandlerInterface`. Your RefundHandler implementation will be called with the `refundId` to call your PSP or similar.
+Generally, refunds are linked to a specific order transaction capture ID. An order can have one or more line items and amounts. Each of these line items signifies refund positions. Based on the number of line items requested for refund, the payment can either be partially or wholly refunded.
 
-Use the Refund API `/api/_action/order_transaction_capture_refund/{refundId}` endpoint to refund payments. You usually need the `refundId` and `context`. The refundId is the id of the `OrderTransactionCaptureRefund` entity, which the payment plugin has created before, and will be forwarded to your RefundHandler implementation.
+To allow easy refund handling, have your payment handler implement the `RefundPaymentHandlerInterface`. Your RefundHandler implementation will be called with the `refundId` to call your PSP or similar.
+
+Use the Refund API endpoint `/api/_action/order_transaction_capture_refund/{refundId}`  to refund payments. You usually need the `refundId` and `context`. The refundId is the id of the `OrderTransactionCaptureRefund` entity, which the payment plugin has created before and will be forwarded to your RefundHandler implementation.
 
 When you refund a payment, the API will change the refund state to *complete*. If you want to fail the refund in your RefundHandler implementation, simply throw a `RefundException`, and the state of the refund will transition to *fail*.
   
-> Your payment extensions must write its own captures and refunds into the order_transaction_capture and order_transaction_capture_refund tables respectively before calling the refund handler as this is not carried out by the Shopware Core.
+> Your payment extensions must write their own captures and refunds into the order_transaction_capture and order_transaction_capture_refund tables, respectively, before calling the refund handler, as the Shopware Core does not carry this out.
