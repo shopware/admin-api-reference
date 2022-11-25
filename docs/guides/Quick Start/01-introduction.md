@@ -1,3 +1,7 @@
+---
+stoplight-id: 472ce9e482dc3
+---
+
 # Quick Start Guide
 
 ## Overview
@@ -14,7 +18,7 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
 
     * Dynamic product groups
 
-    * Product Reviews
+    * Product reviews
 
     * Cross-selling
 
@@ -28,7 +32,7 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
 
     * Order state handling
     
-    * Refund Payment
+    * Refund payment
 
 * Customer
 

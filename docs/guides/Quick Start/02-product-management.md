@@ -1,4 +1,4 @@
-# Product Overview
+# Product Management
 
 This section explains the handling of the product data structure.
 
@@ -16,7 +16,7 @@ A product has only a handful of required fields:
 
 The smallest required payload for a product can therefore be as follows:
 
-```json http
+```sample http
 {
   "method": "post",
   "url": "http://localhost/api/product",
@@ -43,9 +43,10 @@ The smallest required payload for a product can therefore be as follows:
   }
 ```
 
-```json json_schema
+```desription json_schema
 {
   "type": "object",
+  "title": "MinimalProductPayload",
   "description": "Parameters for product creation",
   "properties": {
     "name": {
@@ -85,19 +86,15 @@ The smallest required payload for a product can therefore be as follows:
 }
 ```
 
-The `Productfeatureset` is a default template that extends from `productEntity` to insert all information for a new product.
-
-Here `linked` parameter takes boolean values. This signifies that if `priceForCurrency.linked` is true, the net price is calculated from the gross price based on tax type by the `calculatePrice()` method.
-
 The following payload examples contain UUIDs for various entities such as currencies, tax rates, manufacturers, or properties. These IDs are different on each system and must be adjusted accordingly.
 
 ## Category
 
-All products are categorized in the catalogue. 
+Products are organized into categories within catalogue. 
 
 Below is a sample request to create a category:
 
-```json http
+```sample http
 {
   "method": "post",
   "url": "http://localhost/api/category",
@@ -115,7 +112,7 @@ Below is a sample request to create a category:
   }
 ```
 
-```json json_schema
+```description json_schema
 {
   "type": "object",
   "description": "Parameters for category creation",
@@ -143,15 +140,11 @@ Below is a sample request to create a category:
 
 ## Product assignment
 
-Every product must be assigned to a category for its display. It can be explicitly assigned or can be assigned as a Dynamic Product Group to a category.
+Every product must be assigned to a category for its display. It can be explicitly assigned or can be assigned as a [dynamic product group](../../../adminapi.json/components/schemas/ProductStream) to a category.
 
 Let us assign the test product to the *Home* category created earlier:
 
-```text
-PATCH https://localhost/api/category/{category-id}
-```
-
-```json http
+```sample http
 {
   "method": "PATCH",
   "url": "https://localhost/api/category/a11d11c732d54debad6da3b38ad07b11",
@@ -167,7 +160,7 @@ PATCH https://localhost/api/category/{category-id}
 }
 ```
 
-```json json_schema
+```description json_schema
 {
   "type": "object",
   "description": "Parameters for product assignment",
@@ -251,7 +244,7 @@ The `product.categories` association contains the assignment of products and the
 
 Reviews are comments that stand as a means to evaluate products by buyers. This below API adds a product review against a particular product as shown below:
 
-```json http
+```sample http
 {
   "method": "post",
   "url": "http://localhost/api/product-review",
@@ -270,7 +263,7 @@ Reviews are comments that stand as a means to evaluate products by buyers. This 
 }
 ```
 
-```json json_schema
+```description json_schema
 {
   "type": "object",
   "description": "Parameters for product reviews",
@@ -303,11 +296,7 @@ Reviews are comments that stand as a means to evaluate products by buyers. This 
 
 Cross-selling features product recommendations and interesting content to achieve an optimal shopping experience in the shop.
 
-```text
-POST /api/product/{product-id}/cross-sellings
-```
-
-```json http
+```sample http
 {
   "method": "post",
   "url": "https://localhost/api/product/a55ca50a2cef46d5b11a12c4b4614988/cross-sellings",
@@ -329,7 +318,7 @@ POST /api/product/{product-id}/cross-sellings
 }
 ```
 
-```json json_schema
+```description json_schema
 {
   "type": "object",
   "description": "Parameters for product reviews",
@@ -388,7 +377,7 @@ To update the price for a particular product, use the below endpoint:
 PATCH /api/product/{product-id}
 ```
 
-```json http
+```sample http
 {
   "method": "patch",
   "url": "https://localhost/api/product/a55ca50a2cef46d5b11a12c4b4614988",
@@ -410,7 +399,7 @@ PATCH /api/product/{product-id}
 }
 ```
 
-```json json_schema
+```description json_schema
 {
   "type": "object",
   "description": "Parameters for price updation",

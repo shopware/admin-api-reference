@@ -8,7 +8,7 @@ A Theme gives you the ability to change the visual appearance of the storefront 
 
 One can fetch the available themes by posting `/api/search/themes` endpoint.
 
-To undestand the entire structure of a theme then fetch `/api/_action/theme/fc485aa38de24fa8be890acf50aa9ddc/structured-fields`
+To understand the entire structure of a theme then fetch `/api/_action/theme/fc485aa38de24fa8be890acf50aa9ddc/structured-fields`
 
 ## Update schema
 
