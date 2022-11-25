@@ -1,6 +1,6 @@
 # Overview
 
-One can use documents to send invoive, delivery note, packing slips, etc. Already defined document types can be fetched from 
+One can use documents to send invoive, delivery note, packing slips, etc. Already defined document types can be fetched from :
 
 ``` markdown
 GET /api/document-type
@@ -10,7 +10,7 @@ GET /api/document-type
 
 You can create a document by its purpose - for example, a note for returned items by using a simple payload.
 
-```json http
+```sample http
 {
   "method": "post",
   "url": "http://localhost/api/document-type",
@@ -22,13 +22,13 @@ You can create a document by its purpose - for example, a note for returned item
   "body": {
     "name": "return note",
     "technicalName": "return-note"
-}
-    }
   }
+}
 ```
-If documents are assigned to `global` types then they can be used on any channel. This can be defined in `document_base_config` entity as shown below: 
 
-```json http
+If documents are assigned to `global` then they can be used on any sales channel. This can be defined in `document_base_config` entity as shown below: 
+
+```sample http
 {
   "method": "post",
   "url": "http://localhost/api/document-base-config",
@@ -45,9 +45,9 @@ If documents are assigned to `global` types then they can be used on any channel
   }
 ```
 
-These documents are interfaced for order entity as well. The below endpoint creates a document of invoice type for a particular order.
+These documents are associated to order events. The below endpoint creates a document of invoice type for a particular order.
 
-```json http
+```sample http
 {
   "method": "post",
   "url": "http://localhost/api/_action/order/d84bbaaa3423495e8c98eef1444db7d0/document/invoice",
@@ -56,11 +56,14 @@ These documents are interfaced for order entity as well. The below endpoint crea
     "Accept": "application/json",
     "Authorization": "Bearer Your_API_Key"
   }
-  }
+}
 ```
+
 ## Download a document
 
-```json http
+The below route allows you to download a document as PDF:
+
+```sample http
 {
   "method": "post",
   "url": "http://localhost/api/_action/document/d01c4e3cc8ef49abbdb094a0d8c0547b/XdcfdoQITWimRreZFf6yMIcXfe3gl1op",
@@ -70,4 +73,4 @@ These documents are interfaced for order entity as well. The below endpoint crea
     "Authorization": "Bearer Your_API_Key"
   }
 }
-
+```
