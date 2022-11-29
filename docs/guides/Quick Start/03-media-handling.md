@@ -1,15 +1,19 @@
+---
+stoplight-id: c042ae0cd330f
+---
+
 # Media Handling
 
-A common task when performing product imports is the upload / creation of product images. 
+A common task when performing product imports is the upload/creation of product images. 
 
-In Shopware this is handled in a two-step process, which allows for the separation between writing the associations between media objects and uploading the actual data.
+In Shopware, this is handled in a two-step process, which allows for the separation between writing the associations between media objects and uploading the actual data.
 
 1. Create a media entity associated with a product entity
 2. Attach resource data to the media object
     1. Either reference an image resource via URL or
     2. Upload the resource directly
 
-In the following, we'll go through these steps in more detail. Make sure you've read the [Writing Entities](writing-entities/README.md) guide and especially the section on writing [Product Data](writing-entities/product-data.md#media-handling) before proceeding.
+In the following, we will go through these steps in more detail. Before proceeding, ensure you have gone through the section on writing [Product Data](02-product-management.md).
 
 ## 1. Create a media entity associated with a product entity
 
@@ -93,14 +97,14 @@ The `product` and `media` entities are connected by the `product_media` relation
 }
 ```
 
-Based on the guide on writing [Associations](writing-entities/associations.md), you will already know, how to handle nested associations e.g. write media and product_media using the product endpoint. Hence, we're showing the most straightforward way of creating media entities and associationg them with a product:
+Based on the guide on writing [Associations](../../concepts/endpoint-structure/writing-entities/associations.md), you will already know how to handle nested associations, e.g., write media and product_media using the product endpoint. Hence, we are showing the most straightforward way of creating media entities and associating them with a product:
 
 **Try it out**
 
-```json http
+```sample http
 {
   "method": "patch",
-  "url": "http://localhost/api/product/cfbd5018d38d41d8adca10d94fc8bdd6",
+  "url": "http://localhost/api/product/a55ca50a2cef46d5b11a12c4b4614988",
   "headers": {
     "Content-Type": "application/json",
     "Authorization": "Bearer <your-bearer-token>"
@@ -117,7 +121,7 @@ Based on the guide on writing [Associations](writing-entities/associations.md), 
 ```
 
 ```json
-// PATCH /api/product/cfbd5018d38d41d8adca10d94fc8bdd6
+// PATCH /api/product/a55ca50a2cef46d5b11a12c4b4614988
 
 {
   "media": [{
@@ -129,15 +133,15 @@ Based on the guide on writing [Associations](writing-entities/associations.md), 
 }
 ```
 
-This request updates a given product and creates an array of media items. Make sure you keep track of the IDs you've created, because you will need them for the second step.
+This request updates a given product and creates an array of media items. Make sure you keep track of the IDs you have created because you will need them for the second step.
 
-> A good idea is to generate `product_media` and `media` IDs based on a product identifier in combination with another property, like its position in the product image list and hashing it. This way you don't have to perform any additional lookups.
+> A good idea is to generate `product_media` and `media` IDs based on a product identifier in combination with another property, like its position in the product image list, and hashing it. This way, you don't have to perform any additional lookups.
 
-Now, that we've got the "hull" for our media items, we can start uploading resources.
+Now that we have got the "hull" for our media items, we can start uploading resources.
 
 ## 2. Attach resource data to the media object
 
-This step is about attaching the actual image data. This can be done in two ways - provide a link to a resource and Shopware will download the file from there **or** provide the data within the request body. We'll have a look at both ways:
+This step is about attaching the actual image data. This can be done in two ways - provide a link to a resource, and Shopware will download the file from there **or** provide the data within the request body. We will have a look at both ways:
 
 ### Provide a resource URL
 
@@ -145,10 +149,10 @@ This way, you provide the `mediaId` (id of the Media, not the ProductMedia) as a
 
 **Try it yourself** 
 
-```json http
+```sample http
 {
   "method": "post",
-  "url": "http://localhost/api/_action/media/{mediaId}/upload?extension=jpg",
+  "url": "http://localhost/api/_action/media/0fa91ce3e96a4bc2be4bd9ce752c3425/upload?extension=jpg",
   "headers": {
     "Content-Type": "application/json",
     "Authorization": "Bearer <your-bearer-token>"
@@ -159,22 +163,20 @@ This way, you provide the `mediaId` (id of the Media, not the ProductMedia) as a
 }
 ```
 
-```json
-// POST http://localhost/api/_action/media/{mediaId}/upload?extension=jpg
-
-{
-  "url": "<url-to-your-image>"
-}
-```
-
 ### Upload the resource directly
 
-Using this way, you provide the binary file directly within the request body, set the content type header accordingly (e.g. `Content-Type: image/jpg`) and provide the `extension` as a query parameter.
+This way, you provide the binary file directly within the request body, set the content type header accordingly (e.g. `Content-Type: image/jpg`) and provide the `extension` as a query parameter.
 
-```json
-// POST http://localhost/api/_action/media/{mediaId}/upload?extension=jpg
-// Content-Type: image/jpg
-
-// binary file body
+```sample http
+{
+  "method": "post",
+  "url": "http://localhost/api/_action/media/0fa91ce3e96a4bc2be4bd9ce752c3425/upload?extension=jpg",
+  "headers": {
+    "Content-Type": "image/jpg",
+    "Authorization": "Bearer <your-bearer-token>"
+  },
+  "body": {
+    // binary file body
+  }
+}
 ```
-

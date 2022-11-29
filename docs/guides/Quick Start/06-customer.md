@@ -16,6 +16,7 @@ One can obtain a list of customers using `/api/search/customer`. Individual cust
 | Customer sales channel | `/api/customer/{customer_id}/sales-channel` |
 | Customer language | `/api/customer/{customer_id}/language` |
 
+
 ## Customer creation with simple payload
 
 ```json http
@@ -106,7 +107,7 @@ Create customer group to create a completely new customer group
 }
 ```
 
-## CustomerGroupRegistrationSalesChannels
+## Customer Group egistration to Sales Channels
 
 You can create customer group and assign it to the standard Customer Group of the sales channel. 
 
