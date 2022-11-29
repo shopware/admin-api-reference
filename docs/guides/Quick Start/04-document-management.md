@@ -61,7 +61,7 @@ These documents are associated to order events. The below endpoint creates a doc
 
 ## Download a document
 
-The below route allows you to download a document as PDF:
+The below route allows you to download a document as PDF. The document is followed by its ID and deeplink code.
 
 ```sample http
 {
