@@ -318,7 +318,7 @@ Deleting a sales channel assignment is done via the route `/api/product/{product
 ```javascript
 {
     // This key can be defined individually
-    "unassign-media": {
+    "unassign-sales-channel-visibilities": {
         "entity": "product_visibility",
         "action": "delete",
         "payload": [
