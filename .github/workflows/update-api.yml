@@ -5,63 +5,17 @@ on:
   schedule:
     - cron: 0 8 */1 * *
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  update:
-    name: "Update storeapi.json"
-    runs-on: ubuntu-latest
-    container: "shopware/development:8.1-composer-2"
-    env:
-      APP_ENV: prod
-      DATABASE_URL: mysql://root:root@database:3306/root
-      APP_URL: http://localhost:8000
-      APP_SECRET: devsecret
-      BLUE_GREEN_DEPLOYMENT: 0
-
-    services:
-      database:
-        image: mysql:5.7
-        env:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: root
-
-    steps:    
-    - name: Checkout Shopware
-      uses: actions/checkout@v3
-      with:
-          repository: shopware/platform
-          ref: trunk
-          fetch-depth: 0
-    - name: checkout latest release
-      run: |
-        git checkout $(git tag | tr '.' ' ' | sort -nr -k3,4 | head -n1 | tr ' ' '.')
-        
-    - name: checkout commercial plugin
-      env:
-        DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-        DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
-      run: |
-        git clone https://${DEPLOY_USER}:${DEPLOY_TOKEN}@gitlab.shopware.com/shopware/6/product/commercial.git custom/plugins/SwagCommercial
-        
-    - name: Generate storeapi.json
-      run: |
-        composer install -o
-        composer run init:db
-        ./bin/console plugin:install -a SwagCommercial 
-        ./bin/console framework:schema -s openapi3 --pretty storeapi.json
-        
-    - name: upload api schema
-      uses: actions/upload-artifact@v3
-      with:
-        name: store-api-schema
-        path: storeapi.json
-        retention-days: 1
+  generate-schema:
+    uses: shopware/docs-ci/.github/workflows/generate_schema.yml@main
+    with:
+      api_type: adminapi
+    secrets: inherit
         
   open-pr:
     name: "Open a pull request"
     runs-on: ubuntu-latest
-    needs: [update]
+    needs: [generate-schema]
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -69,15 +23,15 @@ jobs:
     - name: download api schema
       uses: actions/download-artifact@v3
       with:
-        name: store-api-schema
+        name: ${{needs.generate-schema.outputs.api_schema}}
       
     - name: Create PR
       uses: peter-evans/create-pull-request@v4
       with:
-        add-paths: storeapi.json
+        add-paths: adminapi.json
         author: shopwareBot <example@example.com>
         committer: shopwareBot <example@example.com>
         assignees: elkmod, Christian-Rades
         branch: schema-update
         delete-branch: true
-        title: 'Update store API schema'
+        title: 'Update admin API schema'
