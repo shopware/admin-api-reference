@@ -1,3 +1,7 @@
+---
+stoplight-id: e51cf55ab14a4
+---
+
 # Product Management
 
 This section explains the handling of the product data structure.

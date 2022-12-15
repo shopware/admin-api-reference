@@ -6,6 +6,8 @@ stoplight-id: bce44edeecdd5
 
 CMS system is referred to as "Shopping Experiences" built upon pages or layouts which can be reused and dynamically hydrated based on their assignments to categories or other entities.
 
+Using CMS REST API, can person CRUD oerations on creating the basic template for filling the details like section, slot, blocks and page.
+
 To fetch a list of existing CMS layouts, 
 
 ```
