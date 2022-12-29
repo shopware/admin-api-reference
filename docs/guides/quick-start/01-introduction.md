@@ -8,9 +8,9 @@ stoplight-id: twpxvnspkg3yu
 
 Shopware Admin API allows web services to perform administrative tasks. This guide is designed to help you understand the Admin API, its endpoints, and its usage. You will get to learn everything about this API.
 
-* Authentication as API user
+* [Authentication as API user](01-introduction.md)
 
-* Product management
+* [Product management](02-product-management.md)
 
     * Product creation
 
@@ -24,11 +24,11 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
 
     * Price
 
-* Media handling
+* [Media handling](03-media-handling.md)
 
-* Document management
+* [Document management](04-document-management.md)
 
-* Order management
+* [Order management](05-order-management.md)
 
     * Create order
 
@@ -38,7 +38,11 @@ Shopware Admin API allows web services to perform administrative tasks. This gui
     
     * Refund payment
 
-* CMS handling
+* [CMS handling](06-cms-handling.md)
+
+    * Creation of layout
+
+    * Assignment of layout to a categoty
 
 It is useful to use an API client like Postman or Insomnia to follow this guide.
 
