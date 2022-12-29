@@ -6,7 +6,7 @@ stoplight-id: bce44edeecdd5
 
 CMS system is referred to as "Shopping Experiences" built upon pages which can be reused and dynamically hydrated based on their assignments to categories or other entities.
 
-Using CMS REST API, you can perform CRUD operations on section, slot, blocks and page templates.
+Using CMS REST API, you can perform CRUD operations on section, slot, block and page templates.
 
 To fetch a list of existing CMS layouts, 
 
@@ -27,7 +27,7 @@ POST /api/search/cms-page
     "Authorization": "Bearer Your_API_Key"
   },
   "body": {
-    "name": "Summer BBQ1",
+    "name": "Summer BBQ",
     "type": "landingpage",
     "sections":{
         "position": 1,
@@ -87,7 +87,7 @@ POST /api/search/cms-page
       "type": "integer"
     },
     "type": {
-      "description": "Default type",
+      "description": "Default type.",
       "type": "string"
     }
   }
@@ -112,27 +112,27 @@ POST /api/search/cms-page
       "type": "string"
     },
     "sectionPositon": {
-      "description": "Accepts `main` and `side-bar` values",
+      "description": "Accepts `main` and `side-bar` values.",
       "type": "integer"
     },
     "type": {
-      "description": "Accepts `image-text`, `text`, `image`, `form`, `video`, `commerce`, `category-navigation` ",
+      "description": "Accepts `product-listing` and `sidebar-fileter` values. ",
       "type": "string"
     },
     "marginTop": {
-      "description": "Size of the bottom margin of a block defined ",
+      "description": "Size of the bottom margin of a block defined. ",
       "type": "string"
     },
     "marginBottom": {
-      "description": "Size of the bottom margin of a block defined ",
+      "description": "Size of the bottom margin of a block defined.",
       "type": "string"
     },
     "marginRight": {
-      "description": "Size of the right margin of a block defined ",
+      "description": "Size of the right margin of a block defined. ",
       "type": "string"
     },
     "marginLeft": {
-      "description": "Size of the left margin of a block defined ",
+      "description": "Size of the left margin of a block defined. ",
       "type": "string"
     }
   }
@@ -145,19 +145,19 @@ POST /api/search/cms-page
   "description": "Parameters for CMS page.",
   "properties": {
     "type": {
-      "description": "Accepts `image-text`, `text`, `image`, `form`, `video`, `commerce`, `category-navigation` ",
+      "description": "Accepts `image-text`, `text`, `image`, `form`, `video`, `commerce`, `category-navigation`.",
       "type": "string"
     },
     "slot": {
-      "description": "The position of slot `right`, `left`",
+      "description": "The position of slot `right`, `left`.",
       "type": "string"
     },
     "config": {
-      "description": "Allows to add any customised informed with styling",
+      "description": "Allows to add any customised informed with styling.",
       "type": "string"
     },
     "blockId": {
-      "description": "Unique ID of the block",
+      "description": "Unique ID of the block.",
       "type": "integer"
     }
   }
@@ -166,7 +166,7 @@ POST /api/search/cms-page
 
 ## Assignment of layout/page to a category
 
-Now that we have defined a layout, oyou can use it to assign it to any category or entity. Let us here assign the "Summer BBQ" layout to "Summer Collection" category.
+Now that we have defined a layout, you can use it to assign it to any category or entity. Let us here assign the "Summer BBQ" layout to "Summer Collection" category.
 
 ```sample http
 {
@@ -192,10 +192,10 @@ Now that we have defined a layout, oyou can use it to assign it to any category 
 ```description json_schema
 {
   "type": "object",
-  "description": "Parameters for order creation",
+  "description": "Parameters for assigning cms layout to category.",
   "properties": {
     "parentId": {
-      "description": "Unique identity of parent category",
+      "description": "Unique identity of parent category.",
       "type": "string"
     },
     "afterCategoryId": {
@@ -203,15 +203,15 @@ Now that we have defined a layout, oyou can use it to assign it to any category 
       "type": "string"
     },
     "displayNestedProducts": {
-      "description": "When set to true, it shows all the products",
+      "description": "When set to true, it shows all the products.",
       "type": "string"
     },
     "type": {
-      "description": "Accepts `page`, `folder` and `link` type of categories",
+      "description": "Accepts `page`, `folder` and `link` type of categories.",
       "type": "string"
     },
     "productAssignmentType": {
-      "description": "Takes values `product` and `product-stream` ",
+      "description": "Takes values `product` and `product-stream`. ",
       "type": "string"
     },
     "active": {
@@ -219,7 +219,7 @@ Now that we have defined a layout, oyou can use it to assign it to any category 
       "type": "boolean"
       },
     "name": {
-      "description": "Name of the category",
+      "description": "Name of the category.",
       "type": "string"
     }
   }
