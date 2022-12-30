@@ -4,7 +4,7 @@ stoplight-id: s92t5mvj387wz
 
 # CMS
 
-CMS system is referred to as "Shopping Experiences" built upon pages which can be reused and dynamically hydrated based on their assignments to categories or other entities.
+Shopware's built-in CMS system is referred to as "Shopping Experiences". It is built upon layouts which can be reused and dynamically hydrated based on their assignments to categories or other entities.
 
 Using CMS REST API, you can perform CRUD operations on section, slot, block and page templates.
 
