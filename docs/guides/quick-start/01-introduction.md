@@ -85,6 +85,7 @@ A typical Admin API request, including headers, will look as shown below:
 }
 }
 ```
+
 Once you have obtained the access token, simply add it to `Authorization` header as a Bearer token.
 
 Many REST clients, also come with built-in functionality to support the OAuth grant flows.
