@@ -60,7 +60,7 @@ The Admin API offers a variety of functionalities referred to as endpoints or no
 
 ## Authentication and Setup 
 
-All REST Admin API queries require a valid Shopware access token.The Admin API uses the OAuth 2.0 standard to authenticate users. OAuth 2.0 requires you to obtain an access token to confirm your identity for every server request.
+All REST Admin API queries require a valid Shopware access token. The Admin API uses the OAuth 2.0 standard to authenticate users. OAuth 2.0 requires you to obtain an access token to confirm your identity for every server request.
 
 OAuth 2.0 defines various user authentication types called application grant types. We recommend you to only use Password credentials grant type for all client integrations. This grants client applications to perform administrative actions.
 
