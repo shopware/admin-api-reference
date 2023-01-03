@@ -1,0 +1,37 @@
+name: Update Admin API
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 8 */1 * *
+
+jobs:
+  generate-schema:
+    uses: shopware/docs-ci/.github/workflows/generate_schema.yml@main
+    with:
+      api_type: adminapi
+    secrets: inherit
+        
+  open-pr:
+    name: "Open a pull request"
+    runs-on: ubuntu-latest
+    needs: [generate-schema]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: download api schema
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{needs.generate-schema.outputs.api_schema}}
+      
+    - name: Create PR
+      uses: peter-evans/create-pull-request@v4
+      with:
+        add-paths: adminapi.json
+        author: shopwareBot <example@example.com>
+        committer: shopwareBot <example@example.com>
+        assignees: elkmod, Christian-Rades
+        branch: schema-update
+        delete-branch: true
+        title: 'Update admin API schema'
