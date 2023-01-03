@@ -1,3 +1,7 @@
+---
+stoplight-id: 3be386a26c0f9
+---
+
 # Overview
 
 One can use documents to send invoive, delivery note, packing slips, etc. Already defined document types can be fetched from :
