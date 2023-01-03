@@ -6,7 +6,11 @@ stoplight-id: s92t5mvj387wz
 
 Shopware's built-in CMS system is referred to as "Shopping Experiences". It is built upon layouts which can be reused and dynamically hydrated based on their assignments to categories or other entities.
 
+<<<<<<< HEAD
 Using CMS REST API, you can perform CRUD operations on section, slot, block and page templates.
+=======
+Using the CMS REST API, you can perform CRUD operations on sections, slots, blocks and page templates.
+>>>>>>> 8f1c292b16abec80d1fd34ed9dfe8c00c1c12588
 
 To fetch a list of existing CMS layouts, 
 

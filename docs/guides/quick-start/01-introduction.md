@@ -48,13 +48,17 @@ It is useful to use an API client like Postman or Insomnia to follow this guide.
 
 ## General
 
-The Admin API has a base route that is always relative to your Shopware instance host. Note that it might differ from your sales channel domain. Let us assume your Shopware host is
+The Admin API has a base route that is always relative to your Shopware instance host. Note that it might differ from your sales channel domain. Let us assume your Shopware host is:
 
+```
 https://shop.example.com/
+```
 
-then your Admin API base route will be
+then your Admin API base route will be:
 
+```
 https://shop.example.com/api/
+```
 
 The Admin API offers a variety of functionalities referred to as endpoints or nodes, where each has its own route. Refer to [endpoint structure](https://shopware.stoplight.io/docs/admin-api/ZG9jOjEyMzA1ODA5-endpoint-structure) for more details. The endpoints mentioned subsequently are always relative to the API base route.
 
