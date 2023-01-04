@@ -9,7 +9,7 @@ The order resource enables merchants to process orders they receive from custome
 You can use the orders resource to do the following:
 
 * Retrieve orders and their line-items
-* Create orders 
+* Create orders
 * Update order statuses
 * Manage returns
 
@@ -33,7 +33,7 @@ A list of all customer orders is obtained using the below route:
 
 ### Order line-items
 
-An order can have more other items or child items of `type` : `product`, `promotion`, `credit` or `custom`. To fetch line items for a particular order, try the below route:
+An order can have more other items or child items of `type` - `product`, `promotion`, `credit` or `custom`. To fetch line items for a particular order, try the below route:
 
 ```json http
 {
@@ -49,9 +49,9 @@ An order can have more other items or child items of `type` : `product`, `promot
 
 ## Create an order
 
-You can create test orders manually in the admin panel to record orders made outside of Shopware or send customer invoices. However, no payment, or invoices, etc are created automatically.
+You can manually create test orders in the admin panel to record orders made outside Shopware or send customer invoices. However, no payments, invoices, etc., are created automatically.
 
-You can create the orders for existing or new customers.
+You can create orders for existing or new customers.
 
 ```json http
 {
@@ -72,40 +72,39 @@ You can create the orders for existing or new customers.
     "stateId": "a75eb89b4abe41f9bade83b2f07d874e"
    }
   }
-}
-``` 
+```
 
 ```json json_schema
 {
   "type": "object",
-  "description": "Parameters for order creation",
+  "description": "Parameters for order creation.",
   "properties": {
     "billingAddressId": {
-      "description": "ID of the billing address",
+      "description": "ID of the billing address.",
       "type": "string"
     },
     "currencyId": {
-      "description": "ID of the currency to which the price belongs",
+      "description": "ID of the currency to which the price belongs.",
       "type": "string"
     },
     "languageId": {
-      "description": "Unique ID of language",
+      "description": "Unique ID of language.",
       "type": "string"
     },
     "salesChannelId": {
-      "description": "Unique ID of defined sales channel",
+      "description": "Unique ID of the defined sales channel.",
       "type": "string"
     },
     "orderDateTime": {
-      "description": "Timestamp of the order placed",
+      "description": "Timestamp of the order placed.",
       "type": "string"
     },
     "currencyFactor": {
-      "description": "Rate factor for currencies",
+      "description": "Rate factor for currencies.",
       "type": "string"
     },
     "stateId": {
-      "description": "Unique ID of transition state as defined by state machine",
+      "description": "Unique ID of transition state as defined by the state machine.",
       "type": "string"
       }
   }
@@ -116,13 +115,13 @@ Orders created are associated with payment and delivery transitions. The followi
 
 ## Order state handling
 
-Every order in Shopware has three states `order.state`, `order_delivery.state`, `order_transaction.state`. For each state there is a state machine that holds the status of the order, delivery, and payment status, respectively. The `state_machine_transition` is a collection of all defined transitions.
+Every order in Shopware has three states `order.state`, `order_delivery.state`, and `order_transaction.state`. For each state, there is a state machine that holds the status of the order, delivery, and payment status, respectively. The `state_machine_transition` is a collection of all defined transitions.
 
 The `transition` method handles the order transition from one state to another.
 
 ### Order
 
-On creating a new order, the order state is set to *open* by default. Order state can be transitioned among `cancel`, `complete`, `reopen`, and `process`. 
+On creating a new order, the order state is set to *open* by default. Order state can be transitioned among `cancel`, `complete`, `reopen`, and `process`.
 
 Below is a sample request to change the state of order to *complete*:
 
@@ -137,7 +136,9 @@ Below is a sample request to change the state of order to *complete*:
   },
   "body": {
   }
+}
 ```
+
 A *canceled* order cannot change to an *in-progress* state unless it is reopened again.
 
 ### Order delivery
@@ -180,16 +181,16 @@ Below is a sample request that sets the payment state to *open*:
 
 Initiating and capturing payment is handled by [Store API](https://shopware.stoplight.io/docs/store-api/8218801e50fe5-handling-the-payment), whereas the admin API deals with refund payment.
 
-The refund payment method can be called only for transactions that are claimed to be successful. 
+The refund payment method can be called only for transactions that are claimed to be successful.
 
 Generally, refunds are linked to a specific order transaction capture ID. An order can have one or more line items and amounts. Each of these line items signifies refund positions. Based on the number of line items requested for refund, the payment can either be partially or completely refunded.
 
 <!-- theme: danger -->
-> **Refund handling internals** 
+> **Refund handling internals**
 >
 > To allow easy refund handling, have your payment handler implement the `RefundPaymentHandlerInterface`. Your refund handler implementation will be called with the `refundId` to call the PSP or gateway.
 >
-> For more information check our documentation on [implementing payment refund handlers](https://developer.shopware.com/docs/guides/plugins/plugins/checkout/payment/add-payment-plugin#refund-example)
+> For more information, check our documentation on [implementing payment refund handlers](https://developer.shopware.com/docs/guides/plugins/plugins/checkout/payment/add-payment-plugin#refund-example)
 
 When you refund a payment, the API will change the refund state to *complete*. If you want to fail the refund in your RefundHandler implementation, simply throw a `RefundException`, and the state of the refund will transition to *fail*.
   

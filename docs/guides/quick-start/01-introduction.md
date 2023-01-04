@@ -6,7 +6,7 @@ stoplight-id: twpxvnspkg3yu
 
 ## Overview
 
-The Shopware Admin API allows web services to perform administrative tasks. This guide is designed to help you understand the Admin API, its endpoints, and its usage. You will get to learn everything about this API.
+The Shopware Admin API allows web services to perform administrative tasks. This guide is designed to help you understand the Admin API, its endpoints, and its usage.
 
 * [Authentication as API user](01-introduction.md#authentication-and-setup)
 
@@ -42,7 +42,7 @@ The Shopware Admin API allows web services to perform administrative tasks. This
 
     * Creation of layout
 
-    * Assignment of layout to a categoty
+    * Assignment of layout to a category
 
 It is useful to use an API client like Postman or Insomnia to follow this guide.
 
@@ -54,7 +54,7 @@ The Admin API has a base route that is always relative to your Shopware instance
 https://shop.example.com/
 ```
 
-then your Admin API base route will be:
+Then your Admin API base route will be:
 
 ```
 https://shop.example.com/api/
@@ -62,11 +62,11 @@ https://shop.example.com/api/
 
 The Admin API offers a variety of functionalities referred to as endpoints or nodes, where each has its own route. Refer to [endpoint structure](https://shopware.stoplight.io/docs/admin-api/ZG9jOjEyMzA1ODA5-endpoint-structure) for more details. The endpoints mentioned subsequently are always relative to the API base route.
 
-## Authentication and Setup 
+## Authentication and Setup
 
-All REST Admin API queries require a valid Shopware access token. The Admin API uses the OAuth 2.0 standard to authenticate users. OAuth 2.0 requires you to obtain an access token to confirm your identity for every server request.
+All REST Admin API queries require a valid Shopware access token. The Admin API uses the OAuth 2.0 standard to authenticate users and requires you to obtain an access token to confirm your identity for every server request.
 
-OAuth 2.0 defines various user authentication types called application grant types. We recommend you to only use Password credentials grant type for all client integrations. This grants client applications to perform administrative actions.
+OAuth 2.0 defines various user authentication types called application grant types. We recommend only using the Password credentials grant type for all client integrations, which grants client applications to perform administrative actions.
 
 ### Configure OAuth in a REST client
 
@@ -90,9 +90,9 @@ A typical Admin API request, including headers, will look as shown below:
 }
 ```
 
-Once you have obtained the access token, simply add it to `Authorization` header as a Bearer token.
+Once you have obtained the access token, simply add it to the `Authorization` header as a Bearer token.
 
-Many REST clients, also come with built-in functionality to support the OAuth grant flows.
+Many REST clients also come with built-in functionality to support the OAuth grant flows.
 
 In Insomnia or Postman, just select **OAuth 2.0** in the *Authorization* tab of your request and enter the following configuration:
 
@@ -118,7 +118,7 @@ Now that you have authenticated, you can perform your first request to obtain Sh
 }
 ```
 
-Below is the reponse:
+Below is the response:
 
 ```
 {
@@ -126,4 +126,4 @@ Below is the reponse:
 }
 ```
 
-Depending on your setup, integration type differs and hence the process of [obtaining the access the access token](https://shopware.stoplight.io/docs/admin-api/ZG9jOjEwODA3NjQx-authentication#obtain-an-access-token).
+Depending on your setup, the integration type differs, hence the process of [obtaining the access token](https://shopware.stoplight.io/docs/admin-api/ZG9jOjEwODA3NjQx-authentication#obtain-an-access-token).

@@ -51,18 +51,18 @@ The smallest required payload for a product can therefore be as follows:
 {
   "type": "object",
   "title": "MinimalProductPayload",
-  "description": "Parameters for product creation",
+  "description": "Parameters for product creation.",
   "properties": {
     "name": {
-      "description": "Name of the product",
+      "description": "Name of the product.",
       "type": "string"
     },
     "productNumber": {
-      "description": "Any random number given to product",
+      "description": "Any random number given to product.",
       "type": "string"
     },
     "stock": {
-      "description": "Availability of stock",
+      "description": "Availability of stock.",
       "type": "string"
     },
     "taxId": {
@@ -71,19 +71,19 @@ The smallest required payload for a product can therefore be as follows:
     },
     "price": []
       "currencyId": {
-      "description": "ID of [currency](../../../adminapi.json/components/schemas/Currency)",
+      "description": "ID of [currency](../../../adminapi.json/components/schemas/Currency).",
       "type": "string"
       },
       "gross": {
-      "description": "Gross price of a product",
+      "description": "Gross price of a product.",
       "type": "string"
       },
       "net": {
-      "description": "Net price of a product",
+      "description": "Net price of a product.",
       "type": "string"
       },
       "linked": {
-      "description": "If set to true, net price is automatically calculated based on gross price and stored tax rate",
+      "description": "If set to true, net price is automatically calculated based on gross price and stored tax rate.",
       "type": "boolean"
       }
   }
@@ -94,7 +94,7 @@ The following payload examples contain UUIDs for various entities such as curren
 
 ## Category
 
-Products are organized into categories within catalogue. 
+Products are organized into categories within the catalog.
 
 Below is a sample request to create a category:
 
@@ -119,10 +119,10 @@ Below is a sample request to create a category:
 ```description json_schema
 {
   "type": "object",
-  "description": "Parameters for category creation",
+  "description": "Parameters for category creation.",
   "properties": {
     "displayNestedProducts": {
-      "description": "Specify `true` to display nested products else `false` ",
+      "description": "Specify `true` to display nested products else `false`.",
       "type": "boolean"
     },
     "type": {
@@ -131,7 +131,7 @@ Below is a sample request to create a category:
       "Example": " `product`, `category` "
     },
     "productAssignmentType": {
-      "description": "Accepts values `product`, `product-stream` for products added explicitly and added via Dynamic product group respectively",
+      "description": "Accepts values `product`, and `product-stream` for products added explicitly and added via Dynamic product group, respectively.",
       "type": "string"
     },
     "name": {
@@ -144,7 +144,7 @@ Below is a sample request to create a category:
 
 ## Product assignment
 
-Every product must be assigned to a category for its display. It can be explicitly assigned or can be assigned as a [dynamic product group](../../../adminapi.json/components/schemas/ProductStream) to a category.
+Every product must be assigned to a category for its display. It can be explicitly set or can be assigned as a [dynamic product group](../../../adminapi.json/components/schemas/ProductStream) to a category.
 
 Let us assign the test product to the *Home* category created earlier:
 
@@ -167,18 +167,18 @@ Let us assign the test product to the *Home* category created earlier:
 ```description json_schema
 {
   "type": "object",
-  "description": "Parameters for product assignment",
+  "description": "Parameters for product assignment.",
   "properties": {
     "id": {
-      "description": "Unique ID of category",
+      "description": "Unique ID of category.",
       "type": "string"
     },
   "productAssignmentType": {
-      "description": "Accepts values `product`, `product-stream` for products added explicitly and added via Dynamic product group respectively",
+      "description": "Accepts values `product`, and `product-stream` for products added explicitly and added via Dynamic product group, respectively.",
       "type": "string"
     },
   "productStreamId": {
-      "description": "Unique ID Dynamic product group",
+      "description": "Unique ID Dynamic product group.",
       "type": "string"
     }
   }
@@ -189,7 +189,7 @@ Let us assign the test product to the *Home* category created earlier:
 
 The product has various `many-to-many` associations. This type of association is a link between the records. Examples are the `properties` and `categories` of a product.
 
-For assigning several `properties` and `categories` this is an exemplary payload:
+For assigning several `properties` and `categories`, this is an exemplary payload:
 
 ```javascript
 {
@@ -270,26 +270,26 @@ Reviews are comments that stand as a means to evaluate products by buyers. This 
 ```description json_schema
 {
   "type": "object",
-  "description": "Parameters for product reviews",
+  "description": "Parameters for product reviews.",
   "properties": {
     "productId": {
-      "description": "Unique ID of a product",
+      "description": "Unique ID of a product.",
       "type": "string"
     },
     "salesChannelId": {
-      "description": " Unique ID of defined sales channel",
+      "description": " Unique ID of defined sales channel.",
       "type": "string",
     },
     "languageId": {
-      "description": "Unique ID of language",
+      "description": "Unique ID of language.",
       "type": "string"
     },
     "title": {
-      "description": "Caption for the review",
+      "description": "Caption for the review.",
       "type": "string"
     },
     "content": {
-      "description": "Review description",
+      "description": "Review description.",
       "type": "string"
     }
   }
@@ -325,38 +325,38 @@ Cross-selling features product recommendations and interesting content to achiev
 ```description json_schema
 {
   "type": "object",
-  "description": "Parameters for product reviews",
+  "description": "Parameters for product reviews.",
   "properties": {
     "name": {
-      "description": "Name of the cross-selling ",
+      "description": "Name of the cross-selling.",
       "type": "string"
     },
     "type": {
-      "description": "Accepts `productList` or `productStream` type",
+      "description": "Accepts `productList` or `productStream` type.",
       "type": "string"
     },
     "position": {
-      "description": "Position of the product to be displayed in the list. It accepts values greater than 1. When only one product list is to be displayed, the default position taken is 1",
+      "description": "Position of the product to be displayed in the list. It accepts values greater than 1. When only one product list is to be displayed, the default position taken is 1.",
       "type": "integer",
     },    
     "sortBy": {
-      "description": "Sort criteria by `name`, `price`",
+      "description": "Sort criteria by `name`, `price`.",
       "type": "string"
     },
     "sortDirection": {
-      "description": "Sorting can be ` ASC` or `DSC`",
+      "description": "Sorting can be ` ASC` or `DSC`.",
       "type": "string"
     },    
     "active": {
-      "description": "When active is `true`, product recommendation is visible",
+      "description": "When active is `true`, product recommendation is visible.",
       "type": "boolean"
     },
     "limit": {
-      "description": "Maximum number of products displayed in a row",
+      "description": "Maximum number of products displayed in a row.",
       "type": "string"
     },
     "productId": {
-      "description": "Unique ID of product",
+      "description": "Unique ID of product.",
       "type": "string"
     }
   }
@@ -410,15 +410,15 @@ PATCH /api/product/{product-id}
   "properties": {
     "price": []
       "currencyId": {
-      "description": "ID of the currency to which the price belongs",
+      "description": "ID of the currency to which the price belongs.",
       "type": "string"
       },
       "gross": {
-      "description": "This price is displayed to customers who see gross prices in the shop",
+      "description": "This price is displayed to customers who see gross prices in the shop.",
       "type": "string"
       },
       "net": {
-      "description": "This price is shown to customers who see net prices in the shop",
+      "description": "This price is shown to customers who see net prices in the shop.",
       "type": "string"
       },
       "linked": {
@@ -431,7 +431,7 @@ PATCH /api/product/{product-id}
 
 ### Currency price structure
 
-Within the price, different currency prices are available. Each of these currency prices include properties `currencyId`, `gross`, `net`, `linked`.
+Within the price, different currency prices are available. Each currency price includes properties `currencyId`, `gross`, `net`, `linked`.
 
 To define prices for a product in different currencies, this is an exemplary payload:
 
@@ -469,14 +469,14 @@ To define prices for a product in different currencies, this is an exemplary pay
 
 ### Quantity and rule price structure
 
-As an extension to the `product.price`, there is` product.prices`. These are prices that are bound to a `rule`. Rules \(`rule` entity\) are prioritised. If there are several rules for a customer, the customer will see the rule price with the highest priority. In addition to the dependency on a rule, a quantity discount can be defined using these prices.
+As an extension to the `product.price`, there is `product.prices`. These are prices that are bound to a `rule`. Rules \(`rule` entity\) are prioritized. If there are several rules for a customer, the customer will see the rule price with the highest priority. In addition to the dependency on a rule, a quantity discount can be defined using these prices.
 
 Each price in `product.prices` has the following properties:
 
-* `quantityStart` \[int\]     - Indicates the quantity from which this price applies
+* `quantityStart` \[int\]     - Indicates the quantity from which this price applies.
 * `quantityEnd` \[int\|null\]  - Specifies the quantity until this price is valid. 
-* `ruleId` \[string\]         - Id of the rule to which the price applies
-* `price` \[object\[\]\]        - Includes currency prices \(same structure as `product.price`\)
+* `ruleId` \[string\]         - Id of the rule to which the price applies.
+* `price` \[object\[\]\]        - Includes currency prices \(same structure as `product.price`\).
 
 To define prices for a rule including a quantity discount, this is an exemplary payload:
 
@@ -530,11 +530,11 @@ To define prices for a rule including a quantity discount, this is an exemplary 
 
 ### Listing price handling
 
-The third price property available on the product is the `product.listingPrices`. These prices are determined automatically by the system. The price ranges for the corresponding product are available here. The prices are determined on the base of all variants of prices that could be displayed to the customer in the shop.
+The third price property available on the product is the `product.listingPrices`. These prices are determined automatically by the system. The price range for the corresponding products is available here. Prices are determined based on all variants of prices that could be displayed to the customer in the shop.
 
 Each price within this object contains the following properties:
 
-* `currencyId` \[string\] - The currency to which this price applies
-* `ruleId` \[string\]     - The rule to which this price applies
-* `from` \[price-obj\]    - The lowest price possible for the product in this currency
-* `to` \[price-obj\]      - The highest price that is possible for the product in this currency
+* `currencyId` \[string\] - The currency to which this price applies.
+* `ruleId` \[string\]     - The rule to which this price applies.
+* `from` \[price-obj\]    - The lowest price possible for the product in this currency.
+* `to` \[price-obj\]      - The highest price that is possible for the product in this currency.

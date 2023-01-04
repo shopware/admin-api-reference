@@ -4,13 +4,9 @@ stoplight-id: s92t5mvj387wz
 
 # CMS
 
-Shopware's built-in CMS system is referred to as "Shopping Experiences". It is built upon layouts which can be reused and dynamically hydrated based on their assignments to categories or other entities.
+Shopware's built-in CMS system is referred to as "Shopping Experiences". It is built upon layouts that can be reused and dynamically hydrated based on their assignments to categories or other entities.
 
-<<<<<<< HEAD
-Using CMS REST API, you can perform CRUD operations on section, slot, block and page templates.
-=======
-Using the CMS REST API, you can perform CRUD operations on sections, slots, blocks and page templates.
->>>>>>> 8f1c292b16abec80d1fd34ed9dfe8c00c1c12588
+Using CMS REST API, you can perform CRUD operations on section, slot, block, and page templates.
 
 To fetch a list of existing CMS layouts, 
 
@@ -87,7 +83,7 @@ POST /api/search/cms-page
       "type": "string"
     },
     "position": {
-      "description": "The order in which sections are to be represented, when many instances of each are defined.",
+      "description": "The order in which sections are to be represented when many instances of each are defined.",
       "type": "integer"
     },
     "type": {
@@ -104,7 +100,7 @@ POST /api/search/cms-page
   "description": "Parameters for CMS block.",
   "properties": {
     "position": {
-      "description": "The order in which sections are to be represented, when many instances of each are defined.",
+      "description": "The order in which sections are to be represented when many instances of each are defined.",
       "type": "string"
     },
     "backgroundColor": {
@@ -157,7 +153,7 @@ POST /api/search/cms-page
       "type": "string"
     },
     "config": {
-      "description": "Allows to add any customised informed with styling.",
+      "description": "Allows to add any customized information with styling.",
       "type": "string"
     },
     "blockId": {
@@ -170,7 +166,7 @@ POST /api/search/cms-page
 
 ## Assignment of layout/page to a category
 
-Now that we have defined a layout, you can use it to assign it to any category or entity. Let us here assign the "Summer BBQ" layout to "Summer Collection" category.
+Now that we have defined a layout, you can use it to assign it to any category or entity. Let us here assign the "Summer BBQ" layout to the "Summer Collection" category.
 
 ```sample http
 {
@@ -199,7 +195,7 @@ Now that we have defined a layout, you can use it to assign it to any category o
   "description": "Parameters for assigning cms layout to category.",
   "properties": {
     "parentId": {
-      "description": "Unique identity of parent category.",
+      "description": "Unique identity of the parent category.",
       "type": "string"
     },
     "afterCategoryId": {
@@ -219,7 +215,7 @@ Now that we have defined a layout, you can use it to assign it to any category o
       "type": "string"
     },
     "active": {
-      "description": "The active category is shown in the frontend and is used, if switched to inactive it's not in use and won't be shown in the frontend.",
+      "description": "The active category is shown and used in the frontend. If switched to inactive, it's not in use and won't be shown in the frontend.",
       "type": "boolean"
       },
     "name": {

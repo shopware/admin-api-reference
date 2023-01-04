@@ -79,15 +79,15 @@ The `product` and `media` entities are connected by the `product_media` relation
   "properties": {
     "id": {
       "type": "string",
-      "description": "Identifier of the ProductMedia object"
+      "description": "Identifier of the ProductMedia object."
     },
     "productId": {
       "type": "string",
-      "description": "Identifier of the related Product object"
+      "description": "Identifier of the related Product object."
     },
     "mediaId": {
       "type": "string",
-      "description": "Identifier of the related Media object"
+      "description": "Identifier of the related Media object."
     },
     "positon": {
       "type": "integer",
@@ -135,17 +135,17 @@ Based on the guide on writing [Associations](../../concepts/endpoint-structure/w
 
 This request updates a given product and creates an array of media items. Make sure you keep track of the IDs you have created because you will need them for the second step.
 
-> A good idea is to generate `product_media` and `media` IDs based on a product identifier in combination with another property, like its position in the product image list, and hashing it. This way, you don't have to perform any additional lookups.
+> A good idea is to generate `product_media` and `media` IDs based on a product identifier in combination with another property, like its position in the product image list and hashing it. This way, you don't have to perform any additional lookups.
 
-Now that we have got the "hull" for our media items, we can start uploading resources.
+Now that you have an idea of the structure of media items, we can start uploading resources.
 
 ## 2. Attach resource data to the media object
 
-This step is about attaching the actual image data. This can be done in two ways - provide a link to a resource, and Shopware will download the file from there **or** provide the data within the request body. We will have a look at both ways:
+This step is about attaching the actual image data. This can be done in two ways - provide a link to a resource, and Shopware will download the file from there or provide the data within the request body. We will have a look at both ways:
 
 ### Provide a resource URL
 
-This way, you provide the `mediaId` (id of the Media, not the ProductMedia) as a path parameter, the image `url` as a body parameter and the image `extension` as a query parameter.
+This way, you provide the `mediaId` (id of the Media, not the ProductMedia) as a path parameter, the image `url` as a body parameter, and the image `extension` as a query parameter.
 
 **Try it yourself** 
 
@@ -165,7 +165,7 @@ This way, you provide the `mediaId` (id of the Media, not the ProductMedia) as a
 
 ### Upload the resource directly
 
-This way, you provide the binary file directly within the request body, set the content type header accordingly (e.g. `Content-Type: image/jpg`) and provide the `extension` as a query parameter.
+This way, you provide the binary file directly within the request body, set the content type header accordingly (e.g., `Content-Type: image/jpg`), and provide the `extension` as a query parameter.
 
 ```sample http
 {
