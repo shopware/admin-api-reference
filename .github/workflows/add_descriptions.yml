@@ -7,29 +7,26 @@ on:
       - 'main'
     paths:
       - 'descriptions.yml'
-      - 'adminapi.json'
 
 jobs:
-  run-override:
-    uses: shopware/docs-ci/.github/workflows/apply_overrides.yml@main
-    with:
-      override_file: descriptions.yml
-      schema_file: adminapi.json
-    secrets: inherit
-
   overrideDescriptions:
     name: "Finalize adminapi.json"
     runs-on: ubuntu-latest
-    needs: [run-override]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: download api schema
-        uses: actions/download-artifact@v3
-        with:
-          name: adminapi.json
-      
+      - name: install yq
+        uses: cachix/install-nix-action@v18
+
+      - name: Add custom descriptions
+        run: |
+          for k in $(yq '. | keys | .[]' descriptions.yml); do
+          newDescription=$(yq ".\"$k\"" descriptions.yml);
+          # Indent 4; output as json; edit in place
+          yq  -I 4 -o json -i "$k.description = \"${newDescription}\"" storeapi.json
+          done
+
       - name: Create PR
         uses: peter-evans/create-pull-request@v4
         with:
@@ -40,4 +37,3 @@ jobs:
           branch: schema-update
           delete-branch: true
           title: 'Add descriptions'
-
