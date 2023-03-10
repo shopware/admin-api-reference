@@ -12,6 +12,8 @@ A list of all entities available for these operations can be found in the [Entit
 | api.customer\_group.delete | DELETE | /api/customer-group/{id} | Delete the entity |
 | api.customer\_group.create | POST | /api/customer-group | Create a new entity |
 
+> PATCH method only adds properties and does not delete old references. To perform both operations, use [Sync API](bulk-payloads.md) endpoints.
+
 ## Payload
 
 The payload for writing entities is dictated by the API scheme, which in turn is generated from entity definitions which are part of the Shopware core \(unless they are custom entities\).
