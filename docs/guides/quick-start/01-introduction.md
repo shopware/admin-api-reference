@@ -96,13 +96,13 @@ Many REST clients also come with built-in functionality to support the OAuth gra
 
 In Insomnia or Postman, just select **OAuth 2.0** in the *Authorization* tab of your request and enter the following configuration:
 
-| Config              | Value                                             |
-|-------------------- | ------------------------------------------------- |
-| **Grant Type**      | Password Credentials               |
-| **Username**        | Admin user name                                   |
-| **Password**        | Admin user password                               |
-| **Acess Token URL** | `https://replace-with-your-host/api/oauth/token`  |
-| **Client ID**       | `administration`                                  |
+| Config               | Value                                             |
+|--------------------- | ------------------------------------------------- |
+| **Grant Type**       | Password Credentials                              |
+| **Username**         | Admin user name                                   |
+| **Password**         | Admin user password                               |
+| **Access Token URL** | `https://replace-with-your-host/api/oauth/token`  |
+| **Client ID**        | `administration`                                  |
 
 Now that you have authenticated, you can perform your first request to obtain Shopware version.
 
