@@ -75,7 +75,7 @@ A typical Admin API request, including headers, will look as shown below:
 ```json http
 {
   "method": "post",
-  "url": "http://localhost/api/auth/token",
+  "url": "http://localhost/api/oauth/token",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json"
