@@ -180,15 +180,12 @@ You can control the behaviour using the following headers:
 
 | Header | Value | Description |
 | :--- | :--- | :--- |
-| single-operation | `0 (default)` | Data will be written in separate transactions |
-|  | `1` | Data will be written in a single transaction |
 | indexing-behavior | `null (default)` | Data will be indexed synchronously |
 |  | `use-queue-indexing` | Data will be indexed asynchronously |
 |  | `disable-indexing` | Data indexing is completely disabled |
 
 ```javascript
 // POST /api/_action/sync
-// --header 'single-operation: 1'
 // --header 'indexing-behavior: use-queue-indexing'
 
 {
