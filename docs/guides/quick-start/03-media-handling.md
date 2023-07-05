@@ -89,7 +89,7 @@ The `product` and `media` entities are connected by the `product_media` relation
       "type": "string",
       "description": "Identifier of the related Media object."
     },
-    "positon": {
+    "position": {
       "type": "integer",
       "description": "Position of the displayed item in the list of product images"
     }

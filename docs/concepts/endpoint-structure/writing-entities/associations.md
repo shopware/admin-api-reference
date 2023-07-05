@@ -86,7 +86,7 @@ In this case all required fields of the entity must be given:
 {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "manufacturer": { 
-        "name": "My manufcaturer" 
+        "name": "My manufacturer" 
     }
 }
 ```
@@ -103,7 +103,7 @@ In this case it is necessary to send the ID of the existing entity.
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "manufacturer": { 
         "id": "98432def39fc4624b33213a56b8c944d", 
-        "name": "My manufcaturer" 
+        "name": "My manufacturer" 
     }
 }
 ```

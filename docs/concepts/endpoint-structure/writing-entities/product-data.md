@@ -74,7 +74,7 @@ Instead of just assigning a sales channel, the data structure allows a specifica
 
 This can be set to three different values:
 
-| **Visbility** | **Behaviour** |
+| **Visibility** | **Behaviour** |
 | :--- | :--- |
 | 10 | The product is only available via a direct link. It does not appear in listings or searches. |
 | 20 | The product is only available via a direct link or search. The product is not displayed in listings. |

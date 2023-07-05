@@ -111,12 +111,12 @@ POST /api/search/cms-page
       "description": "Unique ID of page.",
       "type": "string"
     },
-    "sectionPositon": {
+    "sectionPosition": {
       "description": "Accepts `main` and `side-bar` values.",
       "type": "integer"
     },
     "type": {
-      "description": "Accepts `product-listing` and `sidebar-fileter` values. ",
+      "description": "Accepts `product-listing` and `sidebar-filter` values. ",
       "type": "string"
     },
     "marginTop": {

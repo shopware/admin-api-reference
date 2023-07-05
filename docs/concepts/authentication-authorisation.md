@@ -122,10 +122,10 @@ Many REST clients, such as Postman or Insomnia come with built-in functionality 
 
 In Insomnia, just select **OAuth 2** in the *Authentication* tab of your request and enter the following configuration:
 
-| Config              | Value                                             |
-|-------------------- | ------------------------------------------------- |
-| **Grant Type**      | Resource Owner Password Credentials               |
-| **Username**        | Admin user name                                   |
-| **Password**        | Admin user password                               |
-| **Acess Token URL** | `https://replace-with-your-host/api/oauth/token`  |
-| **Client ID**       | `administration`                                  |
+| Config               | Value                                             |
+|--------------------- | ------------------------------------------------- |
+| **Grant Type**       | Resource Owner Password Credentials               |
+| **Username**         | Admin user name                                   |
+| **Password**         | Admin user password                               |
+| **Access Token URL** | `https://replace-with-your-host/api/oauth/token`  |
+| **Client ID**        | `administration`                                  |

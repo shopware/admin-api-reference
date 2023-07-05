@@ -47,7 +47,7 @@ The smallest required payload for a product can therefore be as follows:
   }
 ```
 
-```desription json_schema
+```description json_schema
 {
   "type": "object",
   "title": "MinimalProductPayload",
@@ -344,7 +344,7 @@ Cross-selling features product recommendations and interesting content to achiev
       "type": "string"
     },
     "sortDirection": {
-      "description": "Sorting can be ` ASC` or `DSC`.",
+      "description": "Sorting can be `ASC` or `DESC`.",
       "type": "string"
     },    
     "active": {

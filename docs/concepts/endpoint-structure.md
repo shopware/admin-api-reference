@@ -9,9 +9,9 @@ Both fulfill specific cases which are outlined below.
 
 ## Generic entity endpoints
 
-Provide CRUD functionalities on **all entities available** in Shopware. Go to the [Entity Reference](../resources/entity-reference.md) section to see a list of all available entitites and their structure.
+Provide CRUD functionalities on **all entities available** in Shopware. Go to the [Entity Reference](../resources/entity-reference.md) section to see a list of all available entities and their structure.
 
-Furthermore, these endpoints can be divided into **read** and **write** operations. To learn more about those, please head to the corresponding guide on [Reading Entities](../guides/reading-entities.md) and [Writing Entitites](../guides/writing-entities/README.md). These endpoints are generic, since they are entirely based on the entities definitions and contain no additional business logic besides data validation.
+Furthermore, these endpoints can be divided into **read** and **write** operations. To learn more about those, please head to the corresponding guide on [Reading Entities](../guides/reading-entities.md) and [Writing Entities](../guides/writing-entities/README.md). These endpoints are generic, since they are entirely based on the entities definitions and contain no additional business logic besides data validation.
 
 > The URL structure for *Generic entity endpoints* is:
 > ```
@@ -23,7 +23,7 @@ Furthermore, these endpoints can be divided into **read** and **write** operatio
 Provide interactions for more sophisticated operations which can change the state of the system but are not directly based on entities alone. We differ between more than 20 categories of about 140 specific endpoints, such as
 
  * Document Management
- * Order State Managemnt
+ * Order State Management
  * User Role Management
  * System Operations
  * Authorization & Authentication
