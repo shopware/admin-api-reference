@@ -2,7 +2,7 @@
 stoplight-id: c042ae0cd330f
 ---
 
-# Media Handling
+# Media Management
 
 A common task when performing product imports is the upload/creation of product images. 
 

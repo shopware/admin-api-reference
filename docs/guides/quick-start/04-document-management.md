@@ -2,7 +2,7 @@
 stoplight-id: 3be386a26c0f9
 ---
 
-# Overview
+# Document Management
 
 One can use documents to send the invoice, delivery notes, packing slips, etc. Already defined document types can be fetched from :
 
