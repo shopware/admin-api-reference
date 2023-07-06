@@ -213,7 +213,7 @@ To remove these `properties` and `categories`, the corresponding routes can be u
 * `DELETE /api/product/{productId}/properties/{optionId}`
 * `DELETE /api/product/{productId}/categories/{categoryId}`
 
-To delete several assignments at once, the `/_action/sync` route can be used:
+To delete several assignments at once, the `/_action/sync` (see also [Bulk payloads](../concepts/endpoint-structure/writing-entities/bulk-payloads.md)) route can be used:
 
 ```javascript
 {
