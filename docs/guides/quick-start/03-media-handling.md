@@ -2,7 +2,7 @@
 stoplight-id: c042ae0cd330f
 ---
 
-# Media Handling
+# Media Management
 
 A common task when performing product imports is the upload/creation of product images. 
 
@@ -23,7 +23,7 @@ The product media model is entirely relational and based on three elementary ent
  * media
  * product_media
 
-The `product` and `media` entities are connected by the `product_media` relation, which has the following shape:
+The `product` and `media` entities are connected by the `product_media` relation and have the following structure:
 
 **Product**
 
@@ -107,7 +107,7 @@ Based on the guide on writing [Associations](../../concepts/endpoint-structure/w
   "url": "http://localhost/api/product/a55ca50a2cef46d5b11a12c4b4614988",
   "headers": {
     "Content-Type": "application/json",
-    "Authorization": "Bearer <your-bearer-token>"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "media": [{
@@ -155,7 +155,7 @@ This way, you provide the `mediaId` (id of the Media, not the ProductMedia) as a
   "url": "http://localhost/api/_action/media/0fa91ce3e96a4bc2be4bd9ce752c3425/upload?extension=jpg",
   "headers": {
     "Content-Type": "application/json",
-    "Authorization": "Bearer <your-bearer-token>"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "url": "<url-to-your-image>"
@@ -173,7 +173,7 @@ This way, you provide the binary file directly within the request body, set the 
   "url": "http://localhost/api/_action/media/0fa91ce3e96a4bc2be4bd9ce752c3425/upload?extension=jpg",
   "headers": {
     "Content-Type": "image/jpg",
-    "Authorization": "Bearer <your-bearer-token>"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     // binary file body
