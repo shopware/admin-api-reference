@@ -8,7 +8,7 @@ stoplight-id: twpxvnspkg3yu
 
 The Shopware Admin API allows web services to perform administrative tasks. This guide is designed to help you understand the Admin API, its endpoints, and its usage.
 
-* [Authentication as API user](https://shopware.stoplight.io/studio/admin-api?node=twpxvnspkg3yu#authentication-and-setup)
+* [Authentication as API user](#authentication-and-setup)
 
 * [Product management](02-product-management.md)
 
@@ -35,7 +35,7 @@ The Shopware Admin API allows web services to perform administrative tasks. This
     * Line item
 
     * Order state handling
-    
+
     * Refund payment
 
 * [CMS handling](06-cms-handling.md)
