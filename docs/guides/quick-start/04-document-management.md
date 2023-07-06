@@ -21,7 +21,7 @@ You can create a document by its purpose - for example, a note for returned item
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "name": "return note",
@@ -39,7 +39,7 @@ If documents are assigned to `global,` they can be used on any sales channel. Th
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "documentTypeId": "9cc669c406b441e1b7af035552db138f",
@@ -58,7 +58,7 @@ These documents are associated with order events. The below endpoint creates a d
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
 }
 ```
@@ -74,7 +74,7 @@ The below route allows you to download a document as a PDF. The document is foll
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
 }
 ```

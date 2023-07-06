@@ -27,7 +27,7 @@ The smallest required payload for a product can therefore be as follows:
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "name": "test",
@@ -105,7 +105,7 @@ Below is a sample request to create a category:
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "displayNestedProducts": true,
@@ -155,7 +155,7 @@ Let us assign the test product to the *Home* category created earlier:
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "productAssignmentType": "product_stream",
@@ -255,7 +255,7 @@ Reviews are comments that stand as a means to evaluate products by buyers. This 
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "productId": "a55ca50a2cef46d5b11a12c4b4614988",
@@ -307,7 +307,7 @@ Cross-selling features product recommendations and interesting content to achiev
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "name": "sample_review",
@@ -388,7 +388,7 @@ PATCH /api/product/{product-id}
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "price": [

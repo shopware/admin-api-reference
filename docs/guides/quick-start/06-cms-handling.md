@@ -24,7 +24,7 @@ POST /api/search/cms-page
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "name": "Summer BBQ",
@@ -175,7 +175,7 @@ Now that we have defined a layout, you can use it to assign it to any category o
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "parentId": "bda4b60e845240b2b9d6b60e71196e14",

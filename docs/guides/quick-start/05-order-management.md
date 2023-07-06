@@ -24,7 +24,7 @@ A list of all customer orders is obtained using the below route:
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
 }
 ```
@@ -42,7 +42,7 @@ An order can have more other items or child items of `type` - `product`, `promot
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
   }
 ```
@@ -60,7 +60,7 @@ You can create orders for existing or new customers.
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "billingAddressId": "c90e05c82c5a4457844cba7403c7ef96",
@@ -132,7 +132,7 @@ Below is a sample request to change the state of order to *complete*:
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
   }
@@ -154,7 +154,7 @@ Below is a sample request that sets the delivery state to *fail*:
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
 }
 ```
@@ -172,7 +172,7 @@ Below is a sample request that sets the payment state to *open*:
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
   }
 ```  

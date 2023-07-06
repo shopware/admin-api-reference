@@ -113,7 +113,7 @@ Now that you have authenticated, you can perform your first request to obtain Sh
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
 }
 ```
