@@ -24,7 +24,7 @@ The Shopware Admin API allows web services to perform administrative tasks. This
 
     * Price
 
-* [Media handling](03-media-handling.md)
+* [Media management](03-media-handling.md)
 
 * [Document management](04-document-management.md)
 
@@ -38,7 +38,7 @@ The Shopware Admin API allows web services to perform administrative tasks. This
     
     * Refund payment
 
-* [CMS handling](06-cms-handling.md)
+* [CMS management](06-cms-handling.md)
 
     * Creation of layout
 
