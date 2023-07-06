@@ -54,11 +54,19 @@ These documents are associated with order events. The below endpoint creates a d
 ```sample http
 {
   "method": "post",
-  "url": "http://localhost/api/_action/order/d84bbaaa3423495e8c98eef1444db7d0/document/invoice",
+  "url": "http://localhost/api/_action/order/document/invoice/create",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
+    "orderId": "d84bbaaa3423495e8c98eef1444db7d0",
+    "type": "string",
+    "fileType": "pdf",
+    "static": false,
+    "referencedDocumentId": null,
+    "config": {}
   }
 }
 ```
