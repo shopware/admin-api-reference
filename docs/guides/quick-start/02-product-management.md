@@ -365,7 +365,7 @@ Cross-selling adds product recommendations and interesting content to achieve an
 
 ## Price
 
-A particular product's price can be fetched, updated or a [price rule can be created](https://shopware.stoplight.io/docs/admin-api/88941a5a5738c-create-a-new-rule-resources).
+A particular product's price can be fetched, updated, or a [price rule can be created](#quantity-and-rule-price-structure).
 
 Price handling is one of the edge cases in the product data structure. There are three different prices for a product, which can be queried via API:
 
