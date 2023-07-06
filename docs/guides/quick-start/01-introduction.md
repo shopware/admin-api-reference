@@ -104,7 +104,7 @@ In Insomnia or Postman, just select **OAuth 2.0** in the *Authorization* tab of 
 | **Access Token URL** | `https://replace-with-your-host/api/oauth/token`  |
 | **Client ID**        | `administration`                                  |
 
-Now that you have authenticated, you can perform your first request to obtain Shopware version.
+Now that you have authenticated, you can perform your first request to obtain your Shopware version.
 
 ```json http
 {
@@ -122,7 +122,7 @@ Below is the response:
 
 ```
 {
-    "version": "6.4.16.0"
+    "version": "6.5.3.0"
 }
 ```
 
