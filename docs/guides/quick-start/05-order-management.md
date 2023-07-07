@@ -140,11 +140,7 @@ Below is a sample request to change the state of order to *complete*:
 ```
 
 <!-- theme: info -->
-> A *canceled* order cannot change to an *in-progress* state unless it is reopened again.
-
-#### Default order state transitions
-
-![order-state.svg](../../../assets/images/order-transitions.svg)
+> A *canceled* order cannot change to an *in-progress* state unless it is reopened again. For more details see [order state management](https://developer.shopware.com/docs/concepts/commerce/checkout-concept/orders#state-management)
 
 ### Order delivery
 
