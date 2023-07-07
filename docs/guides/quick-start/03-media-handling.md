@@ -4,14 +4,14 @@ stoplight-id: c042ae0cd330f
 
 # Media Management
 
-A common task when performing product imports is the upload/creation of product images. 
+A common task when performing product imports is the upload/creation of product images.
 
 In Shopware, this is handled in a two-step process, which allows for the separation between writing the associations between media objects and uploading the actual data.
 
 1. Create a media entity associated with a product entity
 2. Attach resource data to the media object
-    1. Either reference an image resource via URL or
-    2. Upload the resource directly
+   1. Either reference an image resource via URL or
+   2. Upload the resource directly
 
 In the following, we will go through these steps in more detail. Before proceeding, ensure you have gone through the section on writing [Product Data](02-product-management.md).
 
@@ -19,9 +19,9 @@ In the following, we will go through these steps in more detail. Before proceedi
 
 The product media model is entirely relational and based on three elementary entities:
 
- * product
- * media
- * product_media
+* product
+* media
+* product_media
 
 The `product` and `media` entities are connected by the `product_media` relation and have the following structure:
 
@@ -29,29 +29,29 @@ The `product` and `media` entities are connected by the `product_media` relation
 
 ```json json_schema
 {
-  "type": "object",
-  "description": "Product: Subset of the product object (not the entire object)",
-  "properties": {
-    "id": {
-      "type": "string",
-      "description": "Identifier of the Product object"
-    },
-    "media": {
-      "type": "array",
-      "description": "All ProductMedia items related to the product",
-      "items": {
+   "type": "object",
+   "description": "Product: Subset of the product object (not the entire object)",
+   "properties": {
+      "id": {
+         "type": "string",
+         "description": "Identifier of the Product object"
+      },
+      "media": {
+         "type": "array",
+         "description": "All ProductMedia items related to the product",
+         "items": {
             "type": "ProductMedia"
-        }
-    },
-    "cover": {
-      "type": "object",
-      "description": "Single ProductMedia item used as product cover"
-    },
-    "coverId": {
-      "type": "string",
-      "description": "Identifier of a ProductMedia item used as product cover"
-    }
-  }
+         }
+      },
+      "cover": {
+         "type": "object",
+         "description": "Single ProductMedia item used as product cover"
+      },
+      "coverId": {
+         "type": "string",
+         "description": "Identifier of a ProductMedia item used as product cover"
+      }
+   }
 }
 ```
 
@@ -59,14 +59,14 @@ The `product` and `media` entities are connected by the `product_media` relation
 
 ```json json_schema
 {
-  "type": "object",
-  "description": "Media: Subset of the media object (not the entire object)",
-  "properties": {
-    "id": {
-      "type": "string",
-      "description": "Identifier of the Media object"
-    }
-  }
+   "type": "object",
+   "description": "Media: Subset of the media object (not the entire object)",
+   "properties": {
+      "id": {
+         "type": "string",
+         "description": "Identifier of the Media object"
+      }
+   }
 }
 ```
 
@@ -74,26 +74,26 @@ The `product` and `media` entities are connected by the `product_media` relation
 
 ```json json_schema
 {
-  "type": "object",
-  "description": "ProductMedia: Object relating product and media entities",
-  "properties": {
-    "id": {
-      "type": "string",
-      "description": "Identifier of the ProductMedia object."
-    },
-    "productId": {
-      "type": "string",
-      "description": "Identifier of the related Product object."
-    },
-    "mediaId": {
-      "type": "string",
-      "description": "Identifier of the related Media object."
-    },
-    "position": {
-      "type": "integer",
-      "description": "Position of the displayed item in the list of product images"
-    }
-  }
+   "type": "object",
+   "description": "ProductMedia: Object relating product and media entities",
+   "properties": {
+      "id": {
+         "type": "string",
+         "description": "Identifier of the ProductMedia object."
+      },
+      "productId": {
+         "type": "string",
+         "description": "Identifier of the related Product object."
+      },
+      "mediaId": {
+         "type": "string",
+         "description": "Identifier of the related Media object."
+      },
+      "position": {
+         "type": "integer",
+         "description": "Position of the displayed item in the list of product images"
+      }
+   }
 }
 ```
 
@@ -124,12 +124,12 @@ Based on the guide on writing [Associations](../../concepts/endpoint-structure/w
 // PATCH /api/product/a55ca50a2cef46d5b11a12c4b4614988
 
 {
-  "media": [{
-    "id": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-    "media": {
-      "id": "cfbd5018d38d41d8adca10d94fc8bdf0"
-    }
-  }]
+   "media": [{
+      "id": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+      "media": {
+         "id": "cfbd5018d38d41d8adca10d94fc8bdf0"
+      }
+   }]
 }
 ```
 
@@ -147,7 +147,7 @@ This step is about attaching the actual image data. This can be done in two ways
 
 This way, you provide the `mediaId` (id of the Media, not the ProductMedia) as a path parameter, the image `url` as a body parameter, and the image `extension` as a query parameter.
 
-**Try it yourself** 
+**Try it yourself**
 
 ```sample http
 {
@@ -159,6 +159,9 @@ This way, you provide the `mediaId` (id of the Media, not the ProductMedia) as a
   },
   "body": {
     "url": "<url-to-your-image>"
+  },
+   "query": {
+    "extension": "jpg"
   }
 }
 ```
@@ -177,6 +180,9 @@ This way, you provide the binary file directly within the request body, set the 
   },
   "body": {
     // binary file body
+  },
+   "query": {
+    "extension": "jpg"
   }
 }
 ```
