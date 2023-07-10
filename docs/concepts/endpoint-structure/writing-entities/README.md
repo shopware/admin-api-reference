@@ -19,7 +19,7 @@ A list of all entities available for these operations can be found in the [Entit
 
 The payload for writing entities is dictated by the API scheme, which in turn is generated from entity definitions which are part of the Shopware core \(unless they are custom entities\).
 
-See the [Entity Reference](../../resources/entity-reference.md) section of this documentation to inspect the scheme of all entities.
+See the [Entity Reference](../../../resources/entity-reference.md) section of this documentation to inspect the scheme of all entities.
 
 > If it is not clear how the data has to be sent despite the scheme, it is also possible to open the administration and to have a look at the corresponding requests. To do this, simply open the network tab in the developer tools of your browser, which lists all requests and payloads sent by the administration.
 
@@ -162,14 +162,12 @@ When deleting data, it can happen that this is prevented by foreign key restrict
 
 To clone an entity the route `POST /api/_action/clone/{entity}/{id}` can be used. The API clones all associations which are marked with `CascadeDelete`.
 
-{% hint style="success" %}
 The behaviour can be disabled explicitly by setting the constructor argument for `CascadeDelete` to false in the entity definition
 
 ```php
 (new OneToManyAssociationField('productReviews', /* ... */))
     ->addFlags(new CascadeDelete(false)),
 ```
-{% endhint %}
 
 Some entities have a `ChildrenAssociationField`. The children are also considered in a clone request. However, since this results in large amounts of data, the parameter `cloneChildren: false` can be sent in the payload so that they are no longer duplicated. It is also possible to overwrite fields in the clone using the payload parameter 'overwrites'. This is especially helpful if the entity has a unique constraint in the database. As response, the API returns the new id of the entity:
 
