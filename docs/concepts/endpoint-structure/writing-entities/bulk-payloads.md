@@ -14,7 +14,7 @@ and expects payloads via `POST` and `Content-Type: application/json`.
 
 In contrast to the Admin API, the Sync API does not differ between **create** and **update** operations, but always performs an **upsert** operation. During an **upsert**, the system checks whether the entity already exists in the system and updates it if an ID has been passed, otherwise a new entity is created with this ID.
 
-A request always contains a **list of operations**. An operation defines the `action` to be executed \(`upsert` or `delete`\), the `entity` it is and the `payload` which is an array of multiple records \(for `upsert`\) or multiple IDs \(for `delete`\). Within a request, different entities can therefore be written in batch. For easier debugging, each operation can be given a key. The key is then used in the response to define which entities are written in which operation
+A request always contains a **list of operations**. An operation defines the `action` to be executed \(`upsert` or `delete`\), the `entity` it is and the `payload` which is an array of multiple records \(for `upsert`\) or multiple IDs \(for `delete`\). Within a request, different entities can therefore be written in batch. For easier debugging, each operation can be given a key. The key is then used in the response to define which entities are written in which operation.
 
 **Format of an operation**
 
@@ -119,7 +119,7 @@ A request always contains a **list of operations**. An operation defines the `ac
 
 ### Deleting entities
 
-To delete entities, the `payload` of an operation contains the IDs. If the entity is a `MappingEntityDefinition` \(e.g. `product_category`\) the foreign keys, which are the primary key, must be passed:
+To delete entities, the `payload` of an operation contains the IDs. If the entity is a `MappingEntityDefinition` \(e.g. `product_category`\) the foreign keys, which are the primary keys of the corresponding entities, must be passed:
 
 ```javascript
 // POST /api/_action/sync 
@@ -172,9 +172,9 @@ You can not delete relations by updating the owning entity. Instead you have to 
 
 ## Performance
 
-When using the Sync API, by default each record is written individually. In addition, various indexing processes are also triggered in the background, depending on which data was written.
+Various indexing processes are triggered in the background, depending on which data was written.
 
-However, this leads to a high load on the server and can be a problem with large imports. Therefore, it is possible that all data is written in a single transaction and the indexing is moved to an asynchronous process in the background.
+This leads to a high load on the server and can be a problem with large imports. Therefore, it is possible that the indexing is moved to an asynchronous process in the background.
 
 You can control the behaviour using the following headers:
 
