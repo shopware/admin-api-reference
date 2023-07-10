@@ -4,62 +4,66 @@ stoplight-id: s92t5mvj387wz
 
 # CMS Management
 
-Shopware's built-in CMS system is referred to as "Shopping Experiences". It is built upon layouts that can be reused and dynamically hydrated based on their assignments to categories or other entities.
+Shopware's built-in CMS system is referred to as "Shopping Experiences". It is built upon layouts that can be reused and
+dynamically hydrated based on their assignments to categories or other entities.
 
 Using CMS REST API, you can perform CRUD operations on section, slot, block, and page templates.
 
-To fetch a list of existing CMS layouts, 
+To fetch a list of existing CMS layouts,
 
 ```
 POST /api/search/cms-page
 ```
-
 
 ## Create a layout/page
 
 ```sample http
 {
   "method": "post",
-  "url": "https://localhost/api/cms-page0",
+  "url": "https://localhost/api/cms-page",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
-    "name": "Summer BBQ",
-    "type": "landingpage",
-    "sections":{
-        "position": 1,
-        "type": "default",
-        "sizingMode": "boxed",
-        "backgroundColor": "#c9e4e6ff",
-        "pageId": "f565491912994bcca19657c40b646836",
-        "blocks":
+  "name": "Summer BBQ",
+  "type": "landingpage",
+  "sections": [
+    {
+      "position": 1,
+      "type": "default",
+      "sizingMode": "boxed",
+      "backgroundColor": "#c9e4e6ff",
+      "pageId": "f565491912994bcca19657c40b646836",
+      "blocks": [
         {
-            "position": 0,
-            "type": "image-text",
-            "sectionPosition": "main",
-            "marginTop": "169px",
-            "marginBottom": "169px",
-            "marginLeft": "20px",
-            "marginRight": "20px",
-            "backgroundColor": "#c9e4e6ff",
-            "sectionId": "034982027a3f41f99981ba6886dc38f4",
-            "slots":
+          "position": 0,
+          "type": "image-text",
+          "sectionPosition": "main",
+          "marginTop": "169px",
+          "marginBottom": "169px",
+          "marginLeft": "20px",
+          "marginRight": "20px",
+          "backgroundColor": "#c9e4e6ff",
+          "sectionId": "034982027a3f41f99981ba6886dc38f4",
+          "slots": [
             {
-                "type": "text",
-                "slot": "right",
-                "config": {
-                    "content": {
-                        "value": "S U M M E R&nbsp; &nbsp;T R E N D S<h2>Be prepared for the best? <br>party this summer</h2><div>Summer is finally here and lures us outside with its warm rays of sunshine. The heat is better tolerated with cool snacks, drinks and fresh treats.</div><div><br></div><div><a target=\"_self\" href=\"/navigation/da5db02a783e467cae47e8d64c9f09a1\">Check out Summer Trends</a><br></div>",
-                        "source": "static"
-                    }
-                },
-                "blockId": "99a324f2f2dd4f76a36700bae20977f5"
+              "type": "text",
+              "slot": "right",
+              "config": {
+                "content": {
+                  "value": "S U M M E R&nbsp; &nbsp;T R E N D S<h2>Be prepared for the best? <br>party this summer</h2><div>Summer is finally here and lures us outside with its warm rays of sunshine. The heat is better tolerated with cool snacks, drinks and fresh treats.</div><div><br></div><div><a target=\"_self\" href=\"/navigation/da5db02a783e467cae47e8d64c9f09a1\">Check out Summer Trends</a><br></div>",
+                  "source": "static"
+                }
+              },
+              "blockId": "99a324f2f2dd4f76a36700bae20977f5"
             }
+          ]
         }
+      ]
     }
+  ]
 }
 }
 }
@@ -164,9 +168,13 @@ POST /api/search/cms-page
 }
 ```
 
-## Assignment of layout/page to a category
+## Create a category with layout/page
 
-Now that we have defined a layout, you can use it to assign it to any category or entity. Let us here assign the "Summer BBQ" layout to the "Summer Collection" category.
+Now that we have defined a layout, you can use it to create a category. Let us here assign the "Summer
+BBQ" layout to our new "Summer Collection" category.
+
+The UUID of the layout/page will be placed in the url. The **parentId** is the UUID of the parent category tree (for example "Collections").
+The **afterCategoryId** is optional and is needed if a category needs a specific spot in the tree (for example after "Spring Collection").
 
 ```sample http
 {
