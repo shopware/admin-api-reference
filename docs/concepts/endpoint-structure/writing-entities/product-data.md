@@ -2,13 +2,13 @@
 
 Refer to [Product Management](../../../guides/quick-start/02-product-management.md) section of this guide to get an overview of how the product data is handled. 
 
-Next, let us understand more about how media, variants and etc are handled for product entity.
+Next, let us understand more about how media, variants etc. are handled for the product entity.
 
-## Media handling
+## Media Management
 
 > **Upload media resources**
 >
-> Please go to our guide on [Media Handling](../media-handling.md) to get detailed information on uploading media. The section below only deals with the data model e.g. setting covers or ordering images.
+> Please go to our guide on [Media Management](../media-handling.md) to get detailed information on uploading media. The section below only deals with the data model e.g. setting covers or ordering images.
 
 Media of products are maintained via the association `product.media` and `product.cover`. The `product.media` association is a `one-to-many` association on the `product_media` entity. To assign a media to a product, a new `product_media` entity must be created, in which the foreign key for the corresponding `media` entity is defined. In addition to the foreign key, a `position` can be specified, which defines the display order.
 
@@ -74,11 +74,11 @@ Instead of just assigning a sales channel, the data structure allows a specifica
 
 This can be set to three different values:
 
-| **Visibility** | **Behaviour** |
-| :--- | :--- |
-| 10 | The product is only available via a direct link. It does not appear in listings or searches. |
-| 20 | The product is only available via a direct link or search. The product is not displayed in listings. |
-| 30 | The product is displayed everywhere. |
+| **Visibility** | **Behaviour**                                                                                         |
+| :--- |:------------------------------------------------------------------------------------------------------|
+| 10 | The product is only available via a direct link. It does **not** appear in listings or searches.          |
+| 20 | The product is only available via a direct link and search. The product is **not** displayed in listings. |
+| 30 | The product is displayed **everywhere**.                                                                  |
 
 Since visibility can be configured per sales channel, the entity also has its own ID. This is needed to delete or update the assignment later. To assign a product to several sales channels, the following payload can be used:
 

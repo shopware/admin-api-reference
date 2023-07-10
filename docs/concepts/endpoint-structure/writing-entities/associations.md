@@ -4,9 +4,9 @@ The Admin API allows you to create several data records simultaneously within on
 
 > When writing association via API the following applies: Only data is written, not deleted. So writing a `OneToMany` or `ManyToMany` association only adds new data, the existing data will not be deleted.
 >
-> In general, when writing a field or association, the API expects the format that it returns when reading the record.
+> When writing a field or association, the API expects the format that it returns when reading the record.
 >
-> In general, if no ID is given for an association, the API creates a new record
+> If no ID is given for an association, the API creates a new record
 
 ## ManyToMany Associations
 
@@ -23,7 +23,7 @@ There are three ways in which `ManyToMany` associations can be used in the API
 In this case all required fields are sent with the entity.
 
 ```javascript
-// PATCH /api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
 
 {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
@@ -40,7 +40,7 @@ In this case all required fields are sent with the entity.
 In this case, the entity already exists in the system, but it can be updated in the same request like all other associations. For this purpose, the corresponding ID of the entity is sent with the request. If the ID does not exist in the system, the API creates a new entity with this id.
 
 ```javascript
-// PATCH /api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
 {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "categories": [
@@ -56,7 +56,7 @@ In this case, the entity already exists in the system, but it can be updated in 
 If both data records already exist in the system and are to be linked to the PATCH request exclusively, it is recommended that you send only the ID of the entity. This has the advantage that there is no update of the linked entity, which means less load on the system:
 
 ```javascript
-// PATCH /api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
 {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "categories": [
@@ -151,7 +151,7 @@ There are two ways to use `OneToMany` associations in the API.
 In this case all fields marked as required must be given. An ID can also be given here if it is not to be generated on server side:
 
 ```javascript
-// POST /api/country
+// POST {{host}}/api/country
 {
     "name" : "new country",
     "states": [
@@ -168,7 +168,7 @@ In this case all fields marked as required must be given. An ID can also be give
 In this case, it is necessary that the ID of the entity is also given. If this is not done, the system tries to create a new entity:
 
 ```javascript
-// PATCH /api/country
+// PATCH {{host}}/api/country
 {
     "id": "98432def39fc4624b33213a56b8c944d",
     "name" : "new country",
@@ -181,7 +181,7 @@ In this case, it is necessary that the ID of the entity is also given. If this i
 If an error occurs while writing the data, the API returns a `400 Bad Request` response in which all errors are listed. The affected records and fields can be identified via `source.pointer`:
 
 ```javascript
-// POST /api/country
+// POST {{host}}/api/country
 
 {
     "name" : "new country",
@@ -218,6 +218,8 @@ If an error occurs while writing the data, the API returns a `400 Bad Request` r
 In Shopware 6 translatable fields of an entity can be written directly at the entity itself. For example, the `name` of a product is a translatable field. If no other language is set per header, the default language of the system is used for reading and writing. When an entity object is created in the system, it must have a translation in the default language of the system. This translation is used as a fallback if the entity is displayed in another language for which there is no translation. When writing an entity, it is possible to write several languages at the same time. This is done via the `translations` association:
 
 ```javascript
+// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+
 {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "translations": {
@@ -236,6 +238,8 @@ In Shopware 6 translatable fields of an entity can be written directly at the en
 Within the `translations` property the language id, for which this translation is used, is then passed as key. All translatable fields can be specified within the object. If the language id is not known, the locale code can be used instead of the id:
 
 ```javascript
+// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+
 {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "translations": {
