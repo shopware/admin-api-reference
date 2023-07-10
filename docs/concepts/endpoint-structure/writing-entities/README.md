@@ -2,7 +2,7 @@
 
 Analogous to the reading endpoints, the API also provides endpoints for all entities to be written in the same way. Once an entity is registered in the system, it can also be written via API. The appropriate routes for the entity are generated automatically and follow the REST pattern.
 
-A list of all entities available for these operations can be found in the [Entity Reference](../../resources/entity-reference.md).
+A list of all entities available for these operations can be found in the [Entity Reference](../../../resources/entity-reference.md).
 
 **Example:** The entity `customer_group` is available under the endpoint `api/customer-group`. For an entity, the system automatically generates the following routes where the entity can be written
 
@@ -12,7 +12,8 @@ A list of all entities available for these operations can be found in the [Entit
 | api.customer\_group.delete | DELETE | /api/customer-group/{id} | Delete the entity |
 | api.customer\_group.create | POST | /api/customer-group | Create a new entity |
 
-> PATCH method only adds properties and does not delete old references. To perform both operations, use [Sync API](bulk-payloads.md) endpoints.
+<!-- theme: warning -->
+> **PATCH** method only adds properties and does not delete old references. To perform both operations, use [Sync API](bulk-payloads.md) endpoints.
 
 ## Payload
 
