@@ -16,7 +16,7 @@ Not sure which grant type to use? Read on below.
 
 Per standard, the client credentials grant type should be used for machine-to-machine communications, such as CLI jobs or automated services. Once an access token has been obtained, it remains valid for 10 minutes.
 
-> It requires the setup of an [integration](https://docs.shopware.com/en/shopware-6-en/settings/system/integrationen?category=shopware-6-en/settings/system) and two credentials - an **application id** and an **application secret**.
+> It requires the setup of an [integration](https://docs.shopware.com/en/shopware-6-en/settings/system/integrationen?category=shopware-6-en/settings/system) and two credentials - an **Access key ID** and a **Secret access key**.
 
 ### Resource Owner Password
 

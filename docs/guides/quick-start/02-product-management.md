@@ -27,7 +27,7 @@ The smallest required payload for a product can therefore be as follows:
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "name": "test",
@@ -105,7 +105,7 @@ Below is a sample request to create a category:
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "displayNestedProducts": true,
@@ -155,7 +155,7 @@ Let us assign the test product to the *Home* category created earlier:
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "productAssignmentType": "product_stream",
@@ -213,7 +213,7 @@ To remove these `properties` and `categories`, the corresponding routes can be u
 * `DELETE /api/product/{productId}/properties/{optionId}`
 * `DELETE /api/product/{productId}/categories/{categoryId}`
 
-To delete several assignments at once, the `/_action/sync` route can be used:
+To delete several assignments at once, the `/_action/sync` (see also [Bulk payloads](../concepts/endpoint-structure/writing-entities/bulk-payloads.md)) route can be used:
 
 ```javascript
 {
@@ -246,7 +246,7 @@ The `product.categories` association contains the assignment of products and the
 
 ## Product reviews
 
-Reviews are comments that stand as a means to evaluate products by buyers. This below API adds a product review against a particular product as shown below:
+Reviews are comments that stand as a means to evaluate products by customers. The below API request adds a product review to a particular product:
 
 ```sample http
 {
@@ -255,7 +255,7 @@ Reviews are comments that stand as a means to evaluate products by buyers. This 
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "productId": "a55ca50a2cef46d5b11a12c4b4614988",
@@ -298,7 +298,7 @@ Reviews are comments that stand as a means to evaluate products by buyers. This 
 
 ## Cross-selling
 
-Cross-selling features product recommendations and interesting content to achieve an optimal shopping experience in the shop.
+Cross-selling adds product recommendations and interesting content to achieve an optimal shopping experience in the shop.
 
 ```sample http
 {
@@ -307,7 +307,7 @@ Cross-selling features product recommendations and interesting content to achiev
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "name": "sample_review",
@@ -365,7 +365,7 @@ Cross-selling features product recommendations and interesting content to achiev
 
 ## Price
 
-A particular product's price can be fetched, updated or a [price rule can be created](https://shopware.stoplight.io/docs/admin-api/ZG9jOjEyMzA4NTUy-product-data#quantity-and-rule-price-structure).
+A particular product's price can be fetched, updated, or a [price rule can be created](#quantity-and-rule-price-structure).
 
 Price handling is one of the edge cases in the product data structure. There are three different prices for a product, which can be queried via API:
 
@@ -388,7 +388,7 @@ PATCH /api/product/{product-id}
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "price": [

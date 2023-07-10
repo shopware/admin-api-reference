@@ -8,7 +8,7 @@ stoplight-id: twpxvnspkg3yu
 
 The Shopware Admin API allows web services to perform administrative tasks. This guide is designed to help you understand the Admin API, its endpoints, and its usage.
 
-* [Authentication as API user](https://shopware.stoplight.io/studio/admin-api?node=twpxvnspkg3yu#authentication-and-setup)
+* [Authentication as API user](#authentication-and-setup)
 
 * [Product management](02-product-management.md)
 
@@ -24,7 +24,7 @@ The Shopware Admin API allows web services to perform administrative tasks. This
 
     * Price
 
-* [Media handling](03-media-handling.md)
+* [Media management](03-media-handling.md)
 
 * [Document management](04-document-management.md)
 
@@ -35,10 +35,10 @@ The Shopware Admin API allows web services to perform administrative tasks. This
     * Line item
 
     * Order state handling
-    
+
     * Refund payment
 
-* [CMS handling](06-cms-handling.md)
+* [CMS management](06-cms-handling.md)
 
     * Creation of layout
 
@@ -104,7 +104,7 @@ In Insomnia or Postman, just select **OAuth 2.0** in the *Authorization* tab of 
 | **Access Token URL** | `https://replace-with-your-host/api/oauth/token`  |
 | **Client ID**        | `administration`                                  |
 
-Now that you have authenticated, you can perform your first request to obtain Shopware version.
+Now that you have authenticated, you can perform your first request to obtain your Shopware version.
 
 ```json http
 {
@@ -113,7 +113,7 @@ Now that you have authenticated, you can perform your first request to obtain Sh
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
 }
 ```
@@ -122,7 +122,7 @@ Below is the response:
 
 ```
 {
-    "version": "6.4.16.0"
+    "version": "6.5.3.0"
 }
 ```
 

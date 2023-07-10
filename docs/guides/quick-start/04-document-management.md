@@ -2,7 +2,7 @@
 stoplight-id: 3be386a26c0f9
 ---
 
-# Overview
+# Document Management
 
 One can use documents to send the invoice, delivery notes, packing slips, etc. Already defined document types can be fetched from :
 
@@ -21,7 +21,7 @@ You can create a document by its purpose - for example, a note for returned item
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "name": "return note",
@@ -39,7 +39,7 @@ If documents are assigned to `global,` they can be used on any sales channel. Th
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
   "body": {
     "documentTypeId": "9cc669c406b441e1b7af035552db138f",
@@ -82,7 +82,7 @@ The below route allows you to download a document as a PDF. The document is foll
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": "Bearer Your_API_Key"
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
 }
 ```
