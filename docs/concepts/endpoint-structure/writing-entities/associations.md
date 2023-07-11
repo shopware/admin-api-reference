@@ -22,16 +22,23 @@ There are three ways in which `ManyToMany` associations can be used in the API
 
 In this case all required fields are sent with the entity.
 
-```javascript
-// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
-
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "categories": [
         { "name": "First category" },
         { "name": "Second category" },
         { "name": "Third category" }
     ]
+  }
 }
 ```
 
