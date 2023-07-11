@@ -20,7 +20,7 @@ POST /api/search/cms-page
 ```sample http
 {
   "method": "post",
-  "url": "https://localhost/api/cms-page0",
+  "url": "http://localhost/api/cms-page0",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -171,7 +171,7 @@ Now that we have defined a layout, you can use it to assign it to any category o
 ```sample http
 {
   "method": "post",
-  "url": "https://localhost/api/cms-page/1017542d756d4c87a9df5a35a8e18f84/categories",
+  "url": "http://localhost/api/cms-page/1017542d756d4c87a9df5a35a8e18f84/categories",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
