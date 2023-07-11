@@ -46,15 +46,23 @@ In this case all required fields are sent with the entity.
 
 In this case, the entity already exists in the system, but it can be updated in the same request like all other associations. For this purpose, the corresponding ID of the entity is sent with the request. If the ID does not exist in the system, the API creates a new entity with this id.
 
-```javascript
-// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "categories": [
         { "id": "98432def39fc4624b33213a56b8c944d", "name": "First category" },
         { "id": "2fbb5fe2e29a4d70aa5854ce7ce3e20b", "name": "Second category" },
         { "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca", "name": "Third category" }
     ]
+  }
 }
 ```
 
@@ -62,15 +70,23 @@ In this case, the entity already exists in the system, but it can be updated in 
 
 If both data records already exist in the system and are to be linked to the PATCH request exclusively, it is recommended that you send only the ID of the entity. This has the advantage that there is no update of the linked entity, which means less load on the system:
 
-```javascript
-// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "categories": [
         { "id": "98432def39fc4624b33213a56b8c944d" },
         { "id": "2fbb5fe2e29a4d70aa5854ce7ce3e20b" },
         { "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca" }
     ]
+  }
 }
 ```
 
@@ -88,13 +104,21 @@ There are three ways in which `ManyToOne` associations can be used in the API
 
 In this case all required fields of the entity must be given:
 
-```javascript
-// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "manufacturer": { 
         "name": "My manufacturer" 
     }
+  }
 }
 ```
 
@@ -104,14 +128,22 @@ With the above payload, the system creates a new manufacturer in the system and 
 
 In this case it is necessary to send the ID of the existing entity.
 
-```javascript
-// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "manufacturer": { 
         "id": "98432def39fc4624b33213a56b8c944d", 
         "name": "My manufacturer" 
     }
+  }
 }
 ```
 
@@ -121,21 +153,37 @@ With the above payload, the system first checks whether a manufacturer with the 
 
 With this option, the manufacturer already exists and should only be linked with the product. For this, either only the `id` can be sent, or the foreign key can be specified directly:
 
-```javascript
-// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "manufacturer": { 
         "id": "98432def39fc4624b33213a56b8c944d" 
     }
+  }
 }
 ```
 
-```javascript
-// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "manufacturerId": "98432def39fc4624b33213a56b8c944d"
+  }
 }
 ```
 
@@ -157,16 +205,23 @@ There are two ways to use `OneToMany` associations in the API.
 
 In this case all fields marked as required must be given. An ID can also be given here if it is not to be generated on server side:
 
-```javascript
-// POST {{host}}/api/country
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/country",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "name" : "new country",
     "states": [
         { "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca", "name": "state-a", "shortCode": "A" },
         { "name": "state-b", "shortCode": "B" },
         { "name": "state-c", "shortCode": "C" }
-    ]    
-
+    ]  
+  }
 }
 ```
 
@@ -174,32 +229,50 @@ In this case all fields marked as required must be given. An ID can also be give
 
 In this case, it is necessary that the ID of the entity is also given. If this is not done, the system tries to create a new entity:
 
-```javascript
-// PATCH {{host}}/api/country
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/country",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "id": "98432def39fc4624b33213a56b8c944d",
     "name" : "new country",
     "states": [
         { "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca", "name": "new name" }
-    ]    
+    ]
+  }
 }
 ```
 
 If an error occurs while writing the data, the API returns a `400 Bad Request` response in which all errors are listed. The affected records and fields can be identified via `source.pointer`:
 
-```javascript
-// POST {{host}}/api/country
-
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/country",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "name" : "new country",
     "states": [
         { "name": "state-a", "shortCode": "A" },
         { "name": "state-b", "shortCode": 1 },
         { "name": "state-c" }
-    ]    
-
+    ]   
+  }
 }
+```
 
+### Error
+
+```javascript
 {
     "errors": [
         {
@@ -224,10 +297,16 @@ If an error occurs while writing the data, the API returns a `400 Bad Request` r
 
 In Shopware 6 translatable fields of an entity can be written directly at the entity itself. For example, the `name` of a product is a translatable field. If no other language is set per header, the default language of the system is used for reading and writing. When an entity object is created in the system, it must have a translation in the default language of the system. This translation is used as a fallback if the entity is displayed in another language for which there is no translation. When writing an entity, it is possible to write several languages at the same time. This is done via the `translations` association:
 
-```javascript
-// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
-
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "translations": {
         "2fbb5fe2e29a4d70aa5854ce7ce3e20b": {
@@ -238,16 +317,23 @@ In Shopware 6 translatable fields of an entity can be written directly at the en
             "name": "german name",
             "description": "german description"
         }
-    }
+    } 
+  }
 }
 ```
 
 Within the `translations` property the language id, for which this translation is used, is then passed as key. All translatable fields can be specified within the object. If the language id is not known, the locale code can be used instead of the id:
 
-```javascript
-// PATCH {{host}}/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca
-
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/product/b7d2554b0ce847cd82f3ac9bd1c0dfca",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "id": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
     "translations": {
         "en-GB": {
@@ -259,6 +345,7 @@ Within the `translations` property the language id, for which this translation i
             "description": "german description by code"
         }
     }
+  }
 }
 ```
 
