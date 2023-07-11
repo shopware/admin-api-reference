@@ -62,8 +62,9 @@ When creating an entity, all `required` fields must be provided in the request b
 }
 ```
 
+### Response
+
 ```javascript
-// Response
 {
     "errors": [
         {
@@ -178,10 +179,9 @@ When deleting data, it can happen that this is prevented by foreign key restrict
   }
 }
 ```
+### Response
 
 ```javascript
-// Response
-
 {
     "errors": [
         {
@@ -226,9 +226,9 @@ Some entities have a `ChildrenAssociationField`. The children are also considere
 }
 ```
 
-```javascript
-// Response
+### Response
 
+```javascript
 {
     "id": "cddde8ad9f81497b9a280c7eb5c6bd2e"
 }
