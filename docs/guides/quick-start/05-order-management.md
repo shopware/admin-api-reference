@@ -33,12 +33,12 @@ A list of all customer orders is obtained using the below route:
 
 ### Order line-items
 
-An order can have more other items or child items of `type` - `product`, `promotion`, `credit` or `custom`. To fetch line items for a particular order, try the below route:
+An order can have other items or child items of `type` - `product`, `promotion`, `credit` or `custom`. To fetch line items for a particular order, try the below route:
 
 ```json http
 {
   "method": "get",
-  "url": "http://localhost/api/order/558efc15fe604829b4d0607df75187e0/line-item",
+  "url": "http://localhost/api/order/558efc15fe604829b4d0607df75187e0/line-items",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -139,7 +139,8 @@ Below is a sample request to change the state of order to *complete*:
 }
 ```
 
-A *canceled* order cannot change to an *in-progress* state unless it is reopened again.
+<!-- theme: info -->
+> A *canceled* order cannot change to an *in-progress* state unless it is reopened again. For more details see [order state management](https://developer.shopware.com/docs/concepts/commerce/checkout-concept/orders#state-management)
 
 ### Order delivery
 
