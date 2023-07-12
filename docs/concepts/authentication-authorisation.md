@@ -34,14 +34,19 @@ This grant is only available, when a preceding authentication with the resource 
 In order to obtain an access token, perform one of the following requests, depending on your setup and grant type.
 
 ### Integration (Client Credentials Grant Type)
-
-```javascript
-// POST /api/oauth/token
-
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/oauth/token",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  },
+  "body": {
     "grant_type": "client_credentials",
     "client_id": "<client-id>",
     "client_secret": "<client-secret>"
+  }
 }
 ```
 
@@ -56,15 +61,21 @@ which will return
 ```
 
 ### Username and Password (Password Grant Type)
-```javascript
-// POST /api/oauth/token
-
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/oauth/token",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  },
+  "body": {
     "client_id": "administration",
     "grant_type": "password",
     "scopes": "write",
     "username": "<user-username>",
     "password": "<user-password>"
+  }
 }
 ```
 
@@ -82,14 +93,19 @@ which will return
 Make sure to also persist the `refresh_token` for subsequent authentications using the refresh token grant.
 
 ### Refresh Token
-
-```javascript
-// POST /api/oauth/token
-
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/oauth/token",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  },
+  "body": {
     "grant_type": "refresh_token",
     "client_id": "<client-id>",
     "refresh_token": "<refresh-token>"
+  }
 }
 ```
 

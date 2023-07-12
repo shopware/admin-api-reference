@@ -179,7 +179,7 @@ The **afterCategoryId** is optional and is needed if a category needs a specific
 ```sample http
 {
   "method": "post",
-  "url": "https://localhost/api/cms-page/1017542d756d4c87a9df5a35a8e18f84/categories",
+  "url": "http://localhost/api/cms-page/1017542d756d4c87a9df5a35a8e18f84/categories",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
