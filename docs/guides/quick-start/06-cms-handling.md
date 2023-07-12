@@ -4,8 +4,7 @@ stoplight-id: s92t5mvj387wz
 
 # CMS Management
 
-Shopware's built-in CMS system is referred to as "Shopping Experiences". It is built upon layouts that can be reused and
-dynamically hydrated based on their assignments to categories or other entities.
+Shopware's built-in CMS system is referred to as "Shopping Experiences". It is built upon layouts that can be reused and dynamically hydrated based on their assignments to categories or other entities.
 
 Using CMS REST API, you can perform CRUD operations on section, slot, block, and page templates.
 
@@ -170,11 +169,9 @@ POST /api/search/cms-page
 
 ## Create a category with layout/page
 
-Now that we have defined a layout, you can use it to create a category. Let us here assign the "Summer
-BBQ" layout to our new "Summer Collection" category.
+Now that we have defined a layout, you can use it to create a category. Let us here assign the "Summer BBQ" layout to our new "Summer Collection" category.
 
-The UUID of the layout/page will be placed in the url. The **parentId** is the UUID of the parent category tree (for example "Collections").
-The **afterCategoryId** is optional and is needed if a category needs a specific spot in the tree (for example after "Spring Collection").
+The UUID of the layout/page will be placed in the url.
 
 ```sample http
 {
@@ -203,11 +200,11 @@ The **afterCategoryId** is optional and is needed if a category needs a specific
   "description": "Parameters for assigning cms layout to category.",
   "properties": {
     "parentId": {
-      "description": "Unique identity of the parent category.",
+      "description": "The parentId is the UUID of the parent category tree (for example "Collections").",
       "type": "string"
     },
     "afterCategoryId": {
-      "description": "Unique identity of a category after which the specific category needs to be added. ",
+      "description": "Unique identity of a category after which the specific category needs to be added (for example after "Spring Collection"). ",
       "type": "string"
     },
     "displayNestedProducts": {
