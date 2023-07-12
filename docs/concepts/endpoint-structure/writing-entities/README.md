@@ -2,7 +2,7 @@
 
 Analogous to the reading endpoints, the API also provides endpoints for all entities to be written in the same way. Once an entity is registered in the system, it can also be written via API. The appropriate routes for the entity are generated automatically and follow the REST pattern.
 
-A list of all entities available for these operations can be found in the [Entity Reference](../../resources/entity-reference.md).
+A list of all entities available for these operations can be found in the [Entity Reference](../../../resources/entity-reference.md).
 
 **Example:** The entity `customer_group` is available under the endpoint `api/customer-group`. For an entity, the system automatically generates the following routes where the entity can be written
 
@@ -12,13 +12,14 @@ A list of all entities available for these operations can be found in the [Entit
 | api.customer\_group.delete | DELETE | /api/customer-group/{id} | Delete the entity |
 | api.customer\_group.create | POST | /api/customer-group | Create a new entity |
 
-> PATCH method only adds properties and does not delete old references. To perform both operations, use [Sync API](bulk-payloads.md) endpoints.
+<!-- theme: warning -->
+> **PATCH** method only adds properties and does not delete old references. To perform both operations, use [Sync API](bulk-payloads.md) endpoints.
 
 ## Payload
 
 The payload for writing entities is dictated by the API scheme, which in turn is generated from entity definitions which are part of the Shopware core \(unless they are custom entities\).
 
-See the [Entity Reference](../../resources/entity-reference.md) section of this documentation to inspect the scheme of all entities.
+See the [Entity Reference](../../../resources/entity-reference.md) section of this documentation to inspect the scheme of all entities.
 
 > If it is not clear how the data has to be sent despite the scheme, it is also possible to open the administration and to have a look at the corresponding requests. To do this, simply open the network tab in the developer tools of your browser, which lists all requests and payloads sent by the administration.
 
@@ -46,12 +47,24 @@ If you intend to write multiple entities of a different type or perform various 
 
 When creating an entity, all `required` fields must be provided in the request body. If one or more fields have not been passed or contain incorrect data, the API outputs all errors for an entity:
 
-```javascript
-// POST /api/product/
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/product",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "name" : "test"
+  }
 }
+```
 
+### Response
+
+```javascript
 {
     "errors": [
         {
@@ -91,11 +104,16 @@ When creating an entity, all `required` fields must be provided in the request b
 ```
 
 If the entity has been successfully created, the API responds with a `204 No Content` status code.
-
-```javascript
-// POST /api/product/
-
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/product",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "name" : "test",
     "productNumber" : "random",
     "stock" : 10,
@@ -110,7 +128,8 @@ If the entity has been successfully created, the API responds with a `204 No Con
     "tax" : {
         "name": "test", 
         "taxRate": 15
-    }    
+    }
+  }
 }
 ```
 
@@ -120,10 +139,16 @@ Updating an entity can, and should, be done partially. This means that only the 
 
 For example, to update the stock of a product and update the price at the same time, we recommend the following partial payload:
 
-```javascript
-// PATCH /api/product/021523dde52d42c9a0b005c22ac85043
-
+```sample http
 {
+  "method": "PATCH",
+  "url": "http://localhost/api/product/021523dde52d42c9a0b005c22ac85043",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "stock": 10,
     "price": [
         {
@@ -133,6 +158,7 @@ For example, to update the stock of a product and update the price at the same t
             "linked": false
         }    
     ]
+  }
 }
 ```
 
@@ -142,9 +168,20 @@ To delete an entity the route `DELETE /api/product/{id}` can be used. If the ent
 
 When deleting data, it can happen that this is prevented by foreign key restrictions. This happens if the entity is still linked to another entity which requires the relation. For example, if you try to delete a tax record which is marked as required for a product, the delete request will be prevented with a `409 - Conflict.` Make sure to resolve these cascading conflicts before deleting a referenced entity.
 
-```javascript
-// DELETE /api/tax/5840ff0975ac428ebf7838359e47737f
+```sample http
+{
+  "method": "DELETE",
+  "url": "http://localhost/api/tax/5840ff0975ac428ebf7838359e47737f",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  }
+}
+```
+### Response
 
+```javascript
 {
     "errors": [
         {
@@ -161,28 +198,37 @@ When deleting data, it can happen that this is prevented by foreign key restrict
 
 To clone an entity the route `POST /api/_action/clone/{entity}/{id}` can be used. The API clones all associations which are marked with `CascadeDelete`.
 
-{% hint style="success" %}
 The behaviour can be disabled explicitly by setting the constructor argument for `CascadeDelete` to false in the entity definition
 
 ```php
 (new OneToManyAssociationField('productReviews', /* ... */))
     ->addFlags(new CascadeDelete(false)),
 ```
-{% endhint %}
 
 Some entities have a `ChildrenAssociationField`. The children are also considered in a clone request. However, since this results in large amounts of data, the parameter `cloneChildren: false` can be sent in the payload so that they are no longer duplicated. It is also possible to overwrite fields in the clone using the payload parameter 'overwrites'. This is especially helpful if the entity has a unique constraint in the database. As response, the API returns the new id of the entity:
 
-```javascript
-// POST /api/_action/clone/product/53be6fb93e4b44ed877736cbe01a47b8
-
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/_action/clone/product/53be6fb93e4b44ed877736cbe01a47b8",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "overwrites": {
         "name" : "New name",
         "productNumber" : "new number"
     },
     "cloneChildren": false
+  }
 }
+```
 
+### Response
+
+```javascript
 {
     "id": "cddde8ad9f81497b9a280c7eb5c6bd2e"
 }

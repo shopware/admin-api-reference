@@ -14,7 +14,7 @@ and expects payloads via `POST` and `Content-Type: application/json`.
 
 In contrast to the Admin API, the Sync API does not differ between **create** and **update** operations, but always performs an **upsert** operation. During an **upsert**, the system checks whether the entity already exists in the system and updates it if an ID has been passed, otherwise a new entity is created with this ID.
 
-A request always contains a **list of operations**. An operation defines the `action` to be executed \(`upsert` or `delete`\), the `entity` it is and the `payload` which is an array of multiple records \(for `upsert`\) or multiple IDs \(for `delete`\). Within a request, different entities can therefore be written in batch. For easier debugging, each operation can be given a key. The key is then used in the response to define which entities are written in which operation
+A request always contains a **list of operations**. An operation defines the `action` to be executed \(`upsert` or `delete`\), the `entity` it is and the `payload` which is an array of multiple records \(for `upsert`\) or multiple IDs \(for `delete`\). Within a request, different entities can therefore be written in batch. For easier debugging, each operation can be given a key. The key is then used in the response to define which entities are written in which operation.
 
 **Format of an operation**
 
@@ -26,10 +26,16 @@ A request always contains a **list of operations**. An operation defines the `ac
 
 ### Writing entities
 
-```javascript
-// POST /api/_action/sync
-
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/_action/sync",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "write-tax": {
         "entity": "tax",
         "action": "upsert",
@@ -54,8 +60,13 @@ A request always contains a **list of operations**. An operation defines the `ac
             { "name": "country-2" }
         ]
     }
+  }
 }
+```
 
+#### Response
+
+```javascript
 {
     "success": true,
     "data": {
@@ -119,12 +130,19 @@ A request always contains a **list of operations**. An operation defines the `ac
 
 ### Deleting entities
 
-To delete entities, the `payload` of an operation contains the IDs. If the entity is a `MappingEntityDefinition` \(e.g. `product_category`\) the foreign keys, which are the primary key, must be passed:
+To delete entities, the `payload` of an operation contains the IDs. If the entity is a `MappingEntityDefinition` \(e.g. `product_category`\) the foreign keys, which are the primary keys of the corresponding entities, must be passed:
 
-```javascript
-// POST /api/_action/sync 
 
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/_action/sync",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "delete-tax": {
         "entity": "category",
         "action": "delete",
@@ -148,6 +166,7 @@ To delete entities, the `payload` of an operation contains the IDs. If the entit
             }
         ]
     }
+  }
 }
 ```
 
@@ -155,10 +174,16 @@ To delete entities, the `payload` of an operation contains the IDs. If the entit
 
 You can not delete relations by updating the owning entity. Instead you have to delete the relation on the relation entity `MappingEntityDefinition` \(e.g. `product_property`\). The corresponding entries in the main entity \(here `product`\) will be updated with an indexer that will immediately run after the delete \(for details on indexers, see the next section\).
 
-```javascript
-// POST /api/_action/sync 
-
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/_action/sync",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "delete-product-property": {
         "entity": "product_property",
         "action": "delete",
@@ -167,14 +192,15 @@ You can not delete relations by updating the owning entity. Instead you have to 
             { "productId": "5deed0c33b2a4866a6b2c88fa215561c", "optionId": "0446a1eb394c4e729178699a7bc2833f" }
         ]
     }
+  }
 }
 ```
 
 ## Performance
 
-When using the Sync API, by default each record is written individually. In addition, various indexing processes are also triggered in the background, depending on which data was written.
+Various indexing processes are triggered in the background, depending on which data was written.
 
-However, this leads to a high load on the server and can be a problem with large imports. Therefore, it is possible that all data is written in a single transaction and the indexing is moved to an asynchronous process in the background.
+This leads to a high load on the server and can be a problem with large imports. Therefore, it is possible that the indexing is moved to an asynchronous process in the background.
 
 You can control the behaviour using the following headers:
 
@@ -184,11 +210,17 @@ You can control the behaviour using the following headers:
 |  | `use-queue-indexing` | Data will be indexed asynchronously |
 |  | `disable-indexing` | Data indexing is completely disabled |
 
-```javascript
-// POST /api/_action/sync
-// --header 'indexing-behavior: use-queue-indexing'
 
+```sample http
 {
+  "method": "POST",
+  "url": "http://localhost/api/_action/sync",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
     "write-tax": {
         "entity": "tax",
         "action": "upsert",
@@ -213,6 +245,7 @@ You can control the behaviour using the following headers:
             { "name": "country-2" }
         ]
     }
+  }
 }
 ```
 
@@ -220,9 +253,17 @@ You can control the behaviour using the following headers:
 
 ### Update product stocks
 
-```javascript
+```sample http
 {
-	"stock-updates": { // Name of the transaction, choose freely 
+  "method": "POST",
+  "url": "http://localhost/api/_action/sync",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
+    "stock-updates": { // Name of the transaction, choose freely 
 		"entity": "product", // Name of the entity you would like to update
 		"action": "upsert", // Available actions are upsert and delete,
 		"payload": [ // A list of objects, each representing a subset of the entity scheme referenced in `entity`. `id` is required for upsert operations.
@@ -240,5 +281,6 @@ You can control the behaviour using the following headers:
 			}
 		]
 	}
+  }
 }
 ```

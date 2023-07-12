@@ -151,7 +151,7 @@ Let us assign the test product to the *Home* category created earlier:
 ```sample http
 {
   "method": "PATCH",
-  "url": "https://localhost/api/category/a11d11c732d54debad6da3b38ad07b11",
+  "url": "http://localhost/api/category/a11d11c732d54debad6da3b38ad07b11",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -303,7 +303,7 @@ Cross-selling adds product recommendations and interesting content to achieve an
 ```sample http
 {
   "method": "post",
-  "url": "https://localhost/api/product/a55ca50a2cef46d5b11a12c4b4614988/cross-sellings",
+  "url": "http://localhost/api/product/a55ca50a2cef46d5b11a12c4b4614988/cross-sellings",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -384,7 +384,7 @@ PATCH /api/product/{product-id}
 ```sample http
 {
   "method": "patch",
-  "url": "https://localhost/api/product/a55ca50a2cef46d5b11a12c4b4614988",
+  "url": "http://localhost/api/product/a55ca50a2cef46d5b11a12c4b4614988",
   "headers": {
     "Content-Type": "application/json",
     "Accept": "application/json",
