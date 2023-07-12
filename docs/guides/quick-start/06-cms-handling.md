@@ -200,11 +200,11 @@ The UUID of the layout/page will be placed in the url.
   "description": "Parameters for assigning cms layout to category.",
   "properties": {
     "parentId": {
-      "description": "The parentId is the UUID of the parent category tree (for example "Collections").",
+      "description": "The parentId is the UUID of the parent category tree (for example \"Collections\").",
       "type": "string"
     },
     "afterCategoryId": {
-      "description": "Unique identity of a category after which the specific category needs to be added (for example after "Spring Collection"). ",
+      "description": "Unique identity of a category after which the specific category needs to be added (for example after \"Spring Collection\").",
       "type": "string"
     },
     "displayNestedProducts": {
