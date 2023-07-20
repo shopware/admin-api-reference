@@ -33,7 +33,7 @@ jobs:
         for k in $(yq '. | keys | .[]' descriptions.yml); do
           newDescription=$(yq ".\"$k\"" descriptions.yml);
           # Indent 4; output as json; edit in place
-          yq  -I 4 -o json -i "$k.description = \"${newDescription}\"" storeapi.json
+          yq  -I 4 -o json -i "$k.description = \"${newDescription}\"" adminapi.json
         done
       
     - name: Create PR
