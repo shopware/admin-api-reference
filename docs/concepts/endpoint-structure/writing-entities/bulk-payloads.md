@@ -68,63 +68,43 @@ A request always contains a **list of operations**. An operation defines the `ac
 
 ```javascript
 {
-    "success": true,
-    "data": {
-        "write-tax": {
-            "result": [
-                {
-                    "entities": {
-                        "tax": ["bd59bcc0ceaa4acbbbb9e5e9d22b0312"]
-                    }
-                },
-                {
-                    "entities": {
-                        "tax": ["38bfe5140d58429a840190c6ed43f0c4"]
-                    }
-                }
-            ]
-        },
-        "write-category": {
-            "result": [
-                {
-                    "entities": {
-                        "category": ["0a2275ff38a747069fce697bc2582bdc"],
-                        "category_translation": [
-                            { "categoryId": "0a2275ff38a747069fce697bc2582bdc", "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b" }
-                        ]
-                    }
-                },
-                {
-                    "entities": {
-                        "category": ["8df6114ba9c84116b6011d6b9ce1fa3a"],
-                        "category_translation": [
-                            { "categoryId": "8df6114ba9c84116b6011d6b9ce1fa3a", "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b" }
-                        ]
-                    }
-                }
-            ]
-        },
-        "write-country": {
-            "result": [
-                {
-                    "entities": {
-                        "country": ["91738c2ee74a464e8ffe4f1d572449b3"],
-                        "country_translation": [
-                            { "countryId": "91738c2ee74a464e8ffe4f1d572449b3", "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b" }
-                        ]
-                    }
-                },
-                {
-                    "entities": {
-                        "country": ["69b2d17d04364620ad9ded6b01f471cd"],
-                        "country_translation": [
-                            { "countryId": "69b2d17d04364620ad9ded6b01f471cd", "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b" }
-                        ]
-                    }
-                }
-            ]
-        }
-    }
+    "extensions": [],
+        "data": {
+        "category": [
+            "0189bf2a627a7296adbc83527ba9ac29",
+            "0189bf2a627b719999a9bf3afdc5c5ac"
+        ],
+            "category_translation": [
+            {
+                "categoryId": "0189bf2a627a7296adbc83527ba9ac29",
+                "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b"
+            },
+            {
+                "categoryId": "0189bf2a627b719999a9bf3afdc5c5ac",
+                "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b"
+            }
+        ],
+            "country": [
+            "0189bf2a627e723dbf691bd638113c02",
+            "0189bf2a627e723dbf691bd638ca0a34"
+        ],
+            "country_translation": [
+            {
+                "countryId": "0189bf2a627e723dbf691bd638113c02",
+                "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b"
+            },
+            {
+                "countryId": "0189bf2a627e723dbf691bd638ca0a34",
+                "languageId": "2fbb5fe2e29a4d70aa5854ce7ce3e20b"
+            }
+        ],
+            "tax": [
+            "0189bf2a627971fcb6de1311115ee7fe",
+            "0189bf2a627971fcb6de131111ad13cd"
+        ]
+    },
+    "notFound": [],
+        "deleted": []
 }
 ```
 
