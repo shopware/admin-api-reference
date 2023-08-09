@@ -104,7 +104,7 @@ A request always contains a **list of operations**. An operation defines the `ac
         ]
     },
     "notFound": [],
-        "deleted": []
+    "deleted": []
 }
 ```
 
