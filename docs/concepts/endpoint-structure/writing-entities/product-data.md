@@ -289,7 +289,6 @@ To create a complete product with variants, not only the variants have to be cre
         {
             "productNumber": "random.4",
             "stock": 10,
-            // own pricing
             "price": [
                 {
                     "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
