@@ -273,18 +273,20 @@ To create a complete product with variants, not only the variants have to be cre
             "linked": true
         }
     ],
-    "configuratorGroupConfig": [
-        {
-            "id": "d1f3079ffea34441b0b3e3096ac4821a",
-            "representation": "box",
-            "expressionForListings": true
-        },
-        {
-            "id": "e2d24e55b56b4a4a8f808478fbd30333",
-            "representation": "box",
-            "expressionForListings": false
-        }
-    ],
+    "variantListingConfig": {
+        "configuratorGroupConfig": [
+          {
+                "id": "d1f3079ffea34441b0b3e3096ac4821a",
+                "representation": "box",
+                "expressionForListings": true
+            },
+            {
+                "id": "e2d24e55b56b4a4a8f808478fbd30333",
+                "representation": "box",
+                "expressionForListings": false
+            }
+        ]
+    },
     "children": [
         {
             "productNumber": "random.4",
@@ -353,18 +355,20 @@ To create a complete product with variants, not only the variants have to be cre
             "linked": true
         }
     ],
-    "configuratorGroupConfig": [
-        {
-            "id": "d1f3079ffea34441b0b3e3096ac4821a",       //group id for "color"
-            "representation": "box",
-            "expressionForListings": true                   // display all colors in listings
-        },
-        {
-            "id": "e2d24e55b56b4a4a8f808478fbd30333",       // group id for "size"
-            "representation": "box",
-            "expressionForListings": false
-        }
-    ],
+    "variantListingConfig": {
+        "configuratorGroupConfig": [
+            {
+                "id": "d1f3079ffea34441b0b3e3096ac4821a",
+                "representation": "box",
+                "expressionForListings": true
+            },
+            {
+                "id": "e2d24e55b56b4a4a8f808478fbd30333",
+                "representation": "box",
+                "expressionForListings": false
+            }
+        ]
+    },
     "children": [
         {
             "productNumber": "random.4",
