@@ -178,6 +178,24 @@ Below is a sample request that sets the payment state to *open*:
   }
 ```  
 
+### Order Return
+
+The order return management is only supported in Administration. The order return state represents `open`, `cancelled`, `in_progress`, `done` as transaction states for order items return.
+
+Below is a sample request that sets the orders return to *open*:
+
+```json http
+{
+  "method": "post",
+  "url": "http://localhost/api/_action/order_return/558efc15fe604829b4d0607df75187e0/state/open",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  }
+  }
+```
+
 ## Refund Payment
 
 Initiating and capturing payment is handled by [Store API](https://shopware.stoplight.io/docs/store-api/8218801e50fe5-handling-the-payment), whereas the admin API deals with refund payment.
