@@ -37,7 +37,10 @@ jobs:
         done
 
     - name: Prettify
-      run: jq . adminapi.json | sponge adminapi.json
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y moreutils
+        jq . adminapi.json | sponge adminapi.json
       
     - name: Create PR
       uses: peter-evans/create-pull-request@v4
