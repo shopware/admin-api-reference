@@ -35,6 +35,9 @@ jobs:
           # Indent 4; output as json; edit in place
           yq  -I 4 -o json -i "$k.description = \"${newDescription}\"" adminapi.json
         done
+
+    - name: Prettify
+      run: jq . adminapi.json | sponge adminapi.json
       
     - name: Create PR
       uses: peter-evans/create-pull-request@v4
