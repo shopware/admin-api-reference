@@ -179,8 +179,115 @@ Below is a sample request that sets the payment state to *open*:
 ```  
 
 ### Order Return
+The order return management is only supported in Administration.
 
-The order return management is only supported in Administration. The order return state represents `open`, `cancelled`, `in_progress`, `done` as transaction states for order items return.
+#### 1. Create order return
+You can initiate an order return from the Administration section by utilizing the Proxy-api. The outcome will yield a fresh order return with the `created_by_id` set to the ID of the currently logged-in user.
+
+Below is a sample request to create new order return.
+
+```json http
+{
+  "method": "post",
+  "url": "http://localhost/api/_proxy/order/{orderId}/return",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
+    "lineItems": [
+      {
+        "orderLineItemId": "c90e05c82c5a4457844cba7403c7ef96",
+        "quantity": 2,
+        "internalComment": "Line item comment"
+      }
+    ],
+    "internalComment": "Order return comment"
+  }
+}
+```
+
+```description json_schema
+{
+  "type": "object",
+  "description": "Parameters for adding return line items.",
+  "properties": {
+    "lineItems": []
+    {
+      "orderLineItemId": {
+        "description": "ID of order line item.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "Quantity of order line item which should be returned.",
+        "type": "integer"
+      },
+      "internalComment": {
+        "description": "The optional comment when adding line item as return item",
+        "type": "string"
+      }
+    },
+    "internalComment": {
+      "description": "The optional comment when adding line item as return item",
+      "type": "string"
+    }
+  }
+}
+```
+
+#### 2. Add new order return line items
+If you already have an existing order return, it is indeed possible to include a new item in your return. In the event that the item has already been returned previously, the returned quantity will be increased by the quantity specified in the new return.
+
+Below is a sample request that add the new item into your return.
+
+```json http
+{
+  "method": "post",
+  "url": "http://localhost/api/_action/order/{orderId}/order-return/{orderReturnId}/add-items",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
+    "orderLineItems": [
+      {
+        "orderLineItemId": "c90e05c82c5a4457844cba7403c7ef96",
+        "quantity": 2,
+        "internalComment": "New comment"
+      }
+    ]
+  }
+}
+```
+
+```description json_schema
+{
+  "type": "object",
+  "description": "Parameters for adding return line items.",
+  "properties": {
+    "orderLineItems": []
+    {
+      "orderLineItemId": {
+        "description": "ID of order line item.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "Quantity of order line item which should be returned.",
+        "type": "integer"
+      },
+      "internalComment": {
+        "description": "The optional comment when adding line item as return item",
+        "type": "string"
+      }
+    }
+  }
+}
+```
+
+#### 3. Order return state transition
+The order return state represents `open`, `cancelled`, `in_progress`, `done` as transaction states for order items return.
 
 Below is a sample request that sets the orders return to *open*:
 
@@ -194,6 +301,73 @@ Below is a sample request that sets the orders return to *open*:
     "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
   }
+```
+
+#### 4. Order return line item state transition
+The order return line item state represents `open`, `shipped`, `shipped_partially`, `return_requested`, `returned`, `returned_partially`, `cancelled` as transaction states for order line items return.
+
+Below is a sample request that sets the order return line item to *open*:
+
+```json http
+{
+  "method": "post",
+  "url": "http://localhost/api/_action/order-line-item/state/open",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
+    "ids": ["558efc15fe604829b4d0607df75187e0"]
+  }
+}
+```
+
+```json json_schema
+{
+  "type": "object",
+  "description": "Parameters for transitioning order return line item state.",
+  "properties": {
+    "ids": {
+      "description": "ID of order line item.",
+      "type": "array"
+    }
+  }
+}
+```
+
+#### 5. Order return calculator
+The purpose of the order return calculator is to determine the total amount of the order return.
+
+Below is a sample request that calculates the amount of provided order return's ID.
+
+```json http
+{
+  "method": "post",
+  "url": "http://localhost/api/_action/order/return/558efc15fe604829b4d0607df75187e0/calculate",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  }
+}
+```
+
+#### 6. Obtain Customer Turnover
+This function is designed to retrieve the turnover figure for a specific customer. The turnover value is calculated as the total order amount minus the total return amount.
+
+Below is a sample request that get the turnover of a customer
+
+```json http
+{
+  "method": "GET",
+  "url": "http://localhost/api/_action/customer/558efc15fe604829b4d0607df75187e0/turnover",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  }
+}
 ```
 
 ## Refund Payment
