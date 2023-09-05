@@ -643,6 +643,9 @@
 ".components.schemas.Order.properties.versionId": >
   Unique identity of order version.
 
+".components.schemas.Order.properties.autoIncrement": >
+  //
+
 ".components.schemas.Order.properties.orderNumber": >
   Unique number associated with every order.
 
@@ -672,6 +675,12 @@
 
 ".components.schemas.Order.properties.price.properties.totalPrice": >
   Gross price of the product.
+
+".components.schemas.Order.properties.price.properties.calculatedTaxes": >
+  //
+
+".components.schemas.Order.properties.price.properties.taxRules": >
+ //
 
 ".components.schemas.Order.properties.price.properties.positionPrice": >
   Price of each line item in the cart multiplied by its quantity excluding charges like shipping cost, rules, taxes etc.
@@ -745,11 +754,83 @@
 ".components.schemas.Order.properties.source": >
   Source of orders either via normal order placement or subscriptions.
 
-".components.schemas.Order.properties.extensions": >
-  To store additional data to an order from extensions.
+".components.schemas.Order.properties.stateId": >
+  Unique identity of state.
+
+".components.schemas.Order.properties.ruleIds": >
+  Unique identity of rule.
 
 ".components.schemas.Order.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
+
+".components.schemas.Order.properties.createdById": >
+  Unique identity of createdBy.
+
+".components.schemas.Order.properties.updatedById": >
+  Unique identity of updatedBy.
+
+".components.schemas.Order.properties.itemRounding.properties.decimals": >
+  //
+
+".components.schemas.Order.properties.itemRounding.properties.interval": >
+  //
+
+".components.schemas.Order.properties.itemRounding.properties.roundForNet": >
+  //
+
+".components.schemas.Order.properties.totalRounding.properties.decimals": >
+  //
+
+".components.schemas.Order.properties.totalRounding.properties.interval": >
+  //
+
+".components.schemas.Order.properties.totalRounding.properties.roundForNet": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.subscriptions.properties.links.properties.related": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.subscriptions.properties.data.properties.type": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.subscriptions.properties.data.properties.id": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.delayActions.properties.links.properties.related": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.delayActions.properties.data.properties.type": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.delayActions.properties.data.properties.id": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.warehouseGroups.properties.links.properties.related": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.warehouseGroups.properties.data.properties.type": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.warehouseGroups.properties.data.properties.id": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.warehouseProducts.properties.links.properties.related": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.warehouseProducts.properties.data.properties.type": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.warehouseProducts.properties.data.properties.id": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.returns.properties.links.properties.related": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.returns.properties.data.properties.type": >
+  //
+
+".components.schemas.Order.properties.extensions.properties.returns.properties.data.properties.id": >
+  //
 
 ".components.schemas.OrderAddress.properties.id": >
   Unique identity of order's address.
@@ -762,6 +843,12 @@
 
 ".components.schemas.OrderAddress.properties.countryStateId": >
   Unique identity of state.
+
+".components.schemas.OrderAddress.properties.orderId": >
+  Unique identity of order.
+
+".components.schemas.OrderAddress.properties.orderVersionId": >
+  Unique identity of order's version.
 
 ".components.schemas.OrderAddress.properties.firstName": >
   First name of the customer.
@@ -808,6 +895,15 @@
 ".components.schemas.OrderCustomer.properties.versionId": >
   Unique identity of OrderCustomer's version.
 
+".components.schemas.OrderCustomer.properties.customerId": >
+  Unique identity of customer.
+
+".components.schemas.OrderCustomer.properties.orderId": >
+  Unique identity of order.
+
+".components.schemas.OrderCustomer.properties.orderVersionId": >
+  Unique identity of order's version.
+
 ".components.schemas.OrderCustomer.properties.email": >
   Email address of the customer.
 
@@ -834,6 +930,9 @@
 
 ".components.schemas.OrderCustomer.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
+
+".components.schemas.OrderCustomer.properties.remoteAddress": >
+  //
 
 ".components.schemas.OrderDelivery.properties.id": >
   Unique identity of Order's delivery.
@@ -979,6 +1078,9 @@
 ".components.schemas.OrderLineItem.properties.productVersionId": >
   Unique identity of products's version.
 
+".components.schemas.OrderLineItem.properties.promotionId": >
+  Unique identity of product.
+
 ".components.schemas.OrderLineItem.properties.parentId": >
   Unique identity of parent product.
 
@@ -1018,6 +1120,36 @@
 ".components.schemas.OrderLineItem.properties.states": >
   Internal field.
 
+".components.schemas.OrderLineItem.properties.price.properties.unitPrice": >
+  //
+
+".components.schemas.OrderLineItem.properties.price.properties.totalPrice": >
+  //
+
+".components.schemas.OrderLineItem.properties.price.properties.quantity": >
+  //
+
+".components.schemas.OrderLineItem.properties.price.properties.calculatedTaxes": >
+  //
+
+".components.schemas.OrderLineItem.properties.price.properties.taxRules": >
+  //
+
+".components.schemas.OrderLineItem.properties.price.properties.referencePrice": >
+  //
+
+".components.schemas.OrderLineItem.properties.price.properties.listPrice.properties.price": >
+  //
+
+".components.schemas.OrderLineItem.properties.price.properties.listPrice.properties.discount": >
+  //
+
+".components.schemas.OrderLineItem.properties.price.properties.listPrice.properties.percentage": >
+  //
+
+".components.schemas.OrderLineItem.properties.price.properties.regulationPrice.properties.price": >
+  //
+
 ".components.schemas.OrderLineItem.properties.priceDefinition": >
   Description of how the price has to be calculated. For example, in percentage or absolute value, etc.
 
@@ -1036,8 +1168,15 @@
 ".components.schemas.OrderLineItem.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
-".components.schemas.OrderLineItem.properties.extensions": >
-  To store additional data to an order line item from extensions.
+".components.schemas.OrderLineItem.properties.extensions.properties.returns.properties.links.properties.related": >
+  //
+
+".components.schemas.OrderLineItem.properties.extensions.properties.returns.properties.data.properties.type": >
+  //
+
+".components.schemas.OrderLineItem.properties.extensions.properties.returns.properties.data.properties.id": >
+  //
+
 
 ".components.schemas.OrderLineItemDownload.properties.id": >
   Unique identity of Order line item downloaded digital products.
@@ -1065,6 +1204,27 @@
 
 ".components.schemas.OrderProductWarehouse.properties.id": >
   Unique identity of order's product warehouse.
+
+".components.schemas.OrderProductWarehouse.properties.versionId": >
+  Unique identity of order product warehouse's version.
+
+".components.schemas.OrderProductWarehouse.properties.orderId": >
+  Unique identity of order.
+
+".components.schemas.OrderProductWarehouse.properties.orderVersionId": >
+  Unique identity of order's version.
+
+".components.schemas.OrderProductWarehouse.properties.productId": >
+  Unique identity of product.
+
+".components.schemas.OrderProductWarehouse.properties.productVersionId": >
+  Unique identity of product's version.
+
+".components.schemas.OrderProductWarehouse.properties.warehouseId": >
+  Unique identity of warehouse.
+
+".components.schemas.OrderProductWarehouse.properties.quantity": >
+  //
 
 ".components.schemas.OrderReturn.properties.id": >
   Unique identity of order return.
@@ -1144,6 +1304,15 @@
 ".components.schemas.OrderReturn.properties.amountNet": >
   Net price of the order.
 
+".components.schemas.OrderReturn.properties.internalComment": >
+  //
+
+".components.schemas.OrderReturn.properties.createdById": >
+  Unique identity of createdBy.
+
+".components.schemas.OrderReturn.properties.updatedById": >
+  Unique identity of updatedBy.
+
 ".components.schemas.OrderReturnLineItem.properties.id": >
   Unique identity of order return line item.
 
@@ -1174,11 +1343,20 @@
 ".components.schemas.OrderReturnLineItem.properties.restockQuantity": >
   Update of stock quantity after the return of certain line items are initiated.
 
+".components.schemas.OrderReturnLineItem.properties.internalComment": >
+  //
+
 ".components.schemas.OrderReturnLineItem.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
 ".components.schemas.OrderReturnLineItem.properties.stateId": >
   Unique identity of state.
+
+".components.schemas.OrderReturnLineItem.properties.price....": >
+  //
+
+".components.schemas.OrderReturnLineItem.properties.reason...": >
+  //
 
 ".components.schemas.OrderReturnLineItemReason.properties.id": >
   Unique identity for reason of return.
@@ -1423,8 +1601,26 @@
 ".components.schemas.OrderWarehouseGroup.properties.id": >
   Unique identity of order warehouse group.
 
+".components.schemas.OrderWarehouseGroup.properties.versionId": >
+  Unique identity of order warehouse group's version.
+
+".components.schemas.OrderWarehouseGroup.properties.orderId": >
+  Unique identity of order.
+
+".components.schemas.OrderWarehouseGroup.properties.orderVersionId": >
+  Unique identity of order's version'.
+
+".components.schemas.OrderWarehouseGroup.properties.warehouseGroupId": >
+  Unique identity of warehouse group.
+
 ".components.schemas.PaymentMethod.properties.id": >
   Unique identity of payment method.
+
+".components.schemas.PaymentMethod.properties.pluginId": >
+  Unique identity of plugin.
+
+".components.schemas.PaymentMethod.properties.handlerIdentifier": >
+  //
 
 ".components.schemas.PaymentMethod.properties.name": >
   Name of the payment method.
@@ -1447,14 +1643,86 @@
 ".components.schemas.PaymentMethod.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
+".components.schemas.PaymentMethod.properties.availabilityRuleId": >
+  Unique identity of rule.
+
 ".components.schemas.PaymentMethod.properties.mediaId": >
   Unique identity of media.
 
 ".components.schemas.PaymentMethod.properties.translated": >
   Contains the translations of all translated fields.
 
+".components.schemas.PaymentMethod.properties.extensions.properties.subscriptions.properties.links.properties.related": >
+  //
+
+".components.schemas.PaymentMethod.properties.extensions.properties.subscriptions.properties.data.properties.type": >
+  //
+
+".components.schemas.PaymentMethod.properties.extensions.properties.subscriptions.properties.data.properties.id": >
+  //
+
 ".components.schemas.Plugin.properties.id": >
   Unique identity of a plugin.
+
+".components.schemas.Plugin.properties.baseClass": >
+  //
+
+".components.schemas.Plugin.properties.name": >
+  //
+
+".components.schemas.Plugin.properties.composerName": >
+  //
+
+".components.schemas.Plugin.properties.autoload": >
+  //
+
+".components.schemas.Plugin.properties.active": >
+  //
+
+".components.schemas.Plugin.properties.managedByComposer": >
+  //
+
+".components.schemas.Plugin.properties.path": >
+  //
+
+".components.schemas.Plugin.properties.author": >
+  //
+
+".components.schemas.Plugin.properties.copyright": >
+  //
+
+".components.schemas.Plugin.properties.license": >
+  //
+
+".components.schemas.Plugin.properties.version": >
+  //
+
+".components.schemas.Plugin.properties.upgradeVersion": >
+  //
+
+".components.schemas.Plugin.properties.installedAt": >
+  //
+
+".components.schemas.Plugin.properties.upgradedAt": >
+  //
+
+".components.schemas.Plugin.properties.label": >
+  //
+
+".components.schemas.Plugin.properties.description": >
+  //
+
+".components.schemas.Plugin.properties.manufacturerLink": >
+  //
+
+".components.schemas.Plugin.properties.supportLink": >
+  //
+
+".components.schemas.Plugin.properties.changelog": >
+  //
+
+".components.schemas.Plugin.properties.customFields": >
+  Additional fields that offer a possibility to add own fields for the different program-areas.
 
 ".components.schemas.Plugin.properties.translated": >
   Contains the translations of all translated fields.
@@ -1492,6 +1760,9 @@
 ".components.schemas.Product.properties.deliveryTimeId": >
   Unique identifier of delivery time.
 
+".components.schemas.Product.properties.featureSetId": >
+  Unique identifier of feature set.
+
 ".components.schemas.Product.properties.canonicalProductId": >
   Unique identifier of canonical product.
 
@@ -1501,6 +1772,9 @@
 ".components.schemas.Product.properties.cmsPageVersionId": >
   Unique identifier of CMS page's version.
 
+".components.schemas.Product.properties.price": >
+  //
+
 ".components.schemas.Product.properties.productNumber": >
   Unique number assigned to individual products. Define rules for automatic assignment of every product creation as per your number range.
 
@@ -1509,6 +1783,9 @@
 
 ".components.schemas.Product.properties.restockTime": >
   The restock time in days indicates how long it will take until a sold out item is back in stock.
+
+".components.schemas.Product.properties.autoIncrement": >
+  //
 
 ".components.schemas.Product.properties.active": >
   When boolean value is `true`, the products are available for selection in the storefront for purchase.
@@ -1522,11 +1799,17 @@
 ".components.schemas.Product.isCloseout": >
   When the value is set to true, the product is hidden when sold out.
 
+".components.schemas.Product.variation": >
+  //
+
 ".components.schemas.Product.displayGroup": >
   Runtime field, cannot be used as part of the criteria.
 
-".components.schemas.Product.mainVariantId": >
-  Unique identity of main variant.
+".components.schemas.Product.variantListingConfig": >
+  //
+
+".components.schemas.Product.variantRestrictions": >
+  //
 
 ".components.schemas.Product.manufacturerNumber": >
   Unique number that describes the manufacturer.
@@ -1552,6 +1835,9 @@
 ".components.schemas.Product.properties.shippingFree": >
   Indicates weather the shipping price is free or not.
 
+".components.schemas.Product.purchasePrices": >
+  //
+
 ".components.schemas.Product.properties.markAsTopseller": >
   Indicates weather the product is top seller or not.
 
@@ -1571,28 +1857,37 @@
   The release date of a product or product model. This can be used to distinguish the exact variant of a product.
 
 ".components.schemas.Product.properties.ratingAverage": >
-  Runtime field, cannot be used as part of the criteria.
+  //
 
 ".components.schemas.Product.properties.categoryTree": >
-  Runtime field, cannot be used as part of the criteria.
+  //
 
 ".components.schemas.Product.properties.propertyIds": >
-  Runtime field, cannot be used as part of the criteria.
+  Unique identity of property.
 
 ".components.schemas.Product.properties.streamIds": >
-  Runtime field, cannot be used as part of the criteria.
+  Unique identity of stream.
 
 ".components.schemas.Product.properties.optionIds": >
-  Runtime field, cannot be used as part of the criteria.
+  Unique identity of options.
+
+".components.schemas.Product.properties.tagIds": >
+  Unique identity of tags.
 
 ".components.schemas.Product.properties.categoryIds": >
-  Runtime field, cannot be used as part of the criteria.
+  Unique identity of category.
 
 ".components.schemas.Product.properties.childCount": >
-  Runtime field, cannot be used as part of the criteria.
+  //
+
+".components.schemas.Product.properties.customFieldSetSelectionActive": >
+  //
 
 ".components.schemas.Product.properties.sales": >
-  Runtime field, cannot be used as part of the criteria.
+  //
+
+".components.schemas.Product.properties.states": >
+  Internal field.
 
 ".components.schemas.Product.properties.metaDescription": >
   A short description of the product for search results listings.
@@ -1618,20 +1913,14 @@
 ".components.schemas.Product.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
-".components.schemas.Product.properties.calculatedPrice": >
-  Runtime field, cannot be used as part of the criteria.
+".components.schemas.Product.mainVariantId": >
+  Unique identity of main variant.
 
-".components.schemas.Product.properties.calculatedPrices": >
-  Runtime field, cannot be used as part of the criteria.
+".components.schemas.Product.slotConfig": >
+  //
 
-".components.schemas.Product.properties.calculatedMaxPurchase": >
-  Runtime field, cannot be used as part of the criteria.
-
-".components.schemas.Product.properties.calculatedCheapestPrice": >
-  Runtime field, cannot be used as part of the criteria.
-
-".components.schemas.Product.properties.isNew": >
-  Runtime field, cannot be used as part of the criteria.
+".components.schemas.Product.customSearchKeywords": >
+  //
 
 ".components.schemas.Product.properties.translated": >
   Contains the translations of all translated fields.
@@ -1639,11 +1928,92 @@
 ".components.schemas.Product.properties.externalReference": >
   External payment provider token.
 
-".components.schemas.Product.properties.states": >
-  Internal field.
-
 ".components.schemas.Product.properties.deliveryTime": >
   Time taken for the product to reach the customer. If a delivery time is defined in the product, it overwrites the delivery time of a shipping method.
+
+".components.schemas.Product.properties.extensions.properties.customPrice.properties.links.properties.related": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.customPrice.properties.data.properties.type": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.customPrice.properties.data.properties.id": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.subscriptions.properties.links.properties.related": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.subscriptions.properties.data.properties.type": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.subscriptions.properties.data.properties.id": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.warehouseGroups.properties.links.properties.related": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.warehouseGroups.properties.data.properties.type": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.warehouseGroups.properties.data.properties.id": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.warehouses.properties.links.properties.related": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.warehouses.properties.data.properties.type": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.warehouses.properties.data.properties.id": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.orderWarehouses.properties.links.properties.related": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.orderWarehouses.properties.data.properties.type": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.orderWarehouses.properties.data.properties.id": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.reviewSummaries.properties.links.properties.related": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.reviewSummaries.properties.data.properties.type": >
+  //
+
+".components.schemas.Product.properties.extensions.properties.reviewSummaries.properties.data.properties.id": >
+  //
+
+".components.schemas.ProductCategory.properties.id": >
+  Unique identity of Product Category.
+
+".components.schemas.ProductCategory.properties.productId": >
+  Unique identity of Product.
+
+".components.schemas.ProductCategory.properties.productVersionId": >
+  Unique identity of Product's version.
+
+".components.schemas.ProductCategory.properties.categoryId": >
+  Unique identity of Category.
+
+".components.schemas.ProductCategory.properties.categoryVersionId": >
+  Unique identity of Category's version.
+
+".components.schemas.ProductCategoryTree.properties.id": >
+  Unique identity of Product Category.
+
+".components.schemas.ProductCategoryTree.properties.productId": >
+  Unique identity of Product.
+
+".components.schemas.ProductCategoryTree.properties.productVersionId": >
+  Unique identity of Product's version.
+
+".components.schemas.ProductCategoryTree.properties.categoryId": >
+  Unique identity of Category.
+
+".components.schemas.ProductCategoryTree.properties.categoryVersionId": >
+  Unique identity of Category's version.
 
 ".components.schemas.ProductConfiguratorSetting.properties.id": >
   Unique identity of Product configurator setting.
@@ -1662,6 +2032,9 @@
 
 ".components.schemas.ProductConfiguratorSetting.properties.optionId": >
   Unique identity of option.
+
+".components.schemas.ProductConfiguratorSetting.properties.price": >
+  //
 
 ".components.schemas.ProductConfiguratorSetting.properties.position": >
   The order of the tabs of your defined product configuration settings in the storefront by entering numerical values like 1,2,3, etc.
@@ -1693,11 +2066,44 @@
 ".components.schemas.ProductCrossSelling.properties.limit": >
   The maximum number of products to be displayed in cross-selling on the item detail page of your item.
 
+".components.schemas.ProductCrossSelling.properties.productId": >
+  Unique identity of product.
+
+".components.schemas.ProductCrossSelling.properties.productVersionId": >
+  Unique identity of product's version.
+
+".components.schemas.ProductCrossSelling.properties.productStreamId": >
+  Unique identity of product stream.
+
 ".components.schemas.ProductCrossSelling.properties.translated": >
   Contains the translations of all translated fields.
 
 ".components.schemas.ProductCrossSellingAssignedProducts.properties.id": >
   Unique identity of Product CrossSelling Assigned Products.
+
+".components.schemas.ProductCrossSellingAssignedProducts.properties.crossSellingId": >
+  Unique identity of Product CrossSelling.
+
+".components.schemas.ProductCrossSellingAssignedProducts.properties.productId": >
+  Unique identity of Product.
+
+".components.schemas.ProductCrossSellingAssignedProducts.properties.productVersionId": >
+  Unique identity of Product's version.
+
+".components.schemas.ProductCrossSellingAssignedProducts.properties.position": >
+  //
+
+".components.schemas.ProductCustomFieldSet.properties.id": >
+  Unique identity of Product Custom Field Set.
+
+".components.schemas.ProductCustomFieldSet.properties.productId": >
+  Unique identity of Product.
+
+".components.schemas.ProductCustomFieldSet.properties.customFieldSetId": >
+  Unique identity of custom Field Set.
+
+".components.schemas.ProductCustomFieldSet.properties.productVersionId": >
+  Unique identity of Product's version.
 
 ".components.schemas.ProductDownload.properties.id": >
   Unique identity downloaded product.
@@ -1723,8 +2129,71 @@
 ".components.schemas.ProductExport.properties.id": >
   Unique identity of Exported Product.
 
+".components.schemas.ProductExport.properties.productStreamId": >
+  Unique identity of product stream .
+
+".components.schemas.ProductExport.properties.storefrontSalesChannelId": >
+  Unique identity of storefront's Sales Channel.
+
+".components.schemas.ProductExport.properties.salesChannelId": >
+  Unique identity of salesChannel.
+
+".components.schemas.ProductExport.properties.salesChannelDomainId": >
+  Unique identity of sales Channel Domain.
+
+".components.schemas.ProductExport.properties.currencyId": >
+  Unique identity of currency.
+
+".components.schemas.ProductExport.properties.fileName": >
+  Name of the file.
+
+".components.schemas.ProductExport.properties.accessKey": >
+  //
+
+".components.schemas.ProductExport.properties.encoding": >
+  //
+
+".components.schemas.ProductExport.properties.fileFormat": >
+  //
+
+".components.schemas.ProductExport.properties.includeVariants": >
+  //
+
+".components.schemas.ProductExport.properties.generateByCronjob": >
+  //
+
+".components.schemas.ProductExport.properties.generatedAt": >
+  //
+
+".components.schemas.ProductExport.properties.interval": >
+  //
+
+".components.schemas.ProductExport.properties.headerTemplate": >
+  //
+
+".components.schemas.ProductExport.properties.bodyTemplate": >
+  //
+
+".components.schemas.ProductExport.properties.footerTemplate": >
+  //
+
+".components.schemas.ProductExport.properties.pausedSchedule": >
+  //
+
+".components.schemas.ProductExport.properties.isRunning": >
+  //
+
 ".components.schemas.ProductFeatureSet.properties.id": >
   Unique identity of product feature set.
+
+".components.schemas.ProductFeatureSet.properties.name": >
+  Name of product feature set.
+
+".components.schemas.ProductFeatureSet.properties.description": >
+  A short description of product feature set.
+
+".components.schemas.ProductFeatureSet.properties.features": >
+  //
 
 ".components.schemas.ProductFeatureSet.properties.translated": >
   Contains the translations of all translated fields.
@@ -1737,6 +2206,9 @@
 
 ".components.schemas.ProductKeywordDictionary.properties.keyword": >
   The keywords that help to search the product.
+
+".components.schemas.ProductKeywordDictionary.properties.reversed": >
+  //
 
 ".components.schemas.ProductManufacturer.properties.id": >
   Unique identity of the Product Manufacturer.
@@ -1783,8 +2255,56 @@
 ".components.schemas.ProductMedia.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
+".components.schemas.ProductOption.properties.id": >
+  Unique identity of the product's price.
+
+".components.schemas.ProductOption.properties.productId": >
+  Unique identity of the product.
+
+".components.schemas.ProductOption.properties.productVersionId": >
+  Unique identity of the product's version.
+
+".components.schemas.ProductOption.properties.optionId": >
+  Unique identity of the option.
+
 ".components.schemas.ProductPrice.properties.id": >
   Unique identity of the product's price.
+
+".components.schemas.ProductPrice.properties.versionId": >
+  Unique identity of the product price's version.
+
+".components.schemas.ProductPrice.properties.productId": >
+  Unique identity of the product.
+
+".components.schemas.ProductPrice.properties.productVersionId": >
+  Unique identity of the product's version.
+
+".components.schemas.ProductPrice.properties.ruleId": >
+  Unique identity of the rule.
+
+".components.schemas.ProductPrice.properties.price": >
+  //
+
+".components.schemas.ProductPrice.properties.quantityStart": >
+  //
+
+".components.schemas.ProductPrice.properties.quantityEnd": >
+  //
+
+".components.schemas.ProductPrice.properties.customFields": >
+  Additional fields that offer a possibility to add own fields for the different program-areas.
+
+".components.schemas.ProductProperty.properties.id": >
+  Unique identity of the product property.
+
+".components.schemas.ProductProperty.properties.productId": >
+  Unique identity of the product.
+
+".components.schemas.ProductProperty.properties.productVersionId": >
+  Unique identity of the product's version.
+
+".components.schemas.ProductProperty.properties.optionId": >
+  Unique identity of the option.
 
 ".components.schemas.ProductReview.properties.id": >
   Unique identity of the product's review.
@@ -1795,11 +2315,20 @@
 ".components.schemas.ProductReview.properties.productVersionId": >
   Unique identity of the product's version.
 
+".components.schemas.ProductReview.properties.customerId": >
+  Unique identity of the customer.
+
 ".components.schemas.ProductReview.properties.salesChannelId": >
   Unique identity of the sales channel.
 
 ".components.schemas.ProductReview.properties.languageId": >
   Unique identity of the language.
+
+".components.schemas.ProductReview.properties.externalUser": >
+  //
+
+".components.schemas.ProductReview.properties.externalEmail": >
+  //
 
 ".components.schemas.ProductReview.properties.title": >
   Title of product review.
@@ -1825,6 +2354,9 @@
 ".components.schemas.ProductReviewSummary.properties.productId": >
   Unique identity of products.
 
+".components.schemas.ProductReviewSummary.properties.productVersionId": >
+  Unique identity of product's version.
+
 ".components.schemas.ProductReviewSummary.properties.salesChannelId": >
   Unique identity of sales channel.
 
@@ -1840,20 +2372,77 @@
 ".components.schemas.ProductSearchConfig.properties.id": >
   Unique identity of Product Search Configuration.
 
+".components.schemas.ProductSearchConfig.properties.languageId": >
+  Unique identity of language.
+
+".components.schemas.ProductSearchConfig.properties.andLogic": >
+  //
+
+".components.schemas.ProductSearchConfig.properties.minSearchLength": >
+  //
+
+".components.schemas.ProductSearchConfig.properties.excludedTerms": >
+  //
+
 ".components.schemas.ProductSearchConfigField.properties.id": >
   Unique identity of Product Search Configuration field.
+
+".components.schemas.ProductSearchConfigField.properties.searchConfigId": >
+  Unique identity of Search Configuration.
+
+".components.schemas.ProductSearchConfigField.properties.customFieldId": >
+  Unique identity of custom field.
+
+".components.schemas.ProductSearchConfigField.properties.field": >
+  //
+
+".components.schemas.ProductSearchConfigField.properties.tokenize": >
+  //
+
+".components.schemas.ProductSearchConfigField.properties.searchable": >
+  //
+
+".components.schemas.ProductSearchConfigField.properties.ranking": >
+  //
 
 ".components.schemas.ProductSearchKeyword.properties.id": >
   Unique identity of Product Search Keyword.
 
+".components.schemas.ProductSearchKeyword.properties.versionId": >
+  Unique identity of ProductSeachKeyword's version.
+
+".components.schemas.ProductSearchKeyword.properties.languageId": >
+  Unique identity of language.
+
+".components.schemas.ProductSearchKeyword.properties.productId": >
+  Unique identity of Product.
+
+".components.schemas.ProductSearchKeyword.properties.productVersionId": >
+  Unique identity of Product's version.
+
+".components.schemas.ProductSearchKeyword.properties.keyword": >
+  //
+
+".components.schemas.ProductSearchKeyword.properties.ranking": >
+  //
+
 ".components.schemas.ProductSorting.properties.id": >
   Unique identity of Product sorting.
+
+".components.schemas.ProductSorting.properties.locked": >
+  //
 
 ".components.schemas.ProductSorting.properties.key": >
   A keyword associated to identify product sorting.
 
 ".components.schemas.ProductSorting.properties.priority": >
   A numerical value to prioritize the product sorting.
+
+".components.schemas.ProductSorting.properties.active": >
+  //
+
+".components.schemas.ProductSorting.properties.fields": >
+  //
 
 ".components.schemas.ProductSorting.properties.label": >
   Label given to a product sorting.
@@ -1863,6 +2452,12 @@
 
 ".components.schemas.ProductStream.properties.id": >
   Unique identity of product stream.
+
+".components.schemas.ProductStream.properties.apiFilter": >
+  //
+
+".components.schemas.ProductStream.properties.invalid": >
+  //
 
 ".components.schemas.ProductStream.properties.name": >
   Name of the Dynamic Group to be created.
@@ -1878,6 +2473,57 @@
 
 ".components.schemas.ProductStreamFilter.properties.id": >
   Unique identity of product stream filter.
+
+".components.schemas.ProductStreamFilter.properties.productStreamId": >
+  Unique identity of product stream.
+
+".components.schemas.ProductStreamFilter.properties.parentId": >
+  Unique identity of product's parent.
+
+".components.schemas.ProductStreamFilter.properties.type": >
+  //
+
+".components.schemas.ProductStreamFilter.properties.field": >
+  //
+
+".components.schemas.ProductStreamFilter.properties.operator": >
+  //
+
+".components.schemas.ProductStreamFilter.properties.value": >
+  //
+
+".components.schemas.ProductStreamFilter.properties.parameters": >
+  //
+
+".components.schemas.ProductStreamFilter.properties.position": >
+  //
+
+".components.schemas.ProductStreamFilter.properties.customFields": >
+  Additional fields that offer a possibility to add own fields for the different program-areas.
+
+".components.schemas.ProductStreamMapping.properties.id": >
+  Unique identity of ProductStreamMapping.
+
+".components.schemas.ProductStreamMapping.properties.productId": >
+  Unique identity of Product.
+
+".components.schemas.ProductStreamMapping.properties.productVersionId": >
+  Unique identity of Product's version.
+
+".components.schemas.ProductStreamMapping.properties.productStreamId": >
+  Unique identity of ProductStream.
+
+".components.schemas.ProductTag.properties.id": >
+  Unique identity of Product tag.
+
+".components.schemas.ProductTag.properties.productId": >
+  Unique identity of Product.
+
+".components.schemas.ProductTag.properties.productVersionId": >
+  Unique identity of Product's version.
+
+".components.schemas.ProductTag.properties.tagId": >
+  Unique identity of tag.
 
 ".components.schemas.ProductVisibility.properties.id": >
   Unique identity of product visibility.
