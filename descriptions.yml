@@ -850,6 +850,9 @@
 ".components.schemas.OrderAddress.properties.orderVersionId": >
   Unique identity of order's version.
 
+".components.schemas.OrderAddress.properties.salutationId": >
+  Unique identity of salutation.
+
 ".components.schemas.OrderAddress.properties.firstName": >
   First name of the customer.
 
@@ -1177,6 +1180,14 @@
 ".components.schemas.OrderLineItem.properties.extensions.properties.returns.properties.data.properties.id": >
   //
 
+".components.schemas.OrderLineItem.properties.extensions.properties.state.properties.links.properties.related": >
+  //
+
+".components.schemas.OrderLineItem.properties.extensions.properties.state.properties.data.properties.type": >
+  //
+
+".components.schemas.OrderLineItem.properties.extensions.properties.state.properties.data.properties.id": >
+  //
 
 ".components.schemas.OrderLineItemDownload.properties.id": >
   Unique identity of Order line item downloaded digital products.
@@ -1337,6 +1348,36 @@
 ".components.schemas.OrderReturnLineItem.properties.quantity": >
   Number of line items returned.
 
+".components.schemas.OrderReturnLineItem.properties.shippingCosts.properties.unitPrice": >
+  Shipping cost of product per item (where, quantity=1).
+
+".components.schemas.OrderReturnLineItem.properties.shippingCosts.properties.totalPrice": >
+  Shipping cost of product based on quantity.
+
+".components.schemas.OrderReturnLineItem.properties.shippingCosts.properties.quantity": >
+  Number of items of each product.
+
+".components.schemas.OrderReturnLineItem.properties.shippingCosts.properties.calculatedTaxes": >
+  Contains calculated taxes based on shipping costs/methods.
+
+".components.schemas.OrderReturnLineItem.properties.shippingCosts.properties.taxRules": >
+  Pricing based on multiple taxes.
+
+".components.schemas.OrderReturnLineItem.properties.shippingCosts.properties.referencePrice": >
+  Original cost price of the product.
+
+".components.schemas.OrderReturnLineItemReturn.properties.shippingCosts.properties.listPrice.properties.price": >
+  Price of each line item.
+
+".components.schemas.OrderReturnLineItem.properties.shippingCosts.properties.listPrice.properties.discount": >
+  Absolute discount on each line item.
+
+".components.schemas.OrderReturnLineItem.properties.shippingCosts.properties.listPrice.properties.percentage": >
+  Discount in percentage.
+
+".components.schemas.OrderReturnLineItem.properties.shippingCosts.properties.regulationPrice.properties.price": >
+  Contains cheapest price from last 30 days as per EU law.
+
 ".components.schemas.OrderReturnLineItem.properties.refundAmount": >
   Amount to be refunded.
 
@@ -1351,9 +1392,6 @@
 
 ".components.schemas.OrderReturnLineItem.properties.stateId": >
   Unique identity of state.
-
-".components.schemas.OrderReturnLineItem.properties.price....": >
-  //
 
 ".components.schemas.OrderReturnLineItem.properties.reason...": >
   //
@@ -1777,9 +1815,6 @@
 
 ".components.schemas.Product.properties.productNumber": >
   Unique number assigned to individual products. Define rules for automatic assignment of every product creation as per your number range.
-
-".components.schemas.Product.stock": >
-  Indicate the number of product/s currently in stock. As soon as the order status of an order is set to completed, the stock is reduced.
 
 ".components.schemas.Product.properties.restockTime": >
   The restock time in days indicates how long it will take until a sold out item is back in stock.
