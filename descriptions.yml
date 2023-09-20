@@ -644,7 +644,7 @@
   Unique identity of order version.
 
 ".components.schemas.Order.properties.autoIncrement": >
-  //
+  Internal field.
 
 ".components.schemas.Order.properties.orderNumber": >
   Unique number associated with every order.
@@ -677,10 +677,10 @@
   Gross price of the product.
 
 ".components.schemas.Order.properties.price.properties.calculatedTaxes": >
-  //
+  Contains calculated taxes based on shipping costs/methods.
 
 ".components.schemas.Order.properties.price.properties.taxRules": >
- //
+  Pricing based on multiple taxes.
 
 ".components.schemas.Order.properties.price.properties.positionPrice": >
   Price of each line item in the cart multiplied by its quantity excluding charges like shipping cost, rules, taxes etc.
@@ -770,22 +770,22 @@
   Unique identity of updatedBy.
 
 ".components.schemas.Order.properties.itemRounding.properties.decimals": >
-  //
+  It defines the cash round off applied on the cart line items to the nearest decimal points. If set to 2, it rounds off to two significant decimal points.
 
 ".components.schemas.Order.properties.itemRounding.properties.interval": >
-  //
+  The interval of item rounding defines the cash rounding interval in terms of how high or low should it be rounded. For example, 0.05 signifies the value gets rounded off to nearest 5 cents.
 
 ".components.schemas.Order.properties.itemRounding.properties.roundForNet": >
-  //
+  The cash rounding applied on net prices.
 
 ".components.schemas.Order.properties.totalRounding.properties.decimals": >
-  //
+  It defines the cash round off applied on the cart line items to the nearest decimal points. If set to 2, it rounds off to two significant decimal points.
 
 ".components.schemas.Order.properties.totalRounding.properties.interval": >
-  //
+  The interval of item rounding defines the cash rounding interval in terms of how high or low should it be rounded. For example, 0.05 signifies the value gets rounded off to nearest 5 cents.
 
 ".components.schemas.Order.properties.totalRounding.properties.roundForNet": >
-  //
+  The cash rounding applied on net prices. 
 
 ".components.schemas.Order.properties.extensions.properties.subscriptions.properties.links.properties.related": >
   //
@@ -935,7 +935,7 @@
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
 ".components.schemas.OrderCustomer.properties.remoteAddress": >
-  //
+  Anonymous IP address of the customer for last session.
 
 ".components.schemas.OrderDelivery.properties.id": >
   Unique identity of Order's delivery.
@@ -1124,19 +1124,19 @@
   Internal field.
 
 ".components.schemas.OrderLineItem.properties.price.properties.unitPrice": >
-  //
+  Price of product per item (where, quantity=1).
 
 ".components.schemas.OrderLineItem.properties.price.properties.totalPrice": >
-  //
+  Cost of product based on quantity.
 
 ".components.schemas.OrderLineItem.properties.price.properties.quantity": >
-  //
+  Number of items of each product.
 
 ".components.schemas.OrderLineItem.properties.price.properties.calculatedTaxes": >
-  //
+  Contains calculated taxes based on shipping costs/methods.
 
 ".components.schemas.OrderLineItem.properties.price.properties.taxRules": >
-  //
+  Pricing based on multiple taxes.
 
 ".components.schemas.OrderLineItem.properties.price.properties.referencePrice": >
   //
@@ -1235,7 +1235,7 @@
   Unique identity of warehouse.
 
 ".components.schemas.OrderProductWarehouse.properties.quantity": >
-  //
+  Number of items of each product.
 
 ".components.schemas.OrderReturn.properties.id": >
   Unique identity of order return.
@@ -1393,19 +1393,16 @@
 ".components.schemas.OrderReturnLineItem.properties.stateId": >
   Unique identity of state.
 
-".components.schemas.OrderReturnLineItem.properties.reason...": >
-  //
-
-".components.schemas.OrderReturnLineItemReason.properties.id": >
+".components.schemas.OrderReturnLineItemReason.properties.reason.properties.id": >
   Unique identity for reason of return.
 
-".components.schemas.OrderReturnLineItemReason.properties.reasonKey": >
+".components.schemas.OrderReturnLineItemReason.properties.reason.properties.reasonKey": >
   Unique key associated with reason for the order return. 
 
-".components.schemas.OrderReturnLineItemReason.properties.content": >
+".components.schemas.OrderReturnLineItemReason.properties.reason.properties.content": >
   Description of the reason of return.
 
-".components.schemas.OrderReturnLineItemReason.properties.translated": >
+".components.schemas.OrderReturnLineItemReason.properties..reason.properties.translated": >
   Contains the translations of all translated fields.
 
 ".components.schemas.OrderTag.properties.id": >
@@ -1658,7 +1655,7 @@
   Unique identity of plugin.
 
 ".components.schemas.PaymentMethod.properties.handlerIdentifier": >
-  //
+  Internal field that contains system identifier details for payment methods like Paypal.
 
 ".components.schemas.PaymentMethod.properties.name": >
   Name of the payment method.
@@ -1706,7 +1703,7 @@
   //
 
 ".components.schemas.Plugin.properties.name": >
-  //
+  Unique name of the plugin.
 
 ".components.schemas.Plugin.properties.composerName": >
   //
@@ -1715,7 +1712,7 @@
   //
 
 ".components.schemas.Plugin.properties.active": >
-  //
+  When boolean value is `true`, the plugin is available.
 
 ".components.schemas.Plugin.properties.managedByComposer": >
   //
@@ -1748,7 +1745,7 @@
   //
 
 ".components.schemas.Plugin.properties.description": >
-  //
+  A short description about the plugin.
 
 ".components.schemas.Plugin.properties.manufacturerLink": >
   //
@@ -1820,13 +1817,10 @@
   The restock time in days indicates how long it will take until a sold out item is back in stock.
 
 ".components.schemas.Product.properties.autoIncrement": >
-  //
+  Internal field.
 
 ".components.schemas.Product.properties.active": >
   When boolean value is `true`, the products are available for selection in the storefront for purchase.
-
-".components.schemas.Product.properties.availableStock": >
-  Indicates the number of products still available. This value results from the stock minus the open orders.
 
 ".components.schemas.Product.available": >
   Indicates weather the product is available or not.
@@ -1948,23 +1942,20 @@
 ".components.schemas.Product.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
-".components.schemas.Product.mainVariantId": >
-  Unique identity of main variant.
-
 ".components.schemas.Product.slotConfig": >
   //
 
 ".components.schemas.Product.customSearchKeywords": >
   //
 
+".components.schemas.Product.properties.availableStock": >
+  Indicates the number of products still available. This value results from the stock minus the open orders.
+
+".components.schemas.Product.properties.stock": >
+  Indicates the number of products available.
+
 ".components.schemas.Product.properties.translated": >
   Contains the translations of all translated fields.
-
-".components.schemas.Product.properties.externalReference": >
-  External payment provider token.
-
-".components.schemas.Product.properties.deliveryTime": >
-  Time taken for the product to reach the customer. If a delivery time is defined in the product, it overwrites the delivery time of a shipping method.
 
 ".components.schemas.Product.properties.extensions.properties.customPrice.properties.links.properties.related": >
   //
@@ -2444,7 +2435,7 @@
   Unique identity of Product Search Keyword.
 
 ".components.schemas.ProductSearchKeyword.properties.versionId": >
-  Unique identity of ProductSeachKeyword's version.
+  Unique identity of ProductSearchKeyword's version.
 
 ".components.schemas.ProductSearchKeyword.properties.languageId": >
   Unique identity of language.
@@ -2474,7 +2465,7 @@
   A numerical value to prioritize the product sorting.
 
 ".components.schemas.ProductSorting.properties.active": >
-  //
+  When boolean value is `true`, the product sorting is enabled.
 
 ".components.schemas.ProductSorting.properties.fields": >
   //
@@ -2549,25 +2540,115 @@
   Unique identity of ProductStream.
 
 ".components.schemas.ProductTag.properties.id": >
-  Unique identity of Product tag.
+  Unique identity of product tag.
 
 ".components.schemas.ProductTag.properties.productId": >
-  Unique identity of Product.
+  Unique identity of product.
 
-".components.schemas.ProductTag.properties.productVersionId": >
-  Unique identity of Product's version.
+".components.schemas.ProductTag.properties.parentVersionId": >
+  Unique identity of product's parent.
 
 ".components.schemas.ProductTag.properties.tagId": >
-  Unique identity of tag.
+  //
 
 ".components.schemas.ProductVisibility.properties.id": >
   Unique identity of product visibility.
 
+".components.schemas.ProductVisibility.properties.productId": >
+  Unique identity of product visibility.
+
+".components.schemas.ProductVisibility.properties.productVersionId": >
+  Unique identity of product visibility.
+
+".components.schemas.ProductVisibility.properties.salesChannelId": >
+  Unique identity of product visibility.
+
+".components.schemas.ProductVisibility.properties.visibility": >
+  Unique identity of product visibility.
+
 ".components.schemas.ProductWarehouse.properties.id": >
+  Unique identity of product warehouse.
+
+".components.schemas.ProductWarehouse.properties.productId": >
+  Unique identity of product.
+
+".components.schemas.ProductWarehouse.properties.productVersionId": >
+  Unique identity of product's version.
+
+".components.schemas.ProductWarehouse.properties.warehouseId": >
+  Unique identity of warehouse.
+
+".components.schemas.ProductWarehouse.properties.stock": >
+  //
+
+".components.schemas.ProductWarehouseGroup.properties.id": >
   Unique identity of warehouse of product.
+
+".components.schemas.ProductWarehouseGroup.properties.productId": >
+  Unique identity of product.
+
+".components.schemas.ProductWarehouseGroup.properties.productVersionId": >
+  Unique identity of product's version.
+
+".components.schemas.ProductWarehouseGroup.properties.warehouseGroupId": >
+  Unique identity of warehouse group.
 
 ".components.schemas.Promotion.properties.id": >
   Unique identity of promotion.
+
+".components.schemas.Promotion.properties.name": >
+  Name of the promotion.
+
+".components.schemas.Promotion.properties.active": >
+  When boolean value is `true`, the promotions are available for selection in the storefront for purchase.
+
+".components.schemas.Promotion.properties.validFrom": >
+  //
+
+".components.schemas.Promotion.properties.validUntil": >
+  //
+
+".components.schemas.Promotion.properties.maxRedemptionsGlobal": >
+  //
+
+".components.schemas.Promotion.properties.maxRedemptionsPerCustomer": >
+  //
+
+".components.schemas.Promotion.properties.priority": >
+  //
+
+".components.schemas.Promotion.properties.exclusive": >
+  //
+
+".components.schemas.Promotion.properties.code": >
+  //
+
+".components.schemas.Promotion.properties.useCodes": >
+  //
+
+".components.schemas.Promotion.properties.useIndividualCodes": >
+  //
+
+".components.schemas.Promotion.properties.individualCodePattern": >
+  //
+
+".components.schemas.Promotion.properties.useSetGroups": >
+  //
+
+".components.schemas.Promotion.properties.customerRestriction": >
+  //
+
+".components.schemas.Promotion.properties.preventCombination": >
+  //
+
+".components.schemas.Promotion.properties.orderCount": >
+  //
+
+".components.schemas.Promotion.properties.ordersPerCustomerCount": >
+  //
+
+".components.schemas.Promotion.properties.exclusionIds": >
+  //
 
 ".components.schemas.Promotion.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -2575,20 +2656,143 @@
 ".components.schemas.Promotion.properties.translated": >
   Contains the translations of all translated fields.
 
+".components.schemas.PromotionCartRule.properties.id": >
+  Unique identity of promotion cart rule.
+
+".components.schemas.PromotionCartRule.properties.promotionId": >
+  Unique identity of promotion.
+
+".components.schemas.PromotionCartRule.properties.ruleId": >
+  Unique identity of rule.
+
 ".components.schemas.PromotionDiscount.properties.id": >
   Unique identity of promotion discount.
+
+".components.schemas.PromotionDiscount.properties.promotionId": >
+  Unique identity of promotion.
+
+".components.schemas.PromotionDiscount.properties.scope": >
+  //
+
+".components.schemas.PromotionDiscount.properties.type": >
+  //
+
+".components.schemas.PromotionDiscount.properties.value": >
+  //
+
+".components.schemas.PromotionDiscount.properties.considerAdvancedRules": >
+  //
+
+".components.schemas.PromotionDiscount.properties.maxValue": >
+  //
+
+".components.schemas.PromotionDiscount.properties.sorterKey": >
+  //
+
+".components.schemas.PromotionDiscount.properties.applierKey": >
+  //
+
+".components.schemas.PromotionDiscount.properties.usageKey": >
+  //
+
+".components.schemas.PromotionDiscount.properties.pickerKey": >
+  //
 
 ".components.schemas.PromotionDiscountPrices.properties.id": >
   Unique identity of promotion discount price.
 
+".components.schemas.PromotionDiscountPrices.properties.discountId": >
+  Unique identity of discount.
+
+".components.schemas.PromotionDiscountPrices.properties.currencyId": >
+  Unique identity of currency.
+
+".components.schemas.PromotionDiscountPrices.properties.price": >
+  //
+
+".components.schemas.PromotionDiscountRule.properties.id": >
+  Unique identity of promotion discount price.
+
+".components.schemas.PromotionDiscountRule.properties.discountId": >
+  Unique identity of discount.
+
+".components.schemas.PromotionDiscountRule.properties.ruleId": >
+  Unique identity of rule.
+
 ".components.schemas.PromotionIndividualCode.properties.id": >
   Unique identity of promotion individual code.
+
+".components.schemas.PromotionIndividualCode.properties.promotionId": >
+  Unique identity of promotion.
+
+".components.schemas.PromotionIndividualCode.properties.code": >
+  Promotion code.
+
+".components.schemas.PromotionIndividualCode.properties.payload": >
+  //
+
+".components.schemas.PromotionOrderRule.properties.id": >
+  Unique identity of promotion order rule.
+
+".components.schemas.PromotionOrderRule.properties.promotionId": >
+  Unique identity of promotion.
+
+".components.schemas.PromotionOrderRule.properties.ruleId": >
+  Unique identity of rule.
+
+".components.schemas.PromotionPersonaCustomer.properties.id": >
+  Unique identity of PromotionPersonaCustomer.
+
+".components.schemas.PromotionPersonaCustomer.properties.promotionId": >
+  Unique identity of promotion.
+
+".components.schemas.PromotionPersonaCustomer.properties.customerId": >
+  Unique identity of customer.
+
+".components.schemas.PromotionPersonaRule.properties.id": >
+  Unique identity of PromotionPersonaRule.
+
+".components.schemas.PromotionPersonaRule.properties.promotionId": >
+  Unique identity of promotion.
+
+".components.schemas.PromotionPersonaRule.properties.ruleId": >
+  Unique identity of rule.
 
 ".components.schemas.PromotionSalesChannel.properties.id": >
   Unique identity of promotion on sales channel.
 
+".components.schemas.PromotionSalesChannel.properties.promotionId": >
+  Unique identity of promotion.
+
+".components.schemas.PromotionSalesChannel.properties.salesChannelId": >
+  Unique identity of sales channel.
+
+".components.schemas.PromotionSalesChannel.properties.priority": >
+  //
+
 ".components.schemas.PromotionSetgroup.properties.id": >
   Unique identity of promotion set group.
+
+".components.schemas.PromotionSetgroup.properties.promotionId": >
+  Unique identity of promotion.
+
+".components.schemas.PromotionSetgroup.properties.packagerKey": >
+  //
+
+".components.schemas.PromotionSetgroup.properties.sorterKey": >
+  //
+
+".components.schemas.PromotionSetgroup.properties.value": >
+  //
+
+".components.schemas.PromotionSetgroupRule.properties.id": >
+  Unique identity of promotion set group rule.
+
+".components.schemas.PromotionSetgroupRule.properties.setgroupId": >
+  Unique identity of set group.
+
+".components.schemas.PromotionSetgroupRule.properties.ruleId": >
+  Unique identity of rule.
 
 ".components.schemas.PropertyGroup.properties.id": >
   Unique identity of property group.
@@ -2650,20 +2854,92 @@
 ".components.schemas.Rule.properties.name": >
   Name of the rule defined.
 
+".components.schemas.Rule.properties.priority": >
+  //
+
 ".components.schemas.Rule.properties.description": >
   Description of the rule.
+
+".components.schemas.Rule.properties.invalid": >
+  //
+
+".components.schemas.Rule.properties.areas": >
+  //
 
 ".components.schemas.Rule.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
+".components.schemas.Rule.properties.moduleTypes": >
+  //
+
 ".components.schemas.Rule.properties.extensions": >
   To store additional data to a rule from extensions.
+
+".components.schemas.Rule.properties.extensions.properties.subscriptionPlans.properties.links.properties.related": >
+  //
+
+".components.schemas.Rule.properties.extensions.properties.subscriptionPlans.properties.data.properties.type": >
+  //
+
+".components.schemas.Rule.properties.extensions.properties.subscriptionPlans.properties.data.properties.id": >
+  //
+
+".components.schemas.Rule.properties.extensions.properties.subscriptionIntervals.properties.links.properties.related": >
+  //
+
+".components.schemas.Rule.properties.extensions.properties.subscriptionIntervals.properties.data.properties.type": >
+  //
+
+".components.schemas.Rule.properties.extensions.properties.subscriptionIntervals.properties.data.properties.id": >
+  //
+
+".components.schemas.Rule.properties.extensions.properties.warehouseGroup.properties.links.properties.related": >
+  //
+
+".components.schemas.Rule.properties.extensions.properties.warehouseGroup.properties.data.properties.type": >
+  //
+
+".components.schemas.Rule.properties.extensions.properties.warehouseGroup.properties.data.properties.id": >
+  //
 
 ".components.schemas.RuleCondition.properties.id": >
   Unique identity of rule condition.
 
+".components.schemas.RuleCondition.properties.type": >
+  //
+
+".components.schemas.RuleCondition.properties.ruleId": >
+  Unique identity of rule.
+
+".components.schemas.RuleCondition.properties.scriptId": >
+  Unique identity of script.
+
+".components.schemas.RuleCondition.properties.parentId": >
+  Unique identity of parent.
+
+".components.schemas.RuleCondition.properties.value": >
+  //
+
+".components.schemas.RuleCondition.properties.position": >
+  //
+
+".components.schemas.RuleCondition.properties.customFields": >
+  //
+
+".components.schemas.RuleTag.properties.id": >
+  Unique identity of rule tag.
+
+".components.schemas.RuleTag.properties.ruleId": >
+  Unique identity of rule.
+
+".components.schemas.RuleTag.properties.tagId": >
+  Unique identity of tag.
+
 ".components.schemas.SalesChannel.properties.id": >
   Unique identity of sales channel.
+
+".components.schemas.SalesChannel.properties.typeId": >
+  Unique identity of type.
 
 ".components.schemas.SalesChannel.properties.languageId": >
   Unique identity of language used.
@@ -2681,6 +2957,9 @@
   Unique identity of shipping method.
 
 ".components.schemas.SalesChannel.properties.countryId": >
+  Unique identity of country.
+
+".components.schemas.SalesChannel.properties.analyticsId": >
   Unique identity of country.
 
 ".components.schemas.SalesChannel.properties.navigationCategoryId": >
@@ -2719,6 +2998,12 @@
 ".components.schemas.SalesChannel.properties.taxCalculationType": >
   Tax calculation types are `horizontal` and `vertical`.
 
+".components.schemas.SalesChannel.properties.accessKey": >
+  //
+
+".components.schemas.SalesChannel.properties.configuration": >
+  //
+
 ".components.schemas.SalesChannel.properties.active": >
   When boolean value is `true`, the sales channel is enabled.
 
@@ -2728,14 +3013,92 @@
 ".components.schemas.SalesChannel.properties.maintenance": >
   When `true`, it indicates that the sales channel is undergoing maintenance, and shopping is temporarily unavailable during this period.
 
+".components.schemas.SalesChannel.properties.maintenanceIpWhitelist": >
+  //
+
 ".components.schemas.SalesChannel.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
+
+".components.schemas.SalesChannel.properties.paymentMethodIds": >
+  Unique identity of payment method.
+
+".components.schemas.SalesChannel.properties.homeCmsPageId": >
+  Unique identity of home CMS page.
+
+".components.schemas.SalesChannel.properties.homeCmsPageVersionId": >
+  Unique identity of home CMS page's version.
+
+".components.schemas.SalesChannel.properties.homeSlotConfig": >
+  //
+
+".components.schemas.SalesChannel.properties.homeEnabled": >
+  //
+
+".components.schemas.SalesChannel.properties.homeName": >
+  //
+
+".components.schemas.SalesChannel.properties.homeMetaTitle": >
+  //
+
+".components.schemas.SalesChannel.properties.homeMetaDescription": >
+  //
+
+".components.schemas.SalesChannel.properties.homeKeywords": >
+  //
 
 ".components.schemas.SalesChannel.properties.translated": >
   Contains the translations of all translated fields.
 
+".components.schemas.SalesChannel.properties.extensions.properties.themes.properties.links.properties.related": >
+  //
+
+".components.schemas.SalesChannel.properties.extensions.properties.themes.properties.data.properties.type": >
+  //
+
+".components.schemas.SalesChannel.properties.extensions.properties.themes.properties.data.properties.id": >
+  //
+
+".components.schemas.SalesChannel.properties.extensions.properties.subscriptions.properties.links.properties.related": >
+  //
+
+".components.schemas.SalesChannel.properties.extensions.properties.subscriptions.properties.data.properties.type": >
+  //
+
+".components.schemas.SalesChannel.properties.extensions.properties.subscriptions.properties.data.properties.id": >
+  //
+
 ".components.schemas.SalesChannelAnalytics.properties.id": >
   Unique identity of sales channel analytics.
+
+".components.schemas.SalesChannelAnalytics.properties.trackingId": >
+  Unique identity for tracking.
+
+".components.schemas.SalesChannelAnalytics.properties.active": >
+  When boolean value is `true`, the sales channel analytics are enabled.
+
+".components.schemas.SalesChannelAnalytics.properties.trackOrders": >
+  //
+
+".components.schemas.SalesChannelAnalytics.properties.anonymizeIp": >
+  Unique identity of anonymize.
+
+".components.schemas.SalesChannelCountry.properties.id": >
+  Unique identity of sales channel country.
+
+".components.schemas.SalesChannelCountry.properties.salesChannelId": >
+  Unique identity of sales channel.
+
+".components.schemas.SalesChannelCountry.properties.countryId": >
+  Unique identity of country.
+
+".components.schemas.SalesChannelCurrency.properties.id": >
+  Unique identity of sales channel currency.
+
+".components.schemas.SalesChannelCurrency.properties.salesChannelId": >
+  Unique identity of sales channel.
+
+".components.schemas.SalesChannelCurrency.properties.currencyId": >
+  Unique identity of currency.
 
 ".components.schemas.SalesChannelDomain.properties.id": >
   Unique identity of sales channel domain.
@@ -2761,8 +3124,59 @@
 ".components.schemas.SalesChannelDomain.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
+".components.schemas.SalesChannelLanguage.properties.id": >
+  Unique identity of sales channel language.
+
+".components.schemas.SalesChannelLanguage.properties.salesChannelId": >
+  Unique identity of sales channel.
+
+".components.schemas.SalesChannelLanguage.properties.languageId": >
+  Unique identity of language.
+
+".components.schemas.SalesChannelPaymentMethod.properties.id": >
+  Unique identity of Sales Channel Payment Method.
+
+".components.schemas.SalesChannelPaymentMethod.properties.salesChannelId": >
+  Unique identity of sales channel.
+
+".components.schemas.SalesChannelPaymentMethod.properties.paymentMethodId": >
+  Unique identity of payment method.
+
+".components.schemas.SalesChannelShippingMethod.properties.id": >
+  Unique identity of Sales Channel Shipping Method.
+
+".components.schemas.SalesChannelShippingMethod.properties.salesChannelId": >
+  Unique identity of sales channel.
+
+".components.schemas.SalesChannelShippingMethod.properties.shippingMethodId": >
+  Unique identity of shipping method.
+
 ".components.schemas.SalesChannelType.properties.id": >
   Unique identity of sales channel type.
+
+".components.schemas.SalesChannelType.properties.coverUrl": >
+  //
+
+".components.schemas.SalesChannelType.properties.iconName": >
+  //
+
+".components.schemas.SalesChannelType.properties.screenshotUrls": >
+  //
+
+".components.schemas.SalesChannelType.properties.name": >
+  //
+
+".components.schemas.SalesChannelType.properties.manufacturer": >
+  //
+
+".components.schemas.SalesChannelType.properties.description": >
+  //
+
+".components.schemas.SalesChannelType.properties.descriptionLong": >
+  //
+
+".components.schemas.SalesChannelType.properties.customFields": >
+  //
 
 ".components.schemas.SalesChannelType.properties.translated": >
   Contains the translations of all translated fields.
@@ -2785,11 +3199,62 @@
 ".components.schemas.Salutation.properties.translated": >
   Contains the translations of all translated fields.
 
+".components.schemas.Salutation.properties.extensions.subscriptionCustomers.properties.links.properties.related": >
+  //
+
+".components.schemas.Salutation.properties.extensions.subscriptionCustomers.properties.data.properties.type": >
+  //
+
+".components.schemas.Salutation.properties.extensions.subscriptionCustomers.properties.data.properties.id": >
+  //
+
+".components.schemas.Salutation.properties.extensions.subscriptionCustomerAddresses.properties.links.properties.related": >
+  //
+
+".components.schemas.Salutation.properties.extensions.subscriptionCustomerAddresses.properties.data.properties.type": >
+  //
+
+".components.schemas.Salutation.properties.extensions.subscriptionCustomerAddresses.properties.data.properties.id": >
+  //
+
 ".components.schemas.ScheduledTask.properties.id": >
   Unique identity of scheduled task.
 
+".components.schemas.ScheduledTask.properties.name": >
+  Name of the scheduled task.
+
+".components.schemas.ScheduledTask.properties.scheduledTaskClass": >
+  Unique identity of scheduled task.
+
+".components.schemas.ScheduledTask.properties.runInterval": >
+  //
+
+".components.schemas.ScheduledTask.properties.status": >
+  //
+
+".components.schemas.ScheduledTask.properties.lastExecutionTime": >
+  //
+
+".components.schemas.ScheduledTask.properties.nextExecutionTime": >
+  //
+
+".components.schemas.ScheduledTask.properties.defaultRunInterval": >
+  //
+
 ".components.schemas.Script.properties.id": >
   Unique identity of a script.
+
+".components.schemas.Script.properties.script": >
+  //
+
+".components.schemas.Script.properties.hook": >
+  //
+
+".components.schemas.Script.properties.name": >
+  //
+
+".components.schemas.Script.properties.active": >
+  When boolean value is `true`, the scripts are available for selection.
 
 ".components.schemas.SeoUrl.properties.id": >
   Unique identity of Seo Url.
@@ -2830,6 +3295,15 @@
 ".components.schemas.SeoUrlTemplate.properties.salesChannelId": >
   Unique identity of sales channel.
 
+".components.schemas.SeoUrlTemplate.properties.entityName": >
+  Name of the entity.
+
+".components.schemas.SeoUrlTemplate.properties.routeName": >
+  Name of the route.
+
+".components.schemas.SeoUrlTemplate.properties.template": >
+  //
+
 ".components.schemas.SeoUrlTemplate.properties.isValid": >
   Created SEO URL template can be made usable by setting `isValid` to true.
 
@@ -2851,6 +3325,9 @@
 ".components.schemas.ShippingMethod.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
+".components.schemas.ShippingMethod.properties.availabilityRuleId": >
+  Unique identity of availability rule.
+
 ".components.schemas.ShippingMethod.properties.mediaId": >
   Unique identity of media.
 
@@ -2859,6 +3336,9 @@
 
 ".components.schemas.ShippingMethod.properties.taxType": >
   Refers `Free`, `Net` or `Gross` type of taxes.
+
+".components.schemas.ShippingMethod.properties.taxId": >
+  Unique identity of tax.
 
 ".components.schemas.ShippingMethod.properties.description": >
   Description of each shipping method.
@@ -2896,6 +3376,15 @@
 ".components.schemas.ShippingMethodPrice.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
+".components.schemas.ShippingMethodTag.properties.id": >
+  Unique identity of Shipping method tag.
+
+".components.schemas.ShippingMethodTag.properties.shippingMethodId": >
+  Unique identity of Shipping method.
+
+".components.schemas.ShippingMethodTag.properties.tagId": >
+  Unique identity of tag.
+
 ".components.schemas.Snippet.properties.id": >
   Unique identity of snippet.
 
@@ -2906,6 +3395,9 @@
   Reference to the snippet in the template.
 
 ".components.schemas.Snippet.properties.value": >
+  Value of the key.
+
+".components.schemas.Snippet.properties.author": >
   Value of the key.
 
 ".components.schemas.Snippet.properties.customFields": >
@@ -2926,11 +3418,44 @@
 ".components.schemas.StateMachine.properties.id": >
   Unique identity of state machine.
 
+".components.schemas.StateMachine.properties.technicalName": >
+  Technical name of state machine.
+
+".components.schemas.StateMachine.properties.name": >
+  Unique name of state machine.
+
 ".components.schemas.StateMachine.properties.translated": >
   Contains the translations of all translated fields.
 
 ".components.schemas.StateMachineHistory.properties.id": >
   Unique identity of state machine history.
+
+".components.schemas.StateMachineHistory.properties.stateMachineId": >
+  Unique identity of state machine.
+
+".components.schemas.StateMachineHistory.properties.entityName": >
+  Name of the entity.
+
+".components.schemas.StateMachineHistory.properties.fromStateId": >
+  Unique identity of fromState.
+
+".components.schemas.StateMachineHistory.properties.toStateId": >
+  Unique identity of toState.
+
+".components.schemas.StateMachineHistory.properties.transitionActionName": >
+  Unique name of transition action.
+
+".components.schemas.StateMachineHistory.properties.userId": >
+  Unique identity of user.
+
+".components.schemas.StateMachineHistory.properties.entityId": >
+  Unique identity of entity.
+
+".components.schemas.StateMachineHistory.properties.referencedId": >
+  Unique identity of reference.
+
+".components.schemas.StateMachineHistory.properties.referencedVersionId": >
+  Unique identity of reference's version.
 
 ".components.schemas.StateMachineState.properties.id": >
   Unique identity of state machine state.
@@ -2941,6 +3466,9 @@
 ".components.schemas.StateMachineState.properties.name": >
   Display name of StateMachineState.
 
+".components.schemas.StateMachineState.properties.stateMachineId": >
+  Unique identity of StateMachine.
+
 ".components.schemas.StateMachineState.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
@@ -2949,6 +3477,21 @@
 
 ".components.schemas.StateMachineTransition.properties.id": >
   Unique identity of state machine transition.
+
+".components.schemas.StateMachineTransition.properties.actionName": >
+  Unique name of the action.
+
+".components.schemas.StateMachineTransition.properties.stateMachineId": >
+  Unique identity of state machine.
+
+".components.schemas.StateMachineTransition.properties.fromStateId": >
+  Unique identity of from state.
+
+".components.schemas.StateMachineTransition.properties.toStateId": >
+  Unique identity of to state.
+
+".components.schemas.StateMachineTransition.properties.customFields": >
+  Additional fields that offer a possibility to add own fields for the different program-areas.
 
 ".components.schemas.Subscription.properties.id": >
   Unique identity of subscription.
@@ -2983,6 +3526,12 @@
 ".components.schemas.Subscription.properties.cronInterval": >
   Absolute interval data. For example, `only on January`, `only on Mondays`, etc.
 
+".components.schemas.Subscription.properties.initialExecutionCount": >
+  //
+
+".components.schemas.Subscription.properties.remainingExecutionCount": >
+  //
+
 ".components.schemas.Subscription.properties.billingAddressId": >
   Unique identity of billing address.
 
@@ -3001,8 +3550,29 @@
 ".components.schemas.Subscription.properties.languageId": >
   Unique identity of language.
 
+".components.schemas.Subscription.properties.stateId": >
+  Unique identity of state.
+
 ".components.schemas.Subscription.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
+
+".components.schemas.Subscription.properties.itemRounding.properties.decimals": >
+  It defines the cash round off applied on the cart line items to the nearest decimal points. If set to 2, it rounds off to two significant decimal points.
+
+".components.schemas.Subscription.properties.itemRounding.properties.interval": >
+  The interval of item rounding defines the cash rounding interval in terms of how high or low should it be rounded. For example, 0.05 signifies the value gets rounded off to nearest 5 cents.
+
+".components.schemas.Subscription.properties.itemRounding.properties.roundForNet": >
+  The cash rounding applied on net prices.
+
+".components.schemas.Subscription.properties.totalRounding.properties.decimals": >
+  It defines the cash round off applied on the cart line items to the nearest decimal points. If set to 2, it rounds off to two significant decimal points.
+
+".components.schemas.Subscription.properties.totalRounding.properties.interval": >
+  The interval of item rounding defines the cash rounding interval in terms of how high or low should it be rounded. For example, 0.05 signifies the value gets rounded off to nearest 5 cents.
+
+".components.schemas.Subscription.properties.totalRounding.properties.roundForNet": >
+  The cash rounding applied on net prices. 
 
 ".components.schemas.SubscriptionAddress.properties.id": >
   Unique identity of subscription address.
@@ -3031,6 +3601,9 @@
 ".components.schemas.SubscriptionAddress.properties.zipcode": >
   Zip code of the country.
 
+".components.schemas.SubscriptionAddress.properties.city": >
+  Name of the city.
+
 ".components.schemas.SubscriptionAddress.properties.company": >
   Name of the company.
 
@@ -3057,6 +3630,9 @@
 
 ".components.schemas.SubscriptionCustomer.properties.id": >
   Unique identity of subscription customer.
+
+".components.schemas.SubscriptionCustomer.properties.subscriptionId": >
+  Unique identity of subscription.
 
 ".components.schemas.SubscriptionCustomer.properties.customerId": >
   Unique identity of the customer.
@@ -3087,6 +3663,9 @@
 
 ".components.schemas.SubscriptionCustomer.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
+
+".components.schemas.SubscriptionCustomer.properties.remoteAddress": >
+  Anonymous IP address of the customer for last session.
 
 ".components.schemas.SubscriptionInterval.properties.id": >
   Unique identity of subscription interval.
@@ -3120,6 +3699,9 @@
 
 ".components.schemas.SubscriptionPlan.properties.active": >
   When `true`, the subscription plan is available for selection in storefront.
+
+".components.schemas.SubscriptionPlan.properties.minimumExecutionCount": >
+  //
 
 ".components.schemas.SubscriptionPlan.properties.activeStorefrontLabel": >
   When boolean value id `true`, the label overrides the plan name.
@@ -3164,13 +3746,43 @@
   Unique identity of subscription tag.
 
 ".components.schemas.SwagDelayAction.properties.id": >
-  Unique identity of swag delay action for flow builder
+  Unique identity of swag delay action for flow builder.
+
+".components.schemas.SwagDelayAction.properties.eventName": >
+  Unique name of the event.
+
+".components.schemas.SwagDelayAction.properties.flowId": >
+  Unique identity of flow.
 
 ".components.schemas.SwagDelayAction.properties.orderId": >
   Unique identity of order.
 
+".components.schemas.SwagDelayAction.properties.orderVersionId": >
+  Unique identity of order's version.
+
 ".components.schemas.SwagDelayAction.properties.customerId": >
   Unique identity of customer.
+
+".components.schemas.SwagDelayAction.properties.executionTime": >
+  //
+
+".components.schemas.SwagDelayAction.properties.expired": >
+  //
+
+".components.schemas.SwagDelayAction.properties.delaySequenceId": >
+  Unique identity of delaySequence.
+
+".components.schemas.SwagDelayAction.properties.stored": >
+  //
+
+".components.schemas.SwagSequenceWebhookEventLog.properties.id": >
+  Unique identity of Swag Sequence Webhook Event Log.
+
+".components.schemas.SwagSequenceWebhookEventLog.properties.sequenceId": >
+  Unique identity of sequence.
+
+".components.schemas.SwagSequenceWebhookEventLog.properties.webhookEventLogId": >
+  Unique identity of Webhook Event Log.
 
 ".components.schemas.SystemConfig.properties.id": >
   Unique identity of system configuration.
@@ -3186,6 +3798,18 @@
 
 ".components.schemas.Tag.properties.id": >
   Unique identity of tag.
+
+".components.schemas.Tag.properties.name": >
+  Unique name of the tag.
+
+".components.schemas.Tag.properties.extensions.properties.subscriptions.properties.links.properties.related": >
+  //
+
+".components.schemas.Tag.properties.extensions.properties.subscriptions.properties.data.properties.type": >
+  //
+
+".components.schemas.Tag.properties.extensions.properties.subscriptions.properties.data.properties.id": >
+  //
 
 ".components.schemas.Tax.properties.id": >
   Unique identity of tax.
@@ -3205,6 +3829,9 @@
 ".components.schemas.TaxProvider.properties.id": >
   Unique identity of tax provider.
 
+".components.schemas.TaxProvider.properties.identifier": >
+  Unique identity of tax provider.
+
 ".components.schemas.TaxProvider.properties.active": >
   When boolean value is `true`, the tax providers are available for selection in the storefront.
 
@@ -3216,6 +3843,9 @@
 
 ".components.schemas.TaxProvider.properties.processUrl": >
   External URL makes request to get tax info.
+
+".components.schemas.TaxProvider.properties.availabilityRuleId": >
+  Unique identity of availability Rule.
 
 ".components.schemas.TaxProvider.properties.appId": >
   Unique identity of app.
@@ -3229,8 +3859,44 @@
 ".components.schemas.TaxRule.properties.id": >
   Unique identity of tax rule.
 
+".components.schemas.TaxRule.properties.taxRuleTypeId": >
+  Unique identity of tax rule type.
+
+".components.schemas.TaxRule.properties.countryId": >
+  Unique identity of country.
+
+".components.schemas.TaxRule.properties.taxRate": >
+  //
+
+".components.schemas.TaxRule.properties.data.properties.states": >
+  //
+
+".components.schemas.TaxRule.properties.data.properties.zipCode": >
+  //
+
+".components.schemas.TaxRule.properties.data.properties.fromZipCode": >
+  //
+
+".components.schemas.TaxRule.properties.data.properties.toZipCode": >
+  //
+
+".components.schemas.TaxRule.properties.taxId": >
+  Unique identity of tax.
+
+".components.schemas.TaxRule.properties.activeFrom": >
+  //
+
 ".components.schemas.TaxRuleType.properties.id": >
   Unique identity of tax rule type.
+
+".components.schemas.TaxRuleType.properties.technicalName": >
+  Unique name of tax rule type.
+
+".components.schemas.TaxRuleType.properties.position": >
+  //
+
+".components.schemas.TaxRuleType.properties.typeName": >
+  //
 
 ".components.schemas.TaxRuleType.properties.translated": >
   Contains the translations of all translated fields.
@@ -3265,10 +3931,13 @@
 ".components.schemas.Theme.properties.parentThemeId": >
   Unique identity of parent theme.
 
+".components.schemas.Theme.properties.themeJson": >
+  //
+
 ".components.schemas.Theme.properties.baseConfig": >
   Config elements of theme like header, color, etc
 
-".components.schemas.Theme.properties.ConfigValues": >
+".components.schemas.Theme.properties.configValues": >
   Chosen values for the configuration.
 
 ".components.schemas.Theme.properties.active": >
@@ -3276,6 +3945,33 @@
 
 ".components.schemas.Theme.properties.translated": >
   Contains the translations of all translated fields.
+
+".components.schemas.ThemeChild.properties.id": >
+  Unique identity of ThemeChild.
+
+".components.schemas.ThemeChild.properties.parentId": >
+  Unique identity of parent.
+
+".components.schemas.ThemeChild.properties.childId": >
+  Unique identity of child.
+
+".components.schemas.ThemeMedia.properties.id": >
+  Unique identity of ThemeMedia.
+
+".components.schemas.ThemeMedia.properties.themeId": >
+  Unique identity of theme.
+
+".components.schemas.ThemeMedia.properties.mediaId": >
+  Unique identity of media.
+
+".components.schemas.ThemeSalesChannel.properties.id": >
+  Unique identity of ThemeMedia.
+
+".components.schemas.ThemeSalesChannel.properties.salesChannelId": >
+  Unique identity of sales channel.
+
+".components.schemas.ThemeSalesChannel.properties.themeId": >
+  Unique identity of theme.
 
 ".components.schemas.Unit.properties.id": >
   Unique identity of Unit.
@@ -3293,28 +3989,232 @@
   Contains the translations of all translated fields.
 
 ".components.schemas.User.properties.id": >
-  Unique identity of user.
+  Unique identity of the user.
+
+".components.schemas.User.properties.localeId": >
+  Unique identity of locale.
+
+".components.schemas.User.properties.username": >
+  //
+
+".components.schemas.User.properties.firstName": >
+  //
+
+".components.schemas.User.properties.lastName": >
+  //
+
+".components.schemas.User.properties.title": >
+  //
+
+".components.schemas.User.properties.email": >
+  //
+
+".components.schemas.User.properties.active": >
+  When boolean value is `true`, the user is enabled.
+
+".components.schemas.User.properties.admin": >
+  //
+
+".components.schemas.User.properties.lastUpdatedPasswordAt": >
+  //
+
+".components.schemas.User.properties.timeZone": >
+  //
+
+".components.schemas.User.properties.customFields": >
+  //
+
+".components.schemas.User.properties.avatarId": >
+  //
+
+".components.schemas.User.properties.extensions.properties.createdNotifications.properties.links.properties.related": >
+  //
+
+".components.schemas.User.properties.extensions.properties.createdNotifications.properties.data.properties.type": >
+  //
+
+".components.schemas.User.properties.extensions.properties.createdNotifications.properties.data.properties.id": >
+  //
+
+".components.schemas.User.properties.extensions.properties.orderReturnsCreated.properties.links.properties.related": >
+  //
+
+".components.schemas.User.properties.extensions.properties.orderReturnsCreated.properties.data.properties.type": >
+  //
+
+".components.schemas.User.properties.extensions.properties.orderReturnsCreated.properties.data.properties.id": >
+  //
+
+".components.schemas.User.properties.extensions.properties.orderReturnsUpdated.properties.links.properties.related": >
+  //
+
+".components.schemas.User.properties.extensions.properties.orderReturnsUpdated.properties.data.properties.type": >
+  //
+
+".components.schemas.User.properties.extensions.properties.orderReturnsUpdated.properties.data.properties.id": >
+  //
 
 ".components.schemas.UserAccessKey.properties.id": >
   Unique identity of user access key.
 
+".components.schemas.UserAccessKey.properties.userId": >
+  Unique identity of user.
+
+".components.schemas.UserAccessKey.properties.accessKey": >
+  //
+
+".components.schemas.UserAccessKey.properties.secretAccessKey": >
+  //
+
+".components.schemas.UserAccessKey.properties.lastUsageAt": >
+  //
+
+".components.schemas.UserAccessKey.properties.customFields": >
+  //
+
 ".components.schemas.UserConfig.properties.id": >
   Unique identity of user configuration.
+
+".components.schemas.UserConfig.properties.userId": >
+  Unique identity of user.
+
+".components.schemas.UserConfig.properties.key": >
+  //
+
+".components.schemas.UserConfig.properties.value": >
+  //
 
 ".components.schemas.UserRecovery.properties.id": >
   Unique identity of user recovery.
 
+".components.schemas.UserRecovery.properties.hash": >
+  //
+
+".components.schemas.UserRecovery.properties.userId": >
+  Unique identity of user.
+
 ".components.schemas.Warehouse.properties.id": >
   Unique identity of warehouse.
+
+".components.schemas.Warehouse.properties.name": >
+  Unique name of warehouse.
+
+".components.schemas.Warehouse.properties.description": >
+  //
 
 ".components.schemas.WarehouseGroup.properties.id": >
   Unique identity of warehouse group.
 
+".components.schemas.WarehouseGroup.properties.name": >
+  Unique name of warehouse group.
+
+".components.schemas.WarehouseGroup.properties.description": >
+  //
+
+".components.schemas.WarehouseGroup.properties.priority": >
+  //
+
+".components.schemas.WarehouseGroup.properties.ruleId": >
+  Unique identity of rule.
+
+".components.schemas.WarehouseGroupWarehouse.properties.id": >
+  Unique identity of WarehouseGroupWarehouse.
+
+".components.schemas.WarehouseGroupWarehouse.properties.warehouseId": >
+  Unique identity of Warehouse.
+
+".components.schemas.WarehouseGroupWarehouse.properties.warehouseGroupId": >
+  Unique identity of WarehouseGroup.
+
+".components.schemas.WarehouseGroupWarehouse.properties.priority": >
+  Unique identity of rule.
+
 ".components.schemas.Webhook.properties.id": >
   Unique identity of webhook.
 
+".components.schemas.Webhook.properties.name": >
+  Unique name of webhook.
+
+".components.schemas.Webhook.properties.eventName": >
+  //
+
+".components.schemas.Webhook.properties.url": >
+  //
+
+".components.schemas.Webhook.properties.errorCount": >
+  //
+
+".components.schemas.Webhook.properties.active": >
+  When boolean value is `true`, the webhook is enabled.
+
+".components.schemas.Webhook.properties.appId": >
+  Unique identity of app.
+
 ".components.schemas.WebhookEventLog.properties.id": >
   Unique identity of webhook event log.
+
+".components.schemas.WebhookEventLog.properties.appName": >
+  Unique name of app.
+
+".components.schemas.WebhookEventLog.properties.webhookName": >
+  Unique name of webhook.
+
+".components.schemas.WebhookEventLog.properties.eventName": >
+  Unique name of event.
+
+".components.schemas.WebhookEventLog.properties.deliveryStatus": >
+  //
+
+".components.schemas.WebhookEventLog.properties.timestamp": >
+  //
+
+".components.schemas.WebhookEventLog.properties.processingTime": >
+  //
+
+".components.schemas.WebhookEventLog.properties.appVersion": >
+  //
+
+".components.schemas.WebhookEventLog.properties.requestContent": >
+  //
+
+".components.schemas.WebhookEventLog.properties.responseContent": >
+  //
+
+".components.schemas.WebhookEventLog.properties.responseStatusCode": >
+  //
+
+".components.schemas.WebhookEventLog.properties.responseReasonPhrase": >
+  //
+
+".components.schemas.WebhookEventLog.properties.url": >
+  //
+
+".components.schemas.WebhookEventLog.properties.customFields": >
+  Additional fields that offer a possibility to add own fields for the different program-areas.
+
+".components.schemas.businessEventsResponse.properties.name": >
+  Unique name of the businessEventsResponse.
+
+".components.schemas.businessEventsResponse.properties.class": >
+  //
+
+".components.schemas.businessEventsResponse.properties.data": >
+  //
+
+".components.schemas.businessEventsResponse.properties.aware": >
+  //
+
+".components.schemas.businessEventsResponse.properties.extensions": >
+  //
+
+".components.schemas.flowBulderActionsResponse.properties.name": >
+  //
+
+".components.schemas.flowBulderActionsResponse.properties.requirements": >
+  //
+
+".components.schemas.flowBulderActionsResponse.properties.extensions": >
+  //
 
 ".components.schemas.LineItem.properties.id": >
   Unique identity of line item.
@@ -3656,7 +4556,7 @@
   //
 
 ".components.schemas.App.properties.active": >
-  //
+  When boolean value is `true`, the app is enabled for selection.
 
 ".components.schemas.App.properties.configurable": >
   //
@@ -4283,22 +5183,22 @@
   Unique identity of the country.
 
 ".components.schemas.CurrencyCountryRounding.properties.itemRounding.properties.decimals": >
-  //
+  It defines the cash round off applied on the cart line items to the nearest decimal points. If set to 2, it rounds off to two significant decimal points.
 
 ".components.schemas.CurrencyCountryRounding.properties.itemRounding.properties.interval": >
-  //
+  The interval of item rounding defines the cash rounding interval in terms of how high or low should it be rounded. For example, 0.05 signifies the value gets rounded off to nearest 5 cents.
 
 ".components.schemas.CurrencyCountryRounding.properties.itemRounding.properties.roundForNet": >
-  //
+  The cash rounding applied on net prices.
 
 ".components.schemas.CurrencyCountryRounding.properties.totalRounding.properties.decimals": >
-  //
+  It defines the cash round off applied on the cart line items to the nearest decimal points. If set to 2, it rounds off to two significant decimal points.
 
 ".components.schemas.CurrencyCountryRounding.properties.totalRounding.properties.interval": >
-  //
+  The interval of item rounding defines the cash rounding interval in terms of how high or low should it be rounded. For example, 0.05 signifies the value gets rounded off to nearest 5 cents.
 
 ".components.schemas.CurrencyCountryRounding.properties.totalRounding.properties.roundForNet": >
-  //
+  The cash rounding applied on net prices. 
 
 ".components.schemas.CustomEntity.properties.id": >
   Unique identity of a custom entity.
@@ -4337,7 +5237,7 @@
   //
 
 ".components.schemas.CustomField.properties.active": >
-  //
+  // When boolean value is `true`, the custom field can be configured.
 
 ".components.schemas.CustomField.properties.customFieldSetId": >
   //
@@ -4358,7 +5258,7 @@
   //
 
 ".components.schemas.CustomFieldSet.properties.active": >
-  //
+  // When boolean value is `true`, the custom field set can be configured.
 
 ".components.schemas.CustomFieldSet.properties.global": >
   //
@@ -4421,7 +5321,7 @@
   Unique identity of default shipping address.
 
 ".components.schemas.Customer.properties.autoIncrement": >
-  //
+  Internal field.
 
 ".components.schemas.Customer.properties.customerNumber": >
   Unique  number assigned to identity a customer.
@@ -4496,7 +5396,7 @@
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
 ".components.schemas.Customer.properties.remoteAddress": >
-  //
+  Anonymous IP address of the customer for last session.
 
 ".components.schemas.Customer.properties.tagIds": >
   Unique identity of tag.
@@ -4829,7 +5729,7 @@
   //
 
 ".components.schemas.Flow.properties.active": >
-  //
+  When boolean value is `true`, the flow is available for selection.
 
 ".components.schemas.Flow.properties.description": >
   A short description of the defined flow.
