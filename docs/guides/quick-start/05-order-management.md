@@ -311,7 +311,7 @@ Below is a sample request that sets the orders return to *open*:
 
 The order return line item state represents `open`, `shipped`, `shipped_partially`, `return_requested`, `returned`, `returned_partially`, and `canceled` as transaction states for order line items return.
 
-Below is a sample request that sets the order return line item to *open*:
+Below is a sample request that sets the order return line item to `open` :
 
 ```json http
 {
