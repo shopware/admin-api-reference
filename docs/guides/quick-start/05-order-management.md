@@ -238,7 +238,8 @@ Below is a sample request to create new order return.
 }
 ```
 
-#### 2. Add new order return line items
+####  Add new order return line items
+
 If you already have an existing order return, it is indeed possible to include a new item in your return. In the event that the item has already been returned previously, the returned quantity will be increased by the quantity specified in the new return.
 
 Below is a sample request to add the new item to your return.
