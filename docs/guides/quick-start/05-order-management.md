@@ -182,7 +182,8 @@ Below is a sample request that sets the payment state to *open*:
 
 The order return management is only supported in Administration.
 
-#### 1. Create order return
+#### Create order return
+
 You can initiate an order return from the Administration section by utilizing the Proxy-api. The outcome will yield a fresh order return with the `created_by_id` set to the ID of the currently logged-in user.
 
 Below is a sample request to create new order return.
