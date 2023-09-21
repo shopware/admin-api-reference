@@ -341,7 +341,8 @@ Below is a sample request that sets the order return line item to *open*:
 }
 ```
 
-#### 5. Order return calculator
+####  Order return calculator
+
 The purpose of the order return calculator is to determine the total amount of the order return.
 
 Below is a sample request that calculates the amount of provided order return's ID.
