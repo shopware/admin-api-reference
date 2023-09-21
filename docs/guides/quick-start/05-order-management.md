@@ -179,6 +179,7 @@ Below is a sample request that sets the payment state to *open*:
 ```  
 
 ### Order Return
+
 The order return management is only supported in Administration.
 
 #### 1. Create order return
