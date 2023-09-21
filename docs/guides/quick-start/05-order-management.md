@@ -288,8 +288,9 @@ Below is a sample request to add the new item to your return.
 }
 ```
 
-#### 3. Order return state transition
-The order return state represents `open`, `cancelled`, `in_progress`, `done` as transaction states for order items return.
+#### Order return state transition
+
+The order return state represents `open`, `canceled`, `in_progress`, and `done` as transaction states for order items return.
 
 Below is a sample request that sets the orders return to *open*:
 
