@@ -359,7 +359,8 @@ Below is a sample request that calculates the amount of provided order return's 
 }
 ```
 
-#### 6. Obtain Customer Turnover
+#### Obtain customer turnover
+
 This function is designed to retrieve the turnover figure for a specific customer. The turnover value is calculated as the total order amount minus the total return amount.
 
 Below is a sample request to get the turnover of a customer:
