@@ -2234,7 +2234,7 @@
   The frequency at which the voucher can be redeemed worldwide per customer.
 
 ".components.schemas.Promotion.properties.priority": >
-  A numerical value to prioritize one the promotion from the list.
+  A numerical value to prioritize one of the promotions from the list.
 
 ".components.schemas.Promotion.properties.exclusive": >
   Parameter to exclude the promotion codes on certain products
@@ -2387,7 +2387,7 @@
   Unique identity of sales channel.
 
 ".components.schemas.PromotionSalesChannel.properties.priority": >
-  A numerical value to prioritize one the promotion saleschannel from the list.
+  A numerical value to prioritize one of the promotion saleschannels from the list.
 
 ".components.schemas.PromotionSetgroup.properties.id": >
   Unique identity of promotion set group.
@@ -2474,7 +2474,7 @@
   Name of the rule defined.
 
 ".components.schemas.Rule.properties.priority": >
-  A numerical value to prioritize one the rules from the list.
+  A numerical value to prioritize one of the rules from the list.
 
 ".components.schemas.Rule.properties.description": >
   Description of the rule.
@@ -2733,9 +2733,6 @@
 
 ".components.schemas.SalesChannelType.properties.iconName": >
   An icon for sales channel type.
-
-".components.schemas.SalesChannelType.properties.screenshotUrls": >
-  //na
 
 ".components.schemas.SalesChannelType.properties.name": >
   Name of the sales channel type.
@@ -3083,10 +3080,10 @@
   Absolute interval data. For example, `only on January`, `only on Mondays`, etc.
 
 ".components.schemas.Subscription.properties.initialExecutionCount": >
-  //LENNART
+  The initialExecutionCount is the number of contract terms the merchants subscribes for; for example : 12 for 12 months.
 
 ".components.schemas.Subscription.properties.remainingExecutionCount": >
-  //
+  The remainingExecutionCount is the count of executions, the subscriptions has to run through before the customer can cancel it. For example : 3 for 3 months remaining.
 
 ".components.schemas.Subscription.properties.billingAddressId": >
   Unique identity of billing address.
@@ -3257,7 +3254,7 @@
   When `true`, the subscription plan is available for selection in storefront.
 
 ".components.schemas.SubscriptionPlan.properties.minimumExecutionCount": >
-  //
+  The minimumExecutionCount is the minimum count of executions i.e, the minimum subscription limit set for the subscribers. For example, 2 months.
 
 ".components.schemas.SubscriptionPlan.properties.activeStorefrontLabel": >
   When boolean value id `true`, the label overrides the plan name.
@@ -3386,7 +3383,7 @@
   Name of the tax provider.
 
 ".components.schemas.TaxProvider.properties.priority": >
-  A numerical value to prioritize one the tax providers from the list.
+  A numerical value to prioritize one of the tax providers from the list.
 
 ".components.schemas.TaxProvider.properties.processUrl": >
   External URL makes request to get tax info.
@@ -3632,7 +3629,7 @@
   A short description of warehouse group.
 
 ".components.schemas.WarehouseGroup.properties.priority": >
-  A numerical value to prioritize one the warehouse group from the list.
+  A numerical value to prioritize one of the warehouse groups from the list.
 
 ".components.schemas.WarehouseGroup.properties.ruleId": >
   Unique identity of rule.
@@ -3659,7 +3656,7 @@
   Technical name of the event.
 
 ".components.schemas.Webhook.properties.url": >
-  //url to be called whne the event is.
+  URL to be called when the event occurs.
 
 ".components.schemas.Webhook.properties.errorCount": >
   Parameter that indicates a delivery failure to this url.
@@ -3704,10 +3701,10 @@
   HTTP status codes that are typically generated to provide informational (1xx), successful (2xx), redirection (3xx), client error (4xx), or server error (5xx) responses.
 
 ".components.schemas.WebhookEventLog.properties.responseReasonPhrase": >
-  //
+  Parameter that stores the reason phrase or message associated with the response received from a webhook event.
 
 ".components.schemas.WebhookEventLog.properties.url": >
-  //
+  A URL for the webhook event log.
 
 ".components.schemas.WebhookEventLog.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -3729,9 +3726,6 @@
 
 ".components.schemas.flowBulderActionsResponse.properties.name": >
   Unique name of the flowBulderActionsResponse.
-
-".components.schemas.flowBulderActionsResponse.properties.requirements": >
-  //
 
 ".components.schemas.flowBulderActionsResponse.properties.extensions": >
   Internal field.
@@ -3935,19 +3929,19 @@
   Maximum number of suggested product hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.product.properties.maxSearchCount": >
-  // The number of search results to be shown to the user.
+  The maximum count value that you can specify for the product search.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.product_manufacturer.properties.maxSuggestCount": >
   Maximum number of suggested hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.product_manufacturer.properties.maxSearchCount": >
-  //
+  The maximum count value that you can specify for the product_manufacturer search.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.category.properties.maxSuggestCount": >
   Maximum number of suggested hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.category.properties.maxSearchCount": >
-  //
+  The maximum count value that you can specify for the category search.
 
 ".components.schemas.AdvancedSearchConfig.properties.fields.properties.id": >
   Unique identity of fields.
@@ -4019,19 +4013,19 @@
   Maximum number of suggested hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.product.properties.maxSearchCount": >
-  //
+  The maximum count value that you can specify for the product search.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.product_manufacturer.properties.maxSuggestCount": >
   Maximum number of suggested hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.product_manufacturer.properties.maxSearchCount": >
-  //
+  The maximum count value that you can specify for the product_manufacturer search.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.category.properties.maxSuggestCount": >
   Maximum number of suggested hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.category.properties.maxSearchCount": >
-  //
+  The maximum count value that you can specify for the category search.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.fields.properties.id": >
   Unique identity of fields.
@@ -4082,7 +4076,7 @@
   When boolean value is `true`, the app is configurable for further customizations.
 
 ".components.schemas.App.properties.privacy": >
-  //
+  Privacy-related configuration properties like user data protection, consent mechanisms, or data privacy compliance for an app.
 
 ".components.schemas.App.properties.version": >
   Version of the plugin.
@@ -4091,25 +4085,25 @@
   Icon for the app.
 
 ".components.schemas.App.properties.modules": >
-  //
+  Configuration properties or settings related to modules of an app.
 
 ".components.schemas.App.properties.mainModule": >
-  //
+  Configuration properties or settings related to main modules of an app.
 
 ".components.schemas.App.properties.cookies": >
-  //
+  Configuration properties or settings related to cookies of an app.
 
 ".components.schemas.App.properties.allowDisable": >
-  //
+  When boolean value is `true`, then the users have the option to deactivate specific aspects of the app.
 
 ".components.schemas.App.properties.baseAppUrl": >
-  //
+  Root URL for an app.
 
 ".components.schemas.App.properties.allowedHosts": >
-  //
+  Indicates the allowed or permitted hosts that the application can communicate with or accept requests from.
 
 ".components.schemas.App.properties.templateLoadPriority": >
-  //
+   A numerical value to prioritize one of the templates from the list.
 
 ".components.schemas.App.properties.label": >
   Label given to an app.
@@ -4118,7 +4112,7 @@
   A short description of app.
 
 ".components.schemas.App.properties.privacyPolicyExtensions": >
-  //
+  Parameter used to specify extensions or customizations related to the app's privacy policy.
 
 ".components.schemas.App.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -4145,7 +4139,7 @@
   An url associated with the AppActionButton.
 
 ".components.schemas.AppActionButton.properties.action": >
-  //
+  Indicates the action or functionality that the button performs when clicked or interacted with.
 
 ".components.schemas.AppActionButton.properties.label": >
   Label given to AppActionButton.
@@ -4201,35 +4195,20 @@
 ".components.schemas.AppFlowAction.properties.name": >
   Name of app flow action.
 
-".components.schemas.AppFlowAction.properties.badge": >
-  //
-
 ".components.schemas.AppFlowAction.properties.parameters": >
-  //
+  Parameters that hold data required for the specific action to be executed within flow.
 
 ".components.schemas.AppFlowAction.properties.config": >
   Specifies detailed information about the component.
 
 ".components.schemas.AppFlowAction.properties.headers": >
-  //
-
-".components.schemas.AppFlowAction.properties.requirements": >
-  //
-
-".components.schemas.AppFlowAction.properties.iconRaw": >
-  //
+  Indicates the header value within the context of app flow action.
 
 ".components.schemas.AppFlowAction.properties.icon": >
   Icon to identify app flow action.
 
-".components.schemas.AppFlowAction.properties.swIcon": >
-  //
-
 ".components.schemas.AppFlowAction.properties.url": >
-  //
-
-".components.schemas.AppCmsBlock.properties.delayable": >
-  //
+  An URL to app flow action.
 
 ".components.schemas.AppFlowAction.properties.label": >
   Label given to AppFlowAction.
@@ -4238,7 +4217,7 @@
   A short description of AppFlowAction.
 
 ".components.schemas.AppFlowAction.properties.headline": >
-  //
+  A headline or title associated with the action.
 
 ".components.schemas.AppFlowAction.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -4310,7 +4289,7 @@
   When boolean value is `true`, defined app script conditions are available for selection.
 
 ".components.schemas.AppScriptCondition.properties.group": >
-  //
+  Categorizes script conditions within a specific group.
 
 ".components.schemas.AppScriptCondition.properties.script": >
   Internal field.
@@ -4712,7 +4691,7 @@
   Fields in custom entity.
 
 ".components.schemas.CustomEntity.properties.flags": >
-  //
+  Indicators used to specify certain settings or characteristics associated with the custom entity.
 
 ".components.schemas.CustomEntity.properties.appId": >
   Unique identity of app.
@@ -4721,10 +4700,10 @@
   Unique identity of plugin.
 
 ".components.schemas.CustomEntity.properties.customFieldsAware": >
-  //
+  Parameter that indicates the areas in which the custom field is supported.
 
 ".components.schemas.CustomEntity.properties.labelProperty": >
-  //
+  Specifies which property or attribute of the custom entity is used.
 
 ".components.schemas.CustomField.properties.id": >
   Unique identity of a custom field.
@@ -4733,7 +4712,7 @@
   Unique name of a custom field.
 
 ".components.schemas.CustomField.properties.type": >
-  //
+  Custom field type can be selection, media , etc
 
 ".components.schemas.CustomField.properties.config": >
   Specifies detailed information about the component.
@@ -4745,10 +4724,10 @@
   Unique identity of customFieldSet.
 
 ".components.schemas.CustomField.properties.allowCustomerWrite": >
-  //
+  When boolean value is `true`, then customers have permission to write data in the custom field.
 
 ".components.schemas.CustomField.properties.allowCartExpose": >
-  //
+  When boolean value is `true`, then the custom field's data can be exposed within the shopping cart or order process.
 
 ".components.schemas.CustomFieldSet.properties.id": >
   Unique identity of a custom field set.
@@ -4760,7 +4739,7 @@
   Specifies detailed information about the component.
 
 ".components.schemas.CustomFieldSet.properties.active": >
-  // When boolean value is `true`, the custom field set can be configured.
+  When boolean value is `true`, the custom field set is enabled for use.
 
 ".components.schemas.CustomFieldSet.properties.global": >
   When set to `true`, the custom field set can be used across all sales channels.
@@ -5180,7 +5159,7 @@
   Name of the event.
 
 ".components.schemas.Flow.properties.priority": >
-  A numerical value to prioritize one the flow from the list.
+  A numerical value to prioritize one of the flows from the list.
 
 ".components.schemas.Flow.properties.invalid": >
   When the boolean value is `true`, the flow is no more available for usage.
@@ -5216,10 +5195,7 @@
   The order of the tabs of your defined flow sequence is to be displayed.
 
 ".components.schemas.FlowSequence.properties.displayGroup": >
-  The group to wich the flow sequence is visible.
-
-".components.schemas.FlowSequence.properties.trueCase": >
-  //
+  The group to which the flow sequence is visible.
 
 ".components.schemas.FlowSequence.properties.parentId": >
   Unique identity of parent.
@@ -5255,19 +5231,19 @@
   Size of the import-export file.
 
 ".components.schemas.ImportExportFile.properties.accessToken": >
-  //
+  Secret key to access import-export file.
 
 ".components.schemas.ImportExportLog.properties.id": >
   Unique identity of import-export log.
 
 ".components.schemas.ImportExportLog.properties.activity": >
-  //
+  Information about a specific activity or operation associated with an import-export event.
 
 ".components.schemas.ImportExportLog.properties.state": >
-  //
+  Parameter that indicates the status of an import-export process whether it is in progress, completed, or has encountered an error, for example.
 
 ".components.schemas.ImportExportLog.properties.records": >
-  //
+  Indicates the number of records involved in an import-export process.
 
 ".components.schemas.ImportExportLog.properties.userId": >
   Unique identity of the user.
@@ -5282,16 +5258,16 @@
   Unique identity of the invalid record logs.
 
 ".components.schemas.ImportExportLog.properties.username": >
-  //
+  Username of the user who initiated the import-export operation.
 
 ".components.schemas.ImportExportLog.properties.profileName": >
-  //
+  Name of the profile used for the import-export process.
 
 ".components.schemas.ImportExportLog.properties.config": >
   Specifies detailed information about the component.
 
 ".components.schemas.ImportExportLog.properties.result": >
-  //
+  The result or outcome of an import-export operation.
 
 ".components.schemas.ImportExportProfile.properties.id": >
   Unique identity of import-export profile.
@@ -5303,25 +5279,22 @@
   Label given to ImportExportProfile.
 
 ".components.schemas.ImportExportProfile.properties.type": >
-  //
+  Import-export type can be orders, customers, categories.
 
 ".components.schemas.ImportExportProfile.properties.systemDefault": >
-  //
-
-".components.schemas.ImportExportProfile.properties.sourceEntity": >
-  //
+  When boolean value is true `true`, then its a system default profile.
 
 ".components.schemas.ImportExportProfile.properties.fileType": >
   Type of file like PDF.
 
 ".components.schemas.ImportExportProfile.properties.delimiter": >
-  //
+  Characters used as the delimiter for the specific profile, aiding in proper data parsing during import-export operations.
 
 ".components.schemas.ImportExportProfile.properties.enclosure": >
-  //
+  Specifies the enclosure character used to wrap or enclose data fields, especially when those fields contain special characters or delimiters.
 
 ".components.schemas.ImportExportProfile.properties.mapping": >
-  //
+  Defines the connection to the different database columns.
 
 ".components.schemas.ImportExportProfile.properties.config": >
   Specifies detailed information about the component.
@@ -5339,13 +5312,13 @@
   Access key to store api.
 
 ".components.schemas.Integration.properties.secretAccessKey": >
-  //
+  Secret key required for secure communication.
 
 ".components.schemas.Integration.properties.lastUsageAt": >
   Date and time when teh integration was last used.
 
 ".components.schemas.Integration.properties.admin": >
-  //
+  When boolean value is `true`, it indicates this is a administrative integration that requires elevated permissions.
 
 ".components.schemas.Integration.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -5468,19 +5441,16 @@
   Unique identity of log entry.
 
 ".components.schemas.LogEntry.properties.message": >
-  // A persistent error passed from the log entry processes to the user end.
+  Indicates text or content of a log entry.
 
 ".components.schemas.LogEntry.properties.level": >
-  //
-
-".components.schemas.LogEntry.properties.channel": >
-  //
+  It indicates the level or severity of the log entry. For example: BUG, ERROR, etc.
 
 ".components.schemas.LogEntry.properties.context": >
-  //
+  Information associated with a log entry.
 
 ".components.schemas.LogEntry.properties.extra": >
-  //
+  Additional information associated with a log entry.
 
 ".components.schemas.MailHeaderFooter.properties.id": >
   Unique identity of mail's header and footer component.
@@ -5564,13 +5534,13 @@
   Technical name of mail template.
 
 ".components.schemas.MailTemplateType.properties.availableEntities": >
-  //
+  Defines  which entities are compatible with a given mail template type, ensuring that the right templates can be used for the appropriate purposes within the system
 
 ".components.schemas.MailTemplateType.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
 ".components.schemas.MailTemplateType.properties.templateData": >
-  //
+  Template data used to generate emails associated with that template type.
 
 ".components.schemas.MailTemplateType.properties.translated": >
   Contains the translations of all translated fields.
@@ -5621,7 +5591,7 @@
   Details of the media file uploaded.
 
 ".components.schemas.Media.properties.mediaType": >
-  //
+  Type or format of media content, such as images, videos, or audio files.
 
 ".components.schemas.Media.properties.alt": >
   Alternate text for media.
@@ -5648,7 +5618,7 @@
   Unique identity of the media.
 
 ".components.schemas.MediaAiTag.properties.needsAnalysis": >
-  //
+  When boolean value is `true`, indicates whether the associated media content requires further analysis by AI.
 
 ".components.schemas.MediaAiTag.properties.tag": >
   Tag that indicates if the media is made by AI or not.
@@ -5665,14 +5635,11 @@
 ".components.schemas.MediaDefaultFolder.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
-".components.schemas.MediaDefaultFolder.properties.associationFields": >
-  //
-
 ".components.schemas.MediaFolder.properties.id": >
   Unique identity of media folder.
 
 ".components.schemas.MediaFolder.properties.useParentConfiguration": >
-  //
+  When boolean value is `true`, the folder inherits the configuration settings of its parent folder. 
 
 ".components.schemas.MediaFolder.properties.configurationId": >
   Unique identity of configuration.
@@ -5699,19 +5666,16 @@
   Unique identity of media folder configuration.
 
 ".components.schemas.MediaFolderConfiguration.properties.createThumbnails": >
-  //
+  When boolean value is `true`, it enables thumbnail creation automatically.
 
 ".components.schemas.MediaFolderConfiguration.properties.keepAspectRatio": >
-  //
+  When boolean value is `true`, the system maintains the aspect ratio of media files when generating.
 
 ".components.schemas.MediaFolderConfiguration.properties.thumbnailQuality": >
-  //
+  Parameter that controls the balance between image quality and size when creating thumbnail images.
 
 ".components.schemas.MediaFolderConfiguration.properties.private": >
-  //
-
-".components.schemas.MediaFolderConfiguration.properties.noAssociation": >
-  //
+  When boolean value is `true`, the folder contents are restricted from public access.
 
 ".components.schemas.MediaFolderConfiguration.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -5816,13 +5780,13 @@
   When status is set, the Notification is made visible.
 
 ".components.schemas.Notification.properties.message": >
-  // A persistent message passed to the user end.
+  Indicates text or content of a notification message. 
 
 ".components.schemas.Notification.properties.adminOnly": >
-  //
+  Parameter within a notification configuration that determines whether a notification is intended for administrators only.
 
 ".components.schemas.Notification.properties.requiredPrivileges": >
-  //
+  Parameter within a notification configuration that specifies the required user privileges or permissions to access or view a particular notification.
 
 ".components.schemas.Notification.properties.createdByIntegrationId": >
   Unique identity of createdByIntegration.
@@ -5837,19 +5801,19 @@
   Unique identity of type.
 
 ".components.schemas.NumberRange.properties.global": >
-  //
+  When set to `true`, the defined number range is used across all sales channels.
 
 ".components.schemas.NumberRange.properties.name": >
-  Name pf the number range.
+  Name of the number range.
 
 ".components.schemas.NumberRange.properties.description": >
   A short description of number range.
 
 ".components.schemas.NumberRange.properties.pattern": >
-  //
+  Custom formatting in order to include for example, the date in the number range.
 
 ".components.schemas.NumberRange.properties.start": >
-  //
+  If the start number were 12345, the following patterns would give the following numbers: Order{n}-{date}: Order12345-2019-05-23, Order{n}-{date_d.m.Y}: Order12345-23.05.2019
 
 ".components.schemas.NumberRange.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -5875,9 +5839,6 @@
 ".components.schemas.NumberRangeState.properties.numberRangeId": >
   Unique identity of number range.
 
-".components.schemas.NumberRangeState.properties.lastValue": >
-  //.
-
 ".components.schemas.NumberRangeType.properties.id": >
   Unique identity of number range's type.
 
@@ -5888,7 +5849,7 @@
   Name of the type.
 
 ".components.schemas.NumberRangeType.properties.global": >
-  //
+  When set to `true`, the defined number range type is used across all sales channels.
 
 ".components.schemas.NumberRangeType.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
