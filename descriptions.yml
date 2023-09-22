@@ -98,7 +98,7 @@
   When `true`, it indicates that the sales channel is undergoing maintenance, and shopping is temporarily unavailable during this period.
 
 ".components.schemas.SalesChannelContext.properties.salesChannel.properties.maintenanceIpWhitelist": >
-  Array of IP address allowed to access the sales channel.
+  List of IP addresseS used when the maintenance mode is active.
 
 ".components.schemas.SalesChannelContext.properties.salesChannel.properties.mailHeaderFooterId": >
   Unique identity of a sales channel's mail header and footer within a specific sales channel.
@@ -1391,7 +1391,7 @@
   A property to check whether it is installed via composer or not.
   
 ".components.schemas.Plugin.properties.path": >
-  Path where the plugin is available.
+  A relative URL to the plugin.
 
 ".components.schemas.Plugin.properties.author": >
   Creator of the plugin.
@@ -1615,8 +1615,8 @@
 ".components.schemas.Product.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
-".components.schemas.Product.slotConfig": >
-  Information on CMS page configuration.
+".components.schemas.Product.properties.slotConfig": >
+  Specifies detailed information about how the CMS slots are configured for products.
 
 ".components.schemas.Product.customSearchKeywords": >
   List of additional keywords in the search.
@@ -2606,7 +2606,7 @@
   When `true`, it indicates that the sales channel is undergoing maintenance, and shopping is temporarily unavailable during this period.
 
 ".components.schemas.SalesChannel.properties.maintenanceIpWhitelist": >
-  //list of ip addressed used when the maitence mode is active
+  List of IP addresseS used when the maintenance mode is active.
 
 ".components.schemas.SalesChannel.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -2621,22 +2621,22 @@
   Unique identity of home CMS page's version.
 
 ".components.schemas.SalesChannel.properties.homeSlotConfig": >
-  //cms config
+  Specifies detailed information about how the CMS slots are configured for sales channel.
 
 ".components.schemas.SalesChannel.properties.homeEnabled": >
-  //should be in the menu part in the home navi
+  When boolean value is `true`, it indicates that sales channel is included in the menu section of the homepage navigation.
 
 ".components.schemas.SalesChannel.properties.homeName": >
-  //name of menu point
+  Name of the menu section for the sales channel.
 
 ".components.schemas.SalesChannel.properties.homeMetaTitle": >
-  //seo
+  A page title indexed by search engines and appears in search results listings.
 
 ".components.schemas.SalesChannel.properties.homeMetaDescription": >
-  //
+  A short description of the page for search results listings.
 
 ".components.schemas.SalesChannel.properties.homeKeywords": >
-  //
+  Keywords that help to search the sales channel.
 
 ".components.schemas.SalesChannel.properties.translated": >
   Contains the translations of all translated fields.
@@ -2651,7 +2651,7 @@
   When boolean value is `true`, the sales channel analytics are enabled.
 
 ".components.schemas.SalesChannelAnalytics.properties.trackOrders": >
-  //to enable google analytics to track order or not
+  When boolean value is `true`, it enables Google Analytics to track orders.
 
 ".components.schemas.SalesChannelAnalytics.properties.anonymizeIp": >
   Unique identity of anonymize.
@@ -2729,25 +2729,25 @@
   Unique identity of sales channel type.
 
 ".components.schemas.SalesChannelType.properties.coverUrl": >
-  //
+  A url for the sales channel type.
 
 ".components.schemas.SalesChannelType.properties.iconName": >
-  //
+  An icon for sales channel type.
 
 ".components.schemas.SalesChannelType.properties.screenshotUrls": >
   //na
 
 ".components.schemas.SalesChannelType.properties.name": >
-  //
+  Name of the sales channel type.
 
 ".components.schemas.SalesChannelType.properties.manufacturer": >
-  //
+  Manufacturer name of the sales channel.
 
 ".components.schemas.SalesChannelType.properties.description": >
-  //
+  A short description for sales channel type.
 
 ".components.schemas.SalesChannelType.properties.descriptionLong": >
-  //
+  A detailed description for sales channel type.
 
 ".components.schemas.SalesChannelType.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -2783,34 +2783,34 @@
   Unique identity of scheduled task.
 
 ".components.schemas.ScheduledTask.properties.runInterval": >
-  //how ofte the schdeuled task must run
+  The frequency interval at which the scheduled task must run like 5 min, 1 hours , etc
 
 ".components.schemas.ScheduledTask.properties.status": >
   When status is set, the ScheduledTask is made visible.
 
 ".components.schemas.ScheduledTask.properties.lastExecutionTime": >
-  //
+  Time when the scheduled task was last executed. 
 
 ".components.schemas.ScheduledTask.properties.nextExecutionTime": >
-  //
+  Time when the scheduled task will execute next. 
 
 ".components.schemas.ScheduledTask.properties.defaultRunInterval": >
-  //
+  Default run interval setting.
 
 ".components.schemas.Script.properties.id": >
   Unique identity of a script.
 
 ".components.schemas.Script.properties.script": >
-  //if
+  Internal field.
 
 ".components.schemas.Script.properties.hook": >
-  //if
+  Internal field.
 
 ".components.schemas.Script.properties.name": >
-  Unique name of the script.
+  Internal field.
 
 ".components.schemas.Script.properties.active": >
-  When boolean value is `true`, the scripts are available for selection.
+  Internal field.
 
 ".components.schemas.SeoUrl.properties.id": >
   Unique identity of Seo Url.
@@ -2858,7 +2858,7 @@
   Name of the route.
 
 ".components.schemas.SeoUrlTemplate.properties.template": >
-  //template to generate an URL
+  Template to generate an URL.
 
 ".components.schemas.SeoUrlTemplate.properties.isValid": >
   Created SEO URL template can be made usable by setting `isValid` to true.
@@ -3320,16 +3320,16 @@
   Unique identity of customer.
 
 ".components.schemas.SwagDelayAction.properties.executionTime": >
-  //WHEN to run the flow 
+  Parameters that determine when the flow action is to be executed.
 
 ".components.schemas.SwagDelayAction.properties.expired": >
-  //expired/no
+  Parameter that determines when the flow action ceases to run.
 
 ".components.schemas.SwagDelayAction.properties.delaySequenceId": >
   Unique identity of delaySequence.
 
 ".components.schemas.SwagDelayAction.properties.stored": >
-  //if
+  Internal field.
 
 ".components.schemas.SwagSequenceWebhookEventLog.properties.id": >
   Unique identity of Swag Sequence Webhook Event Log.
@@ -3416,22 +3416,22 @@
   Rate of tax defined for a tax rule.
 
 ".components.schemas.TaxRule.properties.data.properties.states": >
-  //tax rule that is applicablecountry states 
+  Parameter that specifies the country's states where the tax rule is applicable.
 
 ".components.schemas.TaxRule.properties.data.properties.zipCode": >
-  //
+  Parameter that specifies the country's zipcode where the tax rule is applicable.
 
 ".components.schemas.TaxRule.properties.data.properties.fromZipCode": >
-  //
+  Parameter that designates from which zip code the tax rule is applicable.
 
 ".components.schemas.TaxRule.properties.data.properties.toZipCode": >
-  //
+  Parameter that designates to which zip code the tax rule is applicable.
 
 ".components.schemas.TaxRule.properties.taxId": >
   Unique identity of tax.
 
 ".components.schemas.TaxRule.properties.activeFrom": >
-  //
+  Date and time when the tax rule is enabled.
 
 ".components.schemas.TaxRuleType.properties.id": >
   Unique identity of tax rule type.
@@ -3443,7 +3443,7 @@
   The order of the tabs of your defined tax rules to be displayed in the storefront by entering numerical values like 1,2,3, etc.
 
 ".components.schemas.TaxRuleType.properties.typeName": >
-  // choose zipcode/state/country
+  Type name can be zip code, state, or country.
 
 ".components.schemas.TaxRuleType.properties.translated": >
   Contains the translations of all translated fields.
@@ -3479,7 +3479,7 @@
   Unique identity of parent theme.
 
 ".components.schemas.Theme.properties.themeJson": >
-  //if
+  Internal field.
 
 ".components.schemas.Theme.properties.baseConfig": >
   Config elements of theme like header, color, etc
@@ -3560,13 +3560,13 @@
   When boolean value is `true`, the user is enabled.
 
 ".components.schemas.User.properties.admin": >
-  //is admin ?
+  Parameter that indicates if the user is an admin.
 
 ".components.schemas.User.properties.lastUpdatedPasswordAt": >
-  //
+  Parameter that indicates when the password was last updated by the user.
 
 ".components.schemas.User.properties.timeZone": >
-  //time config in his profile
+  Time configuration in the user's profile.
 
 ".components.schemas.User.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -3584,10 +3584,10 @@
   Access key to admin api.
 
 ".components.schemas.UserAccessKey.properties.secretAccessKey": >
-  //secret key to admin api
+  Secret key to admin api.
 
 ".components.schemas.UserAccessKey.properties.lastUsageAt": >
-  //
+  Parameter that indicates when the access key was last accessed.
 
 ".components.schemas.UserAccessKey.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -3656,13 +3656,13 @@
   Unique name of webhook.
 
 ".components.schemas.Webhook.properties.eventName": >
-  // tech name of ewvent
+  Technical name of the event.
 
 ".components.schemas.Webhook.properties.url": >
-  //url to be called whne the event is 
+  //url to be called whne the event is.
 
 ".components.schemas.Webhook.properties.errorCount": >
-  //delivery failed to this url
+  Parameter that indicates a delivery failure to this url.
 
 ".components.schemas.Webhook.properties.active": >
   When boolean value is `true`, the webhook is enabled.
@@ -3683,25 +3683,25 @@
   Unique name of event.
 
 ".components.schemas.WebhookEventLog.properties.deliveryStatus": >
-  //success or failed
+  Parameter that records "success or failed" status of the event.
 
 ".components.schemas.WebhookEventLog.properties.timestamp": >
-  //
+  Time at which the event occurred.
 
 ".components.schemas.WebhookEventLog.properties.processingTime": >
-  //
+  Time the event took to process.
 
 ".components.schemas.WebhookEventLog.properties.appVersion": >
-  //
+  Version of teh app.
 
 ".components.schemas.WebhookEventLog.properties.requestContent": >
-  //
+  Represents the content sent as part of the Request.
 
 ".components.schemas.WebhookEventLog.properties.responseContent": >
-  //
+  Represents the content sent as part of the Response.
 
 ".components.schemas.WebhookEventLog.properties.responseStatusCode": >
-  //
+  HTTP status codes that are typically generated to provide informational (1xx), successful (2xx), redirection (3xx), client error (4xx), or server error (5xx) responses.
 
 ".components.schemas.WebhookEventLog.properties.responseReasonPhrase": >
   //
@@ -3716,16 +3716,16 @@
   Unique name of the businessEventsResponse.
 
 ".components.schemas.businessEventsResponse.properties.class": >
-  //class name of business event
+  Class name of business event.
 
 ".components.schemas.businessEventsResponse.properties.data": >
-  //if
+  Internal field.
 
 ".components.schemas.businessEventsResponse.properties.aware": >
-  //in which areas is business event supported
+  Parameter that indicates the areas in which the business event is supported.
 
 ".components.schemas.businessEventsResponse.properties.extensions": >
-  //if
+  Internal field.
 
 ".components.schemas.flowBulderActionsResponse.properties.name": >
   Unique name of the flowBulderActionsResponse.
@@ -3734,7 +3734,7 @@
   //
 
 ".components.schemas.flowBulderActionsResponse.properties.extensions": >
-  //if
+  Internal field.
 
 ".components.schemas.LineItem.properties.id": >
   Unique identity of line item.
@@ -3836,7 +3836,7 @@
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
 ".components.schemas.Category.properties.slotConfig": >
-  //
+  Specifies detailed information about how the CMS slots are configured for category.
 
 ".components.schemas.Category.properties.linkType": >
   linkType : `external`, `category`, `product`, `landing_page`.
@@ -3899,7 +3899,7 @@
   A short description of the ACL role.
 
 ".components.schemas.AclRole.properties.privileges": >
-  //privileges like read write
+  Privileges like read, write, delete, etc.
 
 ".components.schemas.AclRole.properties.deletedAt": >
   Time and date when the ACL role was deleted.
@@ -3920,31 +3920,31 @@
   Unique identity of sales channel.
 
 ".components.schemas.AdvancedSearchConfig.properties.esEnabled": >
-  //is it enabled
+  When boolean value is `true`, advanced search is enabled.
 
 ".components.schemas.AdvancedSearchConfig.properties.andLogic": >
-  //
+  Advanced search configuration with add logic.
 
 ".components.schemas.AdvancedSearchConfig.properties.minSearchLength": >
-  //
+  Minimum number of characters used for advanced search.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount": >
-  //how many products is searched
+  Parameter that indicates the number of times the product is searched.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.product.properties.maxSuggestCount": >
-  //.
+  Maximum number of suggested product hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.product.properties.maxSearchCount": >
-  //
+  // The number of search results to be shown to the user.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.product_manufacturer.properties.maxSuggestCount": >
-  //
+  Maximum number of suggested hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.product_manufacturer.properties.maxSearchCount": >
   //
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.category.properties.maxSuggestCount": >
-  //
+  Maximum number of suggested hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfig.properties.hitCount.properties.category.properties.maxSearchCount": >
   //
@@ -3959,19 +3959,19 @@
   Unique identity of custom field.
 
 ".components.schemas.AdvancedSearchConfig.properties.fields.properties.entity": >
-  //
+  Indicates in which particular entity.
 
 ".components.schemas.AdvancedSearchConfig.properties.fields.properties.field": >
   Information of the configured advanced search field.
 
 ".components.schemas.AdvancedSearchConfig.properties.fields.properties.tokenize": >
-  //
+  To decide whether the text within the field should undergo tokenization, which involves splitting it into smaller chunks.
 
 ".components.schemas.AdvancedSearchConfig.properties.fields.properties.searchable": >
-  //
+  When a field is searchable, it means that it can be used as a search criterion when conducting advanced searches. 
 
 ".components.schemas.AdvancedSearchConfig.properties.fields.properties.ranking": >
-  //
+  Search ranking.
 
 ".components.schemas.AdvancedSearchConfigField.properties.id": >
   Unique identity of advanced search config field.
@@ -3983,52 +3983,52 @@
   Unique identity of custom field.
 
 ".components.schemas.AdvancedSearchConfigField.properties.entity": >
-  //
+  Indicates in which particular entity.
 
 ".components.schemas.AdvancedSearchConfigField.properties.field": >
   Information of the configured advanced search field.
 
 ".components.schemas.AdvancedSearchConfigField.properties.tokenize": >
-  Unique identity of advanced search config.
+  To decide whether the text within the field should undergo tokenization, which involves splitting it into smaller chunks.
 
 ".components.schemas.AdvancedSearchConfigField.properties.searchable": >
-  Unique identity of advanced search config.
+  When a field is searchable, it means that it can be used as a search criterion when conducting advanced searches. 
 
 ".components.schemas.AdvancedSearchConfigField.properties.ranking": >
-  Unique identity of advanced search config.
+  Search ranking.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.id": >
-  Unique identity of advanced search config.
+  Unique identity of advanced search field.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.salesChannelId": >
   Unique identity of sales channel.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.esEnabled": >
-  //
+  When boolean value is `true`, advanced search is enabled.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.andLogic": >
-  //
+  Advanced search field configuration with add logic.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.minSearchLength": >
-  //
+  Minimum number of characters used for advanced search field.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount": >
-  //
+  Parameter that indicates the number of times the product is searched.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.product.properties.maxSuggestCount": >
-  //.
+  Maximum number of suggested hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.product.properties.maxSearchCount": >
   //
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.product_manufacturer.properties.maxSuggestCount": >
-  //
+  Maximum number of suggested hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.product_manufacturer.properties.maxSearchCount": >
   //
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.category.properties.maxSuggestCount": >
-  //
+  Maximum number of suggested hits or recommendations that will be provided in response to a search.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.hitCount.properties.category.properties.maxSearchCount": >
   //
@@ -4043,19 +4043,19 @@
   Unique identity of custom field.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.fields.properties.entity": >
-  //
+  Indicates in which particular entity.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.fields.properties.field": >
   Information of the configured advanced search field.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.fields.properties.tokenize": >
-  //
+  To decide whether the text within the field should undergo tokenization, which involves splitting it into smaller chunks.
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.fields.properties.searchable": >
-  //
+  When a field is searchable, it means that it can be used as a search criterion when conducting advanced searches. 
 
 ".components.schemas.AdvancedSearchConfigField.properties.config.properties.fields.properties.ranking": >
-  //
+  Search ranking.
 
 ".components.schemas.App.properties.id": >
   Unique identity of App.
@@ -4064,31 +4064,31 @@
   Name of the app.
 
 ".components.schemas.App.properties.path": >
-  //
+  A relative URL to the app.
 
 ".components.schemas.App.properties.author": >
   Creator of the App.
 
 ".components.schemas.App.properties.copyright": >
-  //
+  Legal rights on the created app.
 
 ".components.schemas.App.properties.license": >
-  //
+  Software license's like MIT, etc.
 
 ".components.schemas.App.properties.active": >
   When boolean value is `true`, the app is enabled for selection.
 
 ".components.schemas.App.properties.configurable": >
-  //
+  When boolean value is `true`, the app is configurable for further customizations.
 
 ".components.schemas.App.properties.privacy": >
   //
 
 ".components.schemas.App.properties.version": >
-  //
+  Version of the plugin.
 
 ".components.schemas.App.properties.icon": >
-  //
+  Icon for the app.
 
 ".components.schemas.App.properties.modules": >
   //
@@ -4136,13 +4136,13 @@
   Unique identity of app's action button.
 
 ".components.schemas.AppActionButton.properties.entity": >
-  //in which entity
+  Indicates in which particular entity.
 
 ".components.schemas.AppActionButton.properties.view": >
-  //detail or listing page view
+  Indicates whether it is detail page view or listing page view.
 
 ".components.schemas.AppActionButton.properties.url": >
-  //
+  An url associated with the AppActionButton.
 
 ".components.schemas.AppActionButton.properties.action": >
   //
@@ -4175,13 +4175,13 @@
   Name of app's CMS block.
 
 ".components.schemas.AppCmsBlock.properties.block": >
-  //
+  CMS block.
 
 ".components.schemas.AppCmsBlock.properties.template": >
-  //
+  Template that defines app CMS block.
 
 ".components.schemas.AppCmsBlock.properties.styles": >
-  //
+  Parameter that relates to the styles or formatting within CMS block.
 
 ".components.schemas.AppCmsBlock.properties.label": >
   Label given to AppCmsBlock.
@@ -4220,7 +4220,7 @@
   //
 
 ".components.schemas.AppFlowAction.properties.icon": >
-  //
+  Icon to identify app flow action.
 
 ".components.schemas.AppFlowAction.properties.swIcon": >
   //
@@ -4256,7 +4256,7 @@
   Unique name of the AppFlowEvent.
 
 ".components.schemas.AppFlowEvent.properties.aware": >
-  //
+  Parameter that indicates the areas in which the app flow event is supported.
 
 ".components.schemas.AppFlowEvent.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -4271,22 +4271,22 @@
   It is a unique identity of an AppPaymentMethod.
 
 ".components.schemas.AppPaymentMethod.properties.payUrl": >
-  //
+  A URL sending the pay request.
 
 ".components.schemas.AppPaymentMethod.properties.finalizeUrl": >
-  //
+  A URL that redirects the user back to the shop.
 
 ".components.schemas.AppPaymentMethod.properties.validateUrl": >
-  //
+  A validate URL confirms the authenticity of a payment reference when accessed.
 
 ".components.schemas.AppPaymentMethod.properties.captureUrl": >
-  //
+  A capture URL allows the payments to be processed and completed once validated.
 
 ".components.schemas.AppPaymentMethod.properties.refundUrl": >
-  //
+  A refund URL is used to initiate the refund process for a purchase.
 
 ".components.schemas.AppPaymentMethod.properties.recurringUrl": >
-  //
+  A URL to payment to handle recurring orders like subscriptions.
 
 ".components.schemas.AppPaymentMethod.properties.appId": >
   Unique identity of app.
@@ -4313,7 +4313,7 @@
   //
 
 ".components.schemas.AppScriptCondition.properties.script": >
-  //
+  Internal field.
 
 ".components.schemas.AppScriptCondition.properties.config": >
   Specifies detailed information about the component.
@@ -4328,10 +4328,10 @@
   Unique identity of App template.
 
 ".components.schemas.AppTemplate.properties.template": >
-  //
+  Template for an app.
 
 ".components.schemas.AppTemplate.properties.path": >
-  //
+  A relative URL to the app template.
 
 ".components.schemas.AppTemplate.properties.active": >
   When boolean value is `true`, defined app templates are available for selection.
@@ -4709,7 +4709,7 @@
   Unique name of the entity.
 
 ".components.schemas.CustomEntity.properties.fields": >
-  //
+  Fields in custom entity.
 
 ".components.schemas.CustomEntity.properties.flags": >
   //
@@ -4739,7 +4739,7 @@
   Specifies detailed information about the component.
 
 ".components.schemas.CustomField.properties.active": >
-  // When boolean value is `true`, the custom field can be configured.
+  When boolean value is `true`, the custom field is enabled for use.
 
 ".components.schemas.CustomField.properties.customFieldSetId": >
   Unique identity of customFieldSet.
@@ -4763,7 +4763,7 @@
   // When boolean value is `true`, the custom field set can be configured.
 
 ".components.schemas.CustomFieldSet.properties.global": >
-  //
+  When set to `true`, the custom field set can be used across all sales channels.
 
 ".components.schemas.CustomFieldSet.properties.position": >
   The order of the tabs of your defined custom field set to be displayed.
@@ -4778,7 +4778,7 @@
   Unique identity of a custom field set.
 
 ".components.schemas.CustomFieldSetRelation.properties.entityName": >
-  //
+  Name of the entity.
 
 ".components.schemas.CustomPrice.properties.id": >
   Unique identity of the custom price.
@@ -5018,7 +5018,7 @@
   Unique identity of the customer.
 
 ".components.schemas.CustomerSpecificFeatures.properties.features": >
-  //
+  The actual product features.
 
 ".components.schemas.CustomerTag.properties.id": >
   Unique identity of the customer tag.
@@ -5216,7 +5216,7 @@
   The order of the tabs of your defined flow sequence is to be displayed.
 
 ".components.schemas.FlowSequence.properties.displayGroup": >
-  //
+  The group to wich the flow sequence is visible.
 
 ".components.schemas.FlowSequence.properties.trueCase": >
   //
@@ -5246,10 +5246,10 @@
   Original name of the import-export file.
 
 ".components.schemas.ImportExportFile.properties.path": >
-  //
+  A relative URL to the import-export file.
 
 ".components.schemas.ImportExportFile.properties.expireDate": >
-  //
+  Date and time of import-export file expiry.
 
 ".components.schemas.ImportExportFile.properties.size": >
   Size of the import-export file.
@@ -5312,7 +5312,7 @@
   //
 
 ".components.schemas.ImportExportProfile.properties.fileType": >
-  //
+  Type of file like PDF.
 
 ".components.schemas.ImportExportProfile.properties.delimiter": >
   //
@@ -5342,7 +5342,7 @@
   //
 
 ".components.schemas.Integration.properties.lastUsageAt": >
-  //
+  Date and time when teh integration was last used.
 
 ".components.schemas.Integration.properties.admin": >
   //
@@ -5351,10 +5351,10 @@
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
 ".components.schemas.Integration.properties.deletedAt": >
-  //
+  Date and time when the integration was deleted.
 
 ".components.schemas.Integration.properties.writeAccess": >
-  //
+  This field is deprecated.
 
 ".components.schemas.IntegrationRole.properties.id": >
   Unique identity of Integration role.
@@ -5381,7 +5381,7 @@
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
 ".components.schemas.LandingPage.properties.slotConfig": >
-  //
+  Specifies detailed information about how the CMS slots are configured for landing page.
 
 ".components.schemas.LandingPage.properties.metaTitle": >
   A page title indexed by search engines and appears in search results listings.
@@ -5660,7 +5660,7 @@
   Unique identity of media default folder.
 
 ".components.schemas.MediaDefaultFolder.properties.entity": >
-  //
+  Indicates in which particular entity.
 
 ".components.schemas.MediaDefaultFolder.properties.customFields": >
   Additional fields that offer a possibility to add own fields for the different program-areas.
@@ -5684,10 +5684,10 @@
   Unique identity of parent.
 
 ".components.schemas.MediaFolder.properties.childCount": >
-  //
+  Number of media within the media folder.
 
 ".components.schemas.MediaFolder.properties.path": >
-  //Path of the media folder.
+  A relative URL to the media folder.
 
 ".components.schemas.MediaFolder.properties.name": >
   Name of media folder.
@@ -5762,7 +5762,7 @@
   Email of the recipient.
 
 ".components.schemas.NewsletterRecipient.properties.title": >
-  //Title of the newsletter of customer ?
+  Title of the recipient's newsletter.
 
 ".components.schemas.NewsletterRecipient.properties.firstName": >
   First name of the recipient.
@@ -5789,7 +5789,7 @@
   Additional fields that offer a possibility to add own fields for the different program-areas.
 
 ".components.schemas.NewsletterRecipient.properties.confirmedAt": >
-  //Date and time when the Newsletter was received.
+  Date and time when the Newsletter was received.
 
 ".components.schemas.NewsletterRecipient.properties.salutationId": >
   Unique identity of salutation.
