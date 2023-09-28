@@ -62705,61 +62705,21 @@
         }
       }
     },
-    "/_action/container_cache": {
-      "delete": {
+    "/_info/config": {
+      "get": {
         "tags": [
-          "System Operations"
+          "System Info & Healthcheck"
         ],
-        "summary": "Clear container caches",
-        "description": "The container cache is immediately cleared synchronously.",
-        "operationId": "clearContainerCache",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the container cache is cleared."
-          }
-        }
-      }
-    },
-    "/_action/message-queue/consume": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Consume messages from the message queue.",
-        "description": "This route can be used to consume messenges from the message queue. It is intended to be used if\nno cronjob is configured to consume messages regulary.",
-        "operationId": "consumeMessages",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "receiver"
-                ],
-                "properties": {
-                  "receiver": {
-                    "description": "The name of the transport in the messenger that should be processed.\nSee the [Symfony Messenger documentation](https://symfony.com/doc/current/messenger.html) for more information",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
+        "summary": "Get API information",
+        "description": "Get information about the API",
+        "operationId": "config",
         "responses": {
           "200": {
-            "description": "Returns information about handled messages",
+            "description": "Returns information about the API.",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "handledMessages": {
-                      "description": "The number of messages processed.",
-                      "type": "integer"
-                    }
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/infoConfigResponse"
                 }
               }
             }
@@ -62866,42 +62826,6 @@
         }
       }
     },
-    "/_action/cache_info": {
-      "get": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Get cache information",
-        "description": "Get information about the cache configuration",
-        "operationId": "info",
-        "responses": {
-          "200": {
-            "description": "Information about the cache state.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "environment": {
-                      "description": "The active environment.",
-                      "type": "string"
-                    },
-                    "httpCache": {
-                      "description": "State of the HTTP cache.",
-                      "type": "boolean"
-                    },
-                    "cacheAdapter": {
-                      "description": "The active cache adapter.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/_action/number-range/reserve/{type}/{saleschannel}": {
       "get": {
         "tags": [
@@ -62958,6 +62882,758 @@
           },
           "400": {
             "description": "Number range not found"
+          }
+        }
+      }
+    },
+    "/_action/container_cache": {
+      "delete": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Clear container caches",
+        "description": "The container cache is immediately cleared synchronously.",
+        "operationId": "clearContainerCache",
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the container cache is cleared."
+          }
+        }
+      }
+    },
+    "/_action/scheduled-task/run": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Run scheduled tasks.",
+        "description": "Starts the scheduled task worker to handle the next scheduled tasks.",
+        "operationId": "runScheduledTasks",
+        "responses": {
+          "200": {
+            "description": "Returns a success message indicating a successful run.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "description": "Success message",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/scheduled-task/min-run-interval": {
+      "get": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Get the minimum schedules task interval",
+        "description": "Fetches the smallest interval that a scheduled task uses.",
+        "operationId": "getMinRunInterval",
+        "responses": {
+          "200": {
+            "description": "Returns the minimum interval.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "minRunInterval": {
+                      "description": "Minimal interval in seconds.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_info/version": {
+      "get": {
+        "tags": [
+          "System Info & Healthcheck"
+        ],
+        "summary": "Get the Shopware version",
+        "description": "Get the version of the Shopware instance",
+        "operationId": "infoShopwareVersion",
+        "responses": {
+          "200": {
+            "description": "Returns the version of the Shopware instance.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "version": {
+                      "description": "The Shopware version.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/message-queue/consume": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Consume messages from the message queue.",
+        "description": "This route can be used to consume messenges from the message queue. It is intended to be used if\nno cronjob is configured to consume messages regulary.",
+        "operationId": "consumeMessages",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "receiver"
+                ],
+                "properties": {
+                  "receiver": {
+                    "description": "The name of the transport in the messenger that should be processed.\nSee the [Symfony Messenger documentation](https://symfony.com/doc/current/messenger.html) for more information",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns information about handled messages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "handledMessages": {
+                      "description": "The number of messages processed.",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/document/{documentId}/{deepLinkCode}": {
+      "get": {
+        "tags": [
+          "Document Management"
+        ],
+        "summary": "Download a document",
+        "description": "Download a document by its identifier and deep link code.",
+        "operationId": "downloadDocument",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "Identifier of the document to be downloaded.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "deepLinkCode",
+            "in": "path",
+            "description": "A unique hash code which was generated when the document was created.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "download",
+            "in": "query",
+            "description": "This parameter controls the `Content-Disposition` header. If set to `true` the header will be set to `attachment` else `inline`.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The document.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/document/{documentId}/upload": {
+      "post": {
+        "tags": [
+          "Document Management"
+        ],
+        "summary": "Upload a file for a document",
+        "description": "Uploads a file for a document. This prevents the document from being dynamically generated and delivers the uploaded file instead, when the document is downloaded.\n\nNote:\n* The document is required to be `static`\n* A document can only have one media file\n\nThe are two methods of providing a file to this route:\n * Use a typical file upload and provide the file in the request\n * Fetch the file from an url. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.\nTo use file upload via url, the content type has to be `application/json` and the parameter `url` has to be provided.",
+        "operationId": "uploadToDocument",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "Identifier of the document the new file should be added to.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Name of the uploaded file.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "extension",
+            "in": "query",
+            "description": "Extension of the uploaded file. For example `pdf`",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "description": "The url of the document that will be downloaded.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Document uploaded successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "documentId": {
+                      "description": "Identifier of the document.",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "documentDeepLink": {
+                      "description": "A unique hash code which is required to open the document.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/token": {
+      "post": {
+        "tags": [
+          "Authorization & Authentication"
+        ],
+        "summary": "Fetch an access token",
+        "description": "Fetch a access token that can be used to perform authenticated requests. For more information take a look at the [Authentication documentation](https://shopware.stoplight.io/docs/admin-api/docs/concepts/authentication-authorisation.md).",
+        "operationId": "token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/OAuthPasswordGrant"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OAuthRefreshTokenGrant"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OAuthClientCredentialsGrant"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authorized successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "token_type",
+                    "expires_in",
+                    "access_token"
+                  ],
+                  "properties": {
+                    "token_type": {
+                      "description": "Type of the token.",
+                      "type": "string"
+                    },
+                    "expires_in": {
+                      "description": "Token lifetime in seconds.",
+                      "type": "integer"
+                    },
+                    "access_token": {
+                      "description": "The access token that can be used for subsequent requests",
+                      "type": "string"
+                    },
+                    "refresh_token": {
+                      "description": "The refresh token that can be used to refresh the access token. This field is not returned on grant type `refresh_token`.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/_action/media/{mediaId}/upload": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Upload a file to a media entity",
+        "description": "Adds a new file to a media entity. If the entity has an existing file, it will be replaced.\n\nThe are two methods of providing a file to this route:\n * Use a typical file upload and provide the file in the request\n * Fetch the file from an url. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.\nTo use file upload via url, the content type has to be `application/json` and the parameter `url` has to be provided.",
+        "operationId": "upload",
+        "parameters": [
+          {
+            "name": "mediaId",
+            "in": "path",
+            "description": "Identifier of the media entity.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Name of the uploaded file. If not provided the media identifier will be used as name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "extension",
+            "in": "query",
+            "description": "Extension of the uploaded file. For example `png`",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "description": "The url of the media file that will be downloaded.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Media file uploaded successful",
+            "headers": {
+              "Location": {
+                "description": "Contains the url to the uploaded media for a redirect.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/cache": {
+      "delete": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Clear caches",
+        "description": "The cache is immediately cleared synchronously for all used adapters.",
+        "operationId": "clearCache",
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the cache has been cleared."
+          }
+        }
+      }
+    },
+    "/_action/order/document/download": {
+      "post": {
+        "tags": [
+          "Document Management"
+        ],
+        "summary": "Download a documents",
+        "description": "Download a multiple documents in one pdf file.",
+        "operationId": "downloadDocuments",
+        "requestBody": {
+          "description": "documentIds",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The documents.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/order/document/{documentTypeName}/create": {
+      "post": {
+        "tags": [
+          "Document Management"
+        ],
+        "summary": "Create documents for orders",
+        "description": "Creates documents for orders. Documents can for example be an invoice or a delivery note.",
+        "operationId": "createDocuments",
+        "parameters": [
+          {
+            "name": "documentTypeName",
+            "in": "path",
+            "description": "The type of document to create",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "test",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "orderId",
+                    "type"
+                  ],
+                  "properties": {
+                    "orderId": {
+                      "description": "Identifier of the order.",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "type": {
+                      "description": "Type of the document to be generated.",
+                      "type": "string"
+                    },
+                    "fileType": {
+                      "description": "Type of document file to be generated.",
+                      "type": "string",
+                      "default": "pdf"
+                    },
+                    "static": {
+                      "description": "Indicate if the document should be static or not.",
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "referencedDocumentId": {
+                      "description": "Identifier of the reverenced document.",
+                      "type": "string",
+                      "default": "null",
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "config": {
+                      "description": "Document specific configuration, like documentNumber, documentDate, documentComment.",
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Documents created successfully. The `api/_action/order/document/create` route can be used to download the document."
+          }
+        }
+      }
+    },
+    "/_action/order/{orderId}/state/{transition}": {
+      "post": {
+        "tags": [
+          "Order Management"
+        ],
+        "summary": "Transition an order to a new state",
+        "description": "Changes the order state and informs the customer via email if configured.",
+        "operationId": "orderStateTransition",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "Identifier of the order.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "transition",
+            "in": "path",
+            "description": "The `action_name` of the `state_machine_transition`. For example `process` if the order state should change from open to in progress.\n\nNote: If you choose a transition that is not available, you will get an error that lists possible transitions for the current state.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "sendMail": {
+                    "description": "Controls if a mail should be sent to the customer."
+                  },
+                  "documentIds": {
+                    "description": "A list of document identifiers that should be attached",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "mediaIds": {
+                    "description": "A list of media identifiers that should be attached",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "stateFieldName": {
+                    "description": "This is the state column within the order database table. There should be no need to change it from the default.",
+                    "type": "string",
+                    "default": "stateId"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Todo: Use ref of `state_machine_transition` here"
+          }
+        }
+      }
+    },
+    "/_info/health-check": {
+      "get": {
+        "tags": [
+          "System Info & Healthcheck"
+        ],
+        "summary": "Check that the Application is running",
+        "operationId": "healthCheck",
+        "responses": {
+          "200": {
+            "description": "Returns empty response"
+          },
+          "500": {
+            "description": "Application is not working properly"
+          }
+        }
+      }
+    },
+    "/usage-data/needs-approval": {
+      "delete": {
+        "tags": [
+          "Usage data"
+        ],
+        "summary": "Get information about the usage data approval request.",
+        "description": "Get whether the usage data approval request is necessary or not.",
+        "operationId": "getNeedsUsageDataApprovalRequest",
+        "responses": {
+          "200": {
+            "description": "Returns true if it is needed, false if it is not."
+          }
+        }
+      }
+    },
+    "/_action/order_transaction_capture_refund/{refundId}": {
+      "post": {
+        "tags": [
+          "Order Management"
+        ],
+        "summary": "Refund an order transaction capture",
+        "description": "Refunds an order transaction capture.",
+        "operationId": "orderTransactionCaptureRefund",
+        "parameters": [
+          {
+            "name": "refundId",
+            "in": "path",
+            "description": "Identifier of the order transaction capture refund.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Refund was successful"
+          },
+          "400": {
+            "description": "Something went wrong, while processing the refund"
+          },
+          "404": {
+            "description": "Refund with id not found"
+          }
+        }
+      }
+    },
+    "/_info/flow-actions.json": {
+      "get": {
+        "tags": [
+          "System Info & Healthcheck"
+        ],
+        "summary": "Get actions for flow builder",
+        "description": "Get a list of action for flow builder.",
+        "operationId": "flow-actions",
+        "responses": {
+          "200": {
+            "description": "Returns a list of action for flow builder.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/flowBulderActionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/cache_info": {
+      "get": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Get cache information",
+        "description": "Get information about the cache configuration",
+        "operationId": "info",
+        "responses": {
+          "200": {
+            "description": "Information about the cache state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "environment": {
+                      "description": "The active environment.",
+                      "type": "string"
+                    },
+                    "httpCache": {
+                      "description": "State of the HTTP cache.",
+                      "type": "boolean"
+                    },
+                    "cacheAdapter": {
+                      "description": "The active cache adapter.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
@@ -63030,6 +63706,192 @@
         "responses": {
           "200": {
             "description": "Returns information about the transition that was made. `#/components/schemas/StateMachineTransition`"
+          }
+        }
+      }
+    },
+    "/_action/order_delivery/{orderDeliveryId}/state/{transition}": {
+      "post": {
+        "tags": [
+          "Order Management"
+        ],
+        "summary": "Transition an order delivery to a new state",
+        "description": "Changes the order delivery state and informs the customer via email if configured.",
+        "operationId": "orderDeliveryStateTransition",
+        "parameters": [
+          {
+            "name": "orderDeliveryId",
+            "in": "path",
+            "description": "Identifier of the order delivery.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "transition",
+            "in": "path",
+            "description": "The `action_name` of the `state_machine_transition`. For example `process` if the order state should change from open to in progress.\n\nNote: If you choose a transition which is not possible, you will get an error that lists possible transition for the actual state.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "sendMail": {
+                    "description": "Controls if a mail should be send to the customer."
+                  },
+                  "documentIds": {
+                    "description": "A list of document identifiers that should be attached",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "mediaIds": {
+                    "description": "A list of media identifiers that should be attached",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "stateFieldName": {
+                    "description": "This is the state column within the order delivery database table. There should be no need to change it from the default.",
+                    "type": "string",
+                    "default": "stateId"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Todo: Use ref of `state_machine_transition` here"
+          }
+        }
+      }
+    },
+    "/_info/openapi3.json": {
+      "get": {
+        "tags": [
+          "System Info & Healthcheck"
+        ],
+        "summary": "Get OpenAPI Specification",
+        "description": "Get information about the API in OpenAPI format.",
+        "operationId": "api-info",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of the api",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "jsonapi",
+                "json"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns information about the API."
+          }
+        }
+      }
+    },
+    "/_action/index": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Run indexer",
+        "description": "Runs all registered indexer in the shop asynchronously.",
+        "operationId": "index",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "skip": {
+                    "description": "Array of indexers/updaters to be skipped.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the indexing progress startet."
+          }
+        }
+      }
+    },
+    "/_action/cleanup": {
+      "delete": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Clear old cache folders",
+        "description": "Removes cache folders that are not needed anymore.",
+        "operationId": "clearOldCacheFolders",
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the cleanup finished."
+          }
+        }
+      }
+    },
+    "/_info/events.json": {
+      "get": {
+        "tags": [
+          "System Info & Healthcheck"
+        ],
+        "summary": "Get Business events",
+        "description": "Get a list of about the business events.",
+        "operationId": "business-events",
+        "responses": {
+          "200": {
+            "description": "Returns a list of about the business events.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/businessEventsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/cache_warmup": {
+      "delete": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Clear and warm up caches",
+        "description": "After the cache has been cleared, new cache entries are generated asynchronously.",
+        "operationId": "clearCacheAndScheduleWarmUp",
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the cache has been cleared and generation of new cache has started."
           }
         }
       }
@@ -63307,521 +64169,6 @@
         }
       }
     },
-    "/_action/cache_warmup": {
-      "delete": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Clear and warm up caches",
-        "description": "After the cache has been cleared, new cache entries are generated asynchronously.",
-        "operationId": "clearCacheAndScheduleWarmUp",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the cache has been cleared and generation of new cache has started."
-          }
-        }
-      }
-    },
-    "/_action/cache": {
-      "delete": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Clear caches",
-        "description": "The cache is immediately cleared synchronously for all used adapters.",
-        "operationId": "clearCache",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the cache has been cleared."
-          }
-        }
-      }
-    },
-    "/_action/order_transaction_capture_refund/{refundId}": {
-      "post": {
-        "tags": [
-          "Order Management"
-        ],
-        "summary": "Refund an order transaction capture",
-        "description": "Refunds an order transaction capture.",
-        "operationId": "orderTransactionCaptureRefund",
-        "parameters": [
-          {
-            "name": "refundId",
-            "in": "path",
-            "description": "Identifier of the order transaction capture refund.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Refund was successful"
-          },
-          "400": {
-            "description": "Something went wrong, while processing the refund"
-          },
-          "404": {
-            "description": "Refund with id not found"
-          }
-        }
-      }
-    },
-    "/_action/order/document/download": {
-      "post": {
-        "tags": [
-          "Document Management"
-        ],
-        "summary": "Download a documents",
-        "description": "Download a multiple documents in one pdf file.",
-        "operationId": "downloadDocuments",
-        "requestBody": {
-          "description": "documentIds",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The documents.",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/order/document/{documentTypeName}/create": {
-      "post": {
-        "tags": [
-          "Document Management"
-        ],
-        "summary": "Create documents for orders",
-        "description": "Creates documents for orders. Documents can for example be an invoice or a delivery note.",
-        "operationId": "createDocuments",
-        "parameters": [
-          {
-            "name": "documentTypeName",
-            "in": "path",
-            "description": "The type of document to create",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "test",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "required": [
-                    "orderId",
-                    "type"
-                  ],
-                  "properties": {
-                    "orderId": {
-                      "description": "Identifier of the order.",
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "type": {
-                      "description": "Type of the document to be generated.",
-                      "type": "string"
-                    },
-                    "fileType": {
-                      "description": "Type of document file to be generated.",
-                      "type": "string",
-                      "default": "pdf"
-                    },
-                    "static": {
-                      "description": "Indicate if the document should be static or not.",
-                      "type": "boolean",
-                      "default": false
-                    },
-                    "referencedDocumentId": {
-                      "description": "Identifier of the reverenced document.",
-                      "type": "string",
-                      "default": "null",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "config": {
-                      "description": "Document specific configuration, like documentNumber, documentDate, documentComment.",
-                      "type": "object"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Documents created successfully. The `api/_action/order/document/create` route can be used to download the document."
-          }
-        }
-      }
-    },
-    "/_action/order/{orderId}/state/{transition}": {
-      "post": {
-        "tags": [
-          "Order Management"
-        ],
-        "summary": "Transition an order to a new state",
-        "description": "Changes the order state and informs the customer via email if configured.",
-        "operationId": "orderStateTransition",
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "description": "Identifier of the order.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "transition",
-            "in": "path",
-            "description": "The `action_name` of the `state_machine_transition`. For example `process` if the order state should change from open to in progress.\n\nNote: If you choose a transition that is not available, you will get an error that lists possible transitions for the current state.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "sendMail": {
-                    "description": "Controls if a mail should be sent to the customer."
-                  },
-                  "documentIds": {
-                    "description": "A list of document identifiers that should be attached",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "mediaIds": {
-                    "description": "A list of media identifiers that should be attached",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "stateFieldName": {
-                    "description": "This is the state column within the order database table. There should be no need to change it from the default.",
-                    "type": "string",
-                    "default": "stateId"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Todo: Use ref of `state_machine_transition` here"
-          }
-        }
-      }
-    },
-    "/_info/version": {
-      "get": {
-        "tags": [
-          "System Info & Healthcheck"
-        ],
-        "summary": "Get the Shopware version",
-        "description": "Get the version of the Shopware instance",
-        "operationId": "infoShopwareVersion",
-        "responses": {
-          "200": {
-            "description": "Returns the version of the Shopware instance.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "version": {
-                      "description": "The Shopware version.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/document/{documentId}/{deepLinkCode}": {
-      "get": {
-        "tags": [
-          "Document Management"
-        ],
-        "summary": "Download a document",
-        "description": "Download a document by its identifier and deep link code.",
-        "operationId": "downloadDocument",
-        "parameters": [
-          {
-            "name": "documentId",
-            "in": "path",
-            "description": "Identifier of the document to be downloaded.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "deepLinkCode",
-            "in": "path",
-            "description": "A unique hash code which was generated when the document was created.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "download",
-            "in": "query",
-            "description": "This parameter controls the `Content-Disposition` header. If set to `true` the header will be set to `attachment` else `inline`.",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The document.",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/document/{documentId}/upload": {
-      "post": {
-        "tags": [
-          "Document Management"
-        ],
-        "summary": "Upload a file for a document",
-        "description": "Uploads a file for a document. This prevents the document from being dynamically generated and delivers the uploaded file instead, when the document is downloaded.\n\nNote:\n* The document is required to be `static`\n* A document can only have one media file\n\nThe are two methods of providing a file to this route:\n * Use a typical file upload and provide the file in the request\n * Fetch the file from an url. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.\nTo use file upload via url, the content type has to be `application/json` and the parameter `url` has to be provided.",
-        "operationId": "uploadToDocument",
-        "parameters": [
-          {
-            "name": "documentId",
-            "in": "path",
-            "description": "Identifier of the document the new file should be added to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "fileName",
-            "in": "query",
-            "description": "Name of the uploaded file.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "extension",
-            "in": "query",
-            "description": "Extension of the uploaded file. For example `pdf`",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/octet-stream": {
-              "schema": {
-                "type": "string",
-                "format": "binary"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "required": [
-                  "url"
-                ],
-                "properties": {
-                  "url": {
-                    "description": "The url of the document that will be downloaded.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Document uploaded successful",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "documentId": {
-                      "description": "Identifier of the document.",
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "documentDeepLink": {
-                      "description": "A unique hash code which is required to open the document.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_info/flow-actions.json": {
-      "get": {
-        "tags": [
-          "System Info & Healthcheck"
-        ],
-        "summary": "Get actions for flow builder",
-        "description": "Get a list of action for flow builder.",
-        "operationId": "flow-actions",
-        "responses": {
-          "200": {
-            "description": "Returns a list of action for flow builder.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/flowBulderActionsResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_info/config": {
-      "get": {
-        "tags": [
-          "System Info & Healthcheck"
-        ],
-        "summary": "Get API information",
-        "description": "Get information about the API",
-        "operationId": "config",
-        "responses": {
-          "200": {
-            "description": "Returns information about the API.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/infoConfigResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/scheduled-task/run": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Run scheduled tasks.",
-        "description": "Starts the scheduled task worker to handle the next scheduled tasks.",
-        "operationId": "runScheduledTasks",
-        "responses": {
-          "200": {
-            "description": "Returns a success message indicating a successful run.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "message": {
-                      "description": "Success message",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/scheduled-task/min-run-interval": {
-      "get": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Get the minimum schedules task interval",
-        "description": "Fetches the smallest interval that a scheduled task uses.",
-        "operationId": "getMinRunInterval",
-        "responses": {
-          "200": {
-            "description": "Returns the minimum interval.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "minRunInterval": {
-                      "description": "Minimal interval in seconds.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/_action/index-products": {
       "post": {
         "tags": [
@@ -63833,97 +64180,6 @@
         "responses": {
           "204": {
             "description": "Returns an empty response indicating that the message dispatched."
-          }
-        }
-      }
-    },
-    "/_action/cleanup": {
-      "delete": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Clear old cache folders",
-        "description": "Removes cache folders that are not needed anymore.",
-        "operationId": "clearOldCacheFolders",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the cleanup finished."
-          }
-        }
-      }
-    },
-    "/_action/media/{mediaId}/upload": {
-      "post": {
-        "tags": [
-          "Asset Management"
-        ],
-        "summary": "Upload a file to a media entity",
-        "description": "Adds a new file to a media entity. If the entity has an existing file, it will be replaced.\n\nThe are two methods of providing a file to this route:\n * Use a typical file upload and provide the file in the request\n * Fetch the file from an url. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.\nTo use file upload via url, the content type has to be `application/json` and the parameter `url` has to be provided.",
-        "operationId": "upload",
-        "parameters": [
-          {
-            "name": "mediaId",
-            "in": "path",
-            "description": "Identifier of the media entity.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "fileName",
-            "in": "query",
-            "description": "Name of the uploaded file. If not provided the media identifier will be used as name",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "extension",
-            "in": "query",
-            "description": "Extension of the uploaded file. For example `png`",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/octet-stream": {
-              "schema": {
-                "type": "string",
-                "format": "binary"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "required": [
-                  "url"
-                ],
-                "properties": {
-                  "url": {
-                    "description": "The url of the media file that will be downloaded.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Media file uploaded successful",
-            "headers": {
-              "Location": {
-                "description": "Contains the url to the uploaded media for a redirect.",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
           }
         }
       }
@@ -63998,262 +64254,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/_action/order_delivery/{orderDeliveryId}/state/{transition}": {
-      "post": {
-        "tags": [
-          "Order Management"
-        ],
-        "summary": "Transition an order delivery to a new state",
-        "description": "Changes the order delivery state and informs the customer via email if configured.",
-        "operationId": "orderDeliveryStateTransition",
-        "parameters": [
-          {
-            "name": "orderDeliveryId",
-            "in": "path",
-            "description": "Identifier of the order delivery.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "transition",
-            "in": "path",
-            "description": "The `action_name` of the `state_machine_transition`. For example `process` if the order state should change from open to in progress.\n\nNote: If you choose a transition which is not possible, you will get an error that lists possible transition for the actual state.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "sendMail": {
-                    "description": "Controls if a mail should be send to the customer."
-                  },
-                  "documentIds": {
-                    "description": "A list of document identifiers that should be attached",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "mediaIds": {
-                    "description": "A list of media identifiers that should be attached",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "stateFieldName": {
-                    "description": "This is the state column within the order delivery database table. There should be no need to change it from the default.",
-                    "type": "string",
-                    "default": "stateId"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Todo: Use ref of `state_machine_transition` here"
-          }
-        }
-      }
-    },
-    "/oauth/token": {
-      "post": {
-        "tags": [
-          "Authorization & Authentication"
-        ],
-        "summary": "Fetch an access token",
-        "description": "Fetch a access token that can be used to perform authenticated requests. For more information take a look at the [Authentication documentation](https://shopware.stoplight.io/docs/admin-api/docs/concepts/authentication-authorisation.md).",
-        "operationId": "token",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/OAuthPasswordGrant"
-                  },
-                  {
-                    "$ref": "#/components/schemas/OAuthRefreshTokenGrant"
-                  },
-                  {
-                    "$ref": "#/components/schemas/OAuthClientCredentialsGrant"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Authorized successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "required": [
-                    "token_type",
-                    "expires_in",
-                    "access_token"
-                  ],
-                  "properties": {
-                    "token_type": {
-                      "description": "Type of the token.",
-                      "type": "string"
-                    },
-                    "expires_in": {
-                      "description": "Token lifetime in seconds.",
-                      "type": "integer"
-                    },
-                    "access_token": {
-                      "description": "The access token that can be used for subsequent requests",
-                      "type": "string"
-                    },
-                    "refresh_token": {
-                      "description": "The refresh token that can be used to refresh the access token. This field is not returned on grant type `refresh_token`.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          }
-        }
-      }
-    },
-    "/_info/events.json": {
-      "get": {
-        "tags": [
-          "System Info & Healthcheck"
-        ],
-        "summary": "Get Business events",
-        "description": "Get a list of about the business events.",
-        "operationId": "business-events",
-        "responses": {
-          "200": {
-            "description": "Returns a list of about the business events.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/businessEventsResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_info/openapi3.json": {
-      "get": {
-        "tags": [
-          "System Info & Healthcheck"
-        ],
-        "summary": "Get OpenAPI Specification",
-        "description": "Get information about the API in OpenAPI format.",
-        "operationId": "api-info",
-        "parameters": [
-          {
-            "name": "type",
-            "in": "query",
-            "description": "Type of the api",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "jsonapi",
-                "json"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns information about the API."
-          }
-        }
-      }
-    },
-    "/_info/health-check": {
-      "get": {
-        "tags": [
-          "System Info & Healthcheck"
-        ],
-        "summary": "Check that the Application is running",
-        "operationId": "healthCheck",
-        "responses": {
-          "200": {
-            "description": "Returns empty response"
-          },
-          "500": {
-            "description": "Application is not working properly"
-          }
-        }
-      }
-    },
-    "/_action/index": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Run indexer",
-        "description": "Runs all registered indexer in the shop asynchronously.",
-        "operationId": "index",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "skip": {
-                    "description": "Array of indexers/updaters to be skipped.",
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the indexing progress startet."
-          }
-        }
-      }
-    },
-    "/usage-data/needs-approval": {
-      "delete": {
-        "tags": [
-          "Usage data"
-        ],
-        "summary": "Get information about the usage data approval request.",
-        "description": "Get whether the usage data approval request is necessary or not.",
-        "operationId": "getNeedsUsageDataApprovalRequest",
-        "responses": {
-          "200": {
-            "description": "Returns true if it is needed, false if it is not."
           }
         }
       }
@@ -114634,6 +114634,68 @@
         },
         "type": "object"
       },
+      "infoConfigResponse": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "The Shopware version."
+          },
+          "versionRevision": {
+            "type": "string",
+            "description": "The Shopware version revision."
+          },
+          "adminWorker": {
+            "type": "object",
+            "description": "Information about the admin worker.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "State of the admin worker."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured transports.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Asset files of active extensions",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "css": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the css file."
+                  }
+                },
+                "js": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the js file."
+                  }
+                }
+              }
+            }
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the `urlFeature` setting."
+              }
+            }
+          }
+        }
+      },
       "businessEventsResponse": {
         "type": "array",
         "items": {
@@ -114685,39 +114747,129 @@
           }
         }
       },
-      "flowBulderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
                 "type": "string"
               }
             },
-            "extensions": {
-              "type": "array",
-              "items": {
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scopes": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
                 "type": "string"
               },
-              "description": "Extensions data of event"
-            }
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scopes",
+              "username",
+              "password"
+            ]
           }
-        },
-        "properties": {
-          "name": {
-            "description": "Unique name of the flowBulderActionsResponse."
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
           },
-          "extensions": {
-            "description": "Internal field."
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scopes": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scopes",
+              "refresh_token"
+            ]
           }
-        }
+        ]
       },
       "Criteria": {
         "type": "object",
@@ -114889,242 +115041,37 @@
           }
         }
       },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
-        "type": "object",
-        "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
+      "flowBulderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
           }
         },
-        "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
-          }
-        }
-      },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scopes": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scopes",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scopes": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scopes",
-              "refresh_token"
-            ]
-          }
-        ]
-      },
-      "infoConfigResponse": {
-        "type": "object",
         "properties": {
-          "version": {
-            "type": "string",
-            "description": "The Shopware version."
+          "name": {
+            "description": "Unique name of the flowBulderActionsResponse."
           },
-          "versionRevision": {
-            "type": "string",
-            "description": "The Shopware version revision."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Information about the admin worker.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "State of the admin worker."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured transports.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Asset files of active extensions",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "css": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the css file."
-                  }
-                },
-                "js": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the js file."
-                  }
-                }
-              }
-            }
-          },
-          "settings": {
-            "type": "object",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the `urlFeature` setting."
-              }
-            }
-          }
-        }
-      },
-      "CustomPricingResponse": {
-        "type": "object",
-        "required": [
-          "success",
-          "data"
-        ],
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "entities",
-                      "errors"
-                    ],
-                    "properties": {
-                      "entities": {
-                        "type": "array",
-                        "maxItems": 1,
-                        "items": {
-                          "type": "string",
-                          "pattern": "^[0-9a-f]{32}$"
-                        }
-                      },
-                      "errors": {
-                        "type": "array",
-                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "extensions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
+          "extensions": {
+            "description": "Internal field."
           }
         }
       },
@@ -115202,6 +115149,59 @@
                     "linked": {
                       "type": "boolean"
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingResponse": {
+        "type": "object",
+        "required": [
+          "success",
+          "data"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "entities",
+                      "errors"
+                    ],
+                    "properties": {
+                      "entities": {
+                        "type": "array",
+                        "maxItems": 1,
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{32}$"
+                        }
+                      },
+                      "errors": {
+                        "type": "array",
+                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "extensions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
                   }
                 }
               }
