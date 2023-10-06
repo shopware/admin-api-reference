@@ -46838,6 +46838,1941 @@
         }
       }
     },
+    "/quote": {
+      "get": {
+        "tags": [
+          "Quote"
+        ],
+        "summary": "List with basic information of Quote resources.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "getQuoteList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Quote resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/Quote"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/quote?limit=25"
+                                },
+                                "last": {
+                                  "example": "/quote?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/quote?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/quote?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Quote"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Quote"
+        ],
+        "summary": "Create a new Quote resources.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "createQuote",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/Quote"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quote"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of Quote",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Quote"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quote"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote/{id}": {
+      "get": {
+        "tags": [
+          "Quote"
+        ],
+        "summary": "Detailed information about a Quote resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "getQuote",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of Quote",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Quote"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quote"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Quote"
+        ],
+        "summary": "Delete a Quote resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "deleteQuote",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Quote"
+        ],
+        "summary": "Partially update information about a Quote resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "updateQuote",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Quote resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/Quote"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quote"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of Quote",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Quote"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quote"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-delivery": {
+      "get": {
+        "tags": [
+          "Quote Delivery"
+        ],
+        "summary": "List with basic information of Quote Delivery resources.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "getQuoteDeliveryList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Quote Delivery resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/QuoteDelivery"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/quote-delivery?limit=25"
+                                },
+                                "last": {
+                                  "example": "/quote-delivery?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/quote-delivery?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/quote-delivery?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuoteDelivery"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Quote Delivery"
+        ],
+        "summary": "Create a new Quote Delivery resources.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "createQuoteDelivery",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/QuoteDelivery"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteDelivery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteDelivery",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteDelivery"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteDelivery"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-delivery/{id}": {
+      "get": {
+        "tags": [
+          "Quote Delivery"
+        ],
+        "summary": "Detailed information about a Quote Delivery resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "getQuoteDelivery",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_delivery",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteDelivery",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteDelivery"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteDelivery"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Quote Delivery"
+        ],
+        "summary": "Delete a Quote Delivery resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "deleteQuoteDelivery",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_delivery",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Quote Delivery"
+        ],
+        "summary": "Partially update information about a Quote Delivery resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "updateQuoteDelivery",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_delivery",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Quote Delivery resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/QuoteDelivery"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteDelivery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteDelivery",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteDelivery"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteDelivery"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-delivery-position": {
+      "get": {
+        "tags": [
+          "Quote Delivery Position"
+        ],
+        "summary": "List with basic information of Quote Delivery Position resources.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "getQuoteDeliveryPositionList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Quote Delivery Position resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/QuoteDeliveryPosition"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/quote-delivery-position?limit=25"
+                                },
+                                "last": {
+                                  "example": "/quote-delivery-position?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/quote-delivery-position?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/quote-delivery-position?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuoteDeliveryPosition"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Quote Delivery Position"
+        ],
+        "summary": "Create a new Quote Delivery Position resources.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "createQuoteDeliveryPosition",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/QuoteDeliveryPosition"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteDeliveryPosition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteDeliveryPosition",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteDeliveryPosition"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteDeliveryPosition"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-delivery-position/{id}": {
+      "get": {
+        "tags": [
+          "Quote Delivery Position"
+        ],
+        "summary": "Detailed information about a Quote Delivery Position resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "getQuoteDeliveryPosition",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_delivery_position",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteDeliveryPosition",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteDeliveryPosition"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteDeliveryPosition"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Quote Delivery Position"
+        ],
+        "summary": "Delete a Quote Delivery Position resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "deleteQuoteDeliveryPosition",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_delivery_position",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Quote Delivery Position"
+        ],
+        "summary": "Partially update information about a Quote Delivery Position resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "updateQuoteDeliveryPosition",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_delivery_position",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Quote Delivery Position resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/QuoteDeliveryPosition"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteDeliveryPosition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteDeliveryPosition",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteDeliveryPosition"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteDeliveryPosition"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-line-item": {
+      "get": {
+        "tags": [
+          "Quote Line Item"
+        ],
+        "summary": "List with basic information of Quote Line Item resources.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "getQuoteLineItemList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Quote Line Item resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/QuoteLineItem"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/quote-line-item?limit=25"
+                                },
+                                "last": {
+                                  "example": "/quote-line-item?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/quote-line-item?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/quote-line-item?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuoteLineItem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Quote Line Item"
+        ],
+        "summary": "Create a new Quote Line Item resources.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "createQuoteLineItem",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/QuoteLineItem"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteLineItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteLineItem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteLineItem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteLineItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-line-item/{id}": {
+      "get": {
+        "tags": [
+          "Quote Line Item"
+        ],
+        "summary": "Detailed information about a Quote Line Item resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "getQuoteLineItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_line_item",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteLineItem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteLineItem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteLineItem"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Quote Line Item"
+        ],
+        "summary": "Delete a Quote Line Item resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "deleteQuoteLineItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_line_item",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Quote Line Item"
+        ],
+        "summary": "Partially update information about a Quote Line Item resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "updateQuoteLineItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_line_item",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Quote Line Item resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/QuoteLineItem"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteLineItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteLineItem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteLineItem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteLineItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-transaction": {
+      "get": {
+        "tags": [
+          "Quote Transaction"
+        ],
+        "summary": "List with basic information of Quote Transaction resources.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "getQuoteTransactionList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Quote Transaction resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/QuoteTransaction"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/quote-transaction?limit=25"
+                                },
+                                "last": {
+                                  "example": "/quote-transaction?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/quote-transaction?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/quote-transaction?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuoteTransaction"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Quote Transaction"
+        ],
+        "summary": "Create a new Quote Transaction resources.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "createQuoteTransaction",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/QuoteTransaction"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteTransaction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteTransaction",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteTransaction"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteTransaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-transaction/{id}": {
+      "get": {
+        "tags": [
+          "Quote Transaction"
+        ],
+        "summary": "Detailed information about a Quote Transaction resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "getQuoteTransaction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_transaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteTransaction",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteTransaction"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteTransaction"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Quote Transaction"
+        ],
+        "summary": "Delete a Quote Transaction resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "deleteQuoteTransaction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_transaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Quote Transaction"
+        ],
+        "summary": "Partially update information about a Quote Transaction resource.",
+        "description": "Available since: 6.5.3.0",
+        "operationId": "updateQuoteTransaction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_transaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Quote Transaction resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/QuoteTransaction"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteTransaction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteTransaction",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteTransaction"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteTransaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/rule": {
       "get": {
         "tags": [
@@ -72171,6 +74106,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "quotes": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/currency/386c339d37e737a436499d423a77df0c/quotes"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "2150fd65034a9bcdb357943b3900a918"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -72537,6 +74503,37 @@
                         "id": {
                           "type": "string",
                           "example": "2d5d14f95af035cbd8437948de61f94c"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quotes": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/currency/386c339d37e737a436499d423a77df0c/quotes"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "2150fd65034a9bcdb357943b3900a918"
                         }
                       }
                     }
@@ -74083,6 +76080,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "quotes": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/quotes"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "2150fd65034a9bcdb357943b3900a918"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -75089,6 +77117,37 @@
                         "type": "string",
                         "pattern": "^[0-9a-f]{32}$",
                         "example": "5cfb6fcb7542e25892e1a35cd6a06c54"
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quotes": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/customer/ce26601dac0dea138b7295f02b7620a7/quotes"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "2150fd65034a9bcdb357943b3900a918"
+                        }
                       }
                     }
                   }
@@ -79757,6 +81816,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "quotes": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/language/4994a8ffeba4ac3140beb89e8d41f174/quotes"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "2150fd65034a9bcdb357943b3900a918"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -80300,6 +82390,37 @@
                         "id": {
                           "type": "string",
                           "example": "e78da60cc3106508ef465909fa4cb138"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quotes": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/language/4994a8ffeba4ac3140beb89e8d41f174/quotes"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "2150fd65034a9bcdb357943b3900a918"
                         }
                       }
                     }
@@ -91972,6 +94093,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "quoteTransactions": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/payment-method/da8da1569e6bef3249a7064261df833f/quoteTransactions"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_transaction"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "c960fb2e8b7ef26229da52c7f7775e13"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -92361,6 +94513,37 @@
                         "id": {
                           "type": "string",
                           "example": "2d5d14f95af035cbd8437948de61f94c"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quoteTransactions": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/payment-method/da8da1569e6bef3249a7064261df833f/quoteTransactions"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_transaction"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "c960fb2e8b7ef26229da52c7f7775e13"
                         }
                       }
                     }
@@ -93158,6 +95341,37 @@
                             "id": {
                               "type": "string",
                               "example": "c9c718522e64ffa5effb26cef94f4849"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "quoteLineItems": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/quoteLineItems"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_line_item"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "6b1c17ad551ef636e491ab6848f68420"
                             }
                           }
                         }
@@ -94630,6 +96844,37 @@
                         "id": {
                           "type": "string",
                           "example": "c9c718522e64ffa5effb26cef94f4849"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quoteLineItems": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/product/deb10517653c255364175796ace3553f/quoteLineItems"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_line_item"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "6b1c17ad551ef636e491ab6848f68420"
                         }
                       }
                     }
@@ -99168,6 +101413,42 @@
               "translated": {
                 "type": "object"
               },
+              "extensions": {
+                "properties": {
+                  "quoteLineItems": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/promotion/626a54d37d402d449d6d7541911e0952/quoteLineItems"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_line_item"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "6b1c17ad551ef636e491ab6848f68420"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
               "relationships": {
                 "properties": {
                   "setgroups": {
@@ -99577,6 +101858,42 @@
           "translated": {
             "type": "object",
             "description": "Contains the translations of all translated fields."
+          },
+          "extensions": {
+            "properties": {
+              "quoteLineItems": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/promotion/626a54d37d402d449d6d7541911e0952/quoteLineItems"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_line_item"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "6b1c17ad551ef636e491ab6848f68420"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
           },
           "setgroups": {
             "type": "array",
@@ -101130,6 +103447,2429 @@
         },
         "type": "object"
       },
+      "QuoteJsonApi": {
+        "description": "Added since version: 6.5.3.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "stateId",
+              "currencyId",
+              "languageId",
+              "salesChannelId",
+              "customerId",
+              "itemRounding",
+              "totalRounding",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "versionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "autoIncrement": {
+                "type": "integer",
+                "format": "int64",
+                "readOnly": true
+              },
+              "stateId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "userId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "languageId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "salesChannelId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "createdById": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "updatedById": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "customerId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "orderId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "orderVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteNumber": {
+                "type": "string"
+              },
+              "expirationDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "price": {
+                "required": [
+                  "netPrice",
+                  "totalPrice",
+                  "positionPrice",
+                  "rawTotal",
+                  "taxStatus"
+                ],
+                "properties": {
+                  "netPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "totalPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "calculatedTaxes": {
+                    "type": "object"
+                  },
+                  "taxRules": {
+                    "type": "object"
+                  },
+                  "positionPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "rawTotal": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "taxStatus": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "shippingCosts": {
+                "required": [
+                  "unitPrice",
+                  "totalPrice",
+                  "quantity"
+                ],
+                "properties": {
+                  "unitPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "totalPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "calculatedTaxes": {
+                    "type": "object"
+                  },
+                  "taxRules": {
+                    "type": "object"
+                  },
+                  "referencePrice": {
+                    "type": "object"
+                  },
+                  "listPrice": {
+                    "properties": {
+                      "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "regulationPrice": {
+                    "properties": {
+                      "price": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "discount": {
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              },
+              "taxStatus": {
+                "type": "string",
+                "readOnly": true
+              },
+              "amountTotal": {
+                "type": "number",
+                "format": "float",
+                "readOnly": true
+              },
+              "amountNet": {
+                "type": "number",
+                "format": "float",
+                "readOnly": true
+              },
+              "subtotalNet": {
+                "type": "number",
+                "format": "float"
+              },
+              "totalDiscount": {
+                "type": "number",
+                "format": "float"
+              },
+              "originalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "itemRounding": {
+                "properties": {
+                  "decimals": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "interval": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "roundForNet": {
+                    "type": "boolean"
+                  }
+                },
+                "type": "object"
+              },
+              "totalRounding": {
+                "properties": {
+                  "decimals": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "interval": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "roundForNet": {
+                    "type": "boolean"
+                  }
+                },
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "stateMachineState": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/stateMachineState"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "state_machine_state"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "1ab22d393154f21e3be76aca3ec3ee31"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "user": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/user"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "user"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "ee11cbb19052e40b07aac0ca060c23ee"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "currency": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/currency"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "currency"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "1af0389838508d7016a9841eb6273962"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "language": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/language"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "language"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "8512ae7d57b1396273f76fe6ed341a23"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "salesChannel": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/salesChannel"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "sales_channel"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "ec3712a84143b57e0db620eaac6e55b8"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "createdBy": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/createdBy"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "user"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "34998857f537140306898d54d4b970dc"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "updatedBy": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/updatedBy"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "user"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "7ced3d0067ad61702af7db8ae260aa76"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "customer": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/customer"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "customer"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "91ec1f9324753048c0096d036a694f86"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "order": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/order"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "70a17ffa722a3985b86d30b034ad06d7"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "lineItems": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/lineItems"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_line_item"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "a042af1aa9f3853fe3cd7dabc065568f"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "deliveries": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/deliveries"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_delivery"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "6fc31b6b9cd717cc0dcb81152308f8af"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "transactions": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/transactions"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_transaction"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "c15b977dd99332ca8623fbdfb86827e8"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "Quote": {
+        "description": "Added since version: 6.5.3.0",
+        "required": [
+          "stateId",
+          "currencyId",
+          "languageId",
+          "salesChannelId",
+          "customerId",
+          "itemRounding",
+          "totalRounding",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "autoIncrement": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "stateId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "userId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "languageId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "updatedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "customerId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "orderId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "orderVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteNumber": {
+            "type": "string"
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "price": {
+            "required": [
+              "netPrice",
+              "totalPrice",
+              "positionPrice",
+              "rawTotal",
+              "taxStatus"
+            ],
+            "properties": {
+              "netPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "totalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "calculatedTaxes": {
+                "type": "object"
+              },
+              "taxRules": {
+                "type": "object"
+              },
+              "positionPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "rawTotal": {
+                "type": "number",
+                "format": "float"
+              },
+              "taxStatus": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "shippingCosts": {
+            "required": [
+              "unitPrice",
+              "totalPrice",
+              "quantity"
+            ],
+            "properties": {
+              "unitPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "totalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "quantity": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "calculatedTaxes": {
+                "type": "object"
+              },
+              "taxRules": {
+                "type": "object"
+              },
+              "referencePrice": {
+                "type": "object"
+              },
+              "listPrice": {
+                "properties": {
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              },
+              "regulationPrice": {
+                "properties": {
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "discount": {
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "value": {
+                "type": "number",
+                "format": "float"
+              }
+            },
+            "type": "object"
+          },
+          "taxStatus": {
+            "type": "string",
+            "readOnly": true
+          },
+          "amountTotal": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          },
+          "amountNet": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          },
+          "subtotalNet": {
+            "type": "number",
+            "format": "float"
+          },
+          "totalDiscount": {
+            "type": "number",
+            "format": "float"
+          },
+          "originalPrice": {
+            "type": "number",
+            "format": "float"
+          },
+          "itemRounding": {
+            "properties": {
+              "decimals": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "interval": {
+                "type": "number",
+                "format": "float"
+              },
+              "roundForNet": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "totalRounding": {
+            "properties": {
+              "decimals": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "interval": {
+                "type": "number",
+                "format": "float"
+              },
+              "roundForNet": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "stateMachineState": {
+            "$ref": "#/components/schemas/StateMachineState"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "language": {
+            "$ref": "#/components/schemas/Language"
+          },
+          "salesChannel": {
+            "$ref": "#/components/schemas/SalesChannel"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "order": {
+            "$ref": "#/components/schemas/Order"
+          },
+          "lineItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteLineItem"
+            }
+          },
+          "deliveries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteDelivery"
+            }
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteTransaction"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "QuoteDeliveryJsonApi": {
+        "description": "Added since version: 6.5.3.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "quoteId",
+              "shippingMethodId",
+              "shippingDateEarliest",
+              "shippingDateLatest",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "versionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "shippingMethodId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "shippingDateEarliest": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "shippingDateLatest": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "shippingCosts": {
+                "required": [
+                  "unitPrice",
+                  "totalPrice",
+                  "quantity"
+                ],
+                "properties": {
+                  "unitPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "totalPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "calculatedTaxes": {
+                    "type": "object"
+                  },
+                  "taxRules": {
+                    "type": "object"
+                  },
+                  "referencePrice": {
+                    "type": "object"
+                  },
+                  "listPrice": {
+                    "properties": {
+                      "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "regulationPrice": {
+                    "properties": {
+                      "price": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "quote": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-delivery/d2e61366180daeec11fe88b1cb03bbd6/quote"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "7a674c327bfa07f7c1204fb38ca6ef3b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "shippingMethod": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-delivery/d2e61366180daeec11fe88b1cb03bbd6/shippingMethod"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "shipping_method"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "e97bfcdc0cae44bc9e4ab35762eaf0e1"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "positions": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-delivery/d2e61366180daeec11fe88b1cb03bbd6/positions"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_delivery_position"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "365a4a972db646c76d115b3897f2d4de"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "QuoteDelivery": {
+        "description": "Added since version: 6.5.3.0",
+        "required": [
+          "quoteId",
+          "shippingMethodId",
+          "shippingDateEarliest",
+          "shippingDateLatest",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "shippingMethodId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "shippingDateEarliest": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "shippingDateLatest": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "shippingCosts": {
+            "required": [
+              "unitPrice",
+              "totalPrice",
+              "quantity"
+            ],
+            "properties": {
+              "unitPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "totalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "quantity": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "calculatedTaxes": {
+                "type": "object"
+              },
+              "taxRules": {
+                "type": "object"
+              },
+              "referencePrice": {
+                "type": "object"
+              },
+              "listPrice": {
+                "properties": {
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              },
+              "regulationPrice": {
+                "properties": {
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "quote": {
+            "$ref": "#/components/schemas/Quote"
+          },
+          "shippingMethod": {
+            "$ref": "#/components/schemas/ShippingMethod"
+          },
+          "positions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteDeliveryPosition"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "QuoteDeliveryPositionJsonApi": {
+        "description": "Added since version: 6.5.3.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "quoteDeliveryId",
+              "quoteLineItemId",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "versionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteDeliveryId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteDeliveryVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteLineItemId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteLineItemVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "price": {
+                "required": [
+                  "unitPrice",
+                  "totalPrice",
+                  "quantity"
+                ],
+                "properties": {
+                  "unitPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "totalPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "calculatedTaxes": {
+                    "type": "object"
+                  },
+                  "taxRules": {
+                    "type": "object"
+                  },
+                  "referencePrice": {
+                    "type": "object"
+                  },
+                  "listPrice": {
+                    "properties": {
+                      "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "regulationPrice": {
+                    "properties": {
+                      "price": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "unitPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "totalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "quantity": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "quoteDelivery": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-delivery-position/9bccead7211d7f905df800ef90888f07/quoteDelivery"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote_delivery"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "19397469743ae5505500cb3fa99bc0b1"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "quoteLineItem": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-delivery-position/9bccead7211d7f905df800ef90888f07/quoteLineItem"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote_line_item"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "dbe619b4a557266e76679178cc13085b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "QuoteDeliveryPosition": {
+        "description": "Added since version: 6.5.3.0",
+        "required": [
+          "quoteDeliveryId",
+          "quoteLineItemId",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteDeliveryId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteDeliveryVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteLineItemId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteLineItemVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "price": {
+            "required": [
+              "unitPrice",
+              "totalPrice",
+              "quantity"
+            ],
+            "properties": {
+              "unitPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "totalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "quantity": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "calculatedTaxes": {
+                "type": "object"
+              },
+              "taxRules": {
+                "type": "object"
+              },
+              "referencePrice": {
+                "type": "object"
+              },
+              "listPrice": {
+                "properties": {
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              },
+              "regulationPrice": {
+                "properties": {
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "float"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "float"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "quoteDelivery": {
+            "$ref": "#/components/schemas/QuoteDelivery"
+          },
+          "quoteLineItem": {
+            "$ref": "#/components/schemas/QuoteLineItem"
+          }
+        },
+        "type": "object"
+      },
+      "QuoteLineItemJsonApi": {
+        "description": "Added since version: 6.5.3.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "quoteId",
+              "identifier",
+              "children",
+              "states",
+              "label",
+              "quantity",
+              "price",
+              "position",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "versionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "identifier": {
+                "type": "string"
+              },
+              "parentId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "parentVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "productId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "productVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "promotionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$",
+                "readOnly": true
+              },
+              "states": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "label": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "type": {
+                "type": "string"
+              },
+              "payload": {
+                "type": "object"
+              },
+              "unitPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "totalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "priceDefinition": {
+                "type": "object"
+              },
+              "price": {
+                "required": [
+                  "unitPrice",
+                  "totalPrice",
+                  "quantity"
+                ],
+                "properties": {
+                  "unitPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "totalPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "calculatedTaxes": {
+                    "type": "object"
+                  },
+                  "taxRules": {
+                    "type": "object"
+                  },
+                  "referencePrice": {
+                    "type": "object"
+                  },
+                  "listPrice": {
+                    "properties": {
+                      "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "regulationPrice": {
+                    "properties": {
+                      "price": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "discount": {
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                },
+                "type": "object"
+              },
+              "good": {
+                "type": "boolean"
+              },
+              "removable": {
+                "type": "boolean"
+              },
+              "stackable": {
+                "type": "boolean"
+              },
+              "position": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "referencedId": {
+                "type": "string"
+              },
+              "coverId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "quote": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item/c7917be23ddd01ec45871fc8c1e5e540/quote"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "7a674c327bfa07f7c1204fb38ca6ef3b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "parent": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item/c7917be23ddd01ec45871fc8c1e5e540/parent"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote_line_item"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "d0e45878043844ffc41aac437e86b602"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "children": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item/c7917be23ddd01ec45871fc8c1e5e540/children"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_line_item"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "268184c12df027f536154d099d497b31"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "product": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item/c7917be23ddd01ec45871fc8c1e5e540/product"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "product"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "f5bf48aa40cad7891eb709fcf1fde128"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "promotion": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item/c7917be23ddd01ec45871fc8c1e5e540/promotion"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "promotion"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "f8dcad058c9c44fdb6ffcb22d2d4c31f"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "cover": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item/c7917be23ddd01ec45871fc8c1e5e540/cover"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "41d0e299ca1abeb2094852da042165c7"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "QuoteLineItem": {
+        "description": "Added since version: 6.5.3.0",
+        "required": [
+          "quoteId",
+          "identifier",
+          "children",
+          "states",
+          "label",
+          "quantity",
+          "price",
+          "position",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "parentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "parentVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "productId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "productVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "promotionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "readOnly": true
+          },
+          "states": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "object"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "float"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "float"
+          },
+          "priceDefinition": {
+            "type": "object"
+          },
+          "price": {
+            "required": [
+              "unitPrice",
+              "totalPrice",
+              "quantity"
+            ],
+            "properties": {
+              "unitPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "totalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "quantity": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "calculatedTaxes": {
+                "type": "object"
+              },
+              "taxRules": {
+                "type": "object"
+              },
+              "referencePrice": {
+                "type": "object"
+              },
+              "listPrice": {
+                "properties": {
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              },
+              "regulationPrice": {
+                "properties": {
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "discount": {
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "value": {
+                "type": "integer",
+                "format": "int64"
+              }
+            },
+            "type": "object"
+          },
+          "good": {
+            "type": "boolean"
+          },
+          "removable": {
+            "type": "boolean"
+          },
+          "stackable": {
+            "type": "boolean"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "referencedId": {
+            "type": "string"
+          },
+          "coverId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "quote": {
+            "$ref": "#/components/schemas/Quote"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/QuoteLineItem"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteLineItem"
+            }
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "promotion": {
+            "$ref": "#/components/schemas/Promotion"
+          },
+          "cover": {
+            "$ref": "#/components/schemas/Media"
+          }
+        },
+        "type": "object"
+      },
+      "QuoteTransactionJsonApi": {
+        "description": "Added since version: 6.5.3.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "quoteId",
+              "paymentMethodId",
+              "amount",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "versionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "paymentMethodId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "amount": {
+                "required": [
+                  "unitPrice",
+                  "totalPrice",
+                  "quantity"
+                ],
+                "properties": {
+                  "unitPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "totalPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "calculatedTaxes": {
+                    "type": "object"
+                  },
+                  "taxRules": {
+                    "type": "object"
+                  },
+                  "referencePrice": {
+                    "type": "object"
+                  },
+                  "listPrice": {
+                    "properties": {
+                      "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "regulationPrice": {
+                    "properties": {
+                      "price": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "quote": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-transaction/ace75e8d17b730e2c18557ab7ea8abeb/quote"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "7a674c327bfa07f7c1204fb38ca6ef3b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "paymentMethod": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-transaction/ace75e8d17b730e2c18557ab7ea8abeb/paymentMethod"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "payment_method"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "68ec1eeea9f1b7744e231b5bd0d97df0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "QuoteTransaction": {
+        "description": "Added since version: 6.5.3.0",
+        "required": [
+          "quoteId",
+          "paymentMethodId",
+          "amount",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "paymentMethodId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "amount": {
+            "required": [
+              "unitPrice",
+              "totalPrice",
+              "quantity"
+            ],
+            "properties": {
+              "unitPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "totalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "quantity": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "calculatedTaxes": {
+                "type": "object"
+              },
+              "taxRules": {
+                "type": "object"
+              },
+              "referencePrice": {
+                "type": "object"
+              },
+              "listPrice": {
+                "properties": {
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              },
+              "regulationPrice": {
+                "properties": {
+                  "price": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "quote": {
+            "$ref": "#/components/schemas/Quote"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethod"
+          }
+        },
+        "type": "object"
+      },
       "RuleJsonApi": {
         "description": "Added since version: 6.0.0.0",
         "allOf": [
@@ -102487,6 +107227,37 @@
                             "id": {
                               "type": "string",
                               "example": "2d5d14f95af035cbd8437948de61f94c"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "quotes": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/quotes"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "2150fd65034a9bcdb357943b3900a918"
                             }
                           }
                         }
@@ -103891,6 +108662,37 @@
                         "id": {
                           "type": "string",
                           "example": "2d5d14f95af035cbd8437948de61f94c"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quotes": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/quotes"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "2150fd65034a9bcdb357943b3900a918"
                         }
                       }
                     }
@@ -105988,6 +110790,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "quoteDeliveries": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/shipping-method/d72e7a227a27328b28342b32fc66b6bf/quoteDeliveries"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_delivery"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "2aabe64723fb0f621446cd7b5c04f15e"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -106377,6 +111210,37 @@
                         "id": {
                           "type": "string",
                           "example": "2d5d14f95af035cbd8437948de61f94c"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quoteDeliveries": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/shipping-method/d72e7a227a27328b28342b32fc66b6bf/quoteDeliveries"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_delivery"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "2aabe64723fb0f621446cd7b5c04f15e"
                         }
                       }
                     }
@@ -107642,6 +112506,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "quotes": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/state-machine-state/1e364983d1f17d332d360ae797efc181/quotes"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "2150fd65034a9bcdb357943b3900a918"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -108128,6 +113023,37 @@
                         "id": {
                           "type": "string",
                           "example": "6bd56ce4562ca1be86bf5b8d92c3c1ee"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quotes": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/state-machine-state/1e364983d1f17d332d360ae797efc181/quotes"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "2150fd65034a9bcdb357943b3900a918"
                         }
                       }
                     }
@@ -112828,6 +117754,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "quotes": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/quotes"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "2150fd65034a9bcdb357943b3900a918"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -113405,6 +118362,37 @@
                         "id": {
                           "type": "string",
                           "example": "b236f1d18dddb0c2a359d93c25da5a20"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quotes": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/quotes"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "2150fd65034a9bcdb357943b3900a918"
                         }
                       }
                     }
@@ -116507,6 +121495,26 @@
     {
       "name": "Property Group Option",
       "description": "The endpoint for operations on Property Group Option"
+    },
+    {
+      "name": "Quote",
+      "description": "The endpoint for operations on Quote"
+    },
+    {
+      "name": "Quote Delivery",
+      "description": "The endpoint for operations on Quote Delivery"
+    },
+    {
+      "name": "Quote Delivery Position",
+      "description": "The endpoint for operations on Quote Delivery Position"
+    },
+    {
+      "name": "Quote Line Item",
+      "description": "The endpoint for operations on Quote Line Item"
+    },
+    {
+      "name": "Quote Transaction",
+      "description": "The endpoint for operations on Quote Transaction"
     },
     {
       "name": "Rule",
