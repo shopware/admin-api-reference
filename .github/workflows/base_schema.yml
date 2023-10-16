@@ -3,13 +3,14 @@ name: Update Admin API
 on:
   workflow_dispatch:
   schedule:
-    - cron: 0 8 */1 * *
+    - cron: 0 9 */1 * *
 
 jobs:
   generate-schema:
     uses: shopware/docs-ci/.github/workflows/generate_schema.yml@main
     with:
-      api_type: adminapi
+      schema_flags: ""
+      schema_file: adminapi.json
     secrets: inherit
         
   open-pr:
