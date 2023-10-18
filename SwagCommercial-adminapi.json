@@ -36481,6 +36481,9 @@
                 },
                 "type": "object"
               },
+              "customFields": {
+                "type": "object"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -37090,6 +37093,9 @@
                 "type": "boolean"
               }
             },
+            "type": "object"
+          },
+          "customFields": {
             "type": "object"
           },
           "createdAt": {
@@ -37976,6 +37982,9 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "customFields": {
+                "type": "object"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -38347,6 +38356,9 @@
           "coverId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "customFields": {
+            "type": "object"
           },
           "createdAt": {
             "type": "string",
@@ -50251,6 +50263,68 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "quotesUpdated": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/quotesUpdated"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "58ff54114372ffbca7305b48fa25f8fc"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "quotesAssignee": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/quotesAssignee"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "1b848b0267abc056ed84fb16cb26f60a"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -50846,6 +50920,68 @@
                         "id": {
                           "type": "string",
                           "example": "2150fd65034a9bcdb357943b3900a918"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quotesUpdated": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/quotesUpdated"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "58ff54114372ffbca7305b48fa25f8fc"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quotesAssignee": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/quotesAssignee"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "1b848b0267abc056ed84fb16cb26f60a"
                         }
                       }
                     }
@@ -52053,6 +52189,40 @@
         },
         "type": "object"
       },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -52115,36 +52285,28 @@
           }
         }
       },
-      "businessEventsResponse": {
+      "flowBulderActionsResponse": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
             "name": {
               "type": "string",
-              "description": "Name of the event"
+              "description": "Name of the flow action"
             },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
+            "requirements": {
               "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
               "items": {
                 "type": "string"
               }
             },
             "extensions": {
               "type": "array",
-              "description": "Extensions data of event",
               "items": {
                 "type": "string"
-              }
+              },
+              "description": "Extensions data of event"
             }
           }
         }
@@ -52410,28 +52572,164 @@
           }
         }
       },
-      "flowBulderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
+      "CustomPricingUpsertOperation": {
+        "type": "object",
+        "required": [
+          "action",
+          "payload"
+        ],
+        "properties": {
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "upsert"
+            ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "productId",
+                "prices"
+              ],
+              "description": "A definition almost symmetric with Sync API payload",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "productVersionId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "productId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "This parameter should be specified, or 'customerGroupId', not both",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerGroupId": {
+                  "type": "string",
+                  "description": "This parameter should be specified, or 'customerId', not both",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "price": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomPricingPrice"
+                  }
+                }
               }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
+      "CustomPricingResponse": {
+        "type": "object",
+        "required": [
+          "success",
+          "data"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "entities",
+                      "errors"
+                    ],
+                    "properties": {
+                      "entities": {
+                        "type": "array",
+                        "maxItems": 1,
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{32}$"
+                        }
+                      },
+                      "errors": {
+                        "type": "array",
+                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "extensions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingDeleteOperation": {
+        "type": "object",
+        "required": [
+          "action",
+          "payload"
+        ],
+        "properties": {
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "delete"
+            ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "title": "productIds",
+                  "type": "array",
+                  "description": "An array of product entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerIds",
+                  "type": "array",
+                  "description": "An array of customer entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerGroupIds",
+                  "type": "array",
+                  "description": "An array of customerGroup entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                }
+              ]
             }
           }
         }
@@ -52513,168 +52811,6 @@
                   }
                 }
               }
-            }
-          }
-        }
-      },
-      "CustomPricingResponse": {
-        "type": "object",
-        "required": [
-          "success",
-          "data"
-        ],
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "entities",
-                      "errors"
-                    ],
-                    "properties": {
-                      "entities": {
-                        "type": "array",
-                        "maxItems": 1,
-                        "items": {
-                          "type": "string",
-                          "pattern": "^[0-9a-f]{32}$"
-                        }
-                      },
-                      "errors": {
-                        "type": "array",
-                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "extensions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "CustomPricingUpsertOperation": {
-        "type": "object",
-        "required": [
-          "action",
-          "payload"
-        ],
-        "properties": {
-          "action": {
-            "description": "A specific verb defining what operation should be actioned for a specific data record",
-            "type": "string",
-            "enum": [
-              "upsert"
-            ]
-          },
-          "payload": {
-            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "productId",
-                "prices"
-              ],
-              "description": "A definition almost symmetric with Sync API payload",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "productVersionId": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "productId": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "customerId": {
-                  "type": "string",
-                  "description": "This parameter should be specified, or 'customerGroupId', not both",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "customerGroupId": {
-                  "type": "string",
-                  "description": "This parameter should be specified, or 'customerId', not both",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "price": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CustomPricingPrice"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "CustomPricingDeleteOperation": {
-        "type": "object",
-        "required": [
-          "action",
-          "payload"
-        ],
-        "properties": {
-          "action": {
-            "description": "A specific verb defining what operation should be actioned for a specific data record",
-            "type": "string",
-            "enum": [
-              "delete"
-            ]
-          },
-          "payload": {
-            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "title": "productIds",
-                  "type": "array",
-                  "description": "An array of product entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                {
-                  "title": "customerIds",
-                  "type": "array",
-                  "description": "An array of customer entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                {
-                  "title": "customerGroupIds",
-                  "type": "array",
-                  "description": "An array of customerGroup entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                }
-              ]
             }
           }
         }
