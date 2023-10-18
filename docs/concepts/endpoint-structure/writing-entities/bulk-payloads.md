@@ -229,6 +229,33 @@ You can control the behaviour using the following headers:
 }
 ```
 
+## Flows
+
+To stop flows from being triggered use the `sw-skip-trigger-flow` header. See also [Request Headers](https://developer.shopware.com/docs/guides/integrations-api/general-concepts/request-headers.html#sw-skip-trigger-flow)
+
+```sample http
+{
+  "method": "POST",
+  "url": "http://localhost/api/_action/sync",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+    "sw-skip-trigger-flow": 1
+  },
+  "body": {    
+    "write-customer": {
+        "entity": "customer",
+        "action": "upsert",
+        "payload": [
+            { }
+        ]
+    }
+  }
+}
+```
+
+
 ## Examples
 
 ### Update product stocks
