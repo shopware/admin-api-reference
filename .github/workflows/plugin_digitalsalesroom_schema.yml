@@ -30,8 +30,7 @@ jobs:
       plugin_name: ${{ needs.vars.outputs.PLUGIN_NAME }}
       plugin_url: ${{ needs.vars.outputs.PLUGIN_URL }}
       composer_packages: ${{ needs.vars.outputs.COMPOSER_PACKAGES }}
-      git_options: --single-branch --branch 6.5-compatibility
-    secrets: 
+    secrets:
       DEPLOY_USER: ${{ secrets.DIGITALSALESROOM_DEPLOY_USER }}
       DEPLOY_TOKEN: ${{ secrets.DIGITALSALESROOM_DEPLOY_TOKEN }}
       DAILY_CO_API_KEY: ${{ secrets.DAILY_CO_API_KEY }}
