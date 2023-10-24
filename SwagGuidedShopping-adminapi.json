@@ -11,181 +11,6 @@
     }
   ],
   "paths": {
-    "/search/guided-shopping-presentation": {
-      "post": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Search presentations",
-        "description": "Return list of presentations",
-        "operationId": "searchPresentations",
-        "parameters": [],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetListBodyRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Presentation"
-                      }
-                    },
-                    "aggregations": {
-                      "type": "array",
-                      "items": {
-                        "type": "object"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/guided-shopping-presentation": {
-      "post": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Create a new presentation",
-        "description": "",
-        "operationId": "createPresentation",
-        "parameters": [],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Presentation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/guided-shopping-presentation/{presentationId}": {
-      "get": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Get detail of presentation",
-        "description": "",
-        "operationId": "getPresentation",
-        "parameters": [
-          {
-            "name": "presentationId",
-            "in": "path",
-            "description": "Presentation id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Presentation"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Update partially the existing presentation",
-        "description": "",
-        "operationId": "updatePresentation",
-        "parameters": [
-          {
-            "name": "presentationId",
-            "in": "path",
-            "description": "Presentation id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Presentation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Delete presentation",
-        "description": "",
-        "operationId": "deletePresentation",
-        "parameters": [
-          {
-            "name": "presentationId",
-            "in": "path",
-            "description": "Presentation id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/_action/guided-shopping/appointment/{appointmentId}/join-as-guide": {
       "post": {
         "tags": [
@@ -779,6 +604,181 @@
             "name": "appointmentId",
             "in": "path",
             "description": "Appointment id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/search/guided-shopping-presentation": {
+      "post": {
+        "tags": [
+          "Presentation"
+        ],
+        "summary": "Search presentations",
+        "description": "Return list of presentations",
+        "operationId": "searchPresentations",
+        "parameters": [],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetListBodyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Presentation"
+                      }
+                    },
+                    "aggregations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/guided-shopping-presentation": {
+      "post": {
+        "tags": [
+          "Presentation"
+        ],
+        "summary": "Create a new presentation",
+        "description": "",
+        "operationId": "createPresentation",
+        "parameters": [],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Presentation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/guided-shopping-presentation/{presentationId}": {
+      "get": {
+        "tags": [
+          "Presentation"
+        ],
+        "summary": "Get detail of presentation",
+        "description": "",
+        "operationId": "getPresentation",
+        "parameters": [
+          {
+            "name": "presentationId",
+            "in": "path",
+            "description": "Presentation id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Presentation"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Presentation"
+        ],
+        "summary": "Update partially the existing presentation",
+        "description": "",
+        "operationId": "updatePresentation",
+        "parameters": [
+          {
+            "name": "presentationId",
+            "in": "path",
+            "description": "Presentation id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Presentation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Presentation"
+        ],
+        "summary": "Delete presentation",
+        "description": "",
+        "operationId": "deletePresentation",
+        "parameters": [
+          {
+            "name": "presentationId",
+            "in": "path",
+            "description": "Presentation id",
             "required": true,
             "schema": {
               "type": "string",
@@ -42136,6 +42136,40 @@
         },
         "type": "object"
       },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -42198,36 +42232,28 @@
           }
         }
       },
-      "businessEventsResponse": {
+      "flowBulderActionsResponse": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
             "name": {
               "type": "string",
-              "description": "Name of the event"
+              "description": "Name of the flow action"
             },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
+            "requirements": {
               "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
               "items": {
                 "type": "string"
               }
             },
             "extensions": {
               "type": "array",
-              "description": "Extensions data of event",
               "items": {
                 "type": "string"
-              }
+              },
+              "description": "Extensions data of event"
             }
           }
         }
@@ -42493,29 +42519,150 @@
           }
         }
       },
-      "flowBulderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
+      "JoinAppointmentResponse": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "mercureSubscriberTopics": {
+            "type": "array",
+            "items": {
               "type": "string",
-              "description": "Name of the flow action"
+              "description": "mercure topic"
             },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
+            "description": "The topics to which the attendee/guide can subscribe for"
+          },
+          "mercurePublisherTopic": {
+            "oneOf": [
+              {
                 "type": "string"
               },
-              "description": "Extensions data of event"
-            }
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The topic to which the attendee/guide can send updates"
+          },
+          "JWTMercureSubscriberToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to publish updates"
+          },
+          "mercureHubPublicUrl": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The mercure hub url to connect for subscribing and updating"
+          },
+          "JWTMercurePublisherToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to subscribe for updates"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The appointment id"
+          },
+          "newContextToken": {
+            "type": "string",
+            "description": "The new context token"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The created Id for the attendee"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id of the current sales channel"
+          },
+          "presentationGuideMode": {
+            "type": "string",
+            "enum": [
+              "self",
+              "guided"
+            ],
+            "description": "The type of the appointment"
+          },
+          "isPreview": {
+            "type": "boolean",
+            "description": "To see if it's a preview appointment"
+          }
+        },
+        "example": {
+          "mercureSubscriberTopics": [
+            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
+          ],
+          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
+          "JWTMercureSubscriberToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6WyJncy1ndWlkZS1hY3Rpb25zLTJkMmMzNThmMWNhMDQwOThhYWNmMTI4NzNjMmVlZDgyIiwiZ3MtcHJlc2VudGF0aW9uLXN0YXRlLWZvci1jbGllbnQtMmQyYzM1OGYxY2EwNDA5OGFhY2YxMjg3M2MyZWVkODIiLCJncy1wcmVzZW50YXRpb24tc3RhdGUtZm9yLWFsbC0yZDJjMzU4ZjFjYTA0MDk4YWFjZjEyODczYzJlZWQ4MiJdLCJwdWJsaXNoIjpbXX19.UUkrRCu9PT2FOhkxhWKLo8nUGzwI7l3zqVo74laI-D8",
+          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
+          "JWTMercurePublisherToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6W10sInB1Ymxpc2giOlsiZ3MtY2xpZW50LWFjdGlvbnMtMmQyYzM1OGYxY2EwNDA5OGFhY2YxMjg3M2MyZWVkODIiXX19.g5-_JrB2xdeByr40t7XnnK_qxqOclaY5MKBpTytdFmY",
+          "id": "2d2c358f1ca04098aacf12873c2eed82",
+          "newContextToken": "VR9yWqI2ovhNpdRFWbbn6Z5Fy4wUmDsm",
+          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
+          "presentationGuideMode": "guided",
+          "isPreview": false,
+          "apiAlias": "swag_guided_shopping_content_appointment_struct_appointment_join_struct"
+        }
+      },
+      "AttendeeProductCollection": {
+        "type": "object",
+        "required": [
+          "attendeeId",
+          "productId",
+          "productVersionId",
+          "alias"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "attendee": {
+            "$ref": "#/components/schemas/Attendee"
+          },
+          "productId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "productVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "alias": {
+            "type": "string",
+            "enum": [
+              "liked",
+              "disliked"
+            ]
           }
         }
       },
@@ -42559,6 +42706,198 @@
               "type": "string"
             },
             "default": []
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
+      "StateForAll": {
+        "type": "object",
+        "properties": {
+          "currentGuideProductId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lastActiveGuideSection": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentSectionId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentSlideAlias": {
+            "type": "integer",
+            "default": 0
+          },
+          "currentDynamicPage": {
+            "$ref": "#/components/schemas/DynamicPageOpenedPayload"
+          },
+          "started": {
+            "type": "boolean",
+            "default": false
+          },
+          "running": {
+            "type": "boolean",
+            "default": false
+          },
+          "ended": {
+            "type": "boolean",
+            "default": false
+          },
+          "startedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "endedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accessibleFrom": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accessibleTo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "appointmentMode": {
+            "type": "string",
+            "enum": [
+              "guided",
+              "self"
+            ]
+          },
+          "videoAudioSettings": {
+            "type": "string",
+            "enum": [
+              "both",
+              "none",
+              "audio-only"
+            ],
+            "default": "none"
+          },
+          "videoRoomUrl": {
+            "type": "string",
+            "default": ""
+          },
+          "attendeeRestrictionType": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "customer",
+                  "rules"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "productDetailDefaultPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quickviewPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "productListingDefaultPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "allowUserActionsForGuide": {
+            "type": "boolean",
+            "default": false
+          },
+          "broadcastMode": {
+            "type": "boolean",
+            "default": false
           },
           "extensions": {
             "type": "array",
@@ -42772,54 +43111,6 @@
           }
         }
       },
-      "GetListBodyRequest": {
-        "type": "object",
-        "properties": {
-          "limit": {
-            "type": "integer",
-            "description": "Max amount of resources to be returned in a page"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The page to be returned"
-          }
-        }
-      },
-      "Interaction": {
-        "type": "object",
-        "required": [
-          "name",
-          "triggeredAt",
-          "attendeeId"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "expiresAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "triggeredAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "payload": {
-            "type": "string"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "attendee": {
-            "$ref": "#/components/schemas/Attendee"
-          }
-        }
-      },
       "Attendee": {
         "type": "object",
         "required": [
@@ -42897,151 +43188,129 @@
           }
         }
       },
-      "AttendeeProductCollection": {
+      "AbstractDynamicPageOpenedPayload": {
         "type": "object",
         "required": [
-          "attendeeId",
-          "productId",
-          "productVersionId",
-          "alias"
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of the current dynamic page"
+          },
+          "opened": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "GetListBodyRequest": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "Max amount of resources to be returned in a page"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The page to be returned"
+          }
+        }
+      },
+      "Presentation": {
+        "type": "object",
+        "required": [
+          "name"
         ],
         "properties": {
           "id": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "attendeeId": {
+          "versionId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "attendee": {
-            "$ref": "#/components/schemas/Attendee"
+          "active": {
+            "type": "boolean"
           },
-          "productId": {
+          "parentId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "product": {
-            "$ref": "#/components/schemas/Product"
-          },
-          "productVersionId": {
+          "parentVersionId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "alias": {
+          "name": {
+            "type": "string"
+          },
+          "createdById": {
             "type": "string",
-            "enum": [
-              "liked",
-              "disliked"
-            ]
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "updatedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "appointment": {
+            "$ref": "#/components/schemas/Appointment"
+          },
+          "cmsPages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PresentationCmsPage"
+            }
+          },
+          "translated": {
+            "type": "object"
           }
         }
       },
-      "JoinAppointmentResponse": {
+      "VideoChatCreateStruct": {
         "type": "object",
         "description": "Includes all data you will need to attend to a appointment.",
         "properties": {
-          "mercureSubscriberTopics": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "mercure topic"
-            },
-            "description": "The topics to which the attendee/guide can subscribe for"
-          },
-          "mercurePublisherTopic": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The topic to which the attendee/guide can send updates"
-          },
-          "JWTMercureSubscriberToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to publish updates"
-          },
-          "mercureHubPublicUrl": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The mercure hub url to connect for subscribing and updating"
-          },
-          "JWTMercurePublisherToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to subscribe for updates"
-          },
-          "id": {
+          "roomUrl": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The appointment id"
+            "description": "Url of the video room in daily"
           },
-          "newContextToken": {
+          "roomName": {
             "type": "string",
-            "description": "The new context token"
+            "description": "Name of the video room in daily"
           },
-          "attendeeId": {
+          "userToken": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The created Id for the attendee"
+            "description": "Token for the end users to connect to the daily room"
           },
-          "salesChannelId": {
+          "ownerToken": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id of the current sales channel"
+            "description": "Token for the room owner (guide) to connect to the daily room"
           },
-          "presentationGuideMode": {
-            "type": "string",
-            "enum": [
-              "self",
-              "guided"
-            ],
-            "description": "The type of the appointment"
-          },
-          "isPreview": {
+          "startAsBroadcast": {
             "type": "boolean",
-            "description": "To see if it's a preview appointment"
+            "default": false
           }
         },
         "example": {
-          "mercureSubscriberTopics": [
-            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
-          ],
-          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
-          "JWTMercureSubscriberToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6WyJncy1ndWlkZS1hY3Rpb25zLTJkMmMzNThmMWNhMDQwOThhYWNmMTI4NzNjMmVlZDgyIiwiZ3MtcHJlc2VudGF0aW9uLXN0YXRlLWZvci1jbGllbnQtMmQyYzM1OGYxY2EwNDA5OGFhY2YxMjg3M2MyZWVkODIiLCJncy1wcmVzZW50YXRpb24tc3RhdGUtZm9yLWFsbC0yZDJjMzU4ZjFjYTA0MDk4YWFjZjEyODczYzJlZWQ4MiJdLCJwdWJsaXNoIjpbXX19.UUkrRCu9PT2FOhkxhWKLo8nUGzwI7l3zqVo74laI-D8",
-          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
-          "JWTMercurePublisherToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6W10sInB1Ymxpc2giOlsiZ3MtY2xpZW50LWFjdGlvbnMtMmQyYzM1OGYxY2EwNDA5OGFhY2YxMjg3M2MyZWVkODIiXX19.g5-_JrB2xdeByr40t7XnnK_qxqOclaY5MKBpTytdFmY",
-          "id": "2d2c358f1ca04098aacf12873c2eed82",
-          "newContextToken": "VR9yWqI2ovhNpdRFWbbn6Z5Fy4wUmDsm",
-          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
-          "presentationGuideMode": "guided",
-          "isPreview": false,
-          "apiAlias": "swag_guided_shopping_content_appointment_struct_appointment_join_struct"
+          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
+          "userToken": "eyJhbGciOiJIUzI1NbIsInR5cCI6IkpXVCJ9.eyJyIjoiclNx4jBtcmd3Umo0ZUlYbzF1OTUiLCJvIjpmYWxzZSwiZCI6ImE2MmJkMTUzLTI2ZjYtNDc4OC04NGRjLWMzZjdkZDcyZGIxMiIsImlhdCI6MTY5MTc0MTgwOH0.jDdnfL2h9_mDoME2_CESbzUXYFQEgQLizXr47vUD6_c",
+          "ownerToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyIjoiclN3djBtcmd3Umo0ZUlYbzF1OTUiLCJvIjp0cnVlLCJkIjoiYTYyYmQxNTMtMjZmNi00Nzg4LTg0ZGMtYzNmN2RkNzJkYjEyIiwiaWF0IjoxNjkfNzQxODA4fQ.6hS8LKZndPBNRXBwHtF7pdeTBt02PIzeRNYamBJPo9E",
+          "roomName": "rSq20mrgwsj4eIXo1u95",
+          "startAsBroadcast": false,
+          "extensions": []
         }
       },
       "DynamicPageOpenedPayload": {
@@ -43050,6 +43319,185 @@
             "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
           }
         ]
+      },
+      "AttendeeInsights": {
+        "type": "object",
+        "description": "Attendee Insights",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Id of the attendee"
+          },
+          "cartSum": {
+            "type": "number",
+            "description": "Sum of the cart net in base currency"
+          },
+          "productCount": {
+            "type": "number",
+            "description": "Sum of all quantities in the cart which were added during the appointment"
+          }
+        },
+        "example": {
+          "04da9d8572494ae68391a471d4c3a470": {
+            "extensions": [],
+            "id": "04da9d8572494ae68391a471d4c3a470",
+            "cartSum": 6770.53,
+            "productCount": 3,
+            "lineItemCount": 3
+          }
+        }
+      },
+      "VideoChat": {
+        "type": "object",
+        "required": [
+          "appointmentId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointmentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointment": {
+            "$ref": "#/components/schemas/Appointment"
+          },
+          "ownerToken": {
+            "type": "string"
+          },
+          "userToken": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "startAsBroadcast": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Appointment": {
+        "type": "object",
+        "required": [
+          "name",
+          "guideUserId",
+          "salesChannelDomainId",
+          "presentationPath"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "presentationId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "presentation": {
+            "$ref": "#/components/schemas/Presentation"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "isPreview": {
+            "type": "boolean"
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "guideUserId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "guideUser": {
+            "$ref": "#/components/schemas/User"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "guide",
+              "self"
+            ]
+          },
+          "salesChannelDomainId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "presentationPath": {
+            "type": "string"
+          },
+          "attendeeRestrictionType": {
+            "type": "string",
+            "enum": [
+              "open",
+              "customer",
+              "rules"
+            ]
+          },
+          "accessibleFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "accessibleTo": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "attendeeRuleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "attendees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attendee"
+            }
+          },
+          "message": {
+            "type": "string"
+          },
+          "videoAudioSettings": {
+            "type": "string",
+            "enum": [
+              "none",
+              "both",
+              "audio_only"
+            ]
+          },
+          "videoChat": {
+            "$ref": "#/components/schemas/VideoChat"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "updatedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
       },
       "PresentationCmsPage": {
         "type": "object",
@@ -43182,13 +43630,12 @@
           }
         }
       },
-      "Appointment": {
+      "Interaction": {
         "type": "object",
         "required": [
           "name",
-          "guideUserId",
-          "salesChannelDomainId",
-          "presentationPath"
+          "triggeredAt",
+          "attendeeId"
         ],
         "properties": {
           "id": {
@@ -43198,107 +43645,23 @@
           "name": {
             "type": "string"
           },
-          "presentationId": {
+          "expiresAt": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "format": "date-time"
           },
-          "presentation": {
-            "$ref": "#/components/schemas/Presentation"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "isPreview": {
-            "type": "boolean"
-          },
-          "default": {
-            "type": "boolean"
-          },
-          "guideUserId": {
+          "triggeredAt": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "format": "date-time"
           },
-          "guideUser": {
-            "$ref": "#/components/schemas/User"
-          },
-          "mode": {
-            "type": "string",
-            "enum": [
-              "guide",
-              "self"
-            ]
-          },
-          "salesChannelDomainId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "presentationPath": {
+          "payload": {
             "type": "string"
           },
-          "attendeeRestrictionType": {
-            "type": "string",
-            "enum": [
-              "open",
-              "customer",
-              "rules"
-            ]
-          },
-          "accessibleFrom": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "accessibleTo": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "attendeeRuleIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          "attendees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Attendee"
-            }
-          },
-          "message": {
-            "type": "string"
-          },
-          "videoAudioSettings": {
-            "type": "string",
-            "enum": [
-              "none",
-              "both",
-              "audio_only"
-            ]
-          },
-          "videoChat": {
-            "$ref": "#/components/schemas/VideoChat"
-          },
-          "startedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdById": {
+          "attendeeId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "createdBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "updatedById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "updatedBy": {
-            "$ref": "#/components/schemas/User"
+          "attendee": {
+            "$ref": "#/components/schemas/Attendee"
           }
         }
       },
@@ -43333,369 +43696,6 @@
           },
           "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
           "currencySymbol": "$"
-        }
-      },
-      "AttendeeInsights": {
-        "type": "object",
-        "description": "Attendee Insights",
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "Id of the attendee"
-          },
-          "cartSum": {
-            "type": "number",
-            "description": "Sum of the cart net in base currency"
-          },
-          "productCount": {
-            "type": "number",
-            "description": "Sum of all quantities in the cart which were added during the appointment"
-          }
-        },
-        "example": {
-          "04da9d8572494ae68391a471d4c3a470": {
-            "extensions": [],
-            "id": "04da9d8572494ae68391a471d4c3a470",
-            "cartSum": 6770.53,
-            "productCount": 3,
-            "lineItemCount": 3
-          }
-        }
-      },
-      "Presentation": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "versionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "parentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "parentVersionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "createdById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "createdBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "updatedById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "updatedBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "translations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "cmsPages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PresentationCmsPage"
-            }
-          },
-          "translated": {
-            "type": "object"
-          }
-        }
-      },
-      "VideoChat": {
-        "type": "object",
-        "required": [
-          "appointmentId"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointmentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "ownerToken": {
-            "type": "string"
-          },
-          "userToken": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "startAsBroadcast": {
-            "type": "boolean"
-          }
-        }
-      },
-      "StateForAll": {
-        "type": "object",
-        "properties": {
-          "currentGuideProductId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "lastActiveGuideSection": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentSectionId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentSlideAlias": {
-            "type": "integer",
-            "default": 0
-          },
-          "currentDynamicPage": {
-            "$ref": "#/components/schemas/DynamicPageOpenedPayload"
-          },
-          "started": {
-            "type": "boolean",
-            "default": false
-          },
-          "running": {
-            "type": "boolean",
-            "default": false
-          },
-          "ended": {
-            "type": "boolean",
-            "default": false
-          },
-          "startedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "endedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "accessibleFrom": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "accessibleTo": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "appointmentMode": {
-            "type": "string",
-            "enum": [
-              "guided",
-              "self"
-            ]
-          },
-          "videoAudioSettings": {
-            "type": "string",
-            "enum": [
-              "both",
-              "none",
-              "audio-only"
-            ],
-            "default": "none"
-          },
-          "videoRoomUrl": {
-            "type": "string",
-            "default": ""
-          },
-          "attendeeRestrictionType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "open",
-                  "customer",
-                  "rules"
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "productDetailDefaultPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickviewPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "productListingDefaultPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "allowUserActionsForGuide": {
-            "type": "boolean",
-            "default": false
-          },
-          "broadcastMode": {
-            "type": "boolean",
-            "default": false
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "VideoChatCreateStruct": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "roomUrl": {
-            "type": "string",
-            "description": "Url of the video room in daily"
-          },
-          "roomName": {
-            "type": "string",
-            "description": "Name of the video room in daily"
-          },
-          "userToken": {
-            "type": "string",
-            "description": "Token for the end users to connect to the daily room"
-          },
-          "ownerToken": {
-            "type": "string",
-            "description": "Token for the room owner (guide) to connect to the daily room"
-          },
-          "startAsBroadcast": {
-            "type": "boolean",
-            "default": false
-          }
-        },
-        "example": {
-          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
-          "userToken": "eyJhbGciOiJIUzI1NbIsInR5cCI6IkpXVCJ9.eyJyIjoiclNx4jBtcmd3Umo0ZUlYbzF1OTUiLCJvIjpmYWxzZSwiZCI6ImE2MmJkMTUzLTI2ZjYtNDc4OC04NGRjLWMzZjdkZDcyZGIxMiIsImlhdCI6MTY5MTc0MTgwOH0.jDdnfL2h9_mDoME2_CESbzUXYFQEgQLizXr47vUD6_c",
-          "ownerToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyIjoiclN3djBtcmd3Umo0ZUlYbzF1OTUiLCJvIjp0cnVlLCJkIjoiYTYyYmQxNTMtMjZmNi00Nzg4LTg0ZGMtYzNmN2RkNzJkYjEyIiwiaWF0IjoxNjkfNzQxODA4fQ.6hS8LKZndPBNRXBwHtF7pdeTBt02PIzeRNYamBJPo9E",
-          "roomName": "rSq20mrgwsj4eIXo1u95",
-          "startAsBroadcast": false,
-          "extensions": []
-        }
-      },
-      "AbstractDynamicPageOpenedPayload": {
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of the current dynamic page"
-          },
-          "opened": {
-            "type": "boolean",
-            "default": true
-          }
         }
       }
     },
