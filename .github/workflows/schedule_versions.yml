@@ -1,7 +1,10 @@
 name: Schedule version PRs
 
 on:
-  push
+  push:
+    branches:
+      - main
+      - 'releases/**'
 
 jobs:
   get-latest-version:
@@ -17,14 +20,14 @@ jobs:
     
     
   generate-trunk:
-    uses: ./.github/workflows/base_schema.yml@main
+    uses: ./.github/workflows/base_schema.yml
     with:
       shopware_version: 'trunk'
     secrets: inherit
     
   generate-latest:
     needs: get-latest-version
-    uses: ./.github/workflows/base_schema.yml@latest
+    uses: ./.github/workflows/base_schema.yml
     with:
       shopware_version: ${{needs.get-latest-version.outputs.latest_version}}
     secrets: inherit
