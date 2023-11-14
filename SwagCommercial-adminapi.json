@@ -2254,6 +2254,128 @@
         },
         "type": "object"
       },
+      "AdvancedSearchSynonymJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "left",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "left": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "right": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "languageId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "language": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/advanced-search-synonym/f8fe978e49caae961d38f793b4901801/language"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "language"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "8512ae7d57b1396273f76fe6ed341a23"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "AdvancedSearchSynonym": {
+        "required": [
+          "left",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "left": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "right": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "languageId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "language": {
+            "$ref": "#/components/schemas/Language"
+          }
+        },
+        "type": "object"
+      },
       "AppJsonApi": {
         "description": "Added since version: 6.3.1.0",
         "allOf": [
@@ -4770,6 +4892,7 @@
           },
           {
             "required": [
+              "languageId",
               "firstName",
               "lastName",
               "email",
@@ -4785,6 +4908,10 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "roleId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "languageId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -4876,6 +5003,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "language": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/language"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "language"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "8512ae7d57b1396273f76fe6ed341a23"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -4887,6 +5043,7 @@
       },
       "B2bEmployee": {
         "required": [
+          "languageId",
           "firstName",
           "lastName",
           "email",
@@ -4902,6 +5059,10 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "roleId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "languageId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -4939,6 +5100,9 @@
           },
           "role": {
             "$ref": "#/components/schemas/B2bComponentsRole"
+          },
+          "language": {
+            "$ref": "#/components/schemas/Language"
           }
         },
         "type": "object"
@@ -8854,6 +9018,10 @@
               "labelProperty": {
                 "type": "string"
               },
+              "deletedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -8911,6 +9079,10 @@
           },
           "labelProperty": {
             "type": "string"
+          },
+          "deletedAt": {
+            "type": "string",
+            "format": "date-time"
           },
           "createdAt": {
             "type": "string",
@@ -12608,6 +12780,9 @@
               "deepLinkCode": {
                 "type": "string"
               },
+              "documentNumber": {
+                "type": "string"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -12826,6 +13001,9 @@
             "type": "boolean"
           },
           "deepLinkCode": {
+            "type": "string"
+          },
+          "documentNumber": {
             "type": "string"
           },
           "customFields": {
@@ -27223,6 +27401,9 @@
                 "description": "Runtime field, cannot be used as part of the criteria.",
                 "type": "string"
               },
+              "technicalName": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -27634,6 +27815,9 @@
           },
           "shortName": {
             "description": "Runtime field, cannot be used as part of the criteria.",
+            "type": "string"
+          },
+          "technicalName": {
             "type": "string"
           },
           "createdAt": {
@@ -43417,6 +43601,9 @@
               "trackingUrl": {
                 "type": "string"
               },
+              "technicalName": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -43857,6 +44044,9 @@
             "type": "string"
           },
           "trackingUrl": {
+            "type": "string"
+          },
+          "technicalName": {
             "type": "string"
           },
           "createdAt": {
@@ -52189,40 +52379,6 @@
         },
         "type": "object"
       },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -52281,32 +52437,6 @@
                 "type": "boolean",
                 "description": "State of the `urlFeature` setting."
               }
-            }
-          }
-        }
-      },
-      "flowBulderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
             }
           }
         }
@@ -52434,6 +52564,66 @@
             ]
           }
         ]
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "flowBulderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
       },
       "Criteria": {
         "type": "object",
@@ -52630,110 +52820,6 @@
           }
         }
       },
-      "CustomPricingResponse": {
-        "type": "object",
-        "required": [
-          "success",
-          "data"
-        ],
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "entities",
-                      "errors"
-                    ],
-                    "properties": {
-                      "entities": {
-                        "type": "array",
-                        "maxItems": 1,
-                        "items": {
-                          "type": "string",
-                          "pattern": "^[0-9a-f]{32}$"
-                        }
-                      },
-                      "errors": {
-                        "type": "array",
-                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "extensions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "CustomPricingDeleteOperation": {
-        "type": "object",
-        "required": [
-          "action",
-          "payload"
-        ],
-        "properties": {
-          "action": {
-            "description": "A specific verb defining what operation should be actioned for a specific data record",
-            "type": "string",
-            "enum": [
-              "delete"
-            ]
-          },
-          "payload": {
-            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "title": "productIds",
-                  "type": "array",
-                  "description": "An array of product entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                {
-                  "title": "customerIds",
-                  "type": "array",
-                  "description": "An array of customer entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                {
-                  "title": "customerGroupIds",
-                  "type": "array",
-                  "description": "An array of customerGroup entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
       "CustomPricingPrice": {
         "type": "object",
         "description": "An extended schema for the Custom Price 'price' column (as opposed to ProductPrice 'price' column)",
@@ -52808,6 +52894,110 @@
                     "linked": {
                       "type": "boolean"
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingDeleteOperation": {
+        "type": "object",
+        "required": [
+          "action",
+          "payload"
+        ],
+        "properties": {
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "delete"
+            ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "title": "productIds",
+                  "type": "array",
+                  "description": "An array of product entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerIds",
+                  "type": "array",
+                  "description": "An array of customer entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerGroupIds",
+                  "type": "array",
+                  "description": "An array of customerGroup entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "CustomPricingResponse": {
+        "type": "object",
+        "required": [
+          "success",
+          "data"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "entities",
+                      "errors"
+                    ],
+                    "properties": {
+                      "entities": {
+                        "type": "array",
+                        "maxItems": 1,
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{32}$"
+                        }
+                      },
+                      "errors": {
+                        "type": "array",
+                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "extensions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
                   }
                 }
               }
@@ -53017,6 +53207,10 @@
     {
       "name": "Advanced Search Entity Stream Filter",
       "description": "The endpoint for operations on Advanced Search Entity Stream Filter"
+    },
+    {
+      "name": "Advanced Search Synonym",
+      "description": "The endpoint for operations on Advanced Search Synonym"
     },
     {
       "name": "App",
