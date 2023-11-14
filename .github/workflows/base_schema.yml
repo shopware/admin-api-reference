@@ -1,9 +1,13 @@
 name: Update Admin API
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: 0 9 */1 * *
+  workflow_call:
+    inputs:
+      shopware_version:
+        description: "Shopware version"
+        required: true
+        type: string
+
 
 jobs:
   generate-schema:
@@ -11,6 +15,7 @@ jobs:
     with:
       schema_flags: ""
       schema_file: adminapi.json
+      shopware_version: ${{ inputs.shopware_version }}
     secrets: inherit
         
   open-pr:
