@@ -1,33 +1,12 @@
 name: Schedule version PRs
 
 on:
-  push:
-    branches:
-      - main
-      - 'releases/**'
+  workflow_dispatch:
+  schedule:
+  - cron: 0 9 */1 * *
 
-jobs:
-  get-latest-version:
-    name: "Get latest version"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Call github API
-        id: latest-shopware-version
-        run: |
-          echo latest_version=$(curl -s https://api.github.com/repos/shopware/shopware/releases/latest | jq -r '.tag_name') >> $GITHUB_OUTPUT
-    outputs:
-      latest_version: ${{ steps.latest-shopware-version.outputs.latest_version }}
-    
-    
+jobs:  
   generate-trunk:
     uses: ./.github/workflows/base_schema.yml
     with:
       shopware_version: 'trunk'
-    secrets: inherit
-    
-  generate-latest:
-    needs: get-latest-version
-    uses: ./.github/workflows/base_schema.yml
-    with:
-      shopware_version: ${{needs.get-latest-version.outputs.latest_version}}
-    secrets: inherit
