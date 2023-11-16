@@ -61,6 +61,11 @@ jobs:
           yq  -I 4 -o json -i "$k.description = \"${newDescription}\"" adminapi.json
         done
 
+    - name: Download original file
+      uses: actions/download-artifact@v3
+      with:
+        name: original-file
+
     - name: Prettify
       run: |
         sudo apt-get update
