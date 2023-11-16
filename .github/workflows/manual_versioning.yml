@@ -25,18 +25,21 @@ on:
 
 jobs:
   generate-trunk:
+    if: ${{ inputs.trigger_default_schema }}
     uses: ./.github/workflows/base_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
     secrets: inherit
     
   generate-commercial-trunk:
+    if: ${{ inputs.trigger_commercial_schema }}
     uses: ./.github/workflows/plugin_commercial_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
     secrets: inherit
     
   generate-digitalsalesroom-trunk:
+    if: ${{ inputs.trigger_digitalsalesroom_schema }}
     uses: ./.github/workflows/plugin_digitalsalesroom_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
