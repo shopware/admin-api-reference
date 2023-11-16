@@ -1,0 +1,28 @@
+name: Schedule version PRs
+
+on:
+  workflow_dispatch:
+    inputs:
+      shopware_version:
+        description: "Shopware version"
+        required: true
+        type: string
+
+jobs:
+  generate-trunk:
+    uses: ./.github/workflows/base_schema.yml
+    with:
+      shopware_version: ${{ inputs.shopware_version }}
+    secrets: inherit
+    
+  generate-commercial-trunk:
+    uses: ./.github/workflows/plugin_commercial_schema.yml
+    with:
+      shopware_version: ${{ inputs.shopware_version }}
+    secrets: inherit
+    
+  generate-digitalsalesroom-trunk:
+    uses: ./.github/workflows/plugin_digitalsalesroom_schema.yml
+    with:
+      shopware_version: ${{ inputs.shopware_version }}
+    secrets: inherit
