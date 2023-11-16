@@ -3,10 +3,32 @@ name: Schedule version PRs
 on:
   workflow_dispatch:
   schedule:
-  - cron: 0 9 */1 * *
+    - cron: 0 9 */1 * *
 
-jobs:  
+env:
+  SHOPWARE_VERSION: 'trunk'
+
+jobs:
+  vars:
+    runs-on: ubuntu-22.04
+    outputs:
+      SHOPWARE_VERSION: ${{ env.SHOPWARE_VERSION }}
+    steps:
+      - run: echo "Exposing env vars"
   generate-trunk:
+    needs: vars
     uses: ./.github/workflows/base_schema.yml
     with:
-      shopware_version: 'trunk'
+      shopware_version: ${{ needs.vars.outputs.SHOPWARE_VERSION }}
+  
+  generate-commercial-trunk:
+    needs: vars
+    uses: ./.github/workflows/plugin_commercial_schema.yml
+    with:
+      shopware_version: ${{ needs.vars.outputs.SHOPWARE_VERSION }}
+  
+  generate-digitalsalesroom-trunk:
+    needs: vars
+    uses: ./.github/workflows/plugin_digitalsalesroom_schema.yml
+    with:
+      shopware_version: ${{ needs.vars.outputs.SHOPWARE_VERSION }}

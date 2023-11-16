@@ -1,9 +1,12 @@
 name: Update Digital Sales Room Store API
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: 5 9 */1 * *
+  workflow_call:
+    inputs:
+      shopware_version:
+        description: "Shopware version"
+        required: true
+        type: string
 
 env:
   PLUGIN_NAME: SwagGuidedShopping
@@ -30,6 +33,7 @@ jobs:
       plugin_name: ${{ needs.vars.outputs.PLUGIN_NAME }}
       plugin_url: ${{ needs.vars.outputs.PLUGIN_URL }}
       composer_packages: ${{ needs.vars.outputs.COMPOSER_PACKAGES }}
+      shopware_version: ${{ inputs.shopware_version }}
     secrets:
       DEPLOY_USER: ${{ secrets.DIGITALSALESROOM_DEPLOY_USER }}
       DEPLOY_TOKEN: ${{ secrets.DIGITALSALESROOM_DEPLOY_TOKEN }}
