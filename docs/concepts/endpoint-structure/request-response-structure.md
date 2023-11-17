@@ -45,11 +45,11 @@ Furthermore, these endpoints can be divided into **read** and **write** operatio
 
 Provide interactions for more sophisticated operations which can change the state of the system but are not directly based on entities alone. We differ between more than 20 categories of about 140 specific endpoints, such as
 
- * Document Management
- * Order State Management
- * User Role Management
- * System Operations
- * Authorization & Authentication
+* Document Management
+* Order State Management
+* User Role Management
+* System Operations
+* Authorization & Authentication
 
 which will let you automate every part of the store operation.
 
