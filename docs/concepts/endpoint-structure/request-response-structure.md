@@ -64,7 +64,6 @@ Request headers provide information about your request to a REST API service tha
 
 | Request header              | Key                                    | Description                                                                                |
 | --------------------------- | ---------------------------------------|--------------------------------------------------------------------------------------------|
-| sw-access-token             | SWSCXYZSNTVMAWNZDNFKSHLAYW             | Access key to identify and get authorized to respective sales channel access               |
 | Content-Type                | application/json                       | Indicate the format of the request body                                                    |
 | Accept                      | application/json                       | Indicate the format in which the response will be returned                                 |
 
