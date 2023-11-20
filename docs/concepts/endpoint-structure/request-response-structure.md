@@ -64,7 +64,7 @@ Request headers provide information about your request to a REST API service tha
 
 | Request header              | Key                                    | Description                                                                                |
 | --------------------------- | ---------------------------------------|--------------------------------------------------------------------------------------------|
-| Content-Type                | application/json                       | Indicate the format of the request body                                                    |
+| Content-Type                | application/json or application/vnd.api+json                       | Indicate the format of the request body                                                    |
 | Accept                      | application/json                       | Indicate the format in which the response will be returned                                 |
 
 Refer to the docs for more information on other [response headers](https://developer.shopware.com/docs/guides/integrations-api/general-concepts/request-headers.html#request-headers).
