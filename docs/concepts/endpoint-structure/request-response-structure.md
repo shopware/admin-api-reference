@@ -12,7 +12,7 @@ From this base endpoint, we can assemble almost all paths described in the subse
 
 ## Request format
 
-The request format for Shopware 6 store API's must follow the below format:
+The request format for the Shopware 6 Admin API must follow the below format:
 
 * The request body has to be JSON encoded.
 
