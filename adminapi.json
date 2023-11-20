@@ -3,7 +3,7 @@
   "info": {
     "title": "Shopware Admin API",
     "description": "This endpoint reference contains an overview of all endpoints comprising the Shopware Admin API.\n\nFor a better overview, all CRUD-endpoints are hidden by default. If you want to show also CRUD-endpoints\nadd the query parameter `type=jsonapi`.",
-    "version": "6.5.9999999.9999999-dev"
+    "version": "6.5.6.1"
   },
   "servers": [
     {
@@ -3478,393 +3478,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AppScriptCondition"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/app-shipping-method": {
-      "get": {
-        "tags": [
-          "App Shipping Method"
-        ],
-        "summary": "List with basic information of App Shipping Method resources.",
-        "description": "Available since: 6.5.7.0",
-        "operationId": "getAppShippingMethodList",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max amount of resources to be returned in a page",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page to be returned",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Encoded SwagQL in JSON",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of App Shipping Method resources.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/data"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/AppShippingMethod"
-                              }
-                            }
-                          ]
-                        },
-                        "links": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/pagination"
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "first": {
-                                  "example": "/app-shipping-method?limit=25"
-                                },
-                                "last": {
-                                  "example": "/app-shipping-method?limit=25&page=11"
-                                },
-                                "next": {
-                                  "example": "/app-shipping-method?limit=25&page=4"
-                                },
-                                "prev": {
-                                  "example": "/app-shipping-method?limit=25&page=2"
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppShippingMethod"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "App Shipping Method"
-        ],
-        "summary": "Create a new App Shipping Method resources.",
-        "description": "Available since: 6.5.7.0",
-        "operationId": "createAppShippingMethod",
-        "parameters": [
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "basic",
-                "detail"
-              ]
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "data": {
-                    "$ref": "#/components/schemas/AppShippingMethod"
-                  },
-                  "included": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/resource"
-                    },
-                    "uniqueItems": true
-                  }
-                }
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppShippingMethod"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of AppShippingMethod",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppShippingMethod"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppShippingMethod"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/app-shipping-method/{id}": {
-      "get": {
-        "tags": [
-          "App Shipping Method"
-        ],
-        "summary": "Detailed information about a App Shipping Method resource.",
-        "description": "Available since: 6.5.7.0",
-        "operationId": "getAppShippingMethod",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_shipping_method",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Detail of AppShippingMethod",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppShippingMethod"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppShippingMethod"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "App Shipping Method"
-        ],
-        "summary": "Delete a App Shipping Method resource.",
-        "description": "Available since: 6.5.7.0",
-        "operationId": "deleteAppShippingMethod",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_shipping_method",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "App Shipping Method"
-        ],
-        "summary": "Partially update information about a App Shipping Method resource.",
-        "description": "Available since: 6.5.7.0",
-        "operationId": "updateAppShippingMethod",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_shipping_method",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Partially update information about a App Shipping Method resource.",
-          "content": {
-            "application/vnd.api+json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "data": {
-                    "$ref": "#/components/schemas/AppShippingMethod"
-                  },
-                  "included": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/resource"
-                    },
-                    "uniqueItems": true
-                  }
-                }
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppShippingMethod"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of AppShippingMethod",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppShippingMethod"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AppShippingMethod"
                 }
               }
             }
@@ -52346,6 +51959,21 @@
         }
       }
     },
+    "/usage-data/needs-approval": {
+      "delete": {
+        "tags": [
+          "Usage data"
+        ],
+        "summary": "Get information about the usage data approval request.",
+        "description": "Get whether the usage data approval request is necessary or not.",
+        "operationId": "getNeedsUsageDataApprovalRequest",
+        "responses": {
+          "200": {
+            "description": "Returns true if it is needed, false if it is not."
+          }
+        }
+      }
+    },
     "/_action/scheduled-task/run": {
       "post": {
         "tags": [
@@ -52742,7 +52370,7 @@
           "System Operations"
         ],
         "summary": "Send product indexing message",
-        "description": "Dispatches a product indexing message to the message bus, with the provided ids",
+        "description": "Dispachtes an product indexing message to the message bus, with the provided ids",
         "operationId": "productIndexing",
         "responses": {
           "204": {
@@ -54854,37 +54482,6 @@
                       }
                     },
                     "type": "object"
-                  },
-                  "appShippingMethods": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/appShippingMethods"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_shipping_method"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "1ad05ee47064647ee5b2dc8c12b1041c"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -55091,12 +54688,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AppFlowEvent"
-            }
-          },
-          "appShippingMethods": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppShippingMethod"
             }
           }
         },
@@ -56360,202 +55951,6 @@
             "items": {
               "$ref": "#/components/schemas/RuleCondition"
             }
-          }
-        },
-        "type": "object"
-      },
-      "AppShippingMethodJsonApi": {
-        "description": "Added since version: 6.5.7.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "appName",
-              "identifier",
-              "shippingMethodId",
-              "createdAt"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "appName": {
-                "type": "string"
-              },
-              "identifier": {
-                "type": "string"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "shippingMethodId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "originalMediaId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-shipping-method/de94cc387f2598e321fc402da2abda66/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "shippingMethod": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-shipping-method/de94cc387f2598e321fc402da2abda66/shippingMethod"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "shipping_method"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "e97bfcdc0cae44bc9e4ab35762eaf0e1"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "originalMedia": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-shipping-method/de94cc387f2598e321fc402da2abda66/originalMedia"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "media"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "56386c66f82d9cd5639a5a7447971ead"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppShippingMethod": {
-        "description": "Added since version: 6.5.7.0",
-        "required": [
-          "appName",
-          "identifier",
-          "shippingMethodId",
-          "createdAt"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appName": {
-            "type": "string"
-          },
-          "identifier": {
-            "type": "string"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "shippingMethodId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "originalMediaId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
-          },
-          "shippingMethod": {
-            "$ref": "#/components/schemas/ShippingMethod"
-          },
-          "originalMedia": {
-            "$ref": "#/components/schemas/Media"
           }
         },
         "type": "object"
@@ -60230,10 +59625,6 @@
               "labelProperty": {
                 "type": "string"
               },
-              "deletedAt": {
-                "type": "string",
-                "format": "date-time"
-              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -60299,10 +59690,6 @@
           "labelProperty": {
             "type": "string",
             "description": "Specifies which property or attribute of the custom entity is used."
-          },
-          "deletedAt": {
-            "type": "string",
-            "format": "date-time"
           },
           "createdAt": {
             "type": "string",
@@ -63237,9 +62624,6 @@
               "deepLinkCode": {
                 "type": "string"
               },
-              "documentNumber": {
-                "type": "string"
-              },
               "customFields": {
                 "type": "object"
               },
@@ -63470,9 +62854,6 @@
           "deepLinkCode": {
             "type": "string",
             "description": "It is a generated special code linked to email. It is used to access details of guest customer actions."
-          },
-          "documentNumber": {
-            "type": "string"
           },
           "customFields": {
             "type": "object",
@@ -67685,9 +67066,6 @@
                 "description": "Runtime field, cannot be used as part of the criteria.",
                 "type": "string"
               },
-              "path": {
-                "type": "string"
-              },
               "hasFile": {
                 "description": "Runtime field, cannot be used as part of the criteria.",
                 "type": "boolean"
@@ -68457,37 +67835,6 @@
                       }
                     },
                     "type": "object"
-                  },
-                  "appShippingMethods": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/media/3b563524fdb17b4a86590470d40bef74/appShippingMethods"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_shipping_method"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "1ad05ee47064647ee5b2dc8c12b1041c"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -68565,9 +67912,6 @@
           },
           "url": {
             "description": "Runtime field, cannot be used as part of the criteria.",
-            "type": "string"
-          },
-          "path": {
             "type": "string"
           },
           "hasFile": {
@@ -68788,12 +68132,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AppPaymentMethod"
-            }
-          },
-          "appShippingMethods": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppShippingMethod"
             }
           }
         },
@@ -69492,9 +68830,6 @@
                 "description": "Runtime field, cannot be used as part of the criteria.",
                 "type": "string"
               },
-              "path": {
-                "type": "string"
-              },
               "customFields": {
                 "type": "object"
               },
@@ -69580,9 +68915,6 @@
           },
           "url": {
             "description": "Public url of media thumbnail.",
-            "type": "string"
-          },
-          "path": {
             "type": "string"
           },
           "customFields": {
@@ -75990,9 +75322,6 @@
                 "description": "Runtime field, cannot be used as part of the criteria.",
                 "type": "string"
               },
-              "technicalName": {
-                "type": "string"
-              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -76349,9 +75678,6 @@
           },
           "shortName": {
             "description": "Runtime field, cannot be used as part of the criteria.",
-            "type": "string"
-          },
-          "technicalName": {
             "type": "string"
           },
           "createdAt": {
@@ -88795,9 +88121,6 @@
               "trackingUrl": {
                 "type": "string"
               },
-              "technicalName": {
-                "type": "string"
-              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -89083,35 +88406,6 @@
                       }
                     },
                     "type": "object"
-                  },
-                  "appShippingMethod": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/shipping-method/d72e7a227a27328b28342b32fc66b6bf/appShippingMethod"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app_shipping_method"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "09f1214e961760dbae11d49b2bf9fa2c"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -89185,9 +88479,6 @@
             "type": "string",
             "description": "This URL allows to track packages."
           },
-          "technicalName": {
-            "type": "string"
-          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -89243,9 +88534,6 @@
           },
           "tax": {
             "$ref": "#/components/schemas/Tax"
-          },
-          "appShippingMethod": {
-            "$ref": "#/components/schemas/AppShippingMethod"
           }
         },
         "type": "object"
@@ -93909,9 +93197,6 @@
               "url": {
                 "type": "string"
               },
-              "onlyLiveVersion": {
-                "type": "boolean"
-              },
               "errorCount": {
                 "type": "integer",
                 "format": "int64",
@@ -93999,9 +93284,6 @@
           "url": {
             "type": "string",
             "description": "URL to be called when the event occurs."
-          },
-          "onlyLiveVersion": {
-            "type": "boolean"
           },
           "errorCount": {
             "type": "integer",
@@ -94092,9 +93374,6 @@
               "url": {
                 "type": "string"
               },
-              "onlyLiveVersion": {
-                "type": "boolean"
-              },
               "customFields": {
                 "type": "object"
               },
@@ -94178,9 +93457,6 @@
           "url": {
             "type": "string",
             "description": "A URL for the webhook event log."
-          },
-          "onlyLiveVersion": {
-            "type": "boolean"
           },
           "customFields": {
             "type": "object",
@@ -96318,10 +95594,6 @@
     {
       "name": "App Script Condition",
       "description": "The endpoint for operations on App Script Condition"
-    },
-    {
-      "name": "App Shipping Method",
-      "description": "The endpoint for operations on App Shipping Method"
     },
     {
       "name": "App Template",
