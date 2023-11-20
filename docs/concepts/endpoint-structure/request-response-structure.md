@@ -43,7 +43,7 @@ Furthermore, these endpoints can be divided into **read** and **write** operatio
 
 #### Specific interaction or configuration endpoints
 
-Provide interactions for more sophisticated operations which can change the state of the system but are not directly based on entities alone. We differ between more than 20 categories of about 140 specific endpoints, such as
+Provide interactions for more sophisticated operations that can change the system's state but are not directly based on entities alone. We differ between more than 20 categories of about 140 specific endpoints, such as:
 
 * Document Management
 * Order State Management
