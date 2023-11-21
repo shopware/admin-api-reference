@@ -12,11 +12,66 @@ From this base endpoint, we can assemble almost all paths described in the subse
 
 ## Request format
 
-In Shopware 6, the request body has to be JSON encoded. Always set the `Content-Type` header to `application/json` if you're sending data to the API.
+The request format for the Shopware 6 Admin API must follow the below format:
 
-It's mandatory to use type-safe values, e.g. if the API expects an integer value, you're required to provide an actual integer. If you're using a Date field, make sure to use an ISO 8601 compatible date format.
+* The request body has to be JSON encoded.
 
-```javascript
+* It is mandatory to use type-safe values, e.g., if the API expects an integer value, you are required to provide an actual integer.
+
+* When using a Date field, make sure to use an ISO 8601 compatible date format.
+
+### Request URL
+
+The Admin API can be separated into two general sets of endpoints
+
+* Generic entity endpoints
+
+* Specific interaction/configuration endpoints
+
+Both fulfill specific cases which are outlined below.
+
+#### Generic entity endpoints
+
+Provide CRUD functionalities on **all entities available** in Shopware. Go to the [Entity Reference](../../resources/entity-reference.md) section to see a list of all available entities and their structure.
+
+Furthermore, these endpoints can be divided into **read** and **write** operations. To learn more about those, please head to the corresponding guide on [Reading Entities](reading-entities.md) and [Writing Entities](writing-entities/README.md). These endpoints are generic, since they are entirely based on the entity definitions and contain no additional business logic besides data validation.
+
+> The URL structure for *Generic entity endpoints* is:
+> ```
+> /api/{entity-name}(/{entity-id})
+> ```
+
+#### Specific interaction or configuration endpoints
+
+Provide interactions for more sophisticated operations that can change the system's state but are not directly based on entities alone. We differ between more than 20 categories of about 140 specific endpoints, such as:
+
+* Document Management
+* Order State Management
+* User Role Management
+* System Operations
+* Authorization & Authentication
+
+which will let you automate every part of the store operation.
+
+> The URL structure for *Specific interaction or configuration endpoints* roughly follows this schema:
+> ```
+> /api/_action/{interaction-name}
+> ```
+
+### Request headers
+
+Request headers provide information about your request to a REST API service that allows you to authenticate/authorize and receive the request body.
+
+| Request header              | Key                                    | Description                                                                                |
+| --------------------------- | ---------------------------------------|--------------------------------------------------------------------------------------------|
+| Content-Type                | application/json or application/vnd.api+json                       | Indicate the format of the request body                                                    |
+| Accept                      | application/json                       | Indicate the format in which the response will be returned                                 |
+
+Refer to the docs for more information on other [response headers](https://developer.shopware.com/docs/guides/integrations-api/general-concepts/request-headers.html#request-headers).
+
+### Request body
+
+```json
 {
     "id": "01bd7e70a50443ec96a01fd34890dcc5",
     "name": "Example product",
@@ -28,6 +83,8 @@ It's mandatory to use type-safe values, e.g. if the API expects an integer value
 
 ## Response format
 
+### Response headers
+
 The Admin API generally supports two response body formats. A simple json format to no explicit specification and the [JSON:API](http://jsonapi.org/) standard format. By default, the response will be in JSON:API format. You can control the response format using the `Accept` header.
 
 | Accept                      | Format                                    |
@@ -35,7 +92,7 @@ The Admin API generally supports two response body formats. A simple json format
 | `application/vnd.api+json`  | JSON:API formatted response **(default)** |
 | `application/json`          | Simplified JSON format                    |
 
-### JSON:API
+### Sample response JSON:API
 
 The format has a rich structure that makes discovering the API easier, even without documentation. Some libraries can even generate user interfaces from it. It provides relationships to other resources and additional information about the resource. You can see a shortened example response below
 
@@ -108,7 +165,7 @@ The format has a rich structure that makes discovering the API easier, even with
 }
 ```
 
-### Simple JSON
+### Sample response JSON
 
 The simple JSON format only contains essential information, and skips JSON:API specific fields related to pagination or self-discovery. Associations are placed directly within the entities rather than in a separate section. It is sometimes favourable, because it's less "blown-up" and as such easier for clients to consume. You can see a shortened example below:
 
@@ -150,4 +207,3 @@ The simple JSON format only contains essential information, and skips JSON:API s
     "aggregations": []
 }
 ```
-
