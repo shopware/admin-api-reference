@@ -75,10 +75,8 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y moreutils
         jq . adminapi.json | sponge adminapi.json
-        echo 1
         cmp <(sort adminapi.json) <(sort adminapi-original.json) || echo "FILE_DIFFERENCE=1" >> $GITHUB_ENV
         rm adminapi-original.json
-        echo 2
       
     - name: Create PR
       if: ${{ env.FILE_DIFFERENCE == 1 }}
