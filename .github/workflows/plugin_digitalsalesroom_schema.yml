@@ -7,6 +7,10 @@ on:
         description: "Shopware version"
         required: true
         type: string
+      php_version:
+        description: "PHP version"
+        required: false
+        type: string
 
 env:
   PLUGIN_NAME: SwagGuidedShopping
@@ -34,6 +38,7 @@ jobs:
       plugin_url: ${{ needs.vars.outputs.PLUGIN_URL }}
       composer_packages: ${{ needs.vars.outputs.COMPOSER_PACKAGES }}
       shopware_version: ${{ inputs.shopware_version }}
+      php_version: ${{ inputs.php_version }}
     secrets:
       DEPLOY_USER: ${{ secrets.DIGITALSALESROOM_DEPLOY_USER }}
       DEPLOY_TOKEN: ${{ secrets.DIGITALSALESROOM_DEPLOY_TOKEN }}
