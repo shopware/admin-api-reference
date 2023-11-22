@@ -7,6 +7,10 @@ on:
         description: "Shopware version"
         required: true
         type: string
+      php_version:
+        description: "PHP version"
+        required: false
+        type: string
         
 env:
   PLUGIN_NAME: SwagCommercial
@@ -31,6 +35,7 @@ jobs:
       plugin_name: ${{ needs.vars.outputs.PLUGIN_NAME }}
       plugin_url: ${{ needs.vars.outputs.PLUGIN_URL }}
       shopware_version: ${{ inputs.shopware_version }}
+      php_version: ${{ inputs.php_version }}
     secrets: inherit
   open-pr:
     name: "Open a pull request"

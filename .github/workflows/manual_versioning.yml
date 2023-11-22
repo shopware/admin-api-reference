@@ -7,6 +7,11 @@ on:
         description: "Shopware version"
         required: true
         type: string
+      php_version:
+        description: "PHP version"
+        required: false
+        type: string
+        default: "8.2"
       trigger_default_schema:
         description: "Trigger schema"
         required: false
@@ -29,6 +34,7 @@ jobs:
     uses: ./.github/workflows/base_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
+      php_version: ${{ inputs.php_version }}
     secrets: inherit
     
   generate-commercial-trunk:
@@ -36,6 +42,7 @@ jobs:
     uses: ./.github/workflows/plugin_commercial_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
+      php_version: ${{ inputs.php_version }}
     secrets: inherit
     
   generate-digitalsalesroom-trunk:
@@ -43,4 +50,5 @@ jobs:
     uses: ./.github/workflows/plugin_digitalsalesroom_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
+      php_version: ${{ inputs.php_version }}
     secrets: inherit
