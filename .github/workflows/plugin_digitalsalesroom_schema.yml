@@ -59,7 +59,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y moreutils
           jq . ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json | sponge ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
-
+          ./.github/scripts/find_delta_paths.sh ${{ needs.vars.outputs.PLUGIN_NAME }}
+          
       - name: Create DSR PR
         uses: peter-evans/create-pull-request@v4
         with:
