@@ -3,7 +3,7 @@
   "info": {
     "title": "Shopware Admin API",
     "description": "This endpoint reference contains an overview of all endpoints comprising the Shopware Admin API.\n\nFor a better overview, all CRUD-endpoints are hidden by default. If you want to show also CRUD-endpoints\nadd the query parameter `type=jsonapi`.",
-    "version": "6.5.9999999.9999999-dev"
+    "version": "6.6.9999999.9999999-dev"
   },
   "servers": [
     {
@@ -65381,10 +65381,6 @@
                 "type": "string",
                 "format": "date-time"
               },
-              "writeAccess": {
-                "type": "boolean",
-                "deprecated": true
-              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -65545,11 +65541,6 @@
             "format": "date-time",
             "description": "Date and time when the integration was deleted."
           },
-          "writeAccess": {
-            "type": "boolean",
-            "deprecated": true,
-            "description": "This field is deprecated."
-          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -65604,6 +65595,9 @@
             "items": {
               "$ref": "#/components/schemas/AclRole"
             }
+          },
+          "writeAccess": {
+            "description": "This field is deprecated."
           },
           "integrationId": {
             "description": "Unique identity of integration"
@@ -68814,7 +68808,6 @@
           {
             "required": [
               "entity",
-              "associationFields",
               "createdAt"
             ],
             "properties": {
@@ -68827,12 +68820,6 @@
               },
               "customFields": {
                 "type": "object"
-              },
-              "associationFields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "createdAt": {
                 "type": "string",
@@ -68887,7 +68874,6 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "entity",
-          "associationFields",
           "createdAt"
         ],
         "properties": {
@@ -68903,12 +68889,6 @@
           "customFields": {
             "type": "object",
             "description": "Additional fields that offer a possibility to add own fields for the different program-areas."
-          },
-          "associationFields": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "createdAt": {
             "type": "string",
@@ -88137,6 +88117,7 @@
               "runInterval",
               "status",
               "nextExecutionTime",
+              "defaultRunInterval",
               "createdAt"
             ],
             "properties": {
@@ -88192,6 +88173,7 @@
           "runInterval",
           "status",
           "nextExecutionTime",
+          "defaultRunInterval",
           "createdAt"
         ],
         "properties": {
@@ -88752,7 +88734,6 @@
           },
           {
             "required": [
-              "availabilityRuleId",
               "deliveryTimeId",
               "taxType",
               "createdAt",
@@ -89130,7 +89111,6 @@
       "ShippingMethod": {
         "description": "Added since version: 6.0.0.0",
         "required": [
-          "availabilityRuleId",
           "deliveryTimeId",
           "taxType",
           "createdAt",
@@ -90035,7 +90015,8 @@
               "entityName",
               "fromStateId",
               "toStateId",
-              "entityId",
+              "referencedId",
+              "referencedVersionId",
               "createdAt"
             ],
             "properties": {
@@ -90064,10 +90045,6 @@
               "userId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
-              },
-              "entityId": {
-                "type": "object",
-                "deprecated": true
               },
               "referencedId": {
                 "type": "string",
@@ -90220,7 +90197,8 @@
           "entityName",
           "fromStateId",
           "toStateId",
-          "entityId",
+          "referencedId",
+          "referencedVersionId",
           "createdAt"
         ],
         "properties": {
@@ -90257,11 +90235,6 @@
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of user."
           },
-          "entityId": {
-            "type": "object",
-            "deprecated": true,
-            "description": "Unique identity of entity."
-          },
           "referencedId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
@@ -90293,6 +90266,9 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          },
+          "entityId": {
+            "description": "Unique identity of entity."
           }
         },
         "type": "object"
