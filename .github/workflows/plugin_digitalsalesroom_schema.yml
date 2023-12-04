@@ -32,7 +32,7 @@ jobs:
     needs: vars
     uses: shopware/docs-ci/.github/workflows/generate_schema.yml@main
     with:
-      schema_flags: -b ${{ needs.vars.outputs.PLUGIN_NAME }}
+      schema_flags: ""
       schema_file: ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
       plugin_name: ${{ needs.vars.outputs.PLUGIN_NAME }}
       plugin_url: ${{ needs.vars.outputs.PLUGIN_URL }}
@@ -49,7 +49,7 @@ jobs:
     needs: [generate-schema,vars]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: download api schema
         uses: actions/download-artifact@v3
@@ -64,7 +64,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y moreutils
           jq . ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json | sponge ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
-
+          ./.github/scripts/find_delta_paths.sh ${{ needs.vars.outputs.PLUGIN_NAME }}
+          
       - name: Create DSR PR
         uses: peter-evans/create-pull-request@v4
         with:
