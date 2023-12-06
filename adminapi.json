@@ -76761,6 +76761,15 @@
               "isCloseout": {
                 "type": "boolean"
               },
+              "availableStock": {
+                "type": "integer",
+                "format": "int64",
+                "readOnly": true
+              },
+              "stock": {
+                "type": "integer",
+                "format": "int64"
+              },
               "variation": {
                 "type": "array",
                 "items": {
@@ -76938,14 +76947,6 @@
                   "type": "object",
                   "additionalProperties": false
                 }
-              },
-              "availableStock": {
-                "type": "integer",
-                "format": "int64"
-              },
-              "stock": {
-                "type": "integer",
-                "format": "int64"
               },
               "createdAt": {
                 "type": "string",
@@ -78000,6 +78001,17 @@
             "type": "boolean",
             "description": "When the value is set to true, the product is hidden when sold out."
           },
+          "availableStock": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true,
+            "description": "Indicates the number of products still available. This value results from the stock minus the open orders."
+          },
+          "stock": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Indicates the number of products available."
+          },
           "variation": {
             "type": "array",
             "items": {
@@ -78217,16 +78229,6 @@
               "additionalProperties": false
             },
             "description": "List of additional keywords in the search."
-          },
-          "availableStock": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Indicates the number of products still available. This value results from the stock minus the open orders."
-          },
-          "stock": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Indicates the number of products available."
           },
           "createdAt": {
             "type": "string",
@@ -90011,16 +90013,24 @@
           },
           {
             "required": [
+              "referencedId",
+              "referencedVersionId",
               "stateMachineId",
               "entityName",
               "fromStateId",
               "toStateId",
-              "referencedId",
-              "referencedVersionId",
               "createdAt"
             ],
             "properties": {
               "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "referencedId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "referencedVersionId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -90043,14 +90053,6 @@
                 "type": "string"
               },
               "userId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "referencedId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "referencedVersionId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -90193,12 +90195,12 @@
       "StateMachineHistory": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "referencedId",
+          "referencedVersionId",
           "stateMachineId",
           "entityName",
           "fromStateId",
           "toStateId",
-          "referencedId",
-          "referencedVersionId",
           "createdAt"
         ],
         "properties": {
@@ -90206,6 +90208,16 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of state machine history."
+          },
+          "referencedId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Unique identity of reference."
+          },
+          "referencedVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Unique identity of reference's version."
           },
           "stateMachineId": {
             "type": "string",
@@ -90234,16 +90246,6 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of user."
-          },
-          "referencedId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "Unique identity of reference."
-          },
-          "referencedVersionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "Unique identity of reference's version."
           },
           "createdAt": {
             "type": "string",
