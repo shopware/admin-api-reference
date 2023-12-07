@@ -52413,21 +52413,6 @@
         }
       }
     },
-    "/_action/cache_warmup": {
-      "delete": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Clear and warm up caches",
-        "description": "After the cache has been cleared, new cache entries are generated asynchronously.",
-        "operationId": "clearCacheAndScheduleWarmUp",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the cache has been cleared and generation of new cache has started."
-          }
-        }
-      }
-    },
     "/_info/version": {
       "get": {
         "tags": [
@@ -76474,9 +76459,6 @@
               "supportLink": {
                 "type": "string"
               },
-              "changelog": {
-                "type": "object"
-              },
               "customFields": {
                 "type": "object"
               },
@@ -76629,10 +76611,6 @@
             "type": "string",
             "description": "Links to the support page"
           },
-          "changelog": {
-            "type": "object",
-            "description": "Deprecated from Shopware version 6.6"
-          },
           "customFields": {
             "type": "object",
             "description": "Additional fields that offer a possibility to add own fields for the different program-areas."
@@ -76656,6 +76634,9 @@
             "items": {
               "$ref": "#/components/schemas/PaymentMethod"
             }
+          },
+          "changelog": {
+            "description": "Deprecated from Shopware version 6.6"
           }
         },
         "type": "object"
@@ -88117,9 +88098,9 @@
               "name",
               "scheduledTaskClass",
               "runInterval",
+              "defaultRunInterval",
               "status",
               "nextExecutionTime",
-              "defaultRunInterval",
               "createdAt"
             ],
             "properties": {
@@ -88137,6 +88118,10 @@
                 "type": "integer",
                 "format": "int64"
               },
+              "defaultRunInterval": {
+                "type": "integer",
+                "format": "int64"
+              },
               "status": {
                 "type": "string"
               },
@@ -88147,10 +88132,6 @@
               "nextExecutionTime": {
                 "type": "string",
                 "format": "date-time"
-              },
-              "defaultRunInterval": {
-                "type": "integer",
-                "format": "int64"
               },
               "createdAt": {
                 "type": "string",
@@ -88173,9 +88154,9 @@
           "name",
           "scheduledTaskClass",
           "runInterval",
+          "defaultRunInterval",
           "status",
           "nextExecutionTime",
-          "defaultRunInterval",
           "createdAt"
         ],
         "properties": {
@@ -88197,6 +88178,11 @@
             "format": "int64",
             "description": "The frequency interval at which the scheduled task must run like 5 min, 1 hours , etc"
           },
+          "defaultRunInterval": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Default run interval setting."
+          },
           "status": {
             "type": "string",
             "description": "When status is set, the ScheduledTask is made visible."
@@ -88210,11 +88196,6 @@
             "type": "string",
             "format": "date-time",
             "description": "Time when the scheduled task will execute next. "
-          },
-          "defaultRunInterval": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Default run interval setting."
           },
           "createdAt": {
             "type": "string",
