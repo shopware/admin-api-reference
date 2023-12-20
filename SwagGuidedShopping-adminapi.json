@@ -3,7 +3,7 @@
   "info": {
     "title": "Shopware Admin API",
     "description": "This endpoint reference contains an overview of all endpoints comprising the Shopware Admin API.\n\nFor a better overview, all CRUD-endpoints are hidden by default. If you want to show also CRUD-endpoints\nadd the query parameter `type=jsonapi`.",
-    "version": "6.5.9999999.9999999-dev"
+    "version": "6.6.9999999.9999999-dev"
   },
   "servers": [
     {
@@ -11,6 +11,2723 @@
     }
   ],
   "paths": {
+    "/guided-shopping-appointment": {
+      "get": {
+        "tags": [
+          "Guided Shopping Appointment"
+        ],
+        "summary": "List with basic information of Guided Shopping Appointment resources.",
+        "description": "",
+        "operationId": "getGuidedShoppingAppointmentList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Guided Shopping Appointment resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/guided-shopping-appointment?limit=25"
+                                },
+                                "last": {
+                                  "example": "/guided-shopping-appointment?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/guided-shopping-appointment?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/guided-shopping-appointment?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Create a new appointment",
+        "description": "",
+        "operationId": "createAppointment",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Appointment"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAppointment",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/guided-shopping-appointment/{id}": {
+      "get": {
+        "tags": [
+          "Guided Shopping Appointment"
+        ],
+        "summary": "Detailed information about a Guided Shopping Appointment resource.",
+        "description": "",
+        "operationId": "getGuidedShoppingAppointment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_appointment",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAppointment",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Guided Shopping Appointment"
+        ],
+        "summary": "Delete a Guided Shopping Appointment resource.",
+        "description": "",
+        "operationId": "deleteGuidedShoppingAppointment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_appointment",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Guided Shopping Appointment"
+        ],
+        "summary": "Partially update information about a Guided Shopping Appointment resource.",
+        "description": "",
+        "operationId": "updateGuidedShoppingAppointment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_appointment",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Guided Shopping Appointment resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingAppointment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAppointment",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-appointment-attendee": {
+      "get": {
+        "tags": [
+          "Guided Shopping Appointment Attendee"
+        ],
+        "summary": "List with basic information of Guided Shopping Appointment Attendee resources.",
+        "description": "",
+        "operationId": "getGuidedShoppingAppointmentAttendeeList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Guided Shopping Appointment Attendee resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/guided-shopping-appointment-attendee?limit=25"
+                                },
+                                "last": {
+                                  "example": "/guided-shopping-appointment-attendee?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/guided-shopping-appointment-attendee?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/guided-shopping-appointment-attendee?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Guided Shopping Appointment Attendee"
+        ],
+        "summary": "Create a new Guided Shopping Appointment Attendee resources.",
+        "description": "",
+        "operationId": "createGuidedShoppingAppointmentAttendee",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAppointmentAttendee",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-appointment-attendee/{id}": {
+      "get": {
+        "tags": [
+          "Guided Shopping Appointment Attendee"
+        ],
+        "summary": "Detailed information about a Guided Shopping Appointment Attendee resource.",
+        "description": "",
+        "operationId": "getGuidedShoppingAppointmentAttendee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_appointment_attendee",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAppointmentAttendee",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Guided Shopping Appointment Attendee"
+        ],
+        "summary": "Delete a Guided Shopping Appointment Attendee resource.",
+        "description": "",
+        "operationId": "deleteGuidedShoppingAppointmentAttendee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_appointment_attendee",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Guided Shopping Appointment Attendee"
+        ],
+        "summary": "Partially update information about a Guided Shopping Appointment Attendee resource.",
+        "description": "",
+        "operationId": "updateGuidedShoppingAppointmentAttendee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_appointment_attendee",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Guided Shopping Appointment Attendee resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAppointmentAttendee",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-appointment-video-chat": {
+      "get": {
+        "tags": [
+          "Guided Shopping Appointment Video Chat"
+        ],
+        "summary": "List with basic information of Guided Shopping Appointment Video Chat resources.",
+        "description": "",
+        "operationId": "getGuidedShoppingAppointmentVideoChatList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Guided Shopping Appointment Video Chat resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/guided-shopping-appointment-video-chat?limit=25"
+                                },
+                                "last": {
+                                  "example": "/guided-shopping-appointment-video-chat?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/guided-shopping-appointment-video-chat?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/guided-shopping-appointment-video-chat?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Guided Shopping Appointment Video Chat"
+        ],
+        "summary": "Create a new Guided Shopping Appointment Video Chat resources.",
+        "description": "",
+        "operationId": "createGuidedShoppingAppointmentVideoChat",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAppointmentVideoChat",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-appointment-video-chat/{id}": {
+      "get": {
+        "tags": [
+          "Guided Shopping Appointment Video Chat"
+        ],
+        "summary": "Detailed information about a Guided Shopping Appointment Video Chat resource.",
+        "description": "",
+        "operationId": "getGuidedShoppingAppointmentVideoChat",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_appointment_video_chat",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAppointmentVideoChat",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Guided Shopping Appointment Video Chat"
+        ],
+        "summary": "Delete a Guided Shopping Appointment Video Chat resource.",
+        "description": "",
+        "operationId": "deleteGuidedShoppingAppointmentVideoChat",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_appointment_video_chat",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Guided Shopping Appointment Video Chat"
+        ],
+        "summary": "Partially update information about a Guided Shopping Appointment Video Chat resource.",
+        "description": "",
+        "operationId": "updateGuidedShoppingAppointmentVideoChat",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_appointment_video_chat",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Guided Shopping Appointment Video Chat resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAppointmentVideoChat",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-attendee-product-collection": {
+      "get": {
+        "tags": [
+          "Guided Shopping Attendee Product Collection"
+        ],
+        "summary": "List with basic information of Guided Shopping Attendee Product Collection resources.",
+        "description": "",
+        "operationId": "getGuidedShoppingAttendeeProductCollectionList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Guided Shopping Attendee Product Collection resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/guided-shopping-attendee-product-collection?limit=25"
+                                },
+                                "last": {
+                                  "example": "/guided-shopping-attendee-product-collection?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/guided-shopping-attendee-product-collection?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/guided-shopping-attendee-product-collection?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Guided Shopping Attendee Product Collection"
+        ],
+        "summary": "Create a new Guided Shopping Attendee Product Collection resources.",
+        "description": "",
+        "operationId": "createGuidedShoppingAttendeeProductCollection",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAttendeeProductCollection",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-attendee-product-collection/{id}": {
+      "get": {
+        "tags": [
+          "Guided Shopping Attendee Product Collection"
+        ],
+        "summary": "Detailed information about a Guided Shopping Attendee Product Collection resource.",
+        "description": "",
+        "operationId": "getGuidedShoppingAttendeeProductCollection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_attendee_product_collection",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAttendeeProductCollection",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Guided Shopping Attendee Product Collection"
+        ],
+        "summary": "Delete a Guided Shopping Attendee Product Collection resource.",
+        "description": "",
+        "operationId": "deleteGuidedShoppingAttendeeProductCollection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_attendee_product_collection",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Guided Shopping Attendee Product Collection"
+        ],
+        "summary": "Partially update information about a Guided Shopping Attendee Product Collection resource.",
+        "description": "",
+        "operationId": "updateGuidedShoppingAttendeeProductCollection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_attendee_product_collection",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Guided Shopping Attendee Product Collection resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingAttendeeProductCollection",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-interaction": {
+      "get": {
+        "tags": [
+          "Guided Shopping Interaction"
+        ],
+        "summary": "List with basic information of Guided Shopping Interaction resources.",
+        "description": "",
+        "operationId": "getGuidedShoppingInteractionList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Guided Shopping Interaction resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/guided-shopping-interaction?limit=25"
+                                },
+                                "last": {
+                                  "example": "/guided-shopping-interaction?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/guided-shopping-interaction?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/guided-shopping-interaction?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Guided Shopping Interaction"
+        ],
+        "summary": "Create a new Guided Shopping Interaction resources.",
+        "description": "",
+        "operationId": "createGuidedShoppingInteraction",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingInteraction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingInteraction",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-interaction/{id}": {
+      "get": {
+        "tags": [
+          "Guided Shopping Interaction"
+        ],
+        "summary": "Detailed information about a Guided Shopping Interaction resource.",
+        "description": "",
+        "operationId": "getGuidedShoppingInteraction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingInteraction",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Guided Shopping Interaction"
+        ],
+        "summary": "Delete a Guided Shopping Interaction resource.",
+        "description": "",
+        "operationId": "deleteGuidedShoppingInteraction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Guided Shopping Interaction"
+        ],
+        "summary": "Partially update information about a Guided Shopping Interaction resource.",
+        "description": "",
+        "operationId": "updateGuidedShoppingInteraction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Guided Shopping Interaction resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingInteraction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingInteraction",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-presentation": {
+      "get": {
+        "tags": [
+          "Guided Shopping Presentation"
+        ],
+        "summary": "List with basic information of Guided Shopping Presentation resources.",
+        "description": "",
+        "operationId": "getGuidedShoppingPresentationList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Guided Shopping Presentation resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/guided-shopping-presentation?limit=25"
+                                },
+                                "last": {
+                                  "example": "/guided-shopping-presentation?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/guided-shopping-presentation?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/guided-shopping-presentation?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Presentation"
+        ],
+        "summary": "Create a new presentation",
+        "description": "",
+        "operationId": "createPresentation",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Presentation"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingPresentation",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/guided-shopping-presentation/{id}": {
+      "get": {
+        "tags": [
+          "Guided Shopping Presentation"
+        ],
+        "summary": "Detailed information about a Guided Shopping Presentation resource.",
+        "description": "",
+        "operationId": "getGuidedShoppingPresentation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_presentation",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingPresentation",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Guided Shopping Presentation"
+        ],
+        "summary": "Delete a Guided Shopping Presentation resource.",
+        "description": "",
+        "operationId": "deleteGuidedShoppingPresentation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_presentation",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Guided Shopping Presentation"
+        ],
+        "summary": "Partially update information about a Guided Shopping Presentation resource.",
+        "description": "",
+        "operationId": "updateGuidedShoppingPresentation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_presentation",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Guided Shopping Presentation resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingPresentation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingPresentation",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-presentation-cms-page": {
+      "get": {
+        "tags": [
+          "Guided Shopping Presentation Cms Page"
+        ],
+        "summary": "List with basic information of Guided Shopping Presentation Cms Page resources.",
+        "description": "Available since: 6.0.0.0",
+        "operationId": "getGuidedShoppingPresentationCmsPageList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Guided Shopping Presentation Cms Page resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/guided-shopping-presentation-cms-page?limit=25"
+                                },
+                                "last": {
+                                  "example": "/guided-shopping-presentation-cms-page?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/guided-shopping-presentation-cms-page?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/guided-shopping-presentation-cms-page?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Guided Shopping Presentation Cms Page"
+        ],
+        "summary": "Create a new Guided Shopping Presentation Cms Page resources.",
+        "description": "Available since: 6.0.0.0",
+        "operationId": "createGuidedShoppingPresentationCmsPage",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingPresentationCmsPage",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/guided-shopping-presentation-cms-page/{id}": {
+      "get": {
+        "tags": [
+          "Guided Shopping Presentation Cms Page"
+        ],
+        "summary": "Detailed information about a Guided Shopping Presentation Cms Page resource.",
+        "description": "Available since: 6.0.0.0",
+        "operationId": "getGuidedShoppingPresentationCmsPage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_presentation_cms_page",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingPresentationCmsPage",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Guided Shopping Presentation Cms Page"
+        ],
+        "summary": "Delete a Guided Shopping Presentation Cms Page resource.",
+        "description": "Available since: 6.0.0.0",
+        "operationId": "deleteGuidedShoppingPresentationCmsPage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_presentation_cms_page",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Guided Shopping Presentation Cms Page"
+        ],
+        "summary": "Partially update information about a Guided Shopping Presentation Cms Page resource.",
+        "description": "Available since: 6.0.0.0",
+        "operationId": "updateGuidedShoppingPresentationCmsPage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the guided_shopping_presentation_cms_page",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Guided Shopping Presentation Cms Page resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of GuidedShoppingPresentationCmsPage",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/search/guided-shopping-presentation": {
       "post": {
         "tags": [
@@ -57,32 +2774,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/guided-shopping-presentation": {
-      "post": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Create a new presentation",
-        "description": "",
-        "operationId": "createPresentation",
-        "parameters": [],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Presentation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": ""
           }
         }
       }
@@ -385,8 +3076,24 @@
           }
         },
         "responses": {
-          "204": {
-            "description": ""
+          "201": {
+            "description": "Created a new instant listing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "index": {
+                      "type": "integer",
+                      "description": "The current index of the instant listing which is created by this request"
+                    }
+                  },
+                  "example": {
+                    "index": 1
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -448,8 +3155,42 @@
           }
         },
         "responses": {
-          "204": {
-            "description": ""
+          "200": {
+            "description": "Updated the instant listing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "The id of the instant listing page"
+                    },
+                    "pickedProductIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{32}$"
+                      },
+                      "description": "Ids of the products which are picked for the instant listing"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the instant listing"
+                    }
+                  },
+                  "example": {
+                    "id": "018c3e5ffd3a70899fa1321bf7e2a7f7",
+                    "pickedProductIds": [
+                      "018c19b80403709cb2cef54f70860042",
+                      "018c19b804027291955d8f076c272d0d"
+                    ],
+                    "title": "Default Digital Sales Rooms product listing page"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -618,6 +3359,134 @@
         }
       }
     },
+    "/_action/guided-shopping/appointment/{appointmentId}/widgets/cart-statistics": {
+      "get": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Get cart statistics",
+        "description": "Get cart statistics (cart line items) of all the attendees for the given appointment",
+        "operationId": "getCartStatistics",
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "description": "Appointment id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cart"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/guided-shopping/appointment/{appointmentId}/widgets/last-seen": {
+      "get": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Get last seen products insights",
+        "description": "Get last seen products of all attendees for the given appointment",
+        "operationId": "getLastSeenProductsInsights",
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "description": "Appointment id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "description": "The limit of the products which should be returned",
+                    "default": 10
+                  },
+                  "page": {
+                    "type": "integer",
+                    "description": "The page of the products which should be returned",
+                    "default": 1
+                  },
+                  "attendeeId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "The attendee id for which the last seen products should be returned"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WidgetProductListing"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/guided-shopping/appointment/{appointmentId}/widgets/wishlist": {
+      "get": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Get wishlist insights",
+        "description": "Get wishlist of all the attendees for the given appointment",
+        "operationId": "getWishlistInsights",
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "description": "Appointment id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WidgetProductListing"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/search/guided-shopping-appointment": {
       "post": {
         "tags": [
@@ -664,32 +3533,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/guided-shopping-appointment": {
-      "post": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Create a new appointment",
-        "description": "",
-        "operationId": "createAppointment",
-        "parameters": [],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Appointment"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": ""
           }
         }
       }
@@ -13827,10 +16670,6 @@
                 "type": "string",
                 "format": "date-time"
               },
-              "writeAccess": {
-                "type": "boolean",
-                "deprecated": true
-              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -13982,10 +16821,6 @@
           "deletedAt": {
             "type": "string",
             "format": "date-time"
-          },
-          "writeAccess": {
-            "type": "boolean",
-            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -16102,6 +18937,9 @@
                 "type": "object",
                 "readOnly": true
               },
+              "config": {
+                "type": "object"
+              },
               "alt": {
                 "type": "string"
               },
@@ -16972,6 +19810,9 @@
             "type": "object",
             "readOnly": true
           },
+          "config": {
+            "type": "object"
+          },
           "alt": {
             "type": "string"
           },
@@ -17219,7 +20060,6 @@
           {
             "required": [
               "entity",
-              "associationFields",
               "createdAt"
             ],
             "properties": {
@@ -17232,12 +20072,6 @@
               },
               "customFields": {
                 "type": "object"
-              },
-              "associationFields": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "createdAt": {
                 "type": "string",
@@ -17292,7 +20126,6 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "entity",
-          "associationFields",
           "createdAt"
         ],
         "properties": {
@@ -17305,12 +20138,6 @@
           },
           "customFields": {
             "type": "object"
-          },
-          "associationFields": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "createdAt": {
             "type": "string",
@@ -24459,9 +27286,6 @@
               "supportLink": {
                 "type": "string"
               },
-              "changelog": {
-                "type": "object"
-              },
               "customFields": {
                 "type": "object"
               },
@@ -24595,9 +27419,6 @@
           "supportLink": {
             "type": "string"
           },
-          "changelog": {
-            "type": "object"
-          },
           "customFields": {
             "type": "object"
           },
@@ -24723,6 +27544,15 @@
               },
               "isCloseout": {
                 "type": "boolean"
+              },
+              "availableStock": {
+                "type": "integer",
+                "format": "int64",
+                "readOnly": true
+              },
+              "stock": {
+                "type": "integer",
+                "format": "int64"
               },
               "variation": {
                 "type": "array",
@@ -24901,14 +27731,6 @@
                   "type": "object",
                   "additionalProperties": false
                 }
-              },
-              "availableStock": {
-                "type": "integer",
-                "format": "int64"
-              },
-              "stock": {
-                "type": "integer",
-                "format": "int64"
               },
               "createdAt": {
                 "type": "string",
@@ -26008,6 +28830,15 @@
           "isCloseout": {
             "type": "boolean"
           },
+          "availableStock": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "stock": {
+            "type": "integer",
+            "format": "int64"
+          },
           "variation": {
             "type": "array",
             "items": {
@@ -26185,14 +29016,6 @@
               "type": "object",
               "additionalProperties": false
             }
-          },
-          "availableStock": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "stock": {
-            "type": "integer",
-            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -35923,6 +38746,7 @@
               "name",
               "scheduledTaskClass",
               "runInterval",
+              "defaultRunInterval",
               "status",
               "nextExecutionTime",
               "createdAt"
@@ -35942,6 +38766,10 @@
                 "type": "integer",
                 "format": "int64"
               },
+              "defaultRunInterval": {
+                "type": "integer",
+                "format": "int64"
+              },
               "status": {
                 "type": "string"
               },
@@ -35952,10 +38780,6 @@
               "nextExecutionTime": {
                 "type": "string",
                 "format": "date-time"
-              },
-              "defaultRunInterval": {
-                "type": "integer",
-                "format": "int64"
               },
               "createdAt": {
                 "type": "string",
@@ -35978,6 +38802,7 @@
           "name",
           "scheduledTaskClass",
           "runInterval",
+          "defaultRunInterval",
           "status",
           "nextExecutionTime",
           "createdAt"
@@ -35997,6 +38822,10 @@
             "type": "integer",
             "format": "int64"
           },
+          "defaultRunInterval": {
+            "type": "integer",
+            "format": "int64"
+          },
           "status": {
             "type": "string"
           },
@@ -36007,10 +38836,6 @@
           "nextExecutionTime": {
             "type": "string",
             "format": "date-time"
-          },
-          "defaultRunInterval": {
-            "type": "integer",
-            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -36205,16 +39030,16 @@
               "isDeleted": {
                 "type": "boolean"
               },
+              "error": {
+                "description": "Runtime field, cannot be used as part of the criteria.",
+                "type": "string"
+              },
               "url": {
                 "description": "Runtime field, cannot be used as part of the criteria.",
                 "type": "string"
               },
               "customFields": {
                 "type": "object"
-              },
-              "isValid": {
-                "description": "Runtime field, cannot be used as part of the criteria.",
-                "type": "boolean"
               },
               "createdAt": {
                 "type": "string",
@@ -36339,16 +39164,16 @@
           "isDeleted": {
             "type": "boolean"
           },
+          "error": {
+            "description": "Runtime field, cannot be used as part of the criteria.",
+            "type": "string"
+          },
           "url": {
             "description": "Runtime field, cannot be used as part of the criteria.",
             "type": "string"
           },
           "customFields": {
             "type": "object"
-          },
-          "isValid": {
-            "description": "Runtime field, cannot be used as part of the criteria.",
-            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
@@ -36509,7 +39334,6 @@
           },
           {
             "required": [
-              "availabilityRuleId",
               "deliveryTimeId",
               "taxType",
               "createdAt",
@@ -36887,7 +39711,6 @@
       "ShippingMethod": {
         "description": "Added since version: 6.0.0.0",
         "required": [
-          "availabilityRuleId",
           "deliveryTimeId",
           "taxType",
           "createdAt",
@@ -37749,15 +40572,24 @@
           },
           {
             "required": [
+              "referencedId",
+              "referencedVersionId",
               "stateMachineId",
               "entityName",
               "fromStateId",
               "toStateId",
-              "entityId",
               "createdAt"
             ],
             "properties": {
               "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "referencedId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "referencedVersionId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -37780,18 +40612,6 @@
                 "type": "string"
               },
               "userId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "entityId": {
-                "type": "object",
-                "deprecated": true
-              },
-              "referencedId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "referencedVersionId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -37934,15 +40754,24 @@
       "StateMachineHistory": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "referencedId",
+          "referencedVersionId",
           "stateMachineId",
           "entityName",
           "fromStateId",
           "toStateId",
-          "entityId",
           "createdAt"
         ],
         "properties": {
           "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "referencedId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "referencedVersionId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -37965,18 +40794,6 @@
             "type": "string"
           },
           "userId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "entityId": {
-            "type": "object",
-            "deprecated": true
-          },
-          "referencedId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "referencedVersionId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -42162,68 +44979,6 @@
         },
         "type": "object"
       },
-      "infoConfigResponse": {
-        "type": "object",
-        "properties": {
-          "version": {
-            "type": "string",
-            "description": "The Shopware version."
-          },
-          "versionRevision": {
-            "type": "string",
-            "description": "The Shopware version revision."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Information about the admin worker.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "State of the admin worker."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured transports.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Asset files of active extensions",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "css": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the css file."
-                  }
-                },
-                "js": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the js file."
-                  }
-                }
-              }
-            }
-          },
-          "settings": {
-            "type": "object",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the `urlFeature` setting."
-              }
-            }
-          }
-        }
-      },
       "OAuthScopes": {
         "description": "OAuth scopes that should be requested.",
         "type": "string",
@@ -42382,32 +45137,6 @@
           }
         }
       },
-      "flowBulderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
       "Criteria": {
         "type": "object",
         "description": "Search parameters. For more information, see our documentation on [Search Queries](https://shopware.stoplight.io/docs/store-api/docs/concepts/search-queries.md#structure)",
@@ -42545,6 +45274,855 @@
           }
         }
       },
+      "infoConfigResponse": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "The Shopware version."
+          },
+          "versionRevision": {
+            "type": "string",
+            "description": "The Shopware version revision."
+          },
+          "adminWorker": {
+            "type": "object",
+            "description": "Information about the admin worker.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "State of the admin worker."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured transports.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Asset files of active extensions",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "css": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the css file."
+                  }
+                },
+                "js": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the js file."
+                  }
+                }
+              }
+            }
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the `urlFeature` setting."
+              }
+            }
+          }
+        }
+      },
+      "flowBulderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
+      "AttendeeProductCollection": {
+        "type": "object",
+        "required": [
+          "attendeeId",
+          "productId",
+          "productVersionId",
+          "alias"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "attendee": {
+            "$ref": "#/components/schemas/Attendee"
+          },
+          "productId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "productVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "alias": {
+            "type": "string",
+            "enum": [
+              "liked",
+              "disliked"
+            ]
+          }
+        }
+      },
+      "WidgetProductListing": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "extensions": {
+            "type": "array",
+            "description": "List of extensions",
+            "default": []
+          },
+          "products": {
+            "type": "array",
+            "description": "List of last seen products",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of products"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The current page"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The number of products per page"
+          }
+        }
+      },
+      "Interaction": {
+        "type": "object",
+        "required": [
+          "name",
+          "triggeredAt",
+          "attendeeId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "triggeredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "payload": {
+            "type": "string"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "attendee": {
+            "$ref": "#/components/schemas/Attendee"
+          }
+        }
+      },
+      "GuidePresentationStateResponse": {
+        "type": "object",
+        "properties": {
+          "stateForAll": {
+            "$ref": "#/components/schemas/StateForAll"
+          },
+          "stateForClients": {
+            "$ref": "#/components/schemas/StateForGuides"
+          }
+        },
+        "example": {
+          "extensions": [],
+          "stateForAll": {
+            "currentGuideProductId": null,
+            "lastActiveGuideSection": null,
+            "currentPageId": null,
+            "currentSectionId": null,
+            "currentSlideAlias": 0,
+            "currentDynamicPage": null,
+            "started": false,
+            "running": false,
+            "ended": false,
+            "startedAt": null,
+            "endedAt": null,
+            "accessibleFrom": {
+              "date": "2023-08-04 00:00:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            },
+            "accessibleTo": {
+              "date": "2023-08-05 00:00:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            },
+            "appointmentMode": "guided",
+            "videoAudioSettings": "both",
+            "videoRoomUrl": "",
+            "attendeeRestrictionType": "open",
+            "productDetailDefaultPageId": "bea211b5099241719830df8026624f7f",
+            "quickviewPageId": "182d3f7f988044adbba449b70c8bc472",
+            "productListingDefaultPageId": "33e88c7994fa4cf79a1265e5105b93b2",
+            "allowUserActionsForGuide": true,
+            "broadcastMode": false,
+            "extensions": []
+          },
+          "stateForGuides": {
+            "clients": [],
+            "inactiveClients": {
+              "2b4066cd37a341088e32a81e04a56817": {
+                "attendeeId": "2b4066cd37a341088e32a81e04a56817",
+                "attendeeName": "Attendee 1",
+                "videoUserId": null,
+                "guideCartPermissionsGranted": false,
+                "hasJoined": false
+              },
+              "302108ad602b4ac687f5247aae5d0297": {
+                "attendeeId": "302108ad602b4ac687f5247aae5d0297",
+                "attendeeName": null,
+                "videoUserId": null,
+                "guideCartPermissionsGranted": false,
+                "hasJoined": true
+              },
+              "5a3b4e84acab47119b8a6bceb79e732e": {
+                "attendeeId": "5a3b4e84acab47119b8a6bceb79e732e",
+                "attendeeName": "Test attende name",
+                "videoUserId": null,
+                "guideCartPermissionsGranted": true,
+                "hasJoined": true
+              },
+              "b6358241e4ad4a4e99d0f729d21d63be": {
+                "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+                "attendeeName": null,
+                "videoUserId": null,
+                "guideCartPermissionsGranted": false,
+                "hasJoined": true
+              },
+              "f1bb9374308d4e088c29d10a2fc8cc07": {
+                "attendeeId": "f1bb9374308d4e088c29d10a2fc8cc07",
+                "attendeeName": null,
+                "videoUserId": null,
+                "guideCartPermissionsGranted": false,
+                "hasJoined": false
+              }
+            },
+            "guides": {
+              "1850bbdc12dc44aba95bc78b16c3643c": {
+                "attendeeId": "1850bbdc12dc44aba95bc78b16c3643c",
+                "attendeeName": " admin",
+                "videoUserId": null,
+                "guideCartPermissionsGranted": false,
+                "hasJoined": true
+              }
+            },
+            "videoGuideToken": null,
+            "quickViewState": [],
+            "extensions": []
+          }
+        }
+      },
+      "Appointment": {
+        "type": "object",
+        "required": [
+          "name",
+          "guideUserId",
+          "salesChannelDomainId",
+          "presentationPath"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "presentationId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "presentation": {
+            "$ref": "#/components/schemas/Presentation"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "isPreview": {
+            "type": "boolean"
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "guideUserId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "guideUser": {
+            "$ref": "#/components/schemas/User"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "guide",
+              "self"
+            ]
+          },
+          "salesChannelDomainId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "presentationPath": {
+            "type": "string"
+          },
+          "attendeeRestrictionType": {
+            "type": "string",
+            "enum": [
+              "open",
+              "customer",
+              "rules"
+            ]
+          },
+          "accessibleFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "accessibleTo": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "attendeeRuleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "attendees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attendee"
+            }
+          },
+          "message": {
+            "type": "string"
+          },
+          "videoAudioSettings": {
+            "type": "string",
+            "enum": [
+              "none",
+              "both",
+              "audio_only"
+            ]
+          },
+          "videoChat": {
+            "$ref": "#/components/schemas/VideoChat"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "updatedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "VideoChat": {
+        "type": "object",
+        "required": [
+          "appointmentId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointmentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointment": {
+            "$ref": "#/components/schemas/Appointment"
+          },
+          "ownerToken": {
+            "type": "string"
+          },
+          "userToken": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "startAsBroadcast": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AbstractDynamicPageOpenedPayload": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of the current dynamic page"
+          },
+          "opened": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "GetListBodyRequest": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "Max amount of resources to be returned in a page"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The page to be returned"
+          }
+        }
+      },
+      "GetAttendeeInsightsResponse": {
+        "type": "object",
+        "description": "Returns aggregations for the current attendees within the appointment.",
+        "properties": {
+          "attendees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttendeeInsights"
+            }
+          },
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "currencySymbol": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "extensions": [],
+          "attendees": {
+            "04da9d8572494ae68391a471d4c3a470": {
+              "extensions": [],
+              "id": "04da9d8572494ae68391a471d4c3a470",
+              "cartSum": 6770.53,
+              "productCount": 3,
+              "lineItemCount": 3
+            }
+          },
+          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
+          "currencySymbol": "$"
+        }
+      },
+      "Presentation": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "parentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "parentVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "createdById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "updatedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "appointment": {
+            "$ref": "#/components/schemas/Appointment"
+          },
+          "cmsPages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PresentationCmsPage"
+            }
+          },
+          "translated": {
+            "type": "object"
+          }
+        }
+      },
+      "VideoChatCreateStruct": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "roomUrl": {
+            "type": "string",
+            "description": "Url of the video room in daily"
+          },
+          "roomName": {
+            "type": "string",
+            "description": "Name of the video room in daily"
+          },
+          "userToken": {
+            "type": "string",
+            "description": "Token for the end users to connect to the daily room"
+          },
+          "ownerToken": {
+            "type": "string",
+            "description": "Token for the room owner (guide) to connect to the daily room"
+          },
+          "startAsBroadcast": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "example": {
+          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
+          "userToken": "eyJhbGciOiJIUzI1NbIsInR5cCI6IkpXVCJ9.eyJyIjoiclNx4jBtcmd3Umo0ZUlYbzF1OTUiLCJvIjpmYWxzZSwiZCI6ImE2MmJkMTUzLTI2ZjYtNDc4OC04NGRjLWMzZjdkZDcyZGIxMiIsImlhdCI6MTY5MTc0MTgwOH0.jDdnfL2h9_mDoME2_CESbzUXYFQEgQLizXr47vUD6_c",
+          "ownerToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyIjoiclN3djBtcmd3Umo0ZUlYbzF1OTUiLCJvIjp0cnVlLCJkIjoiYTYyYmQxNTMtMjZmNi00Nzg4LTg0ZGMtYzNmN2RkNzJkYjEyIiwiaWF0IjoxNjkfNzQxODA4fQ.6hS8LKZndPBNRXBwHtF7pdeTBt02PIzeRNYamBJPo9E",
+          "roomName": "rSq20mrgwsj4eIXo1u95",
+          "startAsBroadcast": false,
+          "extensions": []
+        }
+      },
+      "JoinAppointmentResponse": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "mercureSubscriberTopics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "mercure topic"
+            },
+            "description": "The topics to which the attendee/guide can subscribe for"
+          },
+          "mercurePublisherTopic": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The topic to which the attendee/guide can send updates"
+          },
+          "JWTMercureSubscriberToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to publish updates"
+          },
+          "mercureHubPublicUrl": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The mercure hub url to connect for subscribing and updating"
+          },
+          "JWTMercurePublisherToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to subscribe for updates"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The appointment id"
+          },
+          "newContextToken": {
+            "type": "string",
+            "description": "The new context token"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The created Id for the attendee"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id of the current sales channel"
+          },
+          "salesChannelName": {
+            "type": "string",
+            "description": "The name of the current sales channel"
+          },
+          "appointmentName": {
+            "type": "string",
+            "description": "The name of the appointment"
+          },
+          "presentationGuideMode": {
+            "type": "string",
+            "enum": [
+              "self",
+              "guided"
+            ],
+            "description": "The type of the appointment"
+          },
+          "isPreview": {
+            "type": "boolean",
+            "description": "To see if it's a preview appointment"
+          }
+        },
+        "example": {
+          "mercureSubscriberTopics": [
+            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
+          ],
+          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
+          "JWTMercureSubscriberToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6WyJncy1ndWlkZS1hY3Rpb25zLTJkMmMzNThmMWNhMDQwOThhYWNmMTI4NzNjMmVlZDgyIiwiZ3MtcHJlc2VudGF0aW9uLXN0YXRlLWZvci1jbGllbnQtMmQyYzM1OGYxY2EwNDA5OGFhY2YxMjg3M2MyZWVkODIiLCJncy1wcmVzZW50YXRpb24tc3RhdGUtZm9yLWFsbC0yZDJjMzU4ZjFjYTA0MDk4YWFjZjEyODczYzJlZWQ4MiJdLCJwdWJsaXNoIjpbXX19.UUkrRCu9PT2FOhkxhWKLo8nUGzwI7l3zqVo74laI-D8",
+          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
+          "JWTMercurePublisherToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6W10sInB1Ymxpc2giOlsiZ3MtY2xpZW50LWFjdGlvbnMtMmQyYzM1OGYxY2EwNDA5OGFhY2YxMjg3M2MyZWVkODIiXX19.g5-_JrB2xdeByr40t7XnnK_qxqOclaY5MKBpTytdFmY",
+          "id": "2d2c358f1ca04098aacf12873c2eed82",
+          "newContextToken": "VR9yWqI2ovhNpdRFWbbn6Z5Fy4wUmDsm",
+          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
+          "salesChannelName": "Storefront",
+          "appointmentName": "Test Appointment",
+          "presentationGuideMode": "guided",
+          "isPreview": false,
+          "apiAlias": "swag_guided_shopping_content_appointment_struct_appointment_join_struct"
+        }
+      },
+      "Attendee": {
+        "type": "object",
+        "required": [
+          "appointmentId",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointmentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointment": {
+            "$ref": "#/components/schemas/Appointment"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "CLIENT",
+              "GUIDE"
+            ]
+          },
+          "attendeeName": {
+            "type": "string"
+          },
+          "attendeeEmail": {
+            "type": "string"
+          },
+          "videoUserId": {
+            "type": "string"
+          },
+          "guideCartPermissionsGranted": {
+            "type": "boolean"
+          },
+          "attendeeSubmittedAt": {
+            "type": "string",
+            "format": "date-timme"
+          },
+          "customerId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "userId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "invitationStatus": {
+            "type": "string"
+          },
+          "joinedAt": {
+            "type": "string",
+            "format": "date-timme"
+          },
+          "lastActive": {
+            "type": "string",
+            "format": "date-timme"
+          },
+          "interaction": {
+            "$ref": "#/components/schemas/Interaction"
+          },
+          "productCollections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttendeeProductCollection"
+            }
+          }
+        }
+      },
+      "StateForGuides": {
+        "type": "object",
+        "properties": {
+          "clients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "inactiveClients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "guides": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "videoGuideToken": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quickViewState": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
+      "DynamicPageOpenedPayload": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
+          }
+        ]
+      },
       "PresentationCmsPage": {
         "type": "object",
         "properties": {
@@ -42676,191 +46254,144 @@
           }
         }
       },
-      "GetAttendeeInsightsResponse": {
+      "AttendeeInsights": {
         "type": "object",
-        "description": "Returns aggregations for the current attendees within the appointment.",
+        "description": "Attendee Insights",
         "properties": {
-          "attendees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AttendeeInsights"
-            }
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Id of the attendee"
+          },
+          "cartSum": {
+            "type": "number",
+            "description": "Sum of the cart net in base currency"
+          },
+          "productCount": {
+            "type": "number",
+            "description": "Sum of all quantities in the cart which were added during the appointment"
+          }
+        },
+        "example": {
+          "04da9d8572494ae68391a471d4c3a470": {
+            "extensions": [],
+            "id": "04da9d8572494ae68391a471d4c3a470",
+            "cartSum": 6770.53,
+            "productCount": 3,
+            "lineItemCount": 3
+          }
+        }
+      },
+      "GetCartInsightsResponse": {
+        "type": "object",
+        "description": "Returns aggregations for the current carts within the appointment.",
+        "properties": {
+          "cartSum": {
+            "type": "number",
+            "description": "Sum of all products from all attenddees which were added to the cart during the appointment"
+          },
+          "productCount": {
+            "type": "number",
+            "description": "Sum of all product quantities from all attendees which were added to the cart during the appointment"
           },
           "currencyId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id from the shown currency"
           },
           "currencySymbol": {
-            "type": "string"
+            "type": "string",
+            "description": "The currency symbol from the shown currency"
+          },
+          "topProducts": {
+            "type": "object",
+            "required": [
+              "byQuantity",
+              "byRevenue"
+            ],
+            "properties": {
+              "byQuantity": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "productId": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "The id from the product"
+                    },
+                    "value": {
+                      "type": "number",
+                      "description": "The quantity in carts of this product"
+                    }
+                  },
+                  "required": [
+                    "productId",
+                    "value"
+                  ]
+                }
+              },
+              "byRevenue": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "productId": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "The id from the product"
+                    },
+                    "value": {
+                      "type": "number",
+                      "description": "The net revenue in the shown currency in carts of this product"
+                    }
+                  },
+                  "required": [
+                    "productId",
+                    "value"
+                  ]
+                }
+              }
+            }
           }
         },
         "example": {
           "extensions": [],
-          "attendees": {
-            "04da9d8572494ae68391a471d4c3a470": {
-              "extensions": [],
-              "id": "04da9d8572494ae68391a471d4c3a470",
-              "cartSum": 6770.53,
-              "productCount": 3,
-              "lineItemCount": 3
-            }
-          },
+          "cartSum": 6770.53,
+          "productCount": 3,
           "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
-          "currencySymbol": "$"
-        }
-      },
-      "StateForGuides": {
-        "type": "object",
-        "properties": {
-          "clients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "inactiveClients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "guides": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "videoGuideToken": {
-            "anyOf": [
+          "currencySymbol": "$",
+          "topProducts": {
+            "byQuantity": [
               {
-                "type": "string"
+                "productId": "01ae0dee60ea48fdafaf881b96361d59",
+                "value": 1
               },
               {
-                "type": "null"
+                "productId": "fee3ca762be94bb49b692e359d529563",
+                "value": 1
+              },
+              {
+                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
+                "value": 1
+              }
+            ],
+            "byRevenue": [
+              {
+                "productId": "fee3ca762be94bb49b692e359d529563",
+                "value": 5333.03
+              },
+              {
+                "productId": "01ae0dee60ea48fdafaf881b96361d59",
+                "value": 1152.62
+              },
+              {
+                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
+                "value": 284.88
               }
             ]
-          },
-          "quickViewState": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "Attendee": {
-        "type": "object",
-        "required": [
-          "appointmentId",
-          "type"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointmentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "CLIENT",
-              "GUIDE"
-            ]
-          },
-          "attendeeName": {
-            "type": "string"
-          },
-          "attendeeEmail": {
-            "type": "string"
-          },
-          "videoUserId": {
-            "type": "string"
-          },
-          "guideCartPermissionsGranted": {
-            "type": "boolean"
-          },
-          "attendeeSubmittedAt": {
-            "type": "string",
-            "format": "date-timme"
-          },
-          "customerId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "customer": {
-            "$ref": "#/components/schemas/Customer"
-          },
-          "userId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
-          "invitationStatus": {
-            "type": "string"
-          },
-          "joinedAt": {
-            "type": "string",
-            "format": "date-timme"
-          },
-          "lastActive": {
-            "type": "string",
-            "format": "date-timme"
-          },
-          "interaction": {
-            "$ref": "#/components/schemas/Interaction"
-          },
-          "productCollections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AttendeeProductCollection"
-            }
-          }
-        }
-      },
-      "VideoChat": {
-        "type": "object",
-        "required": [
-          "appointmentId"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointmentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "ownerToken": {
-            "type": "string"
-          },
-          "userToken": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "startAsBroadcast": {
-            "type": "boolean"
           }
         }
       },
@@ -43053,674 +46584,6 @@
           "extensions": {
             "type": "array",
             "default": []
-          }
-        }
-      },
-      "GetCartInsightsResponse": {
-        "type": "object",
-        "description": "Returns aggregations for the current carts within the appointment.",
-        "properties": {
-          "cartSum": {
-            "type": "number",
-            "description": "Sum of all products from all attenddees which were added to the cart during the appointment"
-          },
-          "productCount": {
-            "type": "number",
-            "description": "Sum of all product quantities from all attendees which were added to the cart during the appointment"
-          },
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id from the shown currency"
-          },
-          "currencySymbol": {
-            "type": "string",
-            "description": "The currency symbol from the shown currency"
-          },
-          "topProducts": {
-            "type": "object",
-            "required": [
-              "byQuantity",
-              "byRevenue"
-            ],
-            "properties": {
-              "byQuantity": {
-                "type": "array",
-                "uniqueItems": true,
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "productId": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "The id from the product"
-                    },
-                    "value": {
-                      "type": "number",
-                      "description": "The quantity in carts of this product"
-                    }
-                  },
-                  "required": [
-                    "productId",
-                    "value"
-                  ]
-                }
-              },
-              "byRevenue": {
-                "type": "array",
-                "uniqueItems": true,
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "productId": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "The id from the product"
-                    },
-                    "value": {
-                      "type": "number",
-                      "description": "The net revenue in the shown currency in carts of this product"
-                    }
-                  },
-                  "required": [
-                    "productId",
-                    "value"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "example": {
-          "extensions": [],
-          "cartSum": 6770.53,
-          "productCount": 3,
-          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
-          "currencySymbol": "$",
-          "topProducts": {
-            "byQuantity": [
-              {
-                "productId": "01ae0dee60ea48fdafaf881b96361d59",
-                "value": 1
-              },
-              {
-                "productId": "fee3ca762be94bb49b692e359d529563",
-                "value": 1
-              },
-              {
-                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
-                "value": 1
-              }
-            ],
-            "byRevenue": [
-              {
-                "productId": "fee3ca762be94bb49b692e359d529563",
-                "value": 5333.03
-              },
-              {
-                "productId": "01ae0dee60ea48fdafaf881b96361d59",
-                "value": 1152.62
-              },
-              {
-                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
-                "value": 284.88
-              }
-            ]
-          }
-        }
-      },
-      "AttendeeInsights": {
-        "type": "object",
-        "description": "Attendee Insights",
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "Id of the attendee"
-          },
-          "cartSum": {
-            "type": "number",
-            "description": "Sum of the cart net in base currency"
-          },
-          "productCount": {
-            "type": "number",
-            "description": "Sum of all quantities in the cart which were added during the appointment"
-          }
-        },
-        "example": {
-          "04da9d8572494ae68391a471d4c3a470": {
-            "extensions": [],
-            "id": "04da9d8572494ae68391a471d4c3a470",
-            "cartSum": 6770.53,
-            "productCount": 3,
-            "lineItemCount": 3
-          }
-        }
-      },
-      "Interaction": {
-        "type": "object",
-        "required": [
-          "name",
-          "triggeredAt",
-          "attendeeId"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "expiresAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "triggeredAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "payload": {
-            "type": "string"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "attendee": {
-            "$ref": "#/components/schemas/Attendee"
-          }
-        }
-      },
-      "DynamicPageOpenedPayload": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
-          }
-        ]
-      },
-      "AttendeeProductCollection": {
-        "type": "object",
-        "required": [
-          "attendeeId",
-          "productId",
-          "productVersionId",
-          "alias"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "attendee": {
-            "$ref": "#/components/schemas/Attendee"
-          },
-          "productId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "product": {
-            "$ref": "#/components/schemas/Product"
-          },
-          "productVersionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "alias": {
-            "type": "string",
-            "enum": [
-              "liked",
-              "disliked"
-            ]
-          }
-        }
-      },
-      "Presentation": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "versionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "parentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "parentVersionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "createdById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "createdBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "updatedById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "updatedBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "translations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "cmsPages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PresentationCmsPage"
-            }
-          },
-          "translated": {
-            "type": "object"
-          }
-        }
-      },
-      "JoinAppointmentResponse": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "mercureSubscriberTopics": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "mercure topic"
-            },
-            "description": "The topics to which the attendee/guide can subscribe for"
-          },
-          "mercurePublisherTopic": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The topic to which the attendee/guide can send updates"
-          },
-          "JWTMercureSubscriberToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to publish updates"
-          },
-          "mercureHubPublicUrl": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The mercure hub url to connect for subscribing and updating"
-          },
-          "JWTMercurePublisherToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to subscribe for updates"
-          },
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The appointment id"
-          },
-          "newContextToken": {
-            "type": "string",
-            "description": "The new context token"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The created Id for the attendee"
-          },
-          "salesChannelId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id of the current sales channel"
-          },
-          "presentationGuideMode": {
-            "type": "string",
-            "enum": [
-              "self",
-              "guided"
-            ],
-            "description": "The type of the appointment"
-          },
-          "isPreview": {
-            "type": "boolean",
-            "description": "To see if it's a preview appointment"
-          }
-        },
-        "example": {
-          "mercureSubscriberTopics": [
-            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
-          ],
-          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
-          "JWTMercureSubscriberToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6WyJncy1ndWlkZS1hY3Rpb25zLTJkMmMzNThmMWNhMDQwOThhYWNmMTI4NzNjMmVlZDgyIiwiZ3MtcHJlc2VudGF0aW9uLXN0YXRlLWZvci1jbGllbnQtMmQyYzM1OGYxY2EwNDA5OGFhY2YxMjg3M2MyZWVkODIiLCJncy1wcmVzZW50YXRpb24tc3RhdGUtZm9yLWFsbC0yZDJjMzU4ZjFjYTA0MDk4YWFjZjEyODczYzJlZWQ4MiJdLCJwdWJsaXNoIjpbXX19.UUkrRCu9PT2FOhkxhWKLo8nUGzwI7l3zqVo74laI-D8",
-          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
-          "JWTMercurePublisherToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6W10sInB1Ymxpc2giOlsiZ3MtY2xpZW50LWFjdGlvbnMtMmQyYzM1OGYxY2EwNDA5OGFhY2YxMjg3M2MyZWVkODIiXX19.g5-_JrB2xdeByr40t7XnnK_qxqOclaY5MKBpTytdFmY",
-          "id": "2d2c358f1ca04098aacf12873c2eed82",
-          "newContextToken": "VR9yWqI2ovhNpdRFWbbn6Z5Fy4wUmDsm",
-          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
-          "presentationGuideMode": "guided",
-          "isPreview": false,
-          "apiAlias": "swag_guided_shopping_content_appointment_struct_appointment_join_struct"
-        }
-      },
-      "Appointment": {
-        "type": "object",
-        "required": [
-          "name",
-          "guideUserId",
-          "salesChannelDomainId",
-          "presentationPath"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "presentationId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "presentation": {
-            "$ref": "#/components/schemas/Presentation"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "isPreview": {
-            "type": "boolean"
-          },
-          "default": {
-            "type": "boolean"
-          },
-          "guideUserId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "guideUser": {
-            "$ref": "#/components/schemas/User"
-          },
-          "mode": {
-            "type": "string",
-            "enum": [
-              "guide",
-              "self"
-            ]
-          },
-          "salesChannelDomainId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "presentationPath": {
-            "type": "string"
-          },
-          "attendeeRestrictionType": {
-            "type": "string",
-            "enum": [
-              "open",
-              "customer",
-              "rules"
-            ]
-          },
-          "accessibleFrom": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "accessibleTo": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "attendeeRuleIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          "attendees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Attendee"
-            }
-          },
-          "message": {
-            "type": "string"
-          },
-          "videoAudioSettings": {
-            "type": "string",
-            "enum": [
-              "none",
-              "both",
-              "audio_only"
-            ]
-          },
-          "videoChat": {
-            "$ref": "#/components/schemas/VideoChat"
-          },
-          "startedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "createdBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "updatedById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "updatedBy": {
-            "$ref": "#/components/schemas/User"
-          }
-        }
-      },
-      "GetListBodyRequest": {
-        "type": "object",
-        "properties": {
-          "limit": {
-            "type": "integer",
-            "description": "Max amount of resources to be returned in a page"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The page to be returned"
-          }
-        }
-      },
-      "AbstractDynamicPageOpenedPayload": {
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of the current dynamic page"
-          },
-          "opened": {
-            "type": "boolean",
-            "default": true
-          }
-        }
-      },
-      "VideoChatCreateStruct": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "roomUrl": {
-            "type": "string",
-            "description": "Url of the video room in daily"
-          },
-          "roomName": {
-            "type": "string",
-            "description": "Name of the video room in daily"
-          },
-          "userToken": {
-            "type": "string",
-            "description": "Token for the end users to connect to the daily room"
-          },
-          "ownerToken": {
-            "type": "string",
-            "description": "Token for the room owner (guide) to connect to the daily room"
-          },
-          "startAsBroadcast": {
-            "type": "boolean",
-            "default": false
-          }
-        },
-        "example": {
-          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
-          "userToken": "eyJhbGciOiJIUzI1NbIsInR5cCI6IkpXVCJ9.eyJyIjoiclNx4jBtcmd3Umo0ZUlYbzF1OTUiLCJvIjpmYWxzZSwiZCI6ImE2MmJkMTUzLTI2ZjYtNDc4OC04NGRjLWMzZjdkZDcyZGIxMiIsImlhdCI6MTY5MTc0MTgwOH0.jDdnfL2h9_mDoME2_CESbzUXYFQEgQLizXr47vUD6_c",
-          "ownerToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyIjoiclN3djBtcmd3Umo0ZUlYbzF1OTUiLCJvIjp0cnVlLCJkIjoiYTYyYmQxNTMtMjZmNi00Nzg4LTg0ZGMtYzNmN2RkNzJkYjEyIiwiaWF0IjoxNjkfNzQxODA4fQ.6hS8LKZndPBNRXBwHtF7pdeTBt02PIzeRNYamBJPo9E",
-          "roomName": "rSq20mrgwsj4eIXo1u95",
-          "startAsBroadcast": false,
-          "extensions": []
-        }
-      },
-      "GuidePresentationStateResponse": {
-        "type": "object",
-        "properties": {
-          "stateForAll": {
-            "$ref": "#/components/schemas/StateForAll"
-          },
-          "stateForClients": {
-            "$ref": "#/components/schemas/StateForGuides"
-          }
-        },
-        "example": {
-          "extensions": [],
-          "stateForAll": {
-            "currentGuideProductId": null,
-            "lastActiveGuideSection": null,
-            "currentPageId": null,
-            "currentSectionId": null,
-            "currentSlideAlias": 0,
-            "currentDynamicPage": null,
-            "started": false,
-            "running": false,
-            "ended": false,
-            "startedAt": null,
-            "endedAt": null,
-            "accessibleFrom": {
-              "date": "2023-08-04 00:00:00.000000",
-              "timezone_type": 3,
-              "timezone": "UTC"
-            },
-            "accessibleTo": {
-              "date": "2023-08-05 00:00:00.000000",
-              "timezone_type": 3,
-              "timezone": "UTC"
-            },
-            "appointmentMode": "guided",
-            "videoAudioSettings": "both",
-            "videoRoomUrl": "",
-            "attendeeRestrictionType": "open",
-            "productDetailDefaultPageId": "bea211b5099241719830df8026624f7f",
-            "quickviewPageId": "182d3f7f988044adbba449b70c8bc472",
-            "productListingDefaultPageId": "33e88c7994fa4cf79a1265e5105b93b2",
-            "allowUserActionsForGuide": true,
-            "broadcastMode": false,
-            "extensions": []
-          },
-          "stateForGuides": {
-            "clients": [],
-            "inactiveClients": {
-              "2b4066cd37a341088e32a81e04a56817": {
-                "attendeeId": "2b4066cd37a341088e32a81e04a56817",
-                "attendeeName": "Attendee 1",
-                "videoUserId": null,
-                "guideCartPermissionsGranted": false
-              },
-              "302108ad602b4ac687f5247aae5d0297": {
-                "attendeeId": "302108ad602b4ac687f5247aae5d0297",
-                "attendeeName": null,
-                "videoUserId": null,
-                "guideCartPermissionsGranted": false
-              },
-              "5a3b4e84acab47119b8a6bceb79e732e": {
-                "attendeeId": "5a3b4e84acab47119b8a6bceb79e732e",
-                "attendeeName": "Test attende name",
-                "videoUserId": null,
-                "guideCartPermissionsGranted": true
-              },
-              "b6358241e4ad4a4e99d0f729d21d63be": {
-                "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-                "attendeeName": null,
-                "videoUserId": null,
-                "guideCartPermissionsGranted": false
-              },
-              "f1bb9374308d4e088c29d10a2fc8cc07": {
-                "attendeeId": "f1bb9374308d4e088c29d10a2fc8cc07",
-                "attendeeName": null,
-                "videoUserId": null,
-                "guideCartPermissionsGranted": false
-              }
-            },
-            "guides": {
-              "1850bbdc12dc44aba95bc78b16c3643c": {
-                "attendeeId": "1850bbdc12dc44aba95bc78b16c3643c",
-                "attendeeName": " admin",
-                "videoUserId": null,
-                "guideCartPermissionsGranted": false
-              }
-            },
-            "videoGuideToken": null,
-            "quickViewState": [],
-            "extensions": []
           }
         }
       }
