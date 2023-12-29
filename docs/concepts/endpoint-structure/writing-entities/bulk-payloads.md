@@ -176,6 +176,27 @@ You can not delete relations by updating the owning entity. Instead you have to 
 }
 ```
 
+### Deleting mapping entities via criteria
+
+When you want to clear a many to many association of an entity, or want to delete multiple mappings in a single request without passing all combined foreign keys, you can also use a criteria syntax for the sync operation.
+
+```sample http
+
+[
+  {
+    "action": "delete",
+    "entity": "product_category",
+    "criteria": [
+        {"type": "equals", "field": "productId", "value": "2fbb5fe2e29a4d70aa5854ce7ce3e20b"}
+    ]
+  }
+]
+```
+
+The api resolves the criteria for the mapping entity and uses the detected primary keys for the delete operation.
+
+The criteria parameter is not combinable with the payload parameter in a single operation.
+
 ## Performance
 
 Various indexing processes are triggered in the background, depending on which data was written.
