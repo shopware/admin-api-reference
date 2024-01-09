@@ -3494,6 +3494,1167 @@
         }
       }
     },
+    "/b2b-components-approval-rule": {
+      "get": {
+        "tags": [
+          "B2b Components Approval Rule"
+        ],
+        "summary": "List with basic information of B2b Components Approval Rule resources.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "getB2bComponentsApprovalRuleList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of B2b Components Approval Rule resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/b2b-components-approval-rule?limit=25"
+                                },
+                                "last": {
+                                  "example": "/b2b-components-approval-rule?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/b2b-components-approval-rule?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/b2b-components-approval-rule?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "B2b Components Approval Rule"
+        ],
+        "summary": "Create a new B2b Components Approval Rule resources.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "createB2bComponentsApprovalRule",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsApprovalRule",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-approval-rule/{id}": {
+      "get": {
+        "tags": [
+          "B2b Components Approval Rule"
+        ],
+        "summary": "Detailed information about a B2b Components Approval Rule resource.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "getB2bComponentsApprovalRule",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_approval_rule",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsApprovalRule",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "B2b Components Approval Rule"
+        ],
+        "summary": "Delete a B2b Components Approval Rule resource.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "deleteB2bComponentsApprovalRule",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_approval_rule",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "B2b Components Approval Rule"
+        ],
+        "summary": "Partially update information about a B2b Components Approval Rule resource.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "updateB2bComponentsApprovalRule",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_approval_rule",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a B2b Components Approval Rule resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsApprovalRule",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-pending-order": {
+      "get": {
+        "tags": [
+          "B2b Components Pending Order"
+        ],
+        "summary": "List with basic information of B2b Components Pending Order resources.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "getB2bComponentsPendingOrderList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of B2b Components Pending Order resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/b2b-components-pending-order?limit=25"
+                                },
+                                "last": {
+                                  "example": "/b2b-components-pending-order?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/b2b-components-pending-order?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/b2b-components-pending-order?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "B2b Components Pending Order"
+        ],
+        "summary": "Create a new B2b Components Pending Order resources.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "createB2bComponentsPendingOrder",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsPendingOrder",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-pending-order/{id}": {
+      "get": {
+        "tags": [
+          "B2b Components Pending Order"
+        ],
+        "summary": "Detailed information about a B2b Components Pending Order resource.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "getB2bComponentsPendingOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_pending_order",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsPendingOrder",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "B2b Components Pending Order"
+        ],
+        "summary": "Delete a B2b Components Pending Order resource.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "deleteB2bComponentsPendingOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_pending_order",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "B2b Components Pending Order"
+        ],
+        "summary": "Partially update information about a B2b Components Pending Order resource.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "updateB2bComponentsPendingOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_pending_order",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a B2b Components Pending Order resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsPendingOrder",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-pending-order-address": {
+      "get": {
+        "tags": [
+          "B2b Components Pending Order Address"
+        ],
+        "summary": "List with basic information of B2b Components Pending Order Address resources.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "getB2bComponentsPendingOrderAddressList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of B2b Components Pending Order Address resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/b2b-components-pending-order-address?limit=25"
+                                },
+                                "last": {
+                                  "example": "/b2b-components-pending-order-address?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/b2b-components-pending-order-address?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/b2b-components-pending-order-address?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "B2b Components Pending Order Address"
+        ],
+        "summary": "Create a new B2b Components Pending Order Address resources.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "createB2bComponentsPendingOrderAddress",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsPendingOrderAddress",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-pending-order-address/{id}": {
+      "get": {
+        "tags": [
+          "B2b Components Pending Order Address"
+        ],
+        "summary": "Detailed information about a B2b Components Pending Order Address resource.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "getB2bComponentsPendingOrderAddress",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_pending_order_address",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsPendingOrderAddress",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "B2b Components Pending Order Address"
+        ],
+        "summary": "Delete a B2b Components Pending Order Address resource.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "deleteB2bComponentsPendingOrderAddress",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_pending_order_address",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "B2b Components Pending Order Address"
+        ],
+        "summary": "Partially update information about a B2b Components Pending Order Address resource.",
+        "description": "Available since: 6.6.0.0",
+        "operationId": "updateB2bComponentsPendingOrderAddress",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_pending_order_address",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a B2b Components Pending Order Address resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsPendingOrderAddress",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/b2b-components-role": {
       "get": {
         "tags": [
@@ -20597,6 +21758,1349 @@
           },
           "defaultRole": {
             "$ref": "#/components/schemas/B2bComponentsRole"
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsApprovalRuleJsonApi": {
+        "description": "Added since version: 6.6.0.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "name",
+              "priority",
+              "active",
+              "conditions",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "businessPartnerCustomerId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "active": {
+                "type": "boolean"
+              },
+              "conditions": {
+                "type": "object"
+              },
+              "reviewerRoleId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "affectedRoleId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "businessPartnerCustomer": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-approval-rule/7181d2e3f46190b96b7cb8242c761a03/businessPartnerCustomer"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "customer"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "798b3bbcdcbca2ce67fe2ef0d7d28cbf"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "reviewerRole": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-approval-rule/7181d2e3f46190b96b7cb8242c761a03/reviewerRole"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_role"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "06ec286ee4d03afb4028caa32c0ef40b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "affectedRole": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-approval-rule/7181d2e3f46190b96b7cb8242c761a03/affectedRole"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_role"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "33237c6057eedd7b8c978f77270af3b1"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "B2bComponentsApprovalRule": {
+        "description": "Added since version: 6.6.0.0",
+        "required": [
+          "name",
+          "priority",
+          "active",
+          "conditions",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "businessPartnerCustomerId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "conditions": {
+            "type": "object"
+          },
+          "reviewerRoleId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "affectedRoleId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "businessPartnerCustomer": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "reviewerRole": {
+            "$ref": "#/components/schemas/B2bComponentsRole"
+          },
+          "affectedRole": {
+            "$ref": "#/components/schemas/B2bComponentsRole"
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsPendingOrderJsonApi": {
+        "description": "Added since version: 6.6.0.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "billingAddressId",
+              "customerId",
+              "employeeId",
+              "approvalRuleId",
+              "stateId",
+              "currencyId",
+              "countryId",
+              "salesChannelId",
+              "shippingMethodId",
+              "paymentMethodId",
+              "languageId",
+              "number",
+              "cartPayload",
+              "itemRounding",
+              "totalRounding",
+              "lineItemCount",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "autoIncrement": {
+                "type": "integer",
+                "format": "int64",
+                "readOnly": true
+              },
+              "billingAddressId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "customerId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "employeeId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "decidedById": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "approvalRuleId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "stateId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "countryId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "salesChannelId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "shippingMethodId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "paymentMethodId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "languageId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "number": {
+                "type": "string"
+              },
+              "cartPayload": {
+                "type": "string"
+              },
+              "price": {
+                "required": [
+                  "netPrice",
+                  "totalPrice",
+                  "positionPrice",
+                  "rawTotal",
+                  "taxStatus"
+                ],
+                "properties": {
+                  "netPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "totalPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "calculatedTaxes": {
+                    "type": "object"
+                  },
+                  "taxRules": {
+                    "type": "object"
+                  },
+                  "positionPrice": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "rawTotal": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "taxStatus": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "originalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "taxStatus": {
+                "type": "string",
+                "readOnly": true
+              },
+              "amountTotal": {
+                "type": "number",
+                "format": "float",
+                "readOnly": true
+              },
+              "amountNet": {
+                "type": "number",
+                "format": "float",
+                "readOnly": true
+              },
+              "reason": {
+                "type": "string"
+              },
+              "itemRounding": {
+                "properties": {
+                  "decimals": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "interval": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "roundForNet": {
+                    "type": "boolean"
+                  }
+                },
+                "type": "object"
+              },
+              "totalRounding": {
+                "properties": {
+                  "decimals": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "interval": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "roundForNet": {
+                    "type": "boolean"
+                  }
+                },
+                "type": "object"
+              },
+              "lineItemCount": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "billingAddress": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/billingAddress"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_pending_order_address"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "7fee8ff88b768662dd8fc06e1b6997d2"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "customer": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/customer"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "customer"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "91ec1f9324753048c0096d036a694f86"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "employee": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/employee"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_employee"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "fa5473530e4d1a5a1e1eb53d2fedb10c"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "decidedBy": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/decidedBy"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_employee"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "b293e6616bcffea8e393a4066a4a4230"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "approvalRule": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/approvalRule"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_approval_rule"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "2beeb3d6f9f7be5fb67d4cd9d9f9ba25"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "stateMachineState": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/stateMachineState"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "state_machine_state"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "1ab22d393154f21e3be76aca3ec3ee31"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "currency": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/currency"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "currency"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "1af0389838508d7016a9841eb6273962"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "country": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/country"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "country"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "e909c2d7067ea37437cf97fe11d91bd0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "salesChannel": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/salesChannel"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "sales_channel"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "ec3712a84143b57e0db620eaac6e55b8"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "language": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/language"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "language"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "8512ae7d57b1396273f76fe6ed341a23"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "paymentMethod": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/paymentMethod"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "payment_method"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "68ec1eeea9f1b7744e231b5bd0d97df0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "shippingMethod": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/shippingMethod"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "shipping_method"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "e97bfcdc0cae44bc9e4ab35762eaf0e1"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "addresses": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/addresses"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_pending_order_address"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "963e3a2fe559e393bad631f3dc686f69"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "B2bComponentsPendingOrder": {
+        "description": "Added since version: 6.6.0.0",
+        "required": [
+          "billingAddressId",
+          "customerId",
+          "employeeId",
+          "approvalRuleId",
+          "stateId",
+          "currencyId",
+          "countryId",
+          "salesChannelId",
+          "shippingMethodId",
+          "paymentMethodId",
+          "languageId",
+          "number",
+          "cartPayload",
+          "itemRounding",
+          "totalRounding",
+          "lineItemCount",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "autoIncrement": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "billingAddressId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "customerId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "employeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "decidedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "approvalRuleId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "stateId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "countryId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "shippingMethodId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "paymentMethodId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "languageId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "number": {
+            "type": "string"
+          },
+          "cartPayload": {
+            "type": "string"
+          },
+          "price": {
+            "required": [
+              "netPrice",
+              "totalPrice",
+              "positionPrice",
+              "rawTotal",
+              "taxStatus"
+            ],
+            "properties": {
+              "netPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "totalPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "calculatedTaxes": {
+                "type": "object"
+              },
+              "taxRules": {
+                "type": "object"
+              },
+              "positionPrice": {
+                "type": "number",
+                "format": "float"
+              },
+              "rawTotal": {
+                "type": "number",
+                "format": "float"
+              },
+              "taxStatus": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "originalPrice": {
+            "type": "number",
+            "format": "float"
+          },
+          "taxStatus": {
+            "type": "string",
+            "readOnly": true
+          },
+          "amountTotal": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          },
+          "amountNet": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          },
+          "reason": {
+            "type": "string"
+          },
+          "itemRounding": {
+            "properties": {
+              "decimals": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "interval": {
+                "type": "number",
+                "format": "float"
+              },
+              "roundForNet": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "totalRounding": {
+            "properties": {
+              "decimals": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "interval": {
+                "type": "number",
+                "format": "float"
+              },
+              "roundForNet": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "lineItemCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "billingAddress": {
+            "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "employee": {
+            "$ref": "#/components/schemas/B2bEmployee"
+          },
+          "decidedBy": {
+            "$ref": "#/components/schemas/B2bEmployee"
+          },
+          "approvalRule": {
+            "$ref": "#/components/schemas/B2bComponentsApprovalRule"
+          },
+          "stateMachineState": {
+            "$ref": "#/components/schemas/StateMachineState"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "country": {
+            "$ref": "#/components/schemas/Country"
+          },
+          "salesChannel": {
+            "$ref": "#/components/schemas/SalesChannel"
+          },
+          "language": {
+            "$ref": "#/components/schemas/Language"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethod"
+          },
+          "shippingMethod": {
+            "$ref": "#/components/schemas/ShippingMethod"
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsPendingOrderAddressJsonApi": {
+        "description": "Added since version: 6.6.0.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "countryId",
+              "pendingOrderId",
+              "firstName",
+              "lastName",
+              "street",
+              "city",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "countryId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "countryStateId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "pendingOrderId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "salutationId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "street": {
+                "type": "string"
+              },
+              "zipcode": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "company": {
+                "type": "string"
+              },
+              "department": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "vatId": {
+                "type": "string"
+              },
+              "phoneNumber": {
+                "type": "string"
+              },
+              "additionalAddressLine1": {
+                "type": "string"
+              },
+              "additionalAddressLine2": {
+                "type": "string"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "country": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order-address/4fce37927007500103484410b28f4b34/country"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "country"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "e909c2d7067ea37437cf97fe11d91bd0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "countryState": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order-address/4fce37927007500103484410b28f4b34/countryState"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "country_state"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "cb6a9764567191fb74fe28d8d6a4819d"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "pendingOrder": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order-address/4fce37927007500103484410b28f4b34/pendingOrder"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_pending_order"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "1fd94955ea55110a2cf95eeb6fb1679f"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "salutation": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order-address/4fce37927007500103484410b28f4b34/salutation"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "salutation"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "7a6efb02514153b5aa9a8f40c6f8bcc3"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "B2bComponentsPendingOrderAddress": {
+        "description": "Added since version: 6.6.0.0",
+        "required": [
+          "countryId",
+          "pendingOrderId",
+          "firstName",
+          "lastName",
+          "street",
+          "city",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "countryId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "countryStateId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "pendingOrderId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "salutationId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "zipcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "department": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "vatId": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "additionalAddressLine1": {
+            "type": "string"
+          },
+          "additionalAddressLine2": {
+            "type": "string"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "country": {
+            "$ref": "#/components/schemas/Country"
+          },
+          "countryState": {
+            "$ref": "#/components/schemas/CountryState"
+          },
+          "pendingOrder": {
+            "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+          },
+          "salutation": {
+            "$ref": "#/components/schemas/Salutation"
           }
         },
         "type": "object"
@@ -70730,6 +73234,18 @@
     {
       "name": "B2b Business Partner",
       "description": "The endpoint for operations on B2b Business Partner"
+    },
+    {
+      "name": "B2b Components Approval Rule",
+      "description": "The endpoint for operations on B2b Components Approval Rule"
+    },
+    {
+      "name": "B2b Components Pending Order",
+      "description": "The endpoint for operations on B2b Components Pending Order"
+    },
+    {
+      "name": "B2b Components Pending Order Address",
+      "description": "The endpoint for operations on B2b Components Pending Order Address"
     },
     {
       "name": "B2b Components Role",
