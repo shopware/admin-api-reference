@@ -193,9 +193,7 @@ When you want to clear a many-to-many association of an entity, or want to delet
 ]
 ```
 
-The api resolves the criteria for the mapping entity and uses the detected primary keys for the delete operation.
-
-The criteria parameter is not combinable with the payload parameter in a single operation.
+The api resolves the criteria for the mapping entity and uses the detected primary keys for the delete operation. The criteria parameter is not combinable with the payload parameter in a single operation.
 
 You can also use a `equalsAny` to enforce that only the exact match for a value of the given list of categories is deleted.
 
