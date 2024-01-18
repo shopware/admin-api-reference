@@ -14,7 +14,7 @@ and expects payloads via `POST` and `Content-Type: application/json`.
 
 In contrast to the Admin API, the Sync API does not differ between **create** and **update** operations, but always performs an **upsert** operation. During an **upsert**, the system checks whether the entity already exists in the system and updates it if an ID has been passed, otherwise a new entity is created with this ID.
 
-A request always contains a **list of operations**. An operation defines the `action` to be executed \(`upsert` or `delete`\), the `entity` it is and the `payload` which is an array of multiple records \(for `upsert`\) or multiple IDs \(for `delete`\). Within a request, different entities can therefore be written in batch. For easier debugging, each operation can be given a key. The key is then used in the response to define which entities are written in which operation.
+A request always contains a **list of operations**. An operation defines the `action` to be executed \(`upsert` or `delete`\), an associated `entity` and the `payload` which is an array of multiple records \(for `upsert`\) or multiple IDs \(for `delete`\). Within a request, different entities can therefore be written in batch. For easier debugging, each operation can be given a key. The key is then used in the response to define which entities are written in which operation.
 
 **Format of an operation**
 
@@ -22,9 +22,11 @@ A request always contains a **list of operations**. An operation defines the `ac
 | :--- | :--- |
 | **entity** | Any entity in Shopware, e.g. `category`or `customer` |
 | **action** | The type of operation - either `upsert` or `delete` |
-| **payload** | A list, containing objects \(upsert\) OR a list of IDs \(delete\) |
+| **payload** | A list containing objects or a list of IDs |
 
 ### Writing entities
+
+Writing entities is performed with `upsert` operation. This operation is used to insert or update an array of multiple records with their data. The records in the payload for a bulk upsert operation typically represent individual entities (such as products, customers, or orders) with their corresponding data. The specific fields and data within each record depend on the entity you are working with. Here are examples for three different entities: tax, category and country.
 
 ```sample http
 {
@@ -110,8 +112,7 @@ A request always contains a **list of operations**. An operation defines the `ac
 
 ### Deleting entities
 
-To delete entities, the `payload` of an operation contains the IDs. If the entity is a `MappingEntityDefinition` \(e.g. `product_category`\) the foreign keys, which are the primary keys of the corresponding entities, must be passed:
-
+To delete entities, the `payload` of an operation contains the IDs. If the entity is a `MappingEntityDefinition` \(e.g. `product_category`\) the foreign keys, which are the primary keys of the corresponding entities, must be passed.
 
 ```sample http
 {
@@ -152,7 +153,7 @@ To delete entities, the `payload` of an operation contains the IDs. If the entit
 
 ### Deleting Relations
 
-You can not delete relations by updating the owning entity. Instead you have to delete the relation on the relation entity `MappingEntityDefinition` \(e.g. `product_property`\). The corresponding entries in the main entity \(here `product`\) will be updated with an indexer that will immediately run after the delete \(for details on indexers, see the next section\).
+You can't delete relations by updating the owning entity. Instead you have to delete the relation on the relation entity `MappingEntityDefinition` \(e.g. `product_property`\). The corresponding entries in the main entity \(here `product`\) will be updated with an [indexer](#performance) that will immediately run after the delete.
 
 ```sample http
 {
@@ -176,6 +177,40 @@ You can not delete relations by updating the owning entity. Instead you have to 
 }
 ```
 
+### Deleting mapping entities via criteria
+
+When you want to clear a many-to-many association of an entity, or want to delete multiple mappings in a single request without passing all combined foreign keys, you can also use a criteria syntax in the sync operation.
+
+```sample http
+[
+  {
+    "action": "delete",
+    "entity": "product_category",
+    "criteria": [
+        {"type": "equals", "field": "productId", "value": "2fbb5fe2e29a4d70aa5854ce7ce3e20b"}
+    ]
+  }
+]
+```
+
+The api resolves the criteria for the mapping entity and uses the detected primary keys for the delete operation. The criteria parameter is not combinable with the payload parameter in a single operation.
+
+You can also use a `equalsAny` to enforce that only the exact match for a value of the given list of categories is deleted.
+
+```sample http
+[
+  {
+    "action": "delete",
+    "entity": "product_category",
+    "criteria": [
+        {"type": "equalsAny", "field": "categoryId", "value": "2fbb5fe2e29a4d70aa5854ce7ce3e20b", "2fbb5fe2e29a4d70aa5854ce7ce3e20c", "2fbb5fe2e29a4d81aa5854ce7ce3e50c"}
+    ]
+  }
+]
+```
+
+For more operations you can take a look at the [filter references](https://developer.shopware.com/docs/resources/references/core-reference/dal-reference/filters-reference.html)
+
 ## Performance
 
 Various indexing processes are triggered in the background, depending on which data was written.
@@ -189,7 +224,6 @@ You can control the behaviour using the following headers:
 | indexing-behavior | `null (default)` | Data will be indexed synchronously |
 |  | `use-queue-indexing` | Data will be indexed asynchronously |
 |  | `disable-indexing` | Data indexing is completely disabled |
-
 
 ```sample http
 {
