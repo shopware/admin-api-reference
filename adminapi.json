@@ -52256,6 +52256,249 @@
         }
       }
     },
+    "/oauth/token": {
+      "post": {
+        "tags": [
+          "Authorization & Authentication"
+        ],
+        "summary": "Fetch an access token",
+        "description": "Fetch a access token that can be used to perform authenticated requests. For more information take a look at the [Authentication documentation](https://shopware.stoplight.io/docs/admin-api/docs/concepts/authentication-authorisation.md).",
+        "operationId": "token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/OAuthPasswordGrant"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OAuthRefreshTokenGrant"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OAuthClientCredentialsGrant"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authorized successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "token_type",
+                    "expires_in",
+                    "access_token"
+                  ],
+                  "properties": {
+                    "token_type": {
+                      "description": "Type of the token.",
+                      "type": "string"
+                    },
+                    "expires_in": {
+                      "description": "Token lifetime in seconds.",
+                      "type": "integer"
+                    },
+                    "access_token": {
+                      "description": "The access token that can be used for subsequent requests",
+                      "type": "string"
+                    },
+                    "refresh_token": {
+                      "description": "The refresh token that can be used to refresh the access token. This field is not returned on grant type `refresh_token`.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/_action/media/{mediaId}/upload": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Upload a file to a media entity",
+        "description": "Adds a new file to a media entity. If the entity has an existing file, it will be replaced.\n\nThe are two methods of providing a file to this route:\n * Use a typical file upload and provide the file in the request\n * Fetch the file from an url. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.\nTo use file upload via url, the content type has to be `application/json` and the parameter `url` has to be provided.",
+        "operationId": "upload",
+        "parameters": [
+          {
+            "name": "mediaId",
+            "in": "path",
+            "description": "Identifier of the media entity.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Name of the uploaded file. If not provided the media identifier will be used as name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "extension",
+            "in": "query",
+            "description": "Extension of the uploaded file. For example `png`",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "description": "The url of the media file that will be downloaded.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Media file uploaded successful",
+            "headers": {
+              "Location": {
+                "description": "Contains the url to the uploaded media for a redirect.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/index-products": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Send product indexing message",
+        "description": "Dispatches a product indexing message to the message bus, with the provided ids",
+        "operationId": "productIndexing",
+        "responses": {
+          "204": {
+            "description": "Returns an empty response indicating that the message dispatched."
+          }
+        }
+      }
+    },
+    "/_action/order_transaction_capture_refund/{refundId}": {
+      "post": {
+        "tags": [
+          "Order Management"
+        ],
+        "summary": "Refund an order transaction capture",
+        "description": "Refunds an order transaction capture.",
+        "operationId": "orderTransactionCaptureRefund",
+        "parameters": [
+          {
+            "name": "refundId",
+            "in": "path",
+            "description": "Identifier of the order transaction capture refund.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Refund was successful"
+          },
+          "400": {
+            "description": "Something went wrong, while processing the refund"
+          },
+          "404": {
+            "description": "Refund with id not found"
+          }
+        }
+      }
+    },
+    "/_info/config": {
+      "get": {
+        "tags": [
+          "System Info & Healthcheck"
+        ],
+        "summary": "Get API information",
+        "description": "Get information about the API",
+        "operationId": "config",
+        "responses": {
+          "200": {
+            "description": "Returns information about the API.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/infoConfigResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_info/openapi3.json": {
+      "get": {
+        "tags": [
+          "System Info & Healthcheck"
+        ],
+        "summary": "Get OpenAPI Specification",
+        "description": "Get information about the API in OpenAPI format.",
+        "operationId": "api-info",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of the api",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "jsonapi",
+                "json"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns information about the API."
+          }
+        }
+      }
+    },
     "/_action/mail-template/send": {
       "post": {
         "tags": [
@@ -52529,78 +52772,146 @@
         }
       }
     },
-    "/_action/container_cache": {
-      "delete": {
+    "/_action/order_transaction/{orderTransactionId}/state/{transition}": {
+      "post": {
         "tags": [
-          "System Operations"
+          "Order Management"
         ],
-        "summary": "Clear container caches",
-        "description": "The container cache is immediately cleared synchronously.",
-        "operationId": "clearContainerCache",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the container cache is cleared."
-          }
-        }
-      }
-    },
-    "/_action/cleanup": {
-      "delete": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Clear old cache folders",
-        "description": "Removes cache folders that are not needed anymore.",
-        "operationId": "clearOldCacheFolders",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the cleanup finished."
-          }
-        }
-      }
-    },
-    "/_info/health-check": {
-      "get": {
-        "tags": [
-          "System Info & Healthcheck"
-        ],
-        "summary": "Check that the Application is running",
-        "operationId": "healthCheck",
-        "responses": {
-          "200": {
-            "description": "Returns empty response"
-          },
-          "500": {
-            "description": "Application is not working properly"
-          }
-        }
-      }
-    },
-    "/_info/openapi3.json": {
-      "get": {
-        "tags": [
-          "System Info & Healthcheck"
-        ],
-        "summary": "Get OpenAPI Specification",
-        "description": "Get information about the API in OpenAPI format.",
-        "operationId": "api-info",
+        "summary": "Transition an order transaction to a new state",
+        "description": "Changes the order transaction state and informs the customer via email if configured.",
+        "operationId": "orderTransactionStateTransition",
         "parameters": [
           {
-            "name": "type",
-            "in": "query",
-            "description": "Type of the api",
+            "name": "orderTransactionId",
+            "in": "path",
+            "description": "Identifier of the order transaction.",
+            "required": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "jsonapi",
-                "json"
-              ]
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "transition",
+            "in": "path",
+            "description": "The `action_name` of the `state_machine_transition`. For example `process` if the order state should change from open to in progress.\n\nNote: If you choose a transition that is not available, you will get an error that lists possible transitions for the current state.",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "sendMail": {
+                    "description": "Controls if a mail should be sent to the customer."
+                  },
+                  "documentIds": {
+                    "description": "A list of document identifiers that should be attached",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "mediaIds": {
+                    "description": "A list of media identifiers that should be attached",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "stateFieldName": {
+                    "description": "This is the state column within the order transaction database table. There should be no need to change it from the default.",
+                    "type": "string",
+                    "default": "stateId"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Returns information about the API."
+            "description": "Returns information about the transition that was made. `#/components/schemas/StateMachineTransition`"
+          }
+        }
+      }
+    },
+    "/_action/order_delivery/{orderDeliveryId}/state/{transition}": {
+      "post": {
+        "tags": [
+          "Order Management"
+        ],
+        "summary": "Transition an order delivery to a new state",
+        "description": "Changes the order delivery state and informs the customer via email if configured.",
+        "operationId": "orderDeliveryStateTransition",
+        "parameters": [
+          {
+            "name": "orderDeliveryId",
+            "in": "path",
+            "description": "Identifier of the order delivery.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "transition",
+            "in": "path",
+            "description": "The `action_name` of the `state_machine_transition`. For example `process` if the order state should change from open to in progress.\n\nNote: If you choose a transition which is not possible, you will get an error that lists possible transition for the actual state.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "sendMail": {
+                    "description": "Controls if a mail should be send to the customer."
+                  },
+                  "documentIds": {
+                    "description": "A list of document identifiers that should be attached",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "mediaIds": {
+                    "description": "A list of media identifiers that should be attached",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "stateFieldName": {
+                    "description": "This is the state column within the order delivery database table. There should be no need to change it from the default.",
+                    "type": "string",
+                    "default": "stateId"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Todo: Use ref of `state_machine_transition` here"
           }
         }
       }
@@ -52620,21 +52931,110 @@
         }
       }
     },
-    "/_info/events.json": {
+    "/_action/cleanup": {
+      "delete": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Clear old cache folders",
+        "description": "Removes cache folders that are not needed anymore.",
+        "operationId": "clearOldCacheFolders",
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the cleanup finished."
+          }
+        }
+      }
+    },
+    "/_action/number-range/reserve/{type}/{saleschannel}": {
       "get": {
         "tags": [
-          "System Info & Healthcheck"
+          "Document Management"
         ],
-        "summary": "Get Business events",
-        "description": "Get a list of about the business events.",
-        "operationId": "business-events",
+        "summary": "Reserve or preview a document number",
+        "description": "This endpoint provides functionality to reserve or preview a document number which can be used to create a new document using the `/_action/order/{orderId}/document/{documentTypeName}` endpoint.\n\nThe number generated by the endpoint will be reserved and the number pointer will be incremented with every call. For preview purposes, you can add the `?preview=1` parameter to the request. In that case, the number will not be incremented.",
+        "operationId": "numberRangeReserve",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "`technicalName` of the document type (e.g. `document_invoice`). Available types can be fetched with the `/api/document-type endpoint`.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "saleschannel",
+            "in": "path",
+            "description": "Sales channel for the number range. Number ranges can be defined per sales channel, so you can pass a sales channel ID here.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "preview",
+            "in": "query",
+            "description": "If this parameter has a true value, the number will not actually be incremented, but only previewed.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Returns a list of about the business events.",
+            "description": "The generated number",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/businessEventsResponse"
+                  "properties": {
+                    "number": {
+                      "description": "The generated (or previewed) document number.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Number range not found"
+          }
+        }
+      }
+    },
+    "/_action/cache_info": {
+      "get": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Get cache information",
+        "description": "Get information about the cache configuration",
+        "operationId": "info",
+        "responses": {
+          "200": {
+            "description": "Information about the cache state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "environment": {
+                      "description": "The active environment.",
+                      "type": "string"
+                    },
+                    "httpCache": {
+                      "description": "State of the HTTP cache.",
+                      "type": "boolean"
+                    },
+                    "cacheAdapter": {
+                      "description": "The active cache adapter.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
                 }
               }
             }
@@ -52826,6 +53226,206 @@
         }
       }
     },
+    "/_action/scheduled-task/run": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Run scheduled tasks.",
+        "description": "Starts the scheduled task worker to handle the next scheduled tasks.",
+        "operationId": "runScheduledTasks",
+        "responses": {
+          "200": {
+            "description": "Returns a success message indicating a successful run.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "description": "Success message",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/scheduled-task/min-run-interval": {
+      "get": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Get the minimum schedules task interval",
+        "description": "Fetches the smallest interval that a scheduled task uses.",
+        "operationId": "getMinRunInterval",
+        "responses": {
+          "200": {
+            "description": "Returns the minimum interval.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "minRunInterval": {
+                      "description": "Minimal interval in seconds.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/index": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Run indexer",
+        "description": "Runs all registered indexer in the shop asynchronously.",
+        "operationId": "index",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "skip": {
+                    "description": "Array of indexers/updaters to be skipped.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the indexing progress startet."
+          }
+        }
+      }
+    },
+    "/_action/indexing": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Run indexer",
+        "description": "Runs all registered indexer in the shop asynchronously.",
+        "operationId": "indexing",
+        "responses": {
+          "200": {
+            "description": "Returns an empty response indicating that the indexing process started."
+          }
+        }
+      }
+    },
+    "/_action/indexing/{indexer}": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Iterate an indexer",
+        "description": "Starts a defined indexer with an offset.\n\nfor the next request. `finish: true` in the response indicates that the indexer is finished",
+        "operationId": "iterate",
+        "parameters": [
+          {
+            "name": "indexer",
+            "in": "path",
+            "description": "Name of the indexer to iterate.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "offset": {
+                    "description": "The offset for the iteration.",
+                    "type": "integer"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns information about the iteration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "finish": {
+                      "description": "Indicates if the indexing process finished.",
+                      "type": "boolean"
+                    },
+                    "offset": {
+                      "description": "Offset to be used for the next iteration.",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/container_cache": {
+      "delete": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Clear container caches",
+        "description": "The container cache is immediately cleared synchronously.",
+        "operationId": "clearContainerCache",
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the container cache is cleared."
+          }
+        }
+      }
+    },
+    "/_info/events.json": {
+      "get": {
+        "tags": [
+          "System Info & Healthcheck"
+        ],
+        "summary": "Get Business events",
+        "description": "Get a list of about the business events.",
+        "operationId": "business-events",
+        "responses": {
+          "200": {
+            "description": "Returns a list of about the business events.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/businessEventsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/_action/sync": {
       "post": {
         "tags": [
@@ -52925,46 +53525,60 @@
         }
       }
     },
-    "/_info/config": {
+    "/_info/health-check": {
       "get": {
         "tags": [
           "System Info & Healthcheck"
         ],
-        "summary": "Get API information",
-        "description": "Get information about the API",
-        "operationId": "config",
+        "summary": "Check that the Application is running",
+        "operationId": "healthCheck",
         "responses": {
           "200": {
-            "description": "Returns information about the API.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/infoConfigResponse"
-                }
-              }
-            }
+            "description": "Returns empty response"
+          },
+          "500": {
+            "description": "Application is not working properly"
           }
         }
       }
     },
-    "/_action/scheduled-task/run": {
+    "/_action/message-queue/consume": {
       "post": {
         "tags": [
           "System Operations"
         ],
-        "summary": "Run scheduled tasks.",
-        "description": "Starts the scheduled task worker to handle the next scheduled tasks.",
-        "operationId": "runScheduledTasks",
+        "summary": "Consume messages from the message queue.",
+        "description": "This route can be used to consume messenges from the message queue. It is intended to be used if\nno cronjob is configured to consume messages regulary.",
+        "operationId": "consumeMessages",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "receiver"
+                ],
+                "properties": {
+                  "receiver": {
+                    "description": "The name of the transport in the messenger that should be processed.\nSee the [Symfony Messenger documentation](https://symfony.com/doc/current/messenger.html) for more information",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Returns a success message indicating a successful run.",
+            "description": "Returns information about handled messages",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "message": {
-                      "description": "Success message",
-                      "type": "string"
+                    "handledMessages": {
+                      "description": "The number of messages processed.",
+                      "type": "integer"
                     }
                   },
                   "type": "object"
@@ -52975,23 +53589,23 @@
         }
       }
     },
-    "/_action/scheduled-task/min-run-interval": {
+    "/_info/version": {
       "get": {
         "tags": [
-          "System Operations"
+          "System Info & Healthcheck"
         ],
-        "summary": "Get the minimum schedules task interval",
-        "description": "Fetches the smallest interval that a scheduled task uses.",
-        "operationId": "getMinRunInterval",
+        "summary": "Get the Shopware version",
+        "description": "Get the version of the Shopware instance",
+        "operationId": "infoShopwareVersion",
         "responses": {
           "200": {
-            "description": "Returns the minimum interval.",
+            "description": "Returns the version of the Shopware instance.",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "minRunInterval": {
-                      "description": "Minimal interval in seconds.",
+                    "version": {
+                      "description": "The Shopware version.",
                       "type": "string"
                     }
                   },
@@ -53018,80 +53632,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/flowBulderActionsResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/indexing": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Run indexer",
-        "description": "Runs all registered indexer in the shop asynchronously.",
-        "operationId": "indexing",
-        "responses": {
-          "200": {
-            "description": "Returns an empty response indicating that the indexing process started."
-          }
-        }
-      }
-    },
-    "/_action/indexing/{indexer}": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Iterate an indexer",
-        "description": "Starts a defined indexer with an offset.\n\nfor the next request. `finish: true` in the response indicates that the indexer is finished",
-        "operationId": "iterate",
-        "parameters": [
-          {
-            "name": "indexer",
-            "in": "path",
-            "description": "Name of the indexer to iterate.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "offset": {
-                    "description": "The offset for the iteration.",
-                    "type": "integer"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Returns information about the iteration.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "finish": {
-                      "description": "Indicates if the indexing process finished.",
-                      "type": "boolean"
-                    },
-                    "offset": {
-                      "description": "Offset to be used for the next iteration.",
-                      "type": "integer"
-                    }
-                  },
-                  "type": "object"
                 }
               }
             }
@@ -53235,546 +53775,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/_action/order_transaction/{orderTransactionId}/state/{transition}": {
-      "post": {
-        "tags": [
-          "Order Management"
-        ],
-        "summary": "Transition an order transaction to a new state",
-        "description": "Changes the order transaction state and informs the customer via email if configured.",
-        "operationId": "orderTransactionStateTransition",
-        "parameters": [
-          {
-            "name": "orderTransactionId",
-            "in": "path",
-            "description": "Identifier of the order transaction.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "transition",
-            "in": "path",
-            "description": "The `action_name` of the `state_machine_transition`. For example `process` if the order state should change from open to in progress.\n\nNote: If you choose a transition that is not available, you will get an error that lists possible transitions for the current state.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "sendMail": {
-                    "description": "Controls if a mail should be sent to the customer."
-                  },
-                  "documentIds": {
-                    "description": "A list of document identifiers that should be attached",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "mediaIds": {
-                    "description": "A list of media identifiers that should be attached",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "stateFieldName": {
-                    "description": "This is the state column within the order transaction database table. There should be no need to change it from the default.",
-                    "type": "string",
-                    "default": "stateId"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Returns information about the transition that was made. `#/components/schemas/StateMachineTransition`"
-          }
-        }
-      }
-    },
-    "/_action/index": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Run indexer",
-        "description": "Runs all registered indexer in the shop asynchronously.",
-        "operationId": "index",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "skip": {
-                    "description": "Array of indexers/updaters to be skipped.",
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the indexing progress startet."
-          }
-        }
-      }
-    },
-    "/_action/media/{mediaId}/upload": {
-      "post": {
-        "tags": [
-          "Asset Management"
-        ],
-        "summary": "Upload a file to a media entity",
-        "description": "Adds a new file to a media entity. If the entity has an existing file, it will be replaced.\n\nThe are two methods of providing a file to this route:\n * Use a typical file upload and provide the file in the request\n * Fetch the file from an url. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.\nTo use file upload via url, the content type has to be `application/json` and the parameter `url` has to be provided.",
-        "operationId": "upload",
-        "parameters": [
-          {
-            "name": "mediaId",
-            "in": "path",
-            "description": "Identifier of the media entity.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "fileName",
-            "in": "query",
-            "description": "Name of the uploaded file. If not provided the media identifier will be used as name",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "extension",
-            "in": "query",
-            "description": "Extension of the uploaded file. For example `png`",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/octet-stream": {
-              "schema": {
-                "type": "string",
-                "format": "binary"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "required": [
-                  "url"
-                ],
-                "properties": {
-                  "url": {
-                    "description": "The url of the media file that will be downloaded.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Media file uploaded successful",
-            "headers": {
-              "Location": {
-                "description": "Contains the url to the uploaded media for a redirect.",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/message-queue/consume": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Consume messages from the message queue.",
-        "description": "This route can be used to consume messenges from the message queue. It is intended to be used if\nno cronjob is configured to consume messages regulary.",
-        "operationId": "consumeMessages",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "receiver"
-                ],
-                "properties": {
-                  "receiver": {
-                    "description": "The name of the transport in the messenger that should be processed.\nSee the [Symfony Messenger documentation](https://symfony.com/doc/current/messenger.html) for more information",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Returns information about handled messages",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "handledMessages": {
-                      "description": "The number of messages processed.",
-                      "type": "integer"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/order_delivery/{orderDeliveryId}/state/{transition}": {
-      "post": {
-        "tags": [
-          "Order Management"
-        ],
-        "summary": "Transition an order delivery to a new state",
-        "description": "Changes the order delivery state and informs the customer via email if configured.",
-        "operationId": "orderDeliveryStateTransition",
-        "parameters": [
-          {
-            "name": "orderDeliveryId",
-            "in": "path",
-            "description": "Identifier of the order delivery.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "transition",
-            "in": "path",
-            "description": "The `action_name` of the `state_machine_transition`. For example `process` if the order state should change from open to in progress.\n\nNote: If you choose a transition which is not possible, you will get an error that lists possible transition for the actual state.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "sendMail": {
-                    "description": "Controls if a mail should be send to the customer."
-                  },
-                  "documentIds": {
-                    "description": "A list of document identifiers that should be attached",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "mediaIds": {
-                    "description": "A list of media identifiers that should be attached",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "stateFieldName": {
-                    "description": "This is the state column within the order delivery database table. There should be no need to change it from the default.",
-                    "type": "string",
-                    "default": "stateId"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Todo: Use ref of `state_machine_transition` here"
-          }
-        }
-      }
-    },
-    "/_action/cache_info": {
-      "get": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Get cache information",
-        "description": "Get information about the cache configuration",
-        "operationId": "info",
-        "responses": {
-          "200": {
-            "description": "Information about the cache state.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "environment": {
-                      "description": "The active environment.",
-                      "type": "string"
-                    },
-                    "httpCache": {
-                      "description": "State of the HTTP cache.",
-                      "type": "boolean"
-                    },
-                    "cacheAdapter": {
-                      "description": "The active cache adapter.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/order_transaction_capture_refund/{refundId}": {
-      "post": {
-        "tags": [
-          "Order Management"
-        ],
-        "summary": "Refund an order transaction capture",
-        "description": "Refunds an order transaction capture.",
-        "operationId": "orderTransactionCaptureRefund",
-        "parameters": [
-          {
-            "name": "refundId",
-            "in": "path",
-            "description": "Identifier of the order transaction capture refund.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Refund was successful"
-          },
-          "400": {
-            "description": "Something went wrong, while processing the refund"
-          },
-          "404": {
-            "description": "Refund with id not found"
-          }
-        }
-      }
-    },
-    "/_action/number-range/reserve/{type}/{saleschannel}": {
-      "get": {
-        "tags": [
-          "Document Management"
-        ],
-        "summary": "Reserve or preview a document number",
-        "description": "This endpoint provides functionality to reserve or preview a document number which can be used to create a new document using the `/_action/order/{orderId}/document/{documentTypeName}` endpoint.\n\nThe number generated by the endpoint will be reserved and the number pointer will be incremented with every call. For preview purposes, you can add the `?preview=1` parameter to the request. In that case, the number will not be incremented.",
-        "operationId": "numberRangeReserve",
-        "parameters": [
-          {
-            "name": "type",
-            "in": "path",
-            "description": "`technicalName` of the document type (e.g. `document_invoice`). Available types can be fetched with the `/api/document-type endpoint`.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "saleschannel",
-            "in": "path",
-            "description": "Sales channel for the number range. Number ranges can be defined per sales channel, so you can pass a sales channel ID here.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "preview",
-            "in": "query",
-            "description": "If this parameter has a true value, the number will not actually be incremented, but only previewed.",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The generated number",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "number": {
-                      "description": "The generated (or previewed) document number.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Number range not found"
-          }
-        }
-      }
-    },
-    "/_info/version": {
-      "get": {
-        "tags": [
-          "System Info & Healthcheck"
-        ],
-        "summary": "Get the Shopware version",
-        "description": "Get the version of the Shopware instance",
-        "operationId": "infoShopwareVersion",
-        "responses": {
-          "200": {
-            "description": "Returns the version of the Shopware instance.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "version": {
-                      "description": "The Shopware version.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/oauth/token": {
-      "post": {
-        "tags": [
-          "Authorization & Authentication"
-        ],
-        "summary": "Fetch an access token",
-        "description": "Fetch a access token that can be used to perform authenticated requests. For more information take a look at the [Authentication documentation](https://shopware.stoplight.io/docs/admin-api/docs/concepts/authentication-authorisation.md).",
-        "operationId": "token",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/OAuthPasswordGrant"
-                  },
-                  {
-                    "$ref": "#/components/schemas/OAuthRefreshTokenGrant"
-                  },
-                  {
-                    "$ref": "#/components/schemas/OAuthClientCredentialsGrant"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Authorized successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "required": [
-                    "token_type",
-                    "expires_in",
-                    "access_token"
-                  ],
-                  "properties": {
-                    "token_type": {
-                      "description": "Type of the token.",
-                      "type": "string"
-                    },
-                    "expires_in": {
-                      "description": "Token lifetime in seconds.",
-                      "type": "integer"
-                    },
-                    "access_token": {
-                      "description": "The access token that can be used for subsequent requests",
-                      "type": "string"
-                    },
-                    "refresh_token": {
-                      "description": "The refresh token that can be used to refresh the access token. This field is not returned on grant type `refresh_token`.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          }
-        }
-      }
-    },
-    "/_action/index-products": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Send product indexing message",
-        "description": "Dispatches a product indexing message to the message bus, with the provided ids",
-        "operationId": "productIndexing",
-        "responses": {
-          "204": {
-            "description": "Returns an empty response indicating that the message dispatched."
           }
         }
       }
@@ -54140,6 +54140,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "privileges",
               "createdAt"
@@ -54280,6 +54281,7 @@
       "AclRole": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "privileges",
           "createdAt"
@@ -54389,6 +54391,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "path",
               "active",
@@ -54882,6 +54885,7 @@
       "App": {
         "description": "Added since version: 6.3.1.0",
         "required": [
+          "id",
           "name",
           "path",
           "active",
@@ -55095,6 +55099,7 @@
           },
           {
             "required": [
+              "id",
               "entity",
               "view",
               "url",
@@ -55182,6 +55187,7 @@
       "AppActionButton": {
         "description": "Added since version: 6.3.1.0",
         "required": [
+          "id",
           "entity",
           "view",
           "url",
@@ -55249,6 +55255,7 @@
           },
           {
             "required": [
+              "id",
               "value",
               "appId",
               "localeId",
@@ -55288,6 +55295,7 @@
       "AppAdministrationSnippet": {
         "description": "Added since version: 6.4.15.0",
         "required": [
+          "id",
           "value",
           "appId",
           "localeId",
@@ -55334,6 +55342,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "block",
               "template",
@@ -55421,6 +55430,7 @@
       "AppCmsBlock": {
         "description": "Added since version: 6.4.2.0",
         "required": [
+          "id",
           "name",
           "block",
           "template",
@@ -55488,6 +55498,7 @@
           },
           {
             "required": [
+              "id",
               "appId",
               "name",
               "url",
@@ -55639,6 +55650,7 @@
       "AppFlowAction": {
         "description": "Added since version: 6.4.10.0",
         "required": [
+          "id",
           "appId",
           "name",
           "url",
@@ -55749,6 +55761,7 @@
           },
           {
             "required": [
+              "id",
               "appId",
               "name",
               "aware",
@@ -55858,6 +55871,7 @@
       "AppFlowEvent": {
         "description": "Added since version: 6.5.2.0",
         "required": [
+          "id",
           "appId",
           "name",
           "aware",
@@ -55919,6 +55933,7 @@
           },
           {
             "required": [
+              "id",
               "appName",
               "identifier",
               "paymentMethodId",
@@ -56075,6 +56090,7 @@
       "AppPaymentMethod": {
         "description": "Added since version: 6.4.1.0",
         "required": [
+          "id",
           "appName",
           "identifier",
           "paymentMethodId",
@@ -56163,6 +56179,7 @@
           },
           {
             "required": [
+              "id",
               "identifier",
               "active",
               "appId",
@@ -56282,6 +56299,7 @@
       "AppScriptCondition": {
         "description": "Added since version: 6.4.10.3",
         "required": [
+          "id",
           "identifier",
           "active",
           "appId",
@@ -56357,6 +56375,7 @@
           },
           {
             "required": [
+              "id",
               "appName",
               "identifier",
               "shippingMethodId",
@@ -56495,6 +56514,7 @@
       "AppShippingMethod": {
         "description": "Added since version: 6.5.7.0",
         "required": [
+          "id",
           "appName",
           "identifier",
           "shippingMethodId",
@@ -56553,6 +56573,7 @@
           },
           {
             "required": [
+              "id",
               "template",
               "path",
               "active",
@@ -56629,6 +56650,7 @@
       "AppTemplate": {
         "description": "Added since version: 6.3.1.0",
         "required": [
+          "id",
           "template",
           "path",
           "active",
@@ -56682,6 +56704,7 @@
           },
           {
             "required": [
+              "id",
               "displayNestedProducts",
               "type",
               "productAssignmentType",
@@ -57239,6 +57262,7 @@
       "Category": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "displayNestedProducts",
           "type",
           "productAssignmentType",
@@ -57533,6 +57557,7 @@
           },
           {
             "required": [
+              "id",
               "position",
               "type",
               "sectionId",
@@ -57725,6 +57750,7 @@
       "CmsBlock": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "position",
           "type",
           "sectionId",
@@ -57859,6 +57885,7 @@
           },
           {
             "required": [
+              "id",
               "type",
               "createdAt"
             ],
@@ -58111,6 +58138,7 @@
       "CmsPage": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "type",
           "createdAt"
         ],
@@ -58221,6 +58249,7 @@
           },
           {
             "required": [
+              "id",
               "position",
               "type",
               "pageId",
@@ -58404,6 +58433,7 @@
       "CmsSection": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "position",
           "type",
           "pageId",
@@ -58526,6 +58556,7 @@
           },
           {
             "required": [
+              "id",
               "type",
               "slot",
               "blockId",
@@ -58625,6 +58656,7 @@
       "CmsSlot": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "type",
           "slot",
           "blockId",
@@ -58710,6 +58742,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name",
               "addressFormat"
@@ -59057,6 +59090,7 @@
       "Country": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name",
           "addressFormat"
@@ -59253,6 +59287,7 @@
           },
           {
             "required": [
+              "id",
               "countryId",
               "shortCode",
               "createdAt",
@@ -59400,6 +59435,7 @@
       "CountryState": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "countryId",
           "shortCode",
           "createdAt",
@@ -59477,6 +59513,7 @@
           },
           {
             "required": [
+              "id",
               "factor",
               "symbol",
               "isoCode",
@@ -59807,6 +59844,7 @@
       "Currency": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "factor",
           "symbol",
           "isoCode",
@@ -59976,6 +60014,7 @@
           },
           {
             "required": [
+              "id",
               "currencyId",
               "countryId",
               "itemRounding",
@@ -60118,6 +60157,7 @@
       "CurrencyCountryRounding": {
         "description": "Added since version: 6.4.0.0",
         "required": [
+          "id",
           "currencyId",
           "countryId",
           "itemRounding",
@@ -60215,6 +60255,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "fields",
               "createdAt"
@@ -60277,6 +60318,7 @@
       "CustomEntity": {
         "description": "Added since version: 6.4.9.0",
         "required": [
+          "id",
           "name",
           "fields",
           "createdAt"
@@ -60350,6 +60392,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "type",
               "createdAt"
@@ -60464,6 +60507,7 @@
       "CustomField": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "type",
           "createdAt"
@@ -60533,6 +60577,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "createdAt"
             ],
@@ -60706,6 +60751,7 @@
       "CustomFieldSet": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "createdAt"
         ],
@@ -60783,6 +60829,7 @@
           },
           {
             "required": [
+              "id",
               "customFieldSetId",
               "entityName",
               "createdAt"
@@ -60851,6 +60898,7 @@
       "CustomFieldSetRelation": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "customFieldSetId",
           "entityName",
           "createdAt"
@@ -60894,6 +60942,7 @@
           },
           {
             "required": [
+              "id",
               "groupId",
               "defaultPaymentMethodId",
               "salesChannelId",
@@ -61649,6 +61698,7 @@
       "Customer": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "groupId",
           "defaultPaymentMethodId",
           "salesChannelId",
@@ -61952,6 +62002,7 @@
           },
           {
             "required": [
+              "id",
               "customerId",
               "countryId",
               "firstName",
@@ -62156,6 +62207,7 @@
       "CustomerAddress": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "customerId",
           "countryId",
           "firstName",
@@ -62271,6 +62323,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -62422,6 +62475,7 @@
       "CustomerGroup": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -62543,6 +62597,7 @@
           },
           {
             "required": [
+              "id",
               "hash",
               "customerId",
               "createdAt"
@@ -62611,6 +62666,7 @@
       "CustomerRecovery": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "hash",
           "customerId",
           "createdAt"
@@ -62685,6 +62741,7 @@
           },
           {
             "required": [
+              "id",
               "customerId",
               "salesChannelId",
               "createdAt"
@@ -62817,6 +62874,7 @@
       "CustomerWishlist": {
         "description": "Added since version: 6.3.4.0",
         "required": [
+          "id",
           "customerId",
           "salesChannelId",
           "createdAt"
@@ -62874,6 +62932,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "wishlistId",
               "createdAt"
@@ -62976,6 +63035,7 @@
       "CustomerWishlistProduct": {
         "description": "Added since version: 6.3.4.0",
         "required": [
+          "id",
           "productId",
           "wishlistId",
           "createdAt"
@@ -63028,6 +63088,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "min",
               "max",
@@ -63144,6 +63205,7 @@
       "DeliveryTime": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "min",
           "max",
@@ -63215,6 +63277,7 @@
           },
           {
             "required": [
+              "id",
               "documentTypeId",
               "fileType",
               "orderId",
@@ -63438,6 +63501,7 @@
       "Document": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "documentTypeId",
           "fileType",
           "orderId",
@@ -63542,6 +63606,7 @@
           },
           {
             "required": [
+              "id",
               "documentTypeId",
               "name",
               "global",
@@ -63693,6 +63758,7 @@
       "DocumentBaseConfig": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "documentTypeId",
           "name",
           "global",
@@ -63776,6 +63842,7 @@
           },
           {
             "required": [
+              "id",
               "documentBaseConfigId",
               "createdAt"
             ],
@@ -63906,6 +63973,7 @@
       "DocumentBaseConfigSalesChannel": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "documentBaseConfigId",
           "createdAt"
         ],
@@ -63960,6 +64028,7 @@
           },
           {
             "required": [
+              "id",
               "technicalName",
               "createdAt",
               "name"
@@ -64097,6 +64166,7 @@
       "DocumentType": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "technicalName",
           "createdAt",
           "name"
@@ -64162,6 +64232,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "eventName",
               "createdAt"
@@ -64281,6 +64352,7 @@
       "Flow": {
         "description": "Added since version: 6.4.6.0",
         "required": [
+          "id",
           "name",
           "eventName",
           "createdAt"
@@ -64356,6 +64428,7 @@
           },
           {
             "required": [
+              "id",
               "flowId",
               "createdAt"
             ],
@@ -64570,6 +64643,7 @@
       "FlowSequence": {
         "description": "Added since version: 6.4.6.0",
         "required": [
+          "id",
           "flowId",
           "createdAt"
         ],
@@ -64665,6 +64739,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "createdAt"
             ],
@@ -64697,6 +64772,7 @@
       "FlowTemplate": {
         "description": "Added since version: 6.4.18.0",
         "required": [
+          "id",
           "name",
           "createdAt"
         ],
@@ -64735,6 +64811,7 @@
           },
           {
             "required": [
+              "id",
               "originalName",
               "path",
               "expireDate",
@@ -64814,6 +64891,7 @@
       "ImportExportFile": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "originalName",
           "path",
           "expireDate",
@@ -64871,6 +64949,7 @@
           },
           {
             "required": [
+              "id",
               "activity",
               "state",
               "records",
@@ -65088,6 +65167,7 @@
       "ImportExportLog": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "activity",
           "state",
           "records",
@@ -65185,6 +65265,7 @@
           },
           {
             "required": [
+              "id",
               "label",
               "sourceEntity",
               "fileType",
@@ -65287,6 +65368,7 @@
       "ImportExportProfile": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "label",
           "sourceEntity",
           "fileType",
@@ -65373,6 +65455,7 @@
           },
           {
             "required": [
+              "id",
               "label",
               "accessKey",
               "secretAccessKey",
@@ -65525,6 +65608,7 @@
       "Integration": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "label",
           "accessKey",
           "secretAccessKey",
@@ -65670,6 +65754,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name",
               "url"
@@ -65863,6 +65948,7 @@
       "LandingPage": {
         "description": "Added since version: 6.4.0.0",
         "required": [
+          "id",
           "createdAt",
           "name",
           "url"
@@ -66038,6 +66124,7 @@
           },
           {
             "required": [
+              "id",
               "localeId",
               "name",
               "createdAt"
@@ -66514,6 +66601,7 @@
       "Language": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "localeId",
           "name",
           "createdAt"
@@ -66640,6 +66728,7 @@
           },
           {
             "required": [
+              "id",
               "code",
               "createdAt",
               "name",
@@ -66750,6 +66839,7 @@
       "Locale": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "code",
           "createdAt",
           "name",
@@ -66814,6 +66904,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt"
             ],
             "properties": {
@@ -66855,6 +66946,7 @@
       "LogEntry": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt"
         ],
         "properties": {
@@ -66904,6 +66996,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -66990,6 +67083,7 @@
       "MailHeaderFooter": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -67058,6 +67152,7 @@
           },
           {
             "required": [
+              "id",
               "mailTemplateTypeId",
               "createdAt",
               "subject",
@@ -67180,6 +67275,7 @@
       "MailTemplate": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "mailTemplateTypeId",
           "createdAt",
           "subject",
@@ -67254,6 +67350,7 @@
       "MailTemplateMedia": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "mailTemplateId",
           "languageId",
           "mediaId"
@@ -67301,6 +67398,7 @@
           },
           {
             "required": [
+              "id",
               "technicalName",
               "createdAt",
               "name"
@@ -67382,6 +67480,7 @@
       "MailTemplateType": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "technicalName",
           "createdAt",
           "name"
@@ -67443,6 +67542,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "categoryId",
               "salesChannelId",
@@ -67583,6 +67683,7 @@
       "MainCategory": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "productId",
           "categoryId",
           "salesChannelId",
@@ -67649,6 +67750,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt"
             ],
             "properties": {
@@ -68522,6 +68624,7 @@
       "Media": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt"
         ],
         "properties": {
@@ -68832,6 +68935,7 @@
           },
           {
             "required": [
+              "id",
               "entity",
               "createdAt"
             ],
@@ -68898,6 +69002,7 @@
       "MediaDefaultFolder": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "entity",
           "createdAt"
         ],
@@ -68939,6 +69044,7 @@
           },
           {
             "required": [
+              "id",
               "configurationId",
               "name",
               "createdAt"
@@ -69150,6 +69256,7 @@
       "MediaFolder": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "configurationId",
           "name",
           "createdAt"
@@ -69240,6 +69347,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt"
             ],
             "properties": {
@@ -69351,6 +69459,7 @@
       "MediaFolderConfiguration": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt"
         ],
         "properties": {
@@ -69475,6 +69584,7 @@
           },
           {
             "required": [
+              "id",
               "mediaId",
               "width",
               "height",
@@ -69561,6 +69671,7 @@
       "MediaThumbnail": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "mediaId",
           "width",
           "height",
@@ -69624,6 +69735,7 @@
           },
           {
             "required": [
+              "id",
               "width",
               "height",
               "createdAt"
@@ -69698,6 +69810,7 @@
       "MediaThumbnailSize": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "width",
           "height",
           "createdAt"
@@ -69749,6 +69862,7 @@
           },
           {
             "required": [
+              "id",
               "email",
               "status",
               "hash",
@@ -69948,6 +70062,7 @@
       "NewsletterRecipient": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "email",
           "status",
           "hash",
@@ -70088,6 +70203,7 @@
           },
           {
             "required": [
+              "id",
               "status",
               "message",
               "createdAt"
@@ -70202,6 +70318,7 @@
       "Notification": {
         "description": "Added since version: 6.4.7.0",
         "required": [
+          "id",
           "status",
           "message",
           "createdAt"
@@ -70269,6 +70386,7 @@
           },
           {
             "required": [
+              "id",
               "typeId",
               "global",
               "pattern",
@@ -70419,6 +70537,7 @@
       "NumberRange": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "typeId",
           "global",
           "pattern",
@@ -70499,6 +70618,7 @@
           },
           {
             "required": [
+              "id",
               "numberRangeId",
               "salesChannelId",
               "createdAt"
@@ -70630,6 +70750,7 @@
       "NumberRangeSalesChannel": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "numberRangeId",
           "salesChannelId",
           "createdAt"
@@ -70685,6 +70806,7 @@
           },
           {
             "required": [
+              "id",
               "numberRangeId",
               "lastValue",
               "createdAt"
@@ -70754,6 +70876,7 @@
       "NumberRangeState": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "numberRangeId",
           "lastValue",
           "createdAt"
@@ -70797,6 +70920,7 @@
           },
           {
             "required": [
+              "id",
               "global",
               "createdAt",
               "typeName"
@@ -70906,6 +71030,7 @@
       "NumberRangeType": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "global",
           "createdAt",
           "typeName"
@@ -70969,6 +71094,7 @@
           },
           {
             "required": [
+              "id",
               "billingAddressId",
               "currencyId",
               "languageId",
@@ -71666,6 +71792,7 @@
       "Order": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "billingAddressId",
           "currencyId",
           "languageId",
@@ -72053,6 +72180,7 @@
           },
           {
             "required": [
+              "id",
               "countryId",
               "orderId",
               "firstName",
@@ -72299,6 +72427,7 @@
       "OrderAddress": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "countryId",
           "orderId",
           "firstName",
@@ -72434,6 +72563,7 @@
           },
           {
             "required": [
+              "id",
               "orderId",
               "email",
               "firstName",
@@ -72605,6 +72735,7 @@
       "OrderCustomer": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "orderId",
           "email",
           "firstName",
@@ -72711,6 +72842,7 @@
           },
           {
             "required": [
+              "id",
               "orderId",
               "shippingOrderAddressId",
               "shippingMethodId",
@@ -72997,6 +73129,7 @@
       "OrderDelivery": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "orderId",
           "shippingOrderAddressId",
           "shippingMethodId",
@@ -73174,6 +73307,7 @@
           },
           {
             "required": [
+              "id",
               "orderDeliveryId",
               "orderLineItemId",
               "createdAt"
@@ -73356,6 +73490,7 @@
       "OrderDeliveryPosition": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "orderDeliveryId",
           "orderLineItemId",
           "createdAt"
@@ -73504,6 +73639,7 @@
           },
           {
             "required": [
+              "id",
               "orderId",
               "identifier",
               "quantity",
@@ -73960,6 +74096,7 @@
       "OrderLineItem": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "orderId",
           "identifier",
           "quantity",
@@ -74220,6 +74357,7 @@
           },
           {
             "required": [
+              "id",
               "orderLineItemId",
               "mediaId",
               "position",
@@ -74338,6 +74476,7 @@
       "OrderLineItemDownload": {
         "description": "Added since version: 6.4.19.0",
         "required": [
+          "id",
           "orderLineItemId",
           "mediaId",
           "position",
@@ -74446,6 +74585,7 @@
           },
           {
             "required": [
+              "id",
               "orderId",
               "paymentMethodId",
               "amount",
@@ -74678,6 +74818,7 @@
       "OrderTransaction": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "orderId",
           "paymentMethodId",
           "amount",
@@ -74848,6 +74989,7 @@
           },
           {
             "required": [
+              "id",
               "orderTransactionId",
               "stateId",
               "amount",
@@ -75049,6 +75191,7 @@
       "OrderTransactionCapture": {
         "description": "Added since version: 6.4.12.0",
         "required": [
+          "id",
           "orderTransactionId",
           "stateId",
           "amount",
@@ -75214,6 +75357,7 @@
           },
           {
             "required": [
+              "id",
               "captureId",
               "stateId",
               "amount",
@@ -75418,6 +75562,7 @@
       "OrderTransactionCaptureRefund": {
         "description": "Added since version: 6.4.12.0",
         "required": [
+          "id",
           "captureId",
           "stateId",
           "amount",
@@ -75587,6 +75732,7 @@
           },
           {
             "required": [
+              "id",
               "refundId",
               "orderLineItemId",
               "amount",
@@ -75768,6 +75914,7 @@
       "OrderTransactionCaptureRefundPosition": {
         "description": "Added since version: 6.4.12.0",
         "required": [
+          "id",
           "refundId",
           "orderLineItemId",
           "amount",
@@ -75941,6 +76088,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -76290,6 +76438,7 @@
       "PaymentMethod": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -76446,6 +76595,7 @@
           },
           {
             "required": [
+              "id",
               "baseClass",
               "name",
               "autoload",
@@ -76579,6 +76729,7 @@
       "Plugin": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "baseClass",
           "name",
           "autoload",
@@ -76709,6 +76860,7 @@
           },
           {
             "required": [
+              "id",
               "taxId",
               "price",
               "productNumber",
@@ -77927,6 +78079,7 @@
       "Product": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "taxId",
           "price",
           "productNumber",
@@ -78531,6 +78684,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "optionId",
               "createdAt"
@@ -78680,6 +78834,7 @@
       "ProductConfiguratorSetting": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productId",
           "optionId",
           "createdAt"
@@ -78758,6 +78913,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "position",
               "type",
@@ -78919,6 +79075,7 @@
       "ProductCrossSelling": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "name",
           "position",
           "type",
@@ -79013,6 +79170,7 @@
           },
           {
             "required": [
+              "id",
               "crossSellingId",
               "productId",
               "createdAt"
@@ -79119,6 +79277,7 @@
       "ProductCrossSellingAssignedProducts": {
         "description": "Added since version: 6.2.0.0",
         "required": [
+          "id",
           "crossSellingId",
           "productId",
           "createdAt"
@@ -79212,6 +79371,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "mediaId",
               "createdAt"
@@ -79325,6 +79485,7 @@
       "ProductDownload": {
         "description": "Added since version: 6.4.19.0",
         "required": [
+          "id",
           "productId",
           "mediaId",
           "createdAt"
@@ -79391,6 +79552,7 @@
           },
           {
             "required": [
+              "id",
               "productStreamId",
               "storefrontSalesChannelId",
               "salesChannelId",
@@ -79638,6 +79800,7 @@
       "ProductExport": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "productStreamId",
           "storefrontSalesChannelId",
           "salesChannelId",
@@ -79772,6 +79935,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -79846,6 +80010,7 @@
       "ProductFeatureSet": {
         "description": "Added since version: 6.3.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -79898,6 +80063,7 @@
           },
           {
             "required": [
+              "id",
               "languageId",
               "keyword"
             ],
@@ -79958,6 +80124,7 @@
       "ProductKeywordDictionary": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "languageId",
           "keyword"
         ],
@@ -79994,6 +80161,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -80108,6 +80276,7 @@
       "ProductManufacturer": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -80177,6 +80346,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "mediaId",
               "createdAt"
@@ -80321,6 +80491,7 @@
       "ProductMedia": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productId",
           "mediaId",
           "createdAt"
@@ -80429,6 +80600,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "ruleId",
               "price",
@@ -80551,6 +80723,7 @@
       "ProductPrice": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productId",
           "ruleId",
           "price",
@@ -80664,6 +80837,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "salesChannelId",
               "languageId",
@@ -80860,6 +81034,7 @@
       "ProductReview": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productId",
           "salesChannelId",
           "languageId",
@@ -80964,6 +81139,7 @@
           },
           {
             "required": [
+              "id",
               "languageId",
               "andLogic",
               "minSearchLength",
@@ -81074,6 +81250,7 @@
       "ProductSearchConfig": {
         "description": "Added since version: 6.3.5.0",
         "required": [
+          "id",
           "languageId",
           "andLogic",
           "minSearchLength",
@@ -81136,6 +81313,7 @@
           },
           {
             "required": [
+              "id",
               "searchConfigId",
               "field",
               "tokenize",
@@ -81250,6 +81428,7 @@
       "ProductSearchConfigField": {
         "description": "Added since version: 6.3.5.0",
         "required": [
+          "id",
           "searchConfigId",
           "field",
           "tokenize",
@@ -81317,6 +81496,7 @@
           },
           {
             "required": [
+              "id",
               "languageId",
               "productId",
               "keyword",
@@ -81432,6 +81612,7 @@
       "ProductSearchKeyword": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "languageId",
           "productId",
           "keyword",
@@ -81500,6 +81681,7 @@
           },
           {
             "required": [
+              "id",
               "key",
               "priority",
               "active",
@@ -81552,6 +81734,7 @@
       "ProductSorting": {
         "description": "Added since version: 6.3.2.0",
         "required": [
+          "id",
           "key",
           "priority",
           "active",
@@ -81615,6 +81798,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -81790,6 +81974,7 @@
       "ProductStream": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -81870,6 +82055,7 @@
           },
           {
             "required": [
+              "id",
               "productStreamId",
               "type",
               "createdAt"
@@ -82021,6 +82207,7 @@
       "ProductStreamFilter": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productStreamId",
           "type",
           "createdAt"
@@ -82177,6 +82364,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "salesChannelId",
               "visibility",
@@ -82284,6 +82472,7 @@
       "ProductVisibility": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productId",
           "salesChannelId",
           "visibility",
@@ -82342,6 +82531,7 @@
           },
           {
             "required": [
+              "id",
               "active",
               "priority",
               "exclusive",
@@ -82731,6 +82921,7 @@
       "Promotion": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "active",
           "priority",
           "exclusive",
@@ -82945,6 +83136,7 @@
           },
           {
             "required": [
+              "id",
               "promotionId",
               "scope",
               "type",
@@ -83104,6 +83296,7 @@
       "PromotionDiscount": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "promotionId",
           "scope",
           "type",
@@ -83196,6 +83389,7 @@
           },
           {
             "required": [
+              "id",
               "discountId",
               "currencyId",
               "price",
@@ -83299,6 +83493,7 @@
       "PromotionDiscountPrices": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "discountId",
           "currencyId",
           "price",
@@ -83383,6 +83578,7 @@
           },
           {
             "required": [
+              "id",
               "promotionId",
               "code",
               "createdAt"
@@ -83454,6 +83650,7 @@
       "PromotionIndividualCode": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "promotionId",
           "code",
           "createdAt"
@@ -83594,6 +83791,7 @@
           },
           {
             "required": [
+              "id",
               "promotionId",
               "salesChannelId",
               "priority",
@@ -83697,6 +83895,7 @@
       "PromotionSalesChannel": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "promotionId",
           "salesChannelId",
           "priority",
@@ -83750,6 +83949,7 @@
           },
           {
             "required": [
+              "id",
               "promotionId",
               "packagerKey",
               "sorterKey",
@@ -83858,6 +84058,7 @@
       "PromotionSetgroup": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "promotionId",
           "packagerKey",
           "sorterKey",
@@ -83949,6 +84150,7 @@
           },
           {
             "required": [
+              "id",
               "displayType",
               "sortingType",
               "createdAt",
@@ -84041,6 +84243,7 @@
       "PropertyGroup": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "displayType",
           "sortingType",
           "createdAt",
@@ -84116,6 +84319,7 @@
           },
           {
             "required": [
+              "id",
               "groupId",
               "createdAt",
               "name"
@@ -84323,6 +84527,7 @@
       "PropertyGroupOption": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "groupId",
           "createdAt",
           "name"
@@ -84409,6 +84614,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "priority",
               "createdAt"
@@ -84903,6 +85109,7 @@
       "Rule": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "priority",
           "createdAt"
@@ -85056,6 +85263,7 @@
           },
           {
             "required": [
+              "id",
               "type",
               "ruleId",
               "createdAt"
@@ -85231,6 +85439,7 @@
       "RuleCondition": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "type",
           "ruleId",
           "createdAt"
@@ -85340,6 +85549,7 @@
           },
           {
             "required": [
+              "id",
               "typeId",
               "languageId",
               "customerGroupId",
@@ -86675,6 +86885,7 @@
       "SalesChannel": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "typeId",
           "languageId",
           "customerGroupId",
@@ -87107,6 +87318,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt"
             ],
             "properties": {
@@ -87178,6 +87390,7 @@
       "SalesChannelAnalytics": {
         "description": "Added since version: 6.2.0.0",
         "required": [
+          "id",
           "createdAt"
         ],
         "properties": {
@@ -87288,6 +87501,7 @@
           },
           {
             "required": [
+              "id",
               "url",
               "salesChannelId",
               "languageId",
@@ -87524,6 +87738,7 @@
       "SalesChannelDomain": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "url",
           "salesChannelId",
           "languageId",
@@ -87704,6 +87919,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -87796,6 +88012,7 @@
       "SalesChannelType": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -87870,6 +88087,7 @@
           },
           {
             "required": [
+              "id",
               "salutationKey",
               "createdAt",
               "displayName",
@@ -88073,6 +88291,7 @@
       "Salutation": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "salutationKey",
           "createdAt",
           "displayName",
@@ -88155,6 +88374,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "scheduledTaskClass",
               "runInterval",
@@ -88211,6 +88431,7 @@
       "ScheduledTask": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "scheduledTaskClass",
           "runInterval",
@@ -88278,6 +88499,7 @@
           },
           {
             "required": [
+              "id",
               "script",
               "hook",
               "name",
@@ -88357,6 +88579,7 @@
       "Script": {
         "description": "Added since version: 6.4.7.0",
         "required": [
+          "id",
           "script",
           "hook",
           "name",
@@ -88413,6 +88636,7 @@
           },
           {
             "required": [
+              "id",
               "languageId",
               "foreignKey",
               "routeName",
@@ -88547,6 +88771,7 @@
       "SeoUrl": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "languageId",
           "foreignKey",
           "routeName",
@@ -88638,6 +88863,7 @@
           },
           {
             "required": [
+              "id",
               "entityName",
               "routeName",
               "createdAt"
@@ -88718,6 +88944,7 @@
       "SeoUrlTemplate": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "entityName",
           "routeName",
           "createdAt"
@@ -88777,6 +89004,7 @@
           },
           {
             "required": [
+              "id",
               "deliveryTimeId",
               "taxType",
               "createdAt",
@@ -89154,6 +89382,7 @@
       "ShippingMethod": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "deliveryTimeId",
           "taxType",
           "createdAt",
@@ -89287,6 +89516,7 @@
           },
           {
             "required": [
+              "id",
               "shippingMethodId",
               "createdAt"
             ],
@@ -89435,6 +89665,7 @@
       "ShippingMethodPrice": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "shippingMethodId",
           "createdAt"
         ],
@@ -89543,6 +89774,7 @@
           },
           {
             "required": [
+              "id",
               "setId",
               "translationKey",
               "value",
@@ -89622,6 +89854,7 @@
       "Snippet": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "setId",
           "translationKey",
           "value",
@@ -89679,6 +89912,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "baseFile",
               "iso",
@@ -89786,6 +90020,7 @@
       "SnippetSet": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "baseFile",
           "iso",
@@ -89845,6 +90080,7 @@
           },
           {
             "required": [
+              "id",
               "technicalName",
               "createdAt",
               "name"
@@ -89986,6 +90222,7 @@
       "StateMachine": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "technicalName",
           "createdAt",
           "name"
@@ -90054,6 +90291,7 @@
           },
           {
             "required": [
+              "id",
               "referencedId",
               "referencedVersionId",
               "stateMachineId",
@@ -90236,6 +90474,7 @@
       "StateMachineHistory": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "referencedId",
           "referencedVersionId",
           "stateMachineId",
@@ -90324,6 +90563,7 @@
           },
           {
             "required": [
+              "id",
               "technicalName",
               "stateMachineId",
               "createdAt",
@@ -90681,6 +90921,7 @@
       "StateMachineState": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "technicalName",
           "stateMachineId",
           "createdAt",
@@ -90791,6 +91032,7 @@
           },
           {
             "required": [
+              "id",
               "actionName",
               "stateMachineId",
               "fromStateId",
@@ -90930,6 +91172,7 @@
       "StateMachineTransition": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "actionName",
           "stateMachineId",
           "fromStateId",
@@ -90995,6 +91238,7 @@
           },
           {
             "required": [
+              "id",
               "configurationKey",
               "configurationValue",
               "createdAt"
@@ -91071,6 +91315,7 @@
       "SystemConfig": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "configurationKey",
           "configurationValue",
           "createdAt"
@@ -91123,6 +91368,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "createdAt"
             ],
@@ -91436,6 +91682,7 @@
       "Tag": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "createdAt"
         ],
@@ -91524,6 +91771,7 @@
           },
           {
             "required": [
+              "id",
               "taxRate",
               "name",
               "position",
@@ -91665,6 +91913,7 @@
       "Tax": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "taxRate",
           "name",
           "position",
@@ -91733,6 +91982,7 @@
           },
           {
             "required": [
+              "id",
               "identifier",
               "priority",
               "createdAt",
@@ -91854,6 +92104,7 @@
       "TaxProvider": {
         "description": "Added since version: 6.5.0.0",
         "required": [
+          "id",
           "identifier",
           "priority",
           "createdAt",
@@ -91931,6 +92182,7 @@
           },
           {
             "required": [
+              "id",
               "taxRuleTypeId",
               "countryId",
               "taxRate",
@@ -92093,6 +92345,7 @@
       "TaxRule": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "taxRuleTypeId",
           "countryId",
           "taxRate",
@@ -92185,6 +92438,7 @@
           },
           {
             "required": [
+              "id",
               "technicalName",
               "position",
               "createdAt",
@@ -92263,6 +92517,7 @@
       "TaxRuleType": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "technicalName",
           "position",
           "createdAt",
@@ -92319,6 +92574,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "author",
               "active",
@@ -92518,6 +92774,7 @@
       "Theme": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "author",
           "active",
@@ -92722,6 +92979,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "shortCode",
               "name"
@@ -92797,6 +93055,7 @@
       "Unit": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "shortCode",
           "name"
@@ -92850,6 +93109,7 @@
           },
           {
             "required": [
+              "id",
               "localeId",
               "username",
               "firstName",
@@ -93358,6 +93618,7 @@
       "User": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "localeId",
           "username",
           "firstName",
@@ -93549,6 +93810,7 @@
           },
           {
             "required": [
+              "id",
               "userId",
               "accessKey",
               "secretAccessKey",
@@ -93628,6 +93890,7 @@
       "UserAccessKey": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "userId",
           "accessKey",
           "secretAccessKey",
@@ -93685,6 +93948,7 @@
           },
           {
             "required": [
+              "id",
               "userId",
               "key",
               "createdAt"
@@ -93756,6 +94020,7 @@
       "UserConfig": {
         "description": "Added since version: 6.3.5.0",
         "required": [
+          "id",
           "userId",
           "key",
           "createdAt"
@@ -93803,6 +94068,7 @@
           },
           {
             "required": [
+              "id",
               "hash",
               "userId",
               "createdAt"
@@ -93871,6 +94137,7 @@
       "UserRecovery": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "hash",
           "userId",
           "createdAt"
@@ -93914,6 +94181,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "eventName",
               "url",
@@ -94001,6 +94269,7 @@
       "Webhook": {
         "description": "Added since version: 6.3.1.0",
         "required": [
+          "id",
           "name",
           "eventName",
           "url",
@@ -94067,6 +94336,7 @@
           },
           {
             "required": [
+              "id",
               "webhookName",
               "eventName",
               "deliveryStatus",
@@ -94141,6 +94411,7 @@
       "WebhookEventLog": {
         "description": "Added since version: 6.4.1.0",
         "required": [
+          "id",
           "webhookName",
           "eventName",
           "deliveryStatus",
@@ -94223,130 +94494,6 @@
           }
         },
         "type": "object"
-      },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
-        "type": "object",
-        "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
-          }
-        },
-        "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
-          }
-        }
-      },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scopes": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scopes",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scopes": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scopes",
-              "refresh_token"
-            ]
-          }
-        ]
       },
       "businessEventsResponse": {
         "type": "array",
@@ -94568,6 +94715,130 @@
             ]
           }
         }
+      },
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scopes": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scopes",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scopes": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scopes",
+              "refresh_token"
+            ]
+          }
+        ]
       },
       "infoConfigResponse": {
         "type": "object",
