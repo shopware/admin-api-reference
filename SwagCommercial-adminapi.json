@@ -17171,7 +17171,7 @@
     "/api/_action/invite-employee": {
       "post": {
         "tags": [
-          "B2B"
+          "B2B Employee Management"
         ],
         "summary": "Sends an invite email to employee",
         "description": "This route is used to send an invite email to an employee",
@@ -17208,7 +17208,7 @@
     "/api/_action/create-employee": {
       "post": {
         "tags": [
-          "B2B"
+          "B2B Employee Management"
         ],
         "summary": "Creates an employee",
         "description": "This route is used to create an employee",
@@ -17273,7 +17273,7 @@
     "/api/_action/update-employee": {
       "patch": {
         "tags": [
-          "B2B"
+          "B2B Employee Management"
         ],
         "summary": "Updates an employee",
         "description": "This route is used to update an employee",
@@ -17303,6 +17303,287 @@
                   },
                   "roleId": {
                     "description": "Id of the role of the employee",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No content response"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/api/_proxy-quote/{salesChannelId}": {
+      "post": {
+        "tags": [
+          "B2B Quote Management"
+        ],
+        "summary": "Create a new quote",
+        "description": "This route is used to create a new quote from admin",
+        "operationId": "createQuoteFromAdmin",
+        "parameters": [
+          {
+            "name": "salesChannelId",
+            "in": "path",
+            "description": "Identifier of the sales channel to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "customerId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Quote entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quote"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/api/_action/quote/{quoteId}/product/{productId}": {
+      "post": {
+        "tags": [
+          "B2B Quote Management"
+        ],
+        "summary": "Add product to quote",
+        "description": "This route is used to add a product to a quote from admin",
+        "operationId": "addProductToQuote",
+        "parameters": [
+          {
+            "name": "quoteId",
+            "in": "path",
+            "description": "Identifier of the quote to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "Identifier of the product to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "quantity": {
+                    "type": "integer",
+                    "pattern": "int32"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No content response"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/api/_action/quote/{quoteId}/lineItem": {
+      "post": {
+        "tags": [
+          "B2B Quote Management"
+        ],
+        "summary": "Add custom line item to quote",
+        "description": "This route is used to add a custom line item to a quote from admin",
+        "operationId": "addCustomLineItemToQuote",
+        "parameters": [
+          {
+            "name": "quoteId",
+            "in": "path",
+            "description": "Identifier of the quote to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "identifier": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "type": {
+                    "type": "string",
+                    "default": "custom"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "pattern": "int32"
+                  },
+                  "label": {
+                    "type": "string",
+                    "default": "null"
+                  },
+                  "description": {
+                    "type": "string",
+                    "default": "null"
+                  },
+                  "removable": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "stackable": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "payload": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "priceDefinition": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No content response"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/api/_action/quote/{quoteId}/recalculate": {
+      "post": {
+        "tags": [
+          "B2B Quote Management"
+        ],
+        "summary": "Recalculate a quote",
+        "description": "This route is used to recalculate a quote",
+        "operationId": "recalculateQuote",
+        "parameters": [
+          {
+            "name": "quoteId",
+            "in": "path",
+            "description": "Identifier of the quote to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content response"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/api/_action/quote/{quoteId}/comment": {
+      "post": {
+        "tags": [
+          "B2B Quote Management"
+        ],
+        "summary": "Create a new comment",
+        "description": "This route is used to create a new comment from admin",
+        "operationId": "createComment",
+        "parameters": [
+          {
+            "name": "quoteId",
+            "in": "path",
+            "description": "Identifier of the quote to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "comment": {
+                    "description": "Message content",
+                    "type": "string"
+                  },
+                  "state": {
+                    "description": "Current quote state",
                     "type": "string"
                   }
                 },
