@@ -72,7 +72,7 @@ These documents are associated with order events. The below endpoint creates a d
 }
 ```
 
-While placing an order, during order transaction or order delivery, you have the option to set the `sent` parameter to `true`, which is a boolean flag determining whether to to skip documents that have already been marked as sent while processing orders.
+While placing an order, during order transaction or order delivery, you have the option to set the `sent` parameter to `true`, which is a boolean flag determining whether to skip documents that have already been marked as sent while processing orders.
 
 ## Download a document
 
