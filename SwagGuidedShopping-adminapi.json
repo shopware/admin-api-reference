@@ -211,6 +211,87 @@
         }
       }
     },
+    "/search/guided-shopping-appointment": {
+      "post": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Search appointments",
+        "description": "Return list of appointments",
+        "operationId": "searchAppointments",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetListBodyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/GuidedShoppingAppointment"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Appointment"
+                      }
+                    },
+                    "aggregations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        },
+        "parameters": []
+      }
+    },
     "/guided-shopping-appointment/{id}": {
       "get": {
         "tags": [
@@ -585,6 +666,80 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/guided-shopping-appointment-attendee": {
+      "post": {
+        "tags": [
+          "Guided Shopping Appointment Attendee"
+        ],
+        "summary": "Search for the Guided Shopping Appointment Attendee resources.",
+        "description": "",
+        "operationId": "searchGuidedShoppingAppointmentAttendee",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of GuidedShoppingAppointmentAttendee",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingAppointmentAttendee"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -985,6 +1140,80 @@
         }
       }
     },
+    "/search/guided-shopping-appointment-video-chat": {
+      "post": {
+        "tags": [
+          "Guided Shopping Appointment Video Chat"
+        ],
+        "summary": "Search for the Guided Shopping Appointment Video Chat resources.",
+        "description": "",
+        "operationId": "searchGuidedShoppingAppointmentVideoChat",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of GuidedShoppingAppointmentVideoChat",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingAppointmentVideoChat"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/guided-shopping-appointment-video-chat/{id}": {
       "get": {
         "tags": [
@@ -1372,6 +1601,80 @@
         }
       }
     },
+    "/search/guided-shopping-attendee-product-collection": {
+      "post": {
+        "tags": [
+          "Guided Shopping Attendee Product Collection"
+        ],
+        "summary": "Search for the Guided Shopping Attendee Product Collection resources.",
+        "description": "",
+        "operationId": "searchGuidedShoppingAttendeeProductCollection",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of GuidedShoppingAttendeeProductCollection",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingAttendeeProductCollection"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/guided-shopping-attendee-product-collection/{id}": {
       "get": {
         "tags": [
@@ -1746,6 +2049,80 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/guided-shopping-interaction": {
+      "post": {
+        "tags": [
+          "Guided Shopping Interaction"
+        ],
+        "summary": "Search for the Guided Shopping Interaction resources.",
+        "description": "",
+        "operationId": "searchGuidedShoppingInteraction",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of GuidedShoppingInteraction",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingInteraction"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -2150,6 +2527,87 @@
         }
       }
     },
+    "/search/guided-shopping-presentation": {
+      "post": {
+        "tags": [
+          "Presentation"
+        ],
+        "summary": "Search presentations",
+        "description": "Return list of presentations",
+        "operationId": "searchPresentations",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetListBodyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/GuidedShoppingPresentation"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Presentation"
+                      }
+                    },
+                    "aggregations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        },
+        "parameters": []
+      }
+    },
     "/guided-shopping-presentation/{id}": {
       "get": {
         "tags": [
@@ -2537,6 +2995,80 @@
         }
       }
     },
+    "/search/guided-shopping-presentation-cms-page": {
+      "post": {
+        "tags": [
+          "Guided Shopping Presentation Cms Page"
+        ],
+        "summary": "Search for the Guided Shopping Presentation Cms Page resources.",
+        "description": "Available since: 6.0.0.0",
+        "operationId": "searchGuidedShoppingPresentationCmsPage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of GuidedShoppingPresentationCmsPage",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GuidedShoppingPresentationCmsPage"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/guided-shopping-presentation-cms-page/{id}": {
       "get": {
         "tags": [
@@ -2724,155 +3256,6 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/search/guided-shopping-presentation": {
-      "post": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Search presentations",
-        "description": "Return list of presentations",
-        "operationId": "searchPresentations",
-        "parameters": [],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetListBodyRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Presentation"
-                      }
-                    },
-                    "aggregations": {
-                      "type": "array",
-                      "items": {
-                        "type": "object"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/guided-shopping-presentation/{presentationId}": {
-      "get": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Get detail of presentation",
-        "description": "",
-        "operationId": "getPresentation",
-        "parameters": [
-          {
-            "name": "presentationId",
-            "in": "path",
-            "description": "Presentation id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Presentation"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Update partially the existing presentation",
-        "description": "",
-        "operationId": "updatePresentation",
-        "parameters": [
-          {
-            "name": "presentationId",
-            "in": "path",
-            "description": "Presentation id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Presentation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Delete presentation",
-        "description": "",
-        "operationId": "deletePresentation",
-        "parameters": [
-          {
-            "name": "presentationId",
-            "in": "path",
-            "description": "Presentation id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
           }
         }
       }
@@ -3487,56 +3870,6 @@
         }
       }
     },
-    "/search/guided-shopping-appointment": {
-      "post": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Search appointments",
-        "description": "Return list of appointments",
-        "operationId": "searchAppointments",
-        "parameters": [],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetListBodyRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Appointment"
-                      }
-                    },
-                    "aggregations": {
-                      "type": "array",
-                      "items": {
-                        "type": "object"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/guided-shopping-appointment/{appointmentId}": {
       "get": {
         "tags": [
@@ -3622,6 +3955,105 @@
             "name": "appointmentId",
             "in": "path",
             "description": "Appointment id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/guided-shopping-presentation/{presentationId}": {
+      "get": {
+        "tags": [
+          "Presentation"
+        ],
+        "summary": "Get detail of presentation",
+        "description": "",
+        "operationId": "getPresentation",
+        "parameters": [
+          {
+            "name": "presentationId",
+            "in": "path",
+            "description": "Presentation id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Presentation"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Presentation"
+        ],
+        "summary": "Update partially the existing presentation",
+        "description": "",
+        "operationId": "updatePresentation",
+        "parameters": [
+          {
+            "name": "presentationId",
+            "in": "path",
+            "description": "Presentation id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Presentation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Presentation"
+        ],
+        "summary": "Delete presentation",
+        "description": "",
+        "operationId": "deletePresentation",
+        "parameters": [
+          {
+            "name": "presentationId",
+            "in": "path",
+            "description": "Presentation id",
             "required": true,
             "schema": {
               "type": "string",
@@ -3997,6 +4429,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "privileges",
               "createdAt"
@@ -4137,6 +4570,7 @@
       "AclRole": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "privileges",
           "createdAt"
@@ -4238,6 +4672,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "path",
               "active",
@@ -4731,6 +5166,7 @@
       "App": {
         "description": "Added since version: 6.3.1.0",
         "required": [
+          "id",
           "name",
           "path",
           "active",
@@ -4920,6 +5356,7 @@
           },
           {
             "required": [
+              "id",
               "entity",
               "view",
               "url",
@@ -5007,6 +5444,7 @@
       "AppActionButton": {
         "description": "Added since version: 6.3.1.0",
         "required": [
+          "id",
           "entity",
           "view",
           "url",
@@ -5066,6 +5504,7 @@
           },
           {
             "required": [
+              "id",
               "value",
               "appId",
               "localeId",
@@ -5105,6 +5544,7 @@
       "AppAdministrationSnippet": {
         "description": "Added since version: 6.4.15.0",
         "required": [
+          "id",
           "value",
           "appId",
           "localeId",
@@ -5147,6 +5587,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "block",
               "template",
@@ -5234,6 +5675,7 @@
       "AppCmsBlock": {
         "description": "Added since version: 6.4.2.0",
         "required": [
+          "id",
           "name",
           "block",
           "template",
@@ -5293,6 +5735,7 @@
           },
           {
             "required": [
+              "id",
               "appId",
               "name",
               "url",
@@ -5444,6 +5887,7 @@
       "AppFlowAction": {
         "description": "Added since version: 6.4.10.0",
         "required": [
+          "id",
           "appId",
           "name",
           "url",
@@ -5542,6 +5986,7 @@
           },
           {
             "required": [
+              "id",
               "appId",
               "name",
               "aware",
@@ -5651,6 +6096,7 @@
       "AppFlowEvent": {
         "description": "Added since version: 6.5.2.0",
         "required": [
+          "id",
           "appId",
           "name",
           "aware",
@@ -5707,6 +6153,7 @@
           },
           {
             "required": [
+              "id",
               "appName",
               "identifier",
               "paymentMethodId",
@@ -5863,6 +6310,7 @@
       "AppPaymentMethod": {
         "description": "Added since version: 6.4.1.0",
         "required": [
+          "id",
           "appName",
           "identifier",
           "paymentMethodId",
@@ -5939,6 +6387,7 @@
           },
           {
             "required": [
+              "id",
               "identifier",
               "active",
               "appId",
@@ -6058,6 +6507,7 @@
       "AppScriptCondition": {
         "description": "Added since version: 6.4.10.3",
         "required": [
+          "id",
           "identifier",
           "active",
           "appId",
@@ -6124,6 +6574,7 @@
           },
           {
             "required": [
+              "id",
               "appName",
               "identifier",
               "shippingMethodId",
@@ -6262,6 +6713,7 @@
       "AppShippingMethod": {
         "description": "Added since version: 6.5.7.0",
         "required": [
+          "id",
           "appName",
           "identifier",
           "shippingMethodId",
@@ -6320,6 +6772,7 @@
           },
           {
             "required": [
+              "id",
               "template",
               "path",
               "active",
@@ -6396,6 +6849,7 @@
       "AppTemplate": {
         "description": "Added since version: 6.3.1.0",
         "required": [
+          "id",
           "template",
           "path",
           "active",
@@ -6444,6 +6898,7 @@
           },
           {
             "required": [
+              "id",
               "displayNestedProducts",
               "type",
               "productAssignmentType",
@@ -7001,6 +7456,7 @@
       "Category": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "displayNestedProducts",
           "type",
           "productAssignmentType",
@@ -7259,6 +7715,7 @@
           },
           {
             "required": [
+              "id",
               "position",
               "type",
               "sectionId",
@@ -7451,6 +7908,7 @@
       "CmsBlock": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "position",
           "type",
           "sectionId",
@@ -7564,6 +8022,7 @@
           },
           {
             "required": [
+              "id",
               "type",
               "createdAt"
             ],
@@ -7850,6 +8309,7 @@
       "CmsPage": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "type",
           "createdAt"
         ],
@@ -7983,6 +8443,7 @@
           },
           {
             "required": [
+              "id",
               "position",
               "type",
               "pageId",
@@ -8167,6 +8628,7 @@
       "CmsSection": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "position",
           "type",
           "pageId",
@@ -8272,6 +8734,7 @@
           },
           {
             "required": [
+              "id",
               "type",
               "slot",
               "blockId",
@@ -8371,6 +8834,7 @@
       "CmsSlot": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "type",
           "slot",
           "blockId",
@@ -8442,6 +8906,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name",
               "addressFormat"
@@ -8789,6 +9254,7 @@
       "Country": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name",
           "addressFormat"
@@ -8959,6 +9425,7 @@
           },
           {
             "required": [
+              "id",
               "countryId",
               "shortCode",
               "createdAt",
@@ -9106,6 +9573,7 @@
       "CountryState": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "countryId",
           "shortCode",
           "createdAt",
@@ -9175,6 +9643,7 @@
           },
           {
             "required": [
+              "id",
               "factor",
               "symbol",
               "isoCode",
@@ -9221,6 +9690,11 @@
                 "type": "object"
               },
               "itemRounding": {
+                "required": [
+                  "decimals",
+                  "interval",
+                  "roundForNet"
+                ],
                 "properties": {
                   "decimals": {
                     "type": "integer",
@@ -9237,6 +9711,11 @@
                 "type": "object"
               },
               "totalRounding": {
+                "required": [
+                  "decimals",
+                  "interval",
+                  "roundForNet"
+                ],
                 "properties": {
                   "decimals": {
                     "type": "integer",
@@ -9495,6 +9974,7 @@
       "Currency": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "factor",
           "symbol",
           "isoCode",
@@ -9541,6 +10021,11 @@
             "type": "object"
           },
           "itemRounding": {
+            "required": [
+              "decimals",
+              "interval",
+              "roundForNet"
+            ],
             "properties": {
               "decimals": {
                 "type": "integer",
@@ -9557,6 +10042,11 @@
             "type": "object"
           },
           "totalRounding": {
+            "required": [
+              "decimals",
+              "interval",
+              "roundForNet"
+            ],
             "properties": {
               "decimals": {
                 "type": "integer",
@@ -9638,6 +10128,7 @@
           },
           {
             "required": [
+              "id",
               "currencyId",
               "countryId",
               "itemRounding",
@@ -9658,6 +10149,11 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "itemRounding": {
+                "required": [
+                  "decimals",
+                  "interval",
+                  "roundForNet"
+                ],
                 "properties": {
                   "decimals": {
                     "type": "integer",
@@ -9674,6 +10170,11 @@
                 "type": "object"
               },
               "totalRounding": {
+                "required": [
+                  "decimals",
+                  "interval",
+                  "roundForNet"
+                ],
                 "properties": {
                   "decimals": {
                     "type": "integer",
@@ -9770,6 +10271,7 @@
       "CurrencyCountryRounding": {
         "description": "Added since version: 6.4.0.0",
         "required": [
+          "id",
           "currencyId",
           "countryId",
           "itemRounding",
@@ -9790,6 +10292,11 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "itemRounding": {
+            "required": [
+              "decimals",
+              "interval",
+              "roundForNet"
+            ],
             "properties": {
               "decimals": {
                 "type": "integer",
@@ -9806,6 +10313,11 @@
             "type": "object"
           },
           "totalRounding": {
+            "required": [
+              "decimals",
+              "interval",
+              "roundForNet"
+            ],
             "properties": {
               "decimals": {
                 "type": "integer",
@@ -9848,6 +10360,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "fields",
               "createdAt"
@@ -9910,6 +10423,7 @@
       "CustomEntity": {
         "description": "Added since version: 6.4.9.0",
         "required": [
+          "id",
           "name",
           "fields",
           "createdAt"
@@ -9975,6 +10489,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "type",
               "createdAt"
@@ -10089,6 +10604,7 @@
       "CustomField": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "type",
           "createdAt"
@@ -10150,6 +10666,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "createdAt"
             ],
@@ -10323,6 +10840,7 @@
       "CustomFieldSet": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "createdAt"
         ],
@@ -10393,6 +10911,7 @@
           },
           {
             "required": [
+              "id",
               "customFieldSetId",
               "entityName",
               "createdAt"
@@ -10461,6 +10980,7 @@
       "CustomFieldSetRelation": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "customFieldSetId",
           "entityName",
           "createdAt"
@@ -10501,6 +11021,7 @@
           },
           {
             "required": [
+              "id",
               "groupId",
               "defaultPaymentMethodId",
               "salesChannelId",
@@ -11292,6 +11813,7 @@
       "Customer": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "groupId",
           "defaultPaymentMethodId",
           "salesChannelId",
@@ -11593,6 +12115,7 @@
           },
           {
             "required": [
+              "id",
               "customerId",
               "countryId",
               "firstName",
@@ -11797,6 +12320,7 @@
       "CustomerAddress": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "customerId",
           "countryId",
           "firstName",
@@ -11895,6 +12419,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -12046,6 +12571,7 @@
       "CustomerGroup": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -12154,6 +12680,7 @@
           },
           {
             "required": [
+              "id",
               "hash",
               "customerId",
               "createdAt"
@@ -12222,6 +12749,7 @@
       "CustomerRecovery": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "hash",
           "customerId",
           "createdAt"
@@ -12290,6 +12818,7 @@
           },
           {
             "required": [
+              "id",
               "customerId",
               "salesChannelId",
               "createdAt"
@@ -12422,6 +12951,7 @@
       "CustomerWishlist": {
         "description": "Added since version: 6.3.4.0",
         "required": [
+          "id",
           "customerId",
           "salesChannelId",
           "createdAt"
@@ -12475,6 +13005,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "wishlistId",
               "createdAt"
@@ -12577,6 +13108,7 @@
       "CustomerWishlistProduct": {
         "description": "Added since version: 6.3.4.0",
         "required": [
+          "id",
           "productId",
           "wishlistId",
           "createdAt"
@@ -12625,6 +13157,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "min",
               "max",
@@ -12741,6 +13274,7 @@
       "DeliveryTime": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "min",
           "max",
@@ -12805,6 +13339,7 @@
           },
           {
             "required": [
+              "id",
               "documentTypeId",
               "fileType",
               "orderId",
@@ -13028,6 +13563,7 @@
       "Document": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "documentTypeId",
           "fileType",
           "orderId",
@@ -13120,6 +13656,7 @@
           },
           {
             "required": [
+              "id",
               "documentTypeId",
               "name",
               "global",
@@ -13271,6 +13808,7 @@
       "DocumentBaseConfig": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "documentTypeId",
           "name",
           "global",
@@ -13343,6 +13881,7 @@
           },
           {
             "required": [
+              "id",
               "documentBaseConfigId",
               "createdAt"
             ],
@@ -13473,6 +14012,7 @@
       "DocumentBaseConfigSalesChannel": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "documentBaseConfigId",
           "createdAt"
         ],
@@ -13523,6 +14063,7 @@
           },
           {
             "required": [
+              "id",
               "technicalName",
               "createdAt",
               "name"
@@ -13660,6 +14201,7 @@
       "DocumentType": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "technicalName",
           "createdAt",
           "name"
@@ -13720,6 +14262,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "eventName",
               "createdAt"
@@ -13839,6 +14382,7 @@
       "Flow": {
         "description": "Added since version: 6.4.6.0",
         "required": [
+          "id",
           "name",
           "eventName",
           "createdAt"
@@ -13905,6 +14449,7 @@
           },
           {
             "required": [
+              "id",
               "flowId",
               "createdAt"
             ],
@@ -14119,6 +14664,7 @@
       "FlowSequence": {
         "description": "Added since version: 6.4.6.0",
         "required": [
+          "id",
           "flowId",
           "createdAt"
         ],
@@ -14202,6 +14748,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "createdAt"
             ],
@@ -14234,6 +14781,7 @@
       "FlowTemplate": {
         "description": "Added since version: 6.4.18.0",
         "required": [
+          "id",
           "name",
           "createdAt"
         ],
@@ -14268,6 +14816,8 @@
           },
           {
             "required": [
+              "id",
+              "presentationId",
               "salesChannelDomainId",
               "presentationPath",
               "mode",
@@ -14362,6 +14912,9 @@
                 "type": "string",
                 "format": "date-time",
                 "readOnly": true
+              },
+              "translated": {
+                "type": "object"
               },
               "relationships": {
                 "properties": {
@@ -14580,6 +15133,8 @@
       },
       "GuidedShoppingAppointment": {
         "required": [
+          "id",
+          "presentationId",
           "salesChannelDomainId",
           "presentationPath",
           "mode",
@@ -14675,6 +15230,9 @@
             "format": "date-time",
             "readOnly": true
           },
+          "translated": {
+            "type": "object"
+          },
           "presentation": {
             "$ref": "#/components/schemas/GuidedShoppingPresentation"
           },
@@ -14709,6 +15267,7 @@
           },
           {
             "required": [
+              "id",
               "appointmentId",
               "type",
               "createdAt"
@@ -14931,6 +15490,7 @@
       },
       "GuidedShoppingAppointmentAttendee": {
         "required": [
+          "id",
           "appointmentId",
           "type",
           "createdAt"
@@ -15023,6 +15583,7 @@
           },
           {
             "required": [
+              "id",
               "appointmentId",
               "createdAt"
             ],
@@ -15104,6 +15665,7 @@
       },
       "GuidedShoppingAppointmentVideoChat": {
         "required": [
+          "id",
           "appointmentId",
           "createdAt"
         ],
@@ -15157,6 +15719,7 @@
           },
           {
             "required": [
+              "id",
               "attendeeId",
               "productId",
               "alias",
@@ -15262,6 +15825,7 @@
       },
       "GuidedShoppingAttendeeProductCollection": {
         "required": [
+          "id",
           "attendeeId",
           "productId",
           "alias",
@@ -15313,6 +15877,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "triggeredAt",
               "attendeeId",
@@ -15392,6 +15957,7 @@
       },
       "GuidedShoppingInteraction": {
         "required": [
+          "id",
           "name",
           "triggeredAt",
           "attendeeId",
@@ -15443,6 +16009,7 @@
           },
           {
             "required": [
+              "id",
               "createdById",
               "createdAt",
               "name"
@@ -15655,6 +16222,7 @@
       },
       "GuidedShoppingPresentation": {
         "required": [
+          "id",
           "createdById",
           "createdAt",
           "name"
@@ -15738,6 +16306,7 @@
           },
           {
             "required": [
+              "id",
               "presentationId",
               "cmsPageId",
               "createdAt"
@@ -15936,6 +16505,7 @@
       "GuidedShoppingPresentationCmsPage": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "presentationId",
           "cmsPageId",
           "createdAt"
@@ -16028,6 +16598,7 @@
           },
           {
             "required": [
+              "id",
               "originalName",
               "path",
               "expireDate",
@@ -16107,6 +16678,7 @@
       "ImportExportFile": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "originalName",
           "path",
           "expireDate",
@@ -16158,6 +16730,7 @@
           },
           {
             "required": [
+              "id",
               "activity",
               "state",
               "records",
@@ -16375,6 +16948,7 @@
       "ImportExportLog": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "activity",
           "state",
           "records",
@@ -16460,6 +17034,7 @@
           },
           {
             "required": [
+              "id",
               "label",
               "sourceEntity",
               "fileType",
@@ -16562,6 +17137,7 @@
       "ImportExportProfile": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "label",
           "sourceEntity",
           "fileType",
@@ -16637,6 +17213,7 @@
           },
           {
             "required": [
+              "id",
               "label",
               "accessKey",
               "secretAccessKey",
@@ -16789,6 +17366,7 @@
       "Integration": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "label",
           "accessKey",
           "secretAccessKey",
@@ -16916,6 +17494,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name",
               "url"
@@ -17109,6 +17688,7 @@
       "LandingPage": {
         "description": "Added since version: 6.4.0.0",
         "required": [
+          "id",
           "createdAt",
           "name",
           "url"
@@ -17263,6 +17843,7 @@
           },
           {
             "required": [
+              "id",
               "localeId",
               "name",
               "createdAt"
@@ -17775,6 +18356,7 @@
       "Language": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "localeId",
           "name",
           "createdAt"
@@ -17931,6 +18513,7 @@
           },
           {
             "required": [
+              "id",
               "code",
               "createdAt",
               "name",
@@ -18041,6 +18624,7 @@
       "Locale": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "code",
           "createdAt",
           "name",
@@ -18099,6 +18683,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt"
             ],
             "properties": {
@@ -18140,6 +18725,7 @@
       "LogEntry": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt"
         ],
         "properties": {
@@ -18184,6 +18770,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -18270,6 +18857,7 @@
       "MailHeaderFooter": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -18329,6 +18917,7 @@
           },
           {
             "required": [
+              "id",
               "mailTemplateTypeId",
               "createdAt",
               "subject",
@@ -18451,6 +19040,7 @@
       "MailTemplate": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "mailTemplateTypeId",
           "createdAt",
           "subject",
@@ -18515,6 +19105,7 @@
       "MailTemplateMedia": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "mailTemplateId",
           "languageId",
           "mediaId"
@@ -18557,6 +19148,7 @@
           },
           {
             "required": [
+              "id",
               "technicalName",
               "createdAt",
               "name"
@@ -18638,6 +19230,7 @@
       "MailTemplateType": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "technicalName",
           "createdAt",
           "name"
@@ -18692,6 +19285,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "categoryId",
               "salesChannelId",
@@ -18832,6 +19426,7 @@
       "MainCategory": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "productId",
           "categoryId",
           "salesChannelId",
@@ -18892,6 +19487,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt"
             ],
             "properties": {
@@ -19765,6 +20361,7 @@
       "Media": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt"
         ],
         "properties": {
@@ -20059,6 +20656,7 @@
           },
           {
             "required": [
+              "id",
               "entity",
               "createdAt"
             ],
@@ -20125,6 +20723,7 @@
       "MediaDefaultFolder": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "entity",
           "createdAt"
         ],
@@ -20163,6 +20762,7 @@
           },
           {
             "required": [
+              "id",
               "configurationId",
               "name",
               "createdAt"
@@ -20374,6 +20974,7 @@
       "MediaFolder": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "configurationId",
           "name",
           "createdAt"
@@ -20455,6 +21056,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt"
             ],
             "properties": {
@@ -20566,6 +21168,7 @@
       "MediaFolderConfiguration": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt"
         ],
         "properties": {
@@ -20681,6 +21284,7 @@
           },
           {
             "required": [
+              "id",
               "mediaId",
               "width",
               "height",
@@ -20767,6 +21371,7 @@
       "MediaThumbnail": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "mediaId",
           "width",
           "height",
@@ -20825,6 +21430,7 @@
           },
           {
             "required": [
+              "id",
               "width",
               "height",
               "createdAt"
@@ -20899,6 +21505,7 @@
       "MediaThumbnailSize": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "width",
           "height",
           "createdAt"
@@ -20946,6 +21553,7 @@
           },
           {
             "required": [
+              "id",
               "email",
               "status",
               "hash",
@@ -21145,6 +21753,7 @@
       "NewsletterRecipient": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "email",
           "status",
           "hash",
@@ -21267,6 +21876,7 @@
           },
           {
             "required": [
+              "id",
               "status",
               "message",
               "createdAt"
@@ -21381,6 +21991,7 @@
       "Notification": {
         "description": "Added since version: 6.4.7.0",
         "required": [
+          "id",
           "status",
           "message",
           "createdAt"
@@ -21441,6 +22052,7 @@
           },
           {
             "required": [
+              "id",
               "typeId",
               "global",
               "pattern",
@@ -21591,6 +22203,7 @@
       "NumberRange": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "typeId",
           "global",
           "pattern",
@@ -21662,6 +22275,7 @@
           },
           {
             "required": [
+              "id",
               "numberRangeId",
               "salesChannelId",
               "createdAt"
@@ -21793,6 +22407,7 @@
       "NumberRangeSalesChannel": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "numberRangeId",
           "salesChannelId",
           "createdAt"
@@ -21844,6 +22459,7 @@
           },
           {
             "required": [
+              "id",
               "numberRangeId",
               "lastValue",
               "createdAt"
@@ -21913,6 +22529,7 @@
       "NumberRangeState": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "numberRangeId",
           "lastValue",
           "createdAt"
@@ -21954,6 +22571,7 @@
           },
           {
             "required": [
+              "id",
               "global",
               "createdAt",
               "typeName"
@@ -22063,6 +22681,7 @@
       "NumberRangeType": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "global",
           "createdAt",
           "typeName"
@@ -22120,6 +22739,7 @@
           },
           {
             "required": [
+              "id",
               "billingAddressId",
               "currencyId",
               "languageId",
@@ -22335,6 +22955,11 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "itemRounding": {
+                "required": [
+                  "decimals",
+                  "interval",
+                  "roundForNet"
+                ],
                 "properties": {
                   "decimals": {
                     "type": "integer",
@@ -22351,6 +22976,11 @@
                 "type": "object"
               },
               "totalRounding": {
+                "required": [
+                  "decimals",
+                  "interval",
+                  "roundForNet"
+                ],
                 "properties": {
                   "decimals": {
                     "type": "integer",
@@ -22807,6 +23437,7 @@
       "Order": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "billingAddressId",
           "currencyId",
           "languageId",
@@ -23022,6 +23653,11 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "itemRounding": {
+            "required": [
+              "decimals",
+              "interval",
+              "roundForNet"
+            ],
             "properties": {
               "decimals": {
                 "type": "integer",
@@ -23038,6 +23674,11 @@
             "type": "object"
           },
           "totalRounding": {
+            "required": [
+              "decimals",
+              "interval",
+              "roundForNet"
+            ],
             "properties": {
               "decimals": {
                 "type": "integer",
@@ -23134,6 +23775,7 @@
           },
           {
             "required": [
+              "id",
               "countryId",
               "orderId",
               "firstName",
@@ -23380,6 +24022,7 @@
       "OrderAddress": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "countryId",
           "orderId",
           "firstName",
@@ -23495,6 +24138,7 @@
           },
           {
             "required": [
+              "id",
               "orderId",
               "email",
               "firstName",
@@ -23666,6 +24310,7 @@
       "OrderCustomer": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "orderId",
           "email",
           "firstName",
@@ -23757,6 +24402,7 @@
           },
           {
             "required": [
+              "id",
               "orderId",
               "shippingOrderAddressId",
               "shippingMethodId",
@@ -24043,6 +24689,7 @@
       "OrderDelivery": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "orderId",
           "shippingOrderAddressId",
           "shippingMethodId",
@@ -24198,6 +24845,7 @@
           },
           {
             "required": [
+              "id",
               "orderDeliveryId",
               "orderLineItemId",
               "createdAt"
@@ -24380,6 +25028,7 @@
       "OrderDeliveryPosition": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "orderDeliveryId",
           "orderLineItemId",
           "createdAt"
@@ -24508,6 +25157,7 @@
           },
           {
             "required": [
+              "id",
               "orderId",
               "identifier",
               "quantity",
@@ -24964,6 +25614,7 @@
       "OrderLineItem": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "orderId",
           "identifier",
           "quantity",
@@ -25188,6 +25839,7 @@
           },
           {
             "required": [
+              "id",
               "orderLineItemId",
               "mediaId",
               "position",
@@ -25306,6 +25958,7 @@
       "OrderLineItemDownload": {
         "description": "Added since version: 6.4.19.0",
         "required": [
+          "id",
           "orderLineItemId",
           "mediaId",
           "position",
@@ -25402,6 +26055,7 @@
           },
           {
             "required": [
+              "id",
               "orderId",
               "paymentMethodId",
               "amount",
@@ -25634,6 +26288,7 @@
       "OrderTransaction": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "orderId",
           "paymentMethodId",
           "amount",
@@ -25761,6 +26416,7 @@
           },
           {
             "required": [
+              "id",
               "orderTransactionId",
               "stateId",
               "amount",
@@ -25962,6 +26618,7 @@
       "OrderTransactionCapture": {
         "description": "Added since version: 6.4.12.0",
         "required": [
+          "id",
           "orderTransactionId",
           "stateId",
           "amount",
@@ -26084,6 +26741,7 @@
           },
           {
             "required": [
+              "id",
               "captureId",
               "stateId",
               "amount",
@@ -26288,6 +26946,7 @@
       "OrderTransactionCaptureRefund": {
         "description": "Added since version: 6.4.12.0",
         "required": [
+          "id",
           "captureId",
           "stateId",
           "amount",
@@ -26413,6 +27072,7 @@
           },
           {
             "required": [
+              "id",
               "refundId",
               "orderLineItemId",
               "amount",
@@ -26594,6 +27254,7 @@
       "OrderTransactionCaptureRefundPosition": {
         "description": "Added since version: 6.4.12.0",
         "required": [
+          "id",
           "refundId",
           "orderLineItemId",
           "amount",
@@ -26721,6 +27382,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -27070,6 +27732,7 @@
       "PaymentMethod": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -27213,6 +27876,7 @@
           },
           {
             "required": [
+              "id",
               "baseClass",
               "name",
               "autoload",
@@ -27346,6 +28010,7 @@
       "Plugin": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "baseClass",
           "name",
           "autoload",
@@ -27452,6 +28117,7 @@
           },
           {
             "required": [
+              "id",
               "taxId",
               "price",
               "productNumber",
@@ -28737,6 +29403,7 @@
       "Product": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "taxId",
           "price",
           "productNumber",
@@ -29333,6 +30000,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "optionId",
               "createdAt"
@@ -29482,6 +30150,7 @@
       "ProductConfiguratorSetting": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productId",
           "optionId",
           "createdAt"
@@ -29551,6 +30220,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "position",
               "type",
@@ -29712,6 +30382,7 @@
       "ProductCrossSelling": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "name",
           "position",
           "type",
@@ -29794,6 +30465,7 @@
           },
           {
             "required": [
+              "id",
               "crossSellingId",
               "productId",
               "createdAt"
@@ -29900,6 +30572,7 @@
       "ProductCrossSellingAssignedProducts": {
         "description": "Added since version: 6.2.0.0",
         "required": [
+          "id",
           "crossSellingId",
           "productId",
           "createdAt"
@@ -29984,6 +30657,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "mediaId",
               "createdAt"
@@ -30097,6 +30771,7 @@
       "ProductDownload": {
         "description": "Added since version: 6.4.19.0",
         "required": [
+          "id",
           "productId",
           "mediaId",
           "createdAt"
@@ -30156,6 +30831,7 @@
           },
           {
             "required": [
+              "id",
               "productStreamId",
               "storefrontSalesChannelId",
               "salesChannelId",
@@ -30403,6 +31079,7 @@
       "ProductExport": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "productStreamId",
           "storefrontSalesChannelId",
           "salesChannelId",
@@ -30518,6 +31195,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -30592,6 +31270,7 @@
       "ProductFeatureSet": {
         "description": "Added since version: 6.3.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -30639,6 +31318,7 @@
           },
           {
             "required": [
+              "id",
               "languageId",
               "keyword"
             ],
@@ -30699,6 +31379,7 @@
       "ProductKeywordDictionary": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "languageId",
           "keyword"
         ],
@@ -30731,6 +31412,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -30845,6 +31527,7 @@
       "ProductManufacturer": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -30906,6 +31589,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "mediaId",
               "createdAt"
@@ -31050,6 +31734,7 @@
       "ProductMedia": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productId",
           "mediaId",
           "createdAt"
@@ -31147,6 +31832,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "ruleId",
               "price",
@@ -31269,6 +31955,7 @@
       "ProductPrice": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productId",
           "ruleId",
           "price",
@@ -31369,6 +32056,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "salesChannelId",
               "languageId",
@@ -31565,6 +32253,7 @@
       "ProductReview": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productId",
           "salesChannelId",
           "languageId",
@@ -31655,6 +32344,7 @@
           },
           {
             "required": [
+              "id",
               "languageId",
               "andLogic",
               "minSearchLength",
@@ -31765,6 +32455,7 @@
       "ProductSearchConfig": {
         "description": "Added since version: 6.3.5.0",
         "required": [
+          "id",
           "languageId",
           "andLogic",
           "minSearchLength",
@@ -31822,6 +32513,7 @@
           },
           {
             "required": [
+              "id",
               "searchConfigId",
               "field",
               "tokenize",
@@ -31936,6 +32628,7 @@
       "ProductSearchConfigField": {
         "description": "Added since version: 6.3.5.0",
         "required": [
+          "id",
           "searchConfigId",
           "field",
           "tokenize",
@@ -31996,6 +32689,7 @@
           },
           {
             "required": [
+              "id",
               "languageId",
               "productId",
               "keyword",
@@ -32111,6 +32805,7 @@
       "ProductSearchKeyword": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "languageId",
           "productId",
           "keyword",
@@ -32172,6 +32867,7 @@
           },
           {
             "required": [
+              "id",
               "key",
               "priority",
               "active",
@@ -32224,6 +32920,7 @@
       "ProductSorting": {
         "description": "Added since version: 6.3.2.0",
         "required": [
+          "id",
           "key",
           "priority",
           "active",
@@ -32279,6 +32976,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -32490,6 +33188,7 @@
       "ProductStream": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -32599,6 +33298,7 @@
           },
           {
             "required": [
+              "id",
               "productStreamId",
               "type",
               "createdAt"
@@ -32750,6 +33450,7 @@
       "ProductStreamFilter": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productStreamId",
           "type",
           "createdAt"
@@ -32886,6 +33587,7 @@
           },
           {
             "required": [
+              "id",
               "productId",
               "salesChannelId",
               "visibility",
@@ -32993,6 +33695,7 @@
       "ProductVisibility": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "productId",
           "salesChannelId",
           "visibility",
@@ -33046,6 +33749,7 @@
           },
           {
             "required": [
+              "id",
               "active",
               "priority",
               "exclusive",
@@ -33435,6 +34139,7 @@
       "Promotion": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "active",
           "priority",
           "exclusive",
@@ -33625,6 +34330,7 @@
           },
           {
             "required": [
+              "id",
               "promotionId",
               "scope",
               "type",
@@ -33784,6 +34490,7 @@
       "PromotionDiscount": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "promotionId",
           "scope",
           "type",
@@ -33865,6 +34572,7 @@
           },
           {
             "required": [
+              "id",
               "discountId",
               "currencyId",
               "price",
@@ -33968,6 +34676,7 @@
       "PromotionDiscountPrices": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "discountId",
           "currencyId",
           "price",
@@ -34045,6 +34754,7 @@
           },
           {
             "required": [
+              "id",
               "promotionId",
               "code",
               "createdAt"
@@ -34116,6 +34826,7 @@
       "PromotionIndividualCode": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "promotionId",
           "code",
           "createdAt"
@@ -34243,6 +34954,7 @@
           },
           {
             "required": [
+              "id",
               "promotionId",
               "salesChannelId",
               "priority",
@@ -34346,6 +35058,7 @@
       "PromotionSalesChannel": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "promotionId",
           "salesChannelId",
           "priority",
@@ -34395,6 +35108,7 @@
           },
           {
             "required": [
+              "id",
               "promotionId",
               "packagerKey",
               "sorterKey",
@@ -34503,6 +35217,7 @@
       "PromotionSetgroup": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "promotionId",
           "packagerKey",
           "sorterKey",
@@ -34586,6 +35301,7 @@
           },
           {
             "required": [
+              "id",
               "displayType",
               "sortingType",
               "createdAt",
@@ -34678,6 +35394,7 @@
       "PropertyGroup": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "displayType",
           "sortingType",
           "createdAt",
@@ -34743,6 +35460,7 @@
           },
           {
             "required": [
+              "id",
               "groupId",
               "createdAt",
               "name"
@@ -34950,6 +35668,7 @@
       "PropertyGroupOption": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "groupId",
           "createdAt",
           "name"
@@ -35028,6 +35747,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "priority",
               "createdAt"
@@ -35522,6 +36242,7 @@
       "Rule": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "priority",
           "createdAt"
@@ -35664,6 +36385,7 @@
           },
           {
             "required": [
+              "id",
               "type",
               "ruleId",
               "createdAt"
@@ -35839,6 +36561,7 @@
       "RuleCondition": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "type",
           "ruleId",
           "createdAt"
@@ -35937,6 +36660,7 @@
           },
           {
             "required": [
+              "id",
               "typeId",
               "languageId",
               "customerGroupId",
@@ -37272,6 +37996,7 @@
       "SalesChannel": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "typeId",
           "languageId",
           "customerGroupId",
@@ -37666,6 +38391,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt"
             ],
             "properties": {
@@ -37737,6 +38463,7 @@
       "SalesChannelAnalytics": {
         "description": "Added since version: 6.2.0.0",
         "required": [
+          "id",
           "createdAt"
         ],
         "properties": {
@@ -37836,6 +38563,7 @@
           },
           {
             "required": [
+              "id",
               "url",
               "salesChannelId",
               "languageId",
@@ -38108,6 +38836,7 @@
       "SalesChannelDomain": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "url",
           "salesChannelId",
           "languageId",
@@ -38307,6 +39036,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "name"
             ],
@@ -38399,6 +39129,7 @@
       "SalesChannelType": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "name"
         ],
@@ -38464,6 +39195,7 @@
           },
           {
             "required": [
+              "id",
               "salutationKey",
               "createdAt",
               "displayName",
@@ -38667,6 +39399,7 @@
       "Salutation": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "salutationKey",
           "createdAt",
           "displayName",
@@ -38743,6 +39476,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "scheduledTaskClass",
               "runInterval",
@@ -38799,6 +39533,7 @@
       "ScheduledTask": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "scheduledTaskClass",
           "runInterval",
@@ -38858,6 +39593,7 @@
           },
           {
             "required": [
+              "id",
               "script",
               "hook",
               "name",
@@ -38937,6 +39673,7 @@
       "Script": {
         "description": "Added since version: 6.4.7.0",
         "required": [
+          "id",
           "script",
           "hook",
           "name",
@@ -38988,6 +39725,7 @@
           },
           {
             "required": [
+              "id",
               "languageId",
               "foreignKey",
               "routeName",
@@ -39122,6 +39860,7 @@
       "SeoUrl": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "languageId",
           "foreignKey",
           "routeName",
@@ -39202,6 +39941,7 @@
           },
           {
             "required": [
+              "id",
               "entityName",
               "routeName",
               "createdAt"
@@ -39282,6 +40022,7 @@
       "SeoUrlTemplate": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "entityName",
           "routeName",
           "createdAt"
@@ -39334,6 +40075,7 @@
           },
           {
             "required": [
+              "id",
               "deliveryTimeId",
               "taxType",
               "createdAt",
@@ -39711,6 +40453,7 @@
       "ShippingMethod": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "deliveryTimeId",
           "taxType",
           "createdAt",
@@ -39831,6 +40574,7 @@
           },
           {
             "required": [
+              "id",
               "shippingMethodId",
               "createdAt"
             ],
@@ -39979,6 +40723,7 @@
       "ShippingMethodPrice": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "shippingMethodId",
           "createdAt"
         ],
@@ -40075,6 +40820,7 @@
           },
           {
             "required": [
+              "id",
               "setId",
               "translationKey",
               "value",
@@ -40154,6 +40900,7 @@
       "Snippet": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "setId",
           "translationKey",
           "value",
@@ -40205,6 +40952,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "baseFile",
               "iso",
@@ -40312,6 +41060,7 @@
       "SnippetSet": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "baseFile",
           "iso",
@@ -40367,6 +41116,7 @@
           },
           {
             "required": [
+              "id",
               "technicalName",
               "createdAt",
               "name"
@@ -40508,6 +41258,7 @@
       "StateMachine": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "technicalName",
           "createdAt",
           "name"
@@ -40572,6 +41323,7 @@
           },
           {
             "required": [
+              "id",
               "referencedId",
               "referencedVersionId",
               "stateMachineId",
@@ -40754,6 +41506,7 @@
       "StateMachineHistory": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "referencedId",
           "referencedVersionId",
           "stateMachineId",
@@ -40830,6 +41583,7 @@
           },
           {
             "required": [
+              "id",
               "technicalName",
               "stateMachineId",
               "createdAt",
@@ -41187,6 +41941,7 @@
       "StateMachineState": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "technicalName",
           "stateMachineId",
           "createdAt",
@@ -41291,6 +42046,7 @@
           },
           {
             "required": [
+              "id",
               "actionName",
               "stateMachineId",
               "fromStateId",
@@ -41430,6 +42186,7 @@
       "StateMachineTransition": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "actionName",
           "stateMachineId",
           "fromStateId",
@@ -41489,6 +42246,7 @@
           },
           {
             "required": [
+              "id",
               "configurationKey",
               "configurationValue",
               "createdAt"
@@ -41565,6 +42323,7 @@
       "SystemConfig": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "configurationKey",
           "configurationValue",
           "createdAt"
@@ -41613,6 +42372,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "createdAt"
             ],
@@ -41926,6 +42686,7 @@
       "Tag": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "createdAt"
         ],
@@ -42012,6 +42773,7 @@
           },
           {
             "required": [
+              "id",
               "taxRate",
               "name",
               "position",
@@ -42153,6 +42915,7 @@
       "Tax": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "taxRate",
           "name",
           "position",
@@ -42217,6 +42980,7 @@
           },
           {
             "required": [
+              "id",
               "identifier",
               "priority",
               "createdAt",
@@ -42338,6 +43102,7 @@
       "TaxProvider": {
         "description": "Added since version: 6.5.0.0",
         "required": [
+          "id",
           "identifier",
           "priority",
           "createdAt",
@@ -42405,6 +43170,7 @@
           },
           {
             "required": [
+              "id",
               "taxRuleTypeId",
               "countryId",
               "taxRate",
@@ -42567,6 +43333,7 @@
       "TaxRule": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "taxRuleTypeId",
           "countryId",
           "taxRate",
@@ -42649,6 +43416,7 @@
           },
           {
             "required": [
+              "id",
               "technicalName",
               "position",
               "createdAt",
@@ -42727,6 +43495,7 @@
       "TaxRuleType": {
         "description": "Added since version: 6.1.0.0",
         "required": [
+          "id",
           "technicalName",
           "position",
           "createdAt",
@@ -42778,6 +43547,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "author",
               "active",
@@ -42977,6 +43747,7 @@
       "Theme": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "name",
           "author",
           "active",
@@ -43157,6 +43928,7 @@
           },
           {
             "required": [
+              "id",
               "createdAt",
               "shortCode",
               "name"
@@ -43232,6 +44004,7 @@
       "Unit": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "createdAt",
           "shortCode",
           "name"
@@ -43280,6 +44053,7 @@
           },
           {
             "required": [
+              "id",
               "localeId",
               "username",
               "firstName",
@@ -43974,6 +44748,7 @@
       "User": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "localeId",
           "username",
           "firstName",
@@ -44338,6 +45113,7 @@
           },
           {
             "required": [
+              "id",
               "userId",
               "accessKey",
               "secretAccessKey",
@@ -44417,6 +45193,7 @@
       "UserAccessKey": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "userId",
           "accessKey",
           "secretAccessKey",
@@ -44468,6 +45245,7 @@
           },
           {
             "required": [
+              "id",
               "userId",
               "key",
               "createdAt"
@@ -44539,6 +45317,7 @@
       "UserConfig": {
         "description": "Added since version: 6.3.5.0",
         "required": [
+          "id",
           "userId",
           "key",
           "createdAt"
@@ -44582,6 +45361,7 @@
           },
           {
             "required": [
+              "id",
               "hash",
               "userId",
               "createdAt"
@@ -44650,6 +45430,7 @@
       "UserRecovery": {
         "description": "Added since version: 6.0.0.0",
         "required": [
+          "id",
           "hash",
           "userId",
           "createdAt"
@@ -44690,6 +45471,7 @@
           },
           {
             "required": [
+              "id",
               "name",
               "eventName",
               "url",
@@ -44777,6 +45559,7 @@
       "Webhook": {
         "description": "Added since version: 6.3.1.0",
         "required": [
+          "id",
           "name",
           "eventName",
           "url",
@@ -44836,6 +45619,7 @@
           },
           {
             "required": [
+              "id",
               "webhookName",
               "eventName",
               "deliveryStatus",
@@ -44910,6 +45694,7 @@
       "WebhookEventLog": {
         "description": "Added since version: 6.4.1.0",
         "required": [
+          "id",
           "webhookName",
           "eventName",
           "deliveryStatus",
@@ -44979,129 +45764,93 @@
         },
         "type": "object"
       },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
+      "infoConfigResponse": {
         "type": "object",
         "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
-          }
-        },
-        "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          "version": {
+            "type": "string",
+            "description": "The Shopware version."
+          },
+          "versionRevision": {
+            "type": "string",
+            "description": "The Shopware version revision."
+          },
+          "adminWorker": {
+            "type": "object",
+            "description": "Information about the admin worker.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "State of the admin worker."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured transports.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Asset files of active extensions",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "css": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the css file."
+                  }
+                },
+                "js": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the js file."
+                  }
+                }
+              }
+            }
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the `urlFeature` setting."
+              }
+            }
           }
         }
       },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
+      "flowBulderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
                 "type": "string"
               }
             },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scopes": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
+            "extensions": {
+              "type": "array",
+              "items": {
                 "type": "string"
               },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scopes",
-              "username",
-              "password"
-            ]
+              "description": "Extensions data of event"
+            }
           }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scopes": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scopes",
-              "refresh_token"
-            ]
-          }
-        ]
+        }
       },
       "businessEventsResponse": {
         "type": "array",
@@ -45274,196 +46023,174 @@
           }
         }
       },
-      "infoConfigResponse": {
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
         "type": "object",
         "properties": {
-          "version": {
-            "type": "string",
-            "description": "The Shopware version."
-          },
-          "versionRevision": {
-            "type": "string",
-            "description": "The Shopware version revision."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Information about the admin worker.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "State of the admin worker."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured transports.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Asset files of active extensions",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "css": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the css file."
-                  }
-                },
-                "js": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the js file."
-                  }
-                }
-              }
-            }
-          },
-          "settings": {
-            "type": "object",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the `urlFeature` setting."
-              }
-            }
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
           }
-        }
-      },
-      "flowBulderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
-      "AttendeeProductCollection": {
-        "type": "object",
+        },
         "required": [
-          "attendeeId",
-          "productId",
-          "productVersionId",
-          "alias"
+          "grant_type"
         ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
           },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "attendee": {
-            "$ref": "#/components/schemas/Attendee"
-          },
-          "productId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "product": {
-            "$ref": "#/components/schemas/Product"
-          },
-          "productVersionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "alias": {
-            "type": "string",
-            "enum": [
-              "liked",
-              "disliked"
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
             ]
           }
-        }
+        ]
       },
-      "WidgetProductListing": {
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scopes": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scopes",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scopes": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scopes",
+              "refresh_token"
+            ]
+          }
+        ]
+      },
+      "StateForGuides": {
         "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
         "properties": {
-          "extensions": {
+          "clients": {
             "type": "array",
-            "description": "List of extensions",
+            "items": {
+              "type": "string"
+            },
             "default": []
           },
-          "products": {
+          "inactiveClients": {
             "type": "array",
-            "description": "List of last seen products",
             "items": {
-              "$ref": "#/components/schemas/Product"
-            }
+              "type": "string"
+            },
+            "default": []
           },
-          "total": {
-            "type": "integer",
-            "description": "The total number of products"
+          "guides": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
           },
-          "page": {
-            "type": "integer",
-            "description": "The current page"
+          "videoGuideToken": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
-          "limit": {
-            "type": "integer",
-            "description": "The number of products per page"
-          }
-        }
-      },
-      "Interaction": {
-        "type": "object",
-        "required": [
-          "name",
-          "triggeredAt",
-          "attendeeId"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+          "quickViewState": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
           },
-          "name": {
-            "type": "string"
-          },
-          "expiresAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "triggeredAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "payload": {
-            "type": "string"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "attendee": {
-            "$ref": "#/components/schemas/Attendee"
+          "extensions": {
+            "type": "array",
+            "default": []
           }
         }
       },
@@ -45566,186 +46293,6 @@
           }
         }
       },
-      "Appointment": {
-        "type": "object",
-        "required": [
-          "name",
-          "guideUserId",
-          "salesChannelDomainId",
-          "presentationPath"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "presentationId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "presentation": {
-            "$ref": "#/components/schemas/Presentation"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "isPreview": {
-            "type": "boolean"
-          },
-          "default": {
-            "type": "boolean"
-          },
-          "guideUserId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "guideUser": {
-            "$ref": "#/components/schemas/User"
-          },
-          "mode": {
-            "type": "string",
-            "enum": [
-              "guide",
-              "self"
-            ]
-          },
-          "salesChannelDomainId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "presentationPath": {
-            "type": "string"
-          },
-          "attendeeRestrictionType": {
-            "type": "string",
-            "enum": [
-              "open",
-              "customer",
-              "rules"
-            ]
-          },
-          "accessibleFrom": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "accessibleTo": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "attendeeRuleIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          "attendees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Attendee"
-            }
-          },
-          "message": {
-            "type": "string"
-          },
-          "videoAudioSettings": {
-            "type": "string",
-            "enum": [
-              "none",
-              "both",
-              "audio_only"
-            ]
-          },
-          "videoChat": {
-            "$ref": "#/components/schemas/VideoChat"
-          },
-          "startedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "createdBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "updatedById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "updatedBy": {
-            "$ref": "#/components/schemas/User"
-          }
-        }
-      },
-      "VideoChat": {
-        "type": "object",
-        "required": [
-          "appointmentId"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointmentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "ownerToken": {
-            "type": "string"
-          },
-          "userToken": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "startAsBroadcast": {
-            "type": "boolean"
-          }
-        }
-      },
-      "AbstractDynamicPageOpenedPayload": {
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of the current dynamic page"
-          },
-          "opened": {
-            "type": "boolean",
-            "default": true
-          }
-        }
-      },
-      "GetListBodyRequest": {
-        "type": "object",
-        "properties": {
-          "limit": {
-            "type": "integer",
-            "description": "Max amount of resources to be returned in a page"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The page to be returned"
-          }
-        }
-      },
       "GetAttendeeInsightsResponse": {
         "type": "object",
         "description": "Returns aggregations for the current attendees within the appointment.",
@@ -45779,349 +46326,58 @@
           "currencySymbol": "$"
         }
       },
-      "Presentation": {
+      "AttendeeProductCollection": {
         "type": "object",
         "required": [
-          "name"
+          "attendeeId",
+          "productId",
+          "productVersionId",
+          "alias"
         ],
         "properties": {
           "id": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
-          },
-          "versionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "parentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "parentVersionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "createdById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "createdBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "updatedById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "updatedBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "translations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "cmsPages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PresentationCmsPage"
-            }
-          },
-          "translated": {
-            "type": "object"
-          }
-        }
-      },
-      "VideoChatCreateStruct": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "roomUrl": {
-            "type": "string",
-            "description": "Url of the video room in daily"
-          },
-          "roomName": {
-            "type": "string",
-            "description": "Name of the video room in daily"
-          },
-          "userToken": {
-            "type": "string",
-            "description": "Token for the end users to connect to the daily room"
-          },
-          "ownerToken": {
-            "type": "string",
-            "description": "Token for the room owner (guide) to connect to the daily room"
-          },
-          "startAsBroadcast": {
-            "type": "boolean",
-            "default": false
-          }
-        },
-        "example": {
-          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
-          "userToken": "dummy user token",
-          "ownerToken": "dummy owner token",
-          "roomName": "rSq20mrgwsj4eIXo1u95",
-          "startAsBroadcast": false,
-          "extensions": []
-        }
-      },
-      "JoinAppointmentResponse": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "mercureSubscriberTopics": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "mercure topic"
-            },
-            "description": "The topics to which the attendee/guide can subscribe for"
-          },
-          "mercurePublisherTopic": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The topic to which the attendee/guide can send updates"
-          },
-          "JWTMercureSubscriberToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to publish updates"
-          },
-          "mercureHubPublicUrl": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The mercure hub url to connect for subscribing and updating"
-          },
-          "JWTMercurePublisherToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to subscribe for updates"
-          },
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The appointment id"
-          },
-          "newContextToken": {
-            "type": "string",
-            "description": "The new context token"
           },
           "attendeeId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The created Id for the attendee"
+            "pattern": "^[0-9a-f]{32}$"
           },
-          "salesChannelId": {
+          "attendee": {
+            "$ref": "#/components/schemas/Attendee"
+          },
+          "productId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id of the current sales channel"
+            "pattern": "^[0-9a-f]{32}$"
           },
-          "salesChannelName": {
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "productVersionId": {
             "type": "string",
-            "description": "The name of the current sales channel"
+            "pattern": "^[0-9a-f]{32}$"
           },
-          "appointmentName": {
-            "type": "string",
-            "description": "The name of the appointment"
-          },
-          "presentationGuideMode": {
+          "alias": {
             "type": "string",
             "enum": [
-              "self",
-              "guided"
-            ],
-            "description": "The type of the appointment"
-          },
-          "isPreview": {
-            "type": "boolean",
-            "description": "To see if it's a preview appointment"
-          }
-        },
-        "example": {
-          "mercureSubscriberTopics": [
-            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
-          ],
-          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
-          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
-          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
-          "JWTMercurePublisherToken": "jwt token for publishing updates",
-          "id": "2d2c358f1ca04098aacf12873c2eed82",
-          "newContextToken": "new context token to call the other routes",
-          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
-          "salesChannelName": "Storefront",
-          "appointmentName": "Test Appointment",
-          "presentationGuideMode": "guided",
-          "isPreview": false,
-          "apiAlias": "swag_guided_shopping_content_appointment_struct_appointment_join_struct"
-        }
-      },
-      "Attendee": {
-        "type": "object",
-        "required": [
-          "appointmentId",
-          "type"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointmentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "CLIENT",
-              "GUIDE"
+              "liked",
+              "disliked"
             ]
-          },
-          "attendeeName": {
-            "type": "string"
-          },
-          "attendeeEmail": {
-            "type": "string"
-          },
-          "videoUserId": {
-            "type": "string"
-          },
-          "guideCartPermissionsGranted": {
-            "type": "boolean"
-          },
-          "attendeeSubmittedAt": {
-            "type": "string",
-            "format": "date-timme"
-          },
-          "customerId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "customer": {
-            "$ref": "#/components/schemas/Customer"
-          },
-          "userId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
-          "invitationStatus": {
-            "type": "string"
-          },
-          "joinedAt": {
-            "type": "string",
-            "format": "date-timme"
-          },
-          "lastActive": {
-            "type": "string",
-            "format": "date-timme"
-          },
-          "interaction": {
-            "$ref": "#/components/schemas/Interaction"
-          },
-          "productCollections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AttendeeProductCollection"
-            }
           }
         }
       },
-      "StateForGuides": {
+      "GetListBodyRequest": {
         "type": "object",
         "properties": {
-          "clients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
+          "limit": {
+            "type": "integer",
+            "description": "Max amount of resources to be returned in a page"
           },
-          "inactiveClients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "guides": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "videoGuideToken": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickViewState": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
+          "page": {
+            "type": "integer",
+            "description": "The page to be returned"
           }
         }
-      },
-      "DynamicPageOpenedPayload": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
-          }
-        ]
       },
       "PresentationCmsPage": {
         "type": "object",
@@ -46254,6 +46510,123 @@
           }
         }
       },
+      "JoinAppointmentResponse": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "mercureSubscriberTopics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "mercure topic"
+            },
+            "description": "The topics to which the attendee/guide can subscribe for"
+          },
+          "mercurePublisherTopic": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The topic to which the attendee/guide can send updates"
+          },
+          "JWTMercureSubscriberToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to publish updates"
+          },
+          "mercureHubPublicUrl": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The mercure hub url to connect for subscribing and updating"
+          },
+          "JWTMercurePublisherToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to subscribe for updates"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The appointment id"
+          },
+          "newContextToken": {
+            "type": "string",
+            "description": "The new context token"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The created Id for the attendee"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id of the current sales channel"
+          },
+          "salesChannelName": {
+            "type": "string",
+            "description": "The name of the current sales channel"
+          },
+          "appointmentName": {
+            "type": "string",
+            "description": "The name of the appointment"
+          },
+          "presentationGuideMode": {
+            "type": "string",
+            "enum": [
+              "self",
+              "guided"
+            ],
+            "description": "The type of the appointment"
+          },
+          "isPreview": {
+            "type": "boolean",
+            "description": "To see if it's a preview appointment"
+          }
+        },
+        "example": {
+          "mercureSubscriberTopics": [
+            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
+          ],
+          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
+          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
+          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
+          "JWTMercurePublisherToken": "jwt token for publishing updates",
+          "id": "2d2c358f1ca04098aacf12873c2eed82",
+          "newContextToken": "new context token to call the other routes",
+          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
+          "salesChannelName": "Storefront",
+          "appointmentName": "Test Appointment",
+          "presentationGuideMode": "guided",
+          "isPreview": false,
+          "apiAlias": "swag_guided_shopping_content_appointment_struct_appointment_join_struct"
+        }
+      },
       "AttendeeInsights": {
         "type": "object",
         "description": "Attendee Insights",
@@ -46279,6 +46652,272 @@
             "cartSum": 6770.53,
             "productCount": 3,
             "lineItemCount": 3
+          }
+        }
+      },
+      "AbstractDynamicPageOpenedPayload": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of the current dynamic page"
+          },
+          "opened": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "Appointment": {
+        "type": "object",
+        "required": [
+          "name",
+          "guideUserId",
+          "salesChannelDomainId",
+          "presentationPath"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "presentationId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "presentation": {
+            "$ref": "#/components/schemas/Presentation"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "isPreview": {
+            "type": "boolean"
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "guideUserId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "guideUser": {
+            "$ref": "#/components/schemas/User"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "guide",
+              "self"
+            ]
+          },
+          "salesChannelDomainId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "presentationPath": {
+            "type": "string"
+          },
+          "attendeeRestrictionType": {
+            "type": "string",
+            "enum": [
+              "open",
+              "customer",
+              "rules"
+            ]
+          },
+          "accessibleFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "accessibleTo": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "attendeeRuleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "attendees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attendee"
+            }
+          },
+          "message": {
+            "type": "string"
+          },
+          "videoAudioSettings": {
+            "type": "string",
+            "enum": [
+              "none",
+              "both",
+              "audio_only"
+            ]
+          },
+          "videoChat": {
+            "$ref": "#/components/schemas/VideoChat"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "updatedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "Interaction": {
+        "type": "object",
+        "required": [
+          "name",
+          "triggeredAt",
+          "attendeeId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "triggeredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "payload": {
+            "type": "string"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "attendee": {
+            "$ref": "#/components/schemas/Attendee"
+          }
+        }
+      },
+      "VideoChatCreateStruct": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "roomUrl": {
+            "type": "string",
+            "description": "Url of the video room in daily"
+          },
+          "roomName": {
+            "type": "string",
+            "description": "Name of the video room in daily"
+          },
+          "userToken": {
+            "type": "string",
+            "description": "Token for the end users to connect to the daily room"
+          },
+          "ownerToken": {
+            "type": "string",
+            "description": "Token for the room owner (guide) to connect to the daily room"
+          },
+          "startAsBroadcast": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "example": {
+          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
+          "userToken": "dummy user token",
+          "ownerToken": "dummy owner token",
+          "roomName": "rSq20mrgwsj4eIXo1u95",
+          "startAsBroadcast": false,
+          "extensions": []
+        }
+      },
+      "WidgetProductListing": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "extensions": {
+            "type": "array",
+            "description": "List of extensions",
+            "default": []
+          },
+          "products": {
+            "type": "array",
+            "description": "List of last seen products",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of products"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The current page"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The number of products per page"
+          }
+        }
+      },
+      "VideoChat": {
+        "type": "object",
+        "required": [
+          "appointmentId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointmentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointment": {
+            "$ref": "#/components/schemas/Appointment"
+          },
+          "ownerToken": {
+            "type": "string"
+          },
+          "userToken": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "startAsBroadcast": {
+            "type": "boolean"
           }
         }
       },
@@ -46392,6 +47031,152 @@
                 "value": 284.88
               }
             ]
+          }
+        }
+      },
+      "DynamicPageOpenedPayload": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
+          }
+        ]
+      },
+      "Presentation": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "parentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "parentVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "createdById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "updatedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "appointment": {
+            "$ref": "#/components/schemas/Appointment"
+          },
+          "cmsPages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PresentationCmsPage"
+            }
+          },
+          "translated": {
+            "type": "object"
+          }
+        }
+      },
+      "Attendee": {
+        "type": "object",
+        "required": [
+          "appointmentId",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointmentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointment": {
+            "$ref": "#/components/schemas/Appointment"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "CLIENT",
+              "GUIDE"
+            ]
+          },
+          "attendeeName": {
+            "type": "string"
+          },
+          "attendeeEmail": {
+            "type": "string"
+          },
+          "videoUserId": {
+            "type": "string"
+          },
+          "guideCartPermissionsGranted": {
+            "type": "boolean"
+          },
+          "attendeeSubmittedAt": {
+            "type": "string",
+            "format": "date-timme"
+          },
+          "customerId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "userId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "invitationStatus": {
+            "type": "string"
+          },
+          "joinedAt": {
+            "type": "string",
+            "format": "date-timme"
+          },
+          "lastActive": {
+            "type": "string",
+            "format": "date-timme"
+          },
+          "interaction": {
+            "$ref": "#/components/schemas/Interaction"
+          },
+          "productCollections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttendeeProductCollection"
+            }
           }
         }
       },
