@@ -24,7 +24,7 @@ jobs:
         run: |
           cp adminapi.json adminapi-original.json
       - name: Upload original file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: original-file
           path: adminapi-original.json
@@ -50,7 +50,7 @@ jobs:
       uses: actions/checkout@v4
       
     - name: download api schema
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: ${{needs.generate-schema.outputs.api_schema}}
 
@@ -66,7 +66,7 @@ jobs:
         done
 
     - name: Download original file
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: original-file
 
