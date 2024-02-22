@@ -77,12 +77,19 @@ jobs:
         jq . adminapi.json | sponge adminapi.json
         cmp <(sort adminapi.json) <(sort adminapi-original.json) || echo "FILE_DIFFERENCE=1" >> $GITHUB_ENV
         rm adminapi-original.json
-      
+
+    - name: Extract summary
+      run: |
+        chmod +x ./.github/scripts/extract.sh
+        ./.github/scripts/extract.sh adminapi.json adminapi.summary.json
+
     - name: Create PR
       if: ${{ env.FILE_DIFFERENCE == 1 }}
       uses: peter-evans/create-pull-request@v4
       with:
-        add-paths: adminapi.json
+        add-paths: |
+          adminapi.json
+          adminapi.summary.json
         author: shopwareBot <example@example.com>
         committer: shopwareBot <example@example.com>
         assignees: sushmangupta, Isengo1989, bojanrajh
