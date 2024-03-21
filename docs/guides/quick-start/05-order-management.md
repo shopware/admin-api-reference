@@ -44,7 +44,7 @@ An order can have other items or child items of `type` - `product`, `promotion`,
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   }
-  }
+}
 ```
 
 ## Create an order
@@ -70,8 +70,8 @@ You can create orders for existing or new customers.
     "orderDateTime": "2021-05-31T14:13:14.866+00:00",
     "currencyFactor": 1.0,
     "stateId": "a75eb89b4abe41f9bade83b2f07d874e"
-   }
   }
+}
 ```
 
 ```json json_schema
@@ -106,7 +106,7 @@ You can create orders for existing or new customers.
     "stateId": {
       "description": "Unique ID of transition state as defined by the state machine.",
       "type": "string"
-      }
+    }
   }
 }
 ```
@@ -140,7 +140,7 @@ Below is a sample request to change the state of order to *complete*:
 ```
 
 <!-- theme: info -->
-> A *canceled* order cannot change to an *in-progress* state unless it is reopened again. For more details see [order state management](https://developer.shopware.com/docs/concepts/commerce/checkout-concept/orders#state-management)
+> A *cancelled* order cannot change to an *in-progress* state unless it is reopened again. For more details see [order state management](https://developer.shopware.com/docs/concepts/commerce/checkout-concept/orders#state-management)
 
 ### Order delivery
 
@@ -291,7 +291,7 @@ Below is a sample request to add the new item to your return.
 
 #### Order return state transition
 
-The order return state represents `open`, `canceled`, `in_progress`, and `done` as transaction states for order items return.
+The order return state represents `open`, `cancelled`, `in_progress`, and `done` as transaction states for order items return.
 
 Below is a sample request that sets the orders return to *open*:
 
@@ -309,7 +309,7 @@ Below is a sample request that sets the orders return to *open*:
 
 #### Order return line item state transition
 
-The order return line item state represents `open`, `shipped`, `shipped_partially`, `return_requested`, `returned`, `returned_partially`, and `canceled` as transaction states for order line items return.
+The order return line item state represents `open`, `shipped`, `shipped_partially`, `return_requested`, `returned`, `returned_partially`, and `cancelled` as transaction states for order line items return.
 
 Below is a sample request that sets the order return line item to `open` :
 
@@ -393,5 +393,5 @@ Generally, refunds are linked to a specific order transaction capture ID. An ord
 > For more information, check our documentation on [implementing payment refund handlers](https://developer.shopware.com/docs/guides/plugins/plugins/checkout/payment/add-payment-plugin#refund-example)
 
 When you refund a payment, the API will change the refund state to *complete*. If you want to fail the refund in your RefundHandler implementation, simply throw a `RefundException`, and the state of the refund will transition to *fail*.
-  
+
 > Your payment extensions must write their own captures and refunds into the order_transaction_capture and order_transaction_capture_refund tables, respectively, before calling the refund handler, as the Shopware Core does not carry this out.
