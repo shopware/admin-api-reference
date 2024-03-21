@@ -140,7 +140,7 @@ Below is a sample request to change the state of order to *complete*:
 ```
 
 <!-- theme: info -->
-> A *canceled* order cannot change to an *in-progress* state unless it is reopened again. For more details see [order state management](https://developer.shopware.com/docs/concepts/commerce/checkout-concept/orders#state-management)
+> A *cancelled* order cannot change to an *in-progress* state unless it is reopened again. For more details see [order state management](https://developer.shopware.com/docs/concepts/commerce/checkout-concept/orders#state-management)
 
 ### Order delivery
 
@@ -291,7 +291,7 @@ Below is a sample request to add the new item to your return.
 
 #### Order return state transition
 
-The order return state represents `open`, `canceled`, `in_progress`, and `done` as transaction states for order items return.
+The order return state represents `open`, `cancelled`, `in_progress`, and `done` as transaction states for order items return.
 
 Below is a sample request that sets the orders return to *open*:
 
@@ -309,7 +309,7 @@ Below is a sample request that sets the orders return to *open*:
 
 #### Order return line item state transition
 
-The order return line item state represents `open`, `shipped`, `shipped_partially`, `return_requested`, `returned`, `returned_partially`, and `canceled` as transaction states for order line items return.
+The order return line item state represents `open`, `shipped`, `shipped_partially`, `return_requested`, `returned`, `returned_partially`, and `cancelled` as transaction states for order line items return.
 
 Below is a sample request that sets the order return line item to `open` :
 
