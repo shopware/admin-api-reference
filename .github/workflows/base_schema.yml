@@ -65,6 +65,13 @@ jobs:
           yq  -I 4 -o json -i "$k.description = \"${newDescription}\"" adminapi.json
         done
 
+    - name: Add custom summary and title
+      run: |
+        for k in $(yq '. | keys | .[]' summary.yml); do
+          newSummary=$(yq ".\"$k\"" summary.yml);
+          yq -I 4 -o json -i "$k.summary = \"${newSummary}\"" adminapi.json
+        done
+
     - name: Download original file
       uses: actions/download-artifact@v4
       with:
