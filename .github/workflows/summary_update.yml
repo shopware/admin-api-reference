@@ -1,0 +1,97 @@
+name: Update Admin API
+
+on:
+  workflow_call:
+    inputs:
+      shopware_version:
+        description: "Shopware version"
+        required: true
+        type: string
+      php_version:
+        description: "PHP version"
+        required: false
+        type: string
+
+jobs:
+  
+  save-file:    
+    name: "Save file"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - shell: bash
+        run: |
+          cp adminapi.json adminapi-original.json
+      - name: Upload original file
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-file
+          path: adminapi-original.json
+  # This workflow contains a single job called "build"
+  generate-schema:
+    uses: shopware/docs-ci/.github/workflows/generate_schema.yml@main
+    with:
+      schema_flags: ""
+      schema_file: adminapi.json
+      shopware_version: ${{ inputs.shopware_version }}
+      php_version: ${{ inputs.php_version }}
+    secrets: inherit
+        
+  open-pr:
+    name: "Open a pull request"
+    runs-on: ubuntu-latest
+    needs: [generate-schema]
+    env:
+      FILE_DIFFERENCE: 0
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: download api schema
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{needs.generate-schema.outputs.api_schema}}
+
+    - name: install yq
+      uses: cachix/install-nix-action@v18
+
+    - name: Add custom summary and title
+      run: |
+        for k in $(yq '. | keys | .[]' summary.yml); do
+          newSummary=$(yq ".\"$k\"" summary.yml);
+          yq -I 4 -o json -i "$k.summary = \"${newSummary}\"" adminapi.json
+        done
+
+
+    - name: Download original file
+      uses: actions/download-artifact@v4
+      with:
+        name: original-file
+
+    - name: Prettify
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y moreutils
+        jq . adminapi.json | sponge adminapi.json
+        cmp <(sort adminapi.json) <(sort adminapi-original.json) || echo "FILE_DIFFERENCE=1" >> $GITHUB_ENV
+        rm adminapi-original.json
+
+    - name: Extract summary
+      run: |
+        chmod +x ./.github/scripts/extract.sh
+        ./.github/scripts/extract.sh adminapi.json adminapi.summary.json
+
+    - name: Create PR
+      uses: peter-evans/create-pull-request@v6
+      with:
+        add-paths: |
+          adminapi.json
+          adminapi.summary.json
+        author: shopwareBot <example@example.com>
+        committer: shopwareBot <example@example.com>
+        assignees: sushmangupta, Isengo1989, bojanrajh
+        branch: "schema-update-${{ env.BRANCH_NAME }}"
+        delete-branch: true
+        title: 'Update ${{ env.BRANCH_NAME }} admin API schema'

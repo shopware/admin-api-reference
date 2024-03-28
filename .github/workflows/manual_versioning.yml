@@ -32,6 +32,7 @@ jobs:
   generate-trunk:
     if: ${{ inputs.trigger_default_schema }}
     uses: ./.github/workflows/base_schema.yml
+    uses: ./.github/workflows/summary_update.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
       php_version: ${{ inputs.php_version }}
