@@ -65,6 +65,16 @@ jobs:
           yq  -I 4 -o json -i "$k.description = \"${newDescription}\"" adminapi.json
         done
 
+        for k in $(yq '. | keys | .[]' enhance.yml); do
+          newData=$(yq ".\"${k}\"" enhance.yml);
+          # escape all keys by default
+          j=$(echo "$k" | sed -r 's/[.]+/"."/g')
+          # remove first extra quote
+          j=${j#*\"}
+          # add one extra quote at the end
+          yq -I 4 -o json -i "${j}\" = \"${newData}\"" adminapi.json
+        done
+                  
     - name: Download original file
       uses: actions/download-artifact@v4
       with:
