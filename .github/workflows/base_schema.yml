@@ -66,10 +66,12 @@ jobs:
         done
 
         for k in $(yq '. | keys | .[]' summary.yml); do
-          j=$(echo $k | tr -d '"')
-          newSummary=$(yq ".\"${j}\"" summary.yml);
+          newSummary=$(yq ".\"${k}\"" summary.yml);
+          echo $newSummary
+          j=$(echo $k | tr -d '{}')
+          echo $j
           # Indent 4; output as json; edit in place
-          yq -I 4 -o json -i "${k}.summary = \"${newSummary}\"" adminapi.json
+          yq -I 4 -o json -i "${j}.summary = \"${newSummary}\"" adminapi.json
         done
                   
     - name: Download original file
