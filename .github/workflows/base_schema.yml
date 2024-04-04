@@ -68,7 +68,7 @@ jobs:
         for k in $(yq '. | keys | .[]' summary.yml); do
           newSummary=$(yq ".\"'$k'\"" summary.yml);
           # Indent 4; output as json; edit in place
-          yq -I 4 -o json -i "$k.summary = \"${newSummary}\"" adminapi.json
+          yq -I 4 -o json -i "'$k'.summary = \"${newSummary}\"" adminapi.json
         done
                   
     - name: Download original file
