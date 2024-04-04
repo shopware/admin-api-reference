@@ -66,10 +66,8 @@ jobs:
         done
 
         for k in $(yq '. | keys | .[]' summary.yml); do
-          newSummary=$(yq ".\"${k}\"" summary.yml);
-          echo ${k}
-          echo $k
-          echo $newSummary
+          j=$(echo $k | tr -d '"')
+          newSummary=$(yq ".\"${j}\"" summary.yml);
           # Indent 4; output as json; edit in place
           yq -I 4 -o json -i "${k}.summary = \"${newSummary}\"" adminapi.json
         done
