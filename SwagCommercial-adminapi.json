@@ -21926,6 +21926,48 @@
           }
         ]
       }
+    },
+    "/_action/text-to-image/generate": {
+      "post": {
+        "tags": [
+          "Text to Image",
+          "Experimental"
+        ],
+        "summary": "Generate images based on a textual prompt",
+        "description": "<b>Experimental until v6.7.0</b>\n\nGenerate images based on a textual prompt",
+        "operationId": "textToImageGenerate",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "description": "The textual prompt to describe what image to generate",
+                    "type": "string",
+                    "example": "Generate a warm and inviting ambience with soft lightning and neutral tones"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The base64 string representation of the generated image",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "byte",
+                  "example": "data:image/png;base64,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"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
