@@ -3,6 +3,10 @@
   "info": {
     "title": "Shopware Admin API",
     "description": "This endpoint reference contains an overview of all endpoints comprising the Shopware Admin API.\n\nFor a better overview, all CRUD-endpoints are hidden by default. If you want to show also CRUD-endpoints\nadd the query parameter `type=jsonapi`.",
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
+    },
     "version": "6.6.9999999.9999999-dev"
   },
   "servers": [
@@ -27686,6 +27690,14 @@
                 "format": "int64",
                 "readOnly": true
               },
+              "orderId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "orderVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "billingAddressId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -27865,6 +27877,35 @@
               },
               "relationships": {
                 "properties": {
+                  "order": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/order"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "70a17ffa722a3985b86d30b034ad06d7"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "billingAddress": {
                     "properties": {
                       "links": {
@@ -28283,6 +28324,14 @@
             "format": "int64",
             "readOnly": true
           },
+          "orderId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "orderVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "billingAddressId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
@@ -28459,6 +28508,9 @@
             "type": "string",
             "format": "date-time",
             "readOnly": true
+          },
+          "order": {
+            "$ref": "#/components/schemas/Order"
           },
           "billingAddress": {
             "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
@@ -46406,6 +46458,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "b2bPendingOrder": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/order/a240fa27925a635b08dc28c9e4f9216d/b2bPendingOrder"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_pending_order"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "c7e0572188e2dec59215e8872024567e"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -47287,6 +47370,37 @@
                         "id": {
                           "type": "string",
                           "example": "5ea451c08a87db806089c4031601c29a"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "b2bPendingOrder": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/order/a240fa27925a635b08dc28c9e4f9216d/b2bPendingOrder"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_pending_order"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "c7e0572188e2dec59215e8872024567e"
                         }
                       }
                     }
