@@ -4865,6 +4865,491 @@
         }
       }
     },
+    "/b2b-components-approval-rule-app-script-condition": {
+      "get": {
+        "tags": [
+          "B2b Components Approval Rule App Script Condition"
+        ],
+        "summary": "List with basic information of B2b Components Approval Rule App Script Condition resources.",
+        "description": "Available since: 6.6.3.0",
+        "operationId": "getB2bComponentsApprovalRuleAppScriptConditionList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of B2b Components Approval Rule App Script Condition resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/b2b-components-approval-rule-app-script-condition?limit=25"
+                                },
+                                "last": {
+                                  "example": "/b2b-components-approval-rule-app-script-condition?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/b2b-components-approval-rule-app-script-condition?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/b2b-components-approval-rule-app-script-condition?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "B2b Components Approval Rule App Script Condition"
+        ],
+        "summary": "Create a new B2b Components Approval Rule App Script Condition resources.",
+        "description": "Available since: 6.6.3.0",
+        "operationId": "createB2bComponentsApprovalRuleAppScriptCondition",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsApprovalRuleAppScriptCondition",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/b2b-components-approval-rule-app-script-condition": {
+      "post": {
+        "tags": [
+          "B2b Components Approval Rule App Script Condition"
+        ],
+        "summary": "Search for the B2b Components Approval Rule App Script Condition resources.",
+        "description": "Available since: 6.6.3.0",
+        "operationId": "searchB2bComponentsApprovalRuleAppScriptCondition",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsApprovalRuleAppScriptCondition",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-approval-rule-app-script-condition/{id}": {
+      "get": {
+        "tags": [
+          "B2b Components Approval Rule App Script Condition"
+        ],
+        "summary": "Detailed information about a B2b Components Approval Rule App Script Condition resource.",
+        "description": "Available since: 6.6.3.0",
+        "operationId": "getB2bComponentsApprovalRuleAppScriptCondition",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_approval_rule_app_script_condition",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsApprovalRuleAppScriptCondition",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "B2b Components Approval Rule App Script Condition"
+        ],
+        "summary": "Delete a B2b Components Approval Rule App Script Condition resource.",
+        "description": "Available since: 6.6.3.0",
+        "operationId": "deleteB2bComponentsApprovalRuleAppScriptCondition",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_approval_rule_app_script_condition",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "B2b Components Approval Rule App Script Condition"
+        ],
+        "summary": "Partially update information about a B2b Components Approval Rule App Script Condition resource.",
+        "description": "Available since: 6.6.3.0",
+        "operationId": "updateB2bComponentsApprovalRuleAppScriptCondition",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_approval_rule_app_script_condition",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a B2b Components Approval Rule App Script Condition resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsApprovalRuleAppScriptCondition",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsApprovalRuleAppScriptCondition"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/b2b-components-pending-order": {
       "get": {
         "tags": [
@@ -27656,6 +28141,156 @@
           },
           "affectedRole": {
             "$ref": "#/components/schemas/B2bComponentsRole"
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsApprovalRuleAppScriptConditionJsonApi": {
+        "description": "Added since version: 6.6.3.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "identifier",
+              "active",
+              "appId",
+              "createdAt",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "identifier": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "active": {
+                "type": "boolean"
+              },
+              "group": {
+                "type": "string"
+              },
+              "script": {
+                "type": "string"
+              },
+              "config": {
+                "type": "object"
+              },
+              "appId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "translated": {
+                "type": "object"
+              },
+              "relationships": {
+                "properties": {
+                  "app": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-approval-rule-app-script-condition/031e11005a97d52a5c7950ff98b5f2bb/app"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "app"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "B2bComponentsApprovalRuleAppScriptCondition": {
+        "description": "Added since version: 6.6.3.0",
+        "required": [
+          "id",
+          "identifier",
+          "active",
+          "appId",
+          "createdAt",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "group": {
+            "type": "string"
+          },
+          "script": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object"
+          },
+          "appId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "translated": {
+            "type": "object"
+          },
+          "app": {
+            "$ref": "#/components/schemas/App"
           }
         },
         "type": "object"
@@ -80273,6 +80908,10 @@
     {
       "name": "B2b Components Approval Rule",
       "description": "The endpoint for operations on B2b Components Approval Rule"
+    },
+    {
+      "name": "B2b Components Approval Rule App Script Condition",
+      "description": "The endpoint for operations on B2b Components Approval Rule App Script Condition"
     },
     {
       "name": "B2b Components Pending Order",
