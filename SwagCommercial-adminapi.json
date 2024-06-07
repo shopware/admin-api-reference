@@ -17972,6 +17972,2431 @@
         }
       }
     },
+    "/spatial-render-config-size": {
+      "get": {
+        "tags": [
+          "Spatial Render Config Size"
+        ],
+        "summary": "List with basic information of Spatial Render Config Size resources.",
+        "description": "",
+        "operationId": "getSpatialRenderConfigSizeList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Spatial Render Config Size resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/spatial-render-config-size?limit=25"
+                                },
+                                "last": {
+                                  "example": "/spatial-render-config-size?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/spatial-render-config-size?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/spatial-render-config-size?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Spatial Render Config Size"
+        ],
+        "summary": "Create a new Spatial Render Config Size resources.",
+        "description": "",
+        "operationId": "createSpatialRenderConfigSize",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpatialRenderConfigSize"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialRenderConfigSize",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/spatial-render-config-size": {
+      "post": {
+        "tags": [
+          "Spatial Render Config Size"
+        ],
+        "summary": "Search for the Spatial Render Config Size resources.",
+        "description": "",
+        "operationId": "searchSpatialRenderConfigSize",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of SpatialRenderConfigSize",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/spatial-render-config-size/{id}": {
+      "get": {
+        "tags": [
+          "Spatial Render Config Size"
+        ],
+        "summary": "Detailed information about a Spatial Render Config Size resource.",
+        "description": "",
+        "operationId": "getSpatialRenderConfigSize",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_render_config_size",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialRenderConfigSize",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Spatial Render Config Size"
+        ],
+        "summary": "Delete a Spatial Render Config Size resource.",
+        "description": "",
+        "operationId": "deleteSpatialRenderConfigSize",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_render_config_size",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Spatial Render Config Size"
+        ],
+        "summary": "Partially update information about a Spatial Render Config Size resource.",
+        "description": "",
+        "operationId": "updateSpatialRenderConfigSize",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_render_config_size",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Spatial Render Config Size resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpatialRenderConfigSize"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialRenderConfigSize",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialRenderConfigSize"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/spatial-scene": {
+      "get": {
+        "tags": [
+          "Spatial Scene"
+        ],
+        "summary": "List with basic information of Spatial Scene resources.",
+        "description": "",
+        "operationId": "getSpatialSceneList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Spatial Scene resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/SpatialScene"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/spatial-scene?limit=25"
+                                },
+                                "last": {
+                                  "example": "/spatial-scene?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/spatial-scene?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/spatial-scene?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SpatialScene"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Spatial Scene"
+        ],
+        "summary": "Create a new Spatial Scene resources.",
+        "description": "",
+        "operationId": "createSpatialScene",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/SpatialScene"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpatialScene"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialScene",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialScene"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialScene"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/spatial-scene": {
+      "post": {
+        "tags": [
+          "Spatial Scene"
+        ],
+        "summary": "Search for the Spatial Scene resources.",
+        "description": "",
+        "operationId": "searchSpatialScene",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of SpatialScene",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SpatialScene"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SpatialScene"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/spatial-scene/{id}": {
+      "get": {
+        "tags": [
+          "Spatial Scene"
+        ],
+        "summary": "Detailed information about a Spatial Scene resource.",
+        "description": "",
+        "operationId": "getSpatialScene",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialScene",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialScene"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialScene"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Spatial Scene"
+        ],
+        "summary": "Delete a Spatial Scene resource.",
+        "description": "",
+        "operationId": "deleteSpatialScene",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Spatial Scene"
+        ],
+        "summary": "Partially update information about a Spatial Scene resource.",
+        "description": "",
+        "operationId": "updateSpatialScene",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Spatial Scene resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/SpatialScene"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpatialScene"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialScene",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialScene"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialScene"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/spatial-scene-camera": {
+      "get": {
+        "tags": [
+          "Spatial Scene Camera"
+        ],
+        "summary": "List with basic information of Spatial Scene Camera resources.",
+        "description": "",
+        "operationId": "getSpatialSceneCameraList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Spatial Scene Camera resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/SpatialSceneCamera"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/spatial-scene-camera?limit=25"
+                                },
+                                "last": {
+                                  "example": "/spatial-scene-camera?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/spatial-scene-camera?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/spatial-scene-camera?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SpatialSceneCamera"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Spatial Scene Camera"
+        ],
+        "summary": "Create a new Spatial Scene Camera resources.",
+        "description": "",
+        "operationId": "createSpatialSceneCamera",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/SpatialSceneCamera"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpatialSceneCamera"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialSceneCamera",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialSceneCamera"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialSceneCamera"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/spatial-scene-camera": {
+      "post": {
+        "tags": [
+          "Spatial Scene Camera"
+        ],
+        "summary": "Search for the Spatial Scene Camera resources.",
+        "description": "",
+        "operationId": "searchSpatialSceneCamera",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of SpatialSceneCamera",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SpatialSceneCamera"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SpatialSceneCamera"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/spatial-scene-camera/{id}": {
+      "get": {
+        "tags": [
+          "Spatial Scene Camera"
+        ],
+        "summary": "Detailed information about a Spatial Scene Camera resource.",
+        "description": "",
+        "operationId": "getSpatialSceneCamera",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene_camera",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialSceneCamera",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialSceneCamera"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialSceneCamera"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Spatial Scene Camera"
+        ],
+        "summary": "Delete a Spatial Scene Camera resource.",
+        "description": "",
+        "operationId": "deleteSpatialSceneCamera",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene_camera",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Spatial Scene Camera"
+        ],
+        "summary": "Partially update information about a Spatial Scene Camera resource.",
+        "description": "",
+        "operationId": "updateSpatialSceneCamera",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene_camera",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Spatial Scene Camera resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/SpatialSceneCamera"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpatialSceneCamera"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialSceneCamera",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialSceneCamera"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialSceneCamera"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/spatial-scene-light": {
+      "get": {
+        "tags": [
+          "Spatial Scene Light"
+        ],
+        "summary": "List with basic information of Spatial Scene Light resources.",
+        "description": "",
+        "operationId": "getSpatialSceneLightList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Spatial Scene Light resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/SpatialSceneLight"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/spatial-scene-light?limit=25"
+                                },
+                                "last": {
+                                  "example": "/spatial-scene-light?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/spatial-scene-light?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/spatial-scene-light?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SpatialSceneLight"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Spatial Scene Light"
+        ],
+        "summary": "Create a new Spatial Scene Light resources.",
+        "description": "",
+        "operationId": "createSpatialSceneLight",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/SpatialSceneLight"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpatialSceneLight"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialSceneLight",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialSceneLight"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialSceneLight"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/spatial-scene-light": {
+      "post": {
+        "tags": [
+          "Spatial Scene Light"
+        ],
+        "summary": "Search for the Spatial Scene Light resources.",
+        "description": "",
+        "operationId": "searchSpatialSceneLight",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of SpatialSceneLight",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SpatialSceneLight"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SpatialSceneLight"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/spatial-scene-light/{id}": {
+      "get": {
+        "tags": [
+          "Spatial Scene Light"
+        ],
+        "summary": "Detailed information about a Spatial Scene Light resource.",
+        "description": "",
+        "operationId": "getSpatialSceneLight",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene_light",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialSceneLight",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialSceneLight"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialSceneLight"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Spatial Scene Light"
+        ],
+        "summary": "Delete a Spatial Scene Light resource.",
+        "description": "",
+        "operationId": "deleteSpatialSceneLight",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene_light",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Spatial Scene Light"
+        ],
+        "summary": "Partially update information about a Spatial Scene Light resource.",
+        "description": "",
+        "operationId": "updateSpatialSceneLight",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene_light",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Spatial Scene Light resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/SpatialSceneLight"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpatialSceneLight"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialSceneLight",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialSceneLight"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialSceneLight"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/spatial-scene-object": {
+      "get": {
+        "tags": [
+          "Spatial Scene Object"
+        ],
+        "summary": "List with basic information of Spatial Scene Object resources.",
+        "description": "",
+        "operationId": "getSpatialSceneObjectList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Spatial Scene Object resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/SpatialSceneObject"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/spatial-scene-object?limit=25"
+                                },
+                                "last": {
+                                  "example": "/spatial-scene-object?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/spatial-scene-object?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/spatial-scene-object?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SpatialSceneObject"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Spatial Scene Object"
+        ],
+        "summary": "Create a new Spatial Scene Object resources.",
+        "description": "",
+        "operationId": "createSpatialSceneObject",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/SpatialSceneObject"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpatialSceneObject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialSceneObject",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialSceneObject"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialSceneObject"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/spatial-scene-object": {
+      "post": {
+        "tags": [
+          "Spatial Scene Object"
+        ],
+        "summary": "Search for the Spatial Scene Object resources.",
+        "description": "",
+        "operationId": "searchSpatialSceneObject",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of SpatialSceneObject",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SpatialSceneObject"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SpatialSceneObject"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/spatial-scene-object/{id}": {
+      "get": {
+        "tags": [
+          "Spatial Scene Object"
+        ],
+        "summary": "Detailed information about a Spatial Scene Object resource.",
+        "description": "",
+        "operationId": "getSpatialSceneObject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene_object",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialSceneObject",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialSceneObject"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialSceneObject"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Spatial Scene Object"
+        ],
+        "summary": "Delete a Spatial Scene Object resource.",
+        "description": "",
+        "operationId": "deleteSpatialSceneObject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene_object",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Spatial Scene Object"
+        ],
+        "summary": "Partially update information about a Spatial Scene Object resource.",
+        "description": "",
+        "operationId": "updateSpatialSceneObject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the spatial_scene_object",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Spatial Scene Object resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/SpatialSceneObject"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpatialSceneObject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SpatialSceneObject",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SpatialSceneObject"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SpatialSceneObject"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/sso-provider": {
       "get": {
         "tags": [
@@ -43330,6 +45755,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "spatialObjects": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media/3b563524fdb17b4a86590470d40bef74/spatialObjects"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "spatial_scene_object"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "ad6bd8458100c1c7b8a7d1478a4ba188"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -44289,6 +46745,37 @@
                         "id": {
                           "type": "string",
                           "example": "5f9aa016c99bbfdc16be8c44d885e7e4"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "spatialObjects": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/media/3b563524fdb17b4a86590470d40bef74/spatialObjects"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "spatial_scene_object"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "ad6bd8458100c1c7b8a7d1478a4ba188"
                         }
                       }
                     }
@@ -71672,6 +74159,738 @@
         },
         "type": "object"
       },
+      "SpatialRenderConfigSizeJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "name",
+              "width",
+              "height",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "name": {
+                "type": "string"
+              },
+              "width": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "height": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "SpatialRenderConfigSize": {
+        "required": [
+          "id",
+          "name",
+          "width",
+          "height",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        },
+        "type": "object"
+      },
+      "SpatialSceneJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "name",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "backgroundEnabled": {
+                "type": "boolean"
+              },
+              "backgroundColor": {
+                "type": "string"
+              },
+              "floorEnabled": {
+                "type": "boolean"
+              },
+              "floorColor": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "objects": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/spatial-scene/fbe2b606c76b0075eced631365324623/objects"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "spatial_scene_object"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "5891da2d64975cae48d175d1e001f5da"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "cameras": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/spatial-scene/fbe2b606c76b0075eced631365324623/cameras"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "spatial_scene_camera"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "036651ad64ffb926ca7a2759af327a8a"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "lights": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/spatial-scene/fbe2b606c76b0075eced631365324623/lights"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "spatial_scene_light"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "278e59671a1a559c4bc61d226cd217cd"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "SpatialScene": {
+        "required": [
+          "id",
+          "name",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "backgroundEnabled": {
+            "type": "boolean"
+          },
+          "backgroundColor": {
+            "type": "string"
+          },
+          "floorEnabled": {
+            "type": "boolean"
+          },
+          "floorColor": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpatialSceneObject"
+            }
+          },
+          "cameras": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpatialSceneCamera"
+            }
+          },
+          "lights": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpatialSceneLight"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "SpatialSceneCameraJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "sceneId",
+              "type",
+              "name",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "sceneId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "type": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "position": {
+                "type": "object"
+              },
+              "target": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "scene": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/spatial-scene-camera/d7d65fbdb516f0fc0e32feb511de5c33/scene"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "spatial_scene"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "1e7f604b86415ade94e15fef8627609b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "SpatialSceneCamera": {
+        "required": [
+          "id",
+          "sceneId",
+          "type",
+          "name",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "sceneId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "position": {
+            "type": "object"
+          },
+          "target": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "scene": {
+            "$ref": "#/components/schemas/SpatialScene"
+          }
+        },
+        "type": "object"
+      },
+      "SpatialSceneLightJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "sceneId",
+              "type",
+              "name",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "sceneId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "type": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "intensity": {
+                "type": "number",
+                "format": "float"
+              },
+              "color": {
+                "type": "string"
+              },
+              "position": {
+                "type": "object"
+              },
+              "rotation": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "scene": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/spatial-scene-light/fb2a55d47b419c2709f04f235c4eb7fe/scene"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "spatial_scene"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "1e7f604b86415ade94e15fef8627609b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "SpatialSceneLight": {
+        "required": [
+          "id",
+          "sceneId",
+          "type",
+          "name",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "sceneId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "intensity": {
+            "type": "number",
+            "format": "float"
+          },
+          "color": {
+            "type": "string"
+          },
+          "position": {
+            "type": "object"
+          },
+          "rotation": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "scene": {
+            "$ref": "#/components/schemas/SpatialScene"
+          }
+        },
+        "type": "object"
+      },
+      "SpatialSceneObjectJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "sceneId",
+              "mediaId",
+              "name",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "sceneId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "mediaId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "name": {
+                "type": "string"
+              },
+              "position": {
+                "type": "object"
+              },
+              "rotation": {
+                "type": "object"
+              },
+              "scale": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "scene": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/spatial-scene-object/c632bfed18543c7114e7a93456a28d9c/scene"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "spatial_scene"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "1e7f604b86415ade94e15fef8627609b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "media": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/spatial-scene-object/c632bfed18543c7114e7a93456a28d9c/media"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "62933a2951ef01f4eafd9bdf4d3cd2f0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "SpatialSceneObject": {
+        "required": [
+          "id",
+          "sceneId",
+          "mediaId",
+          "name",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "sceneId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "mediaId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "position": {
+            "type": "object"
+          },
+          "rotation": {
+            "type": "object"
+          },
+          "scale": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "scene": {
+            "$ref": "#/components/schemas/SpatialScene"
+          },
+          "media": {
+            "$ref": "#/components/schemas/Media"
+          }
+        },
+        "type": "object"
+      },
       "SsoProviderJsonApi": {
         "allOf": [
           {
@@ -81446,6 +84665,26 @@
     {
       "name": "Snippet Set",
       "description": "The endpoint for operations on Snippet Set"
+    },
+    {
+      "name": "Spatial Render Config Size",
+      "description": "The endpoint for operations on Spatial Render Config Size"
+    },
+    {
+      "name": "Spatial Scene",
+      "description": "The endpoint for operations on Spatial Scene"
+    },
+    {
+      "name": "Spatial Scene Camera",
+      "description": "The endpoint for operations on Spatial Scene Camera"
+    },
+    {
+      "name": "Spatial Scene Light",
+      "description": "The endpoint for operations on Spatial Scene Light"
+    },
+    {
+      "name": "Spatial Scene Object",
+      "description": "The endpoint for operations on Spatial Scene Object"
     },
     {
       "name": "Sso Provider",
