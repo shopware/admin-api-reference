@@ -78571,7 +78571,6 @@
           {
             "required": [
               "id",
-              "technicalName",
               "label",
               "sourceEntity",
               "fileType",
@@ -78583,12 +78582,6 @@
               "id": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "technicalName": {
-                "type": "string"
               },
               "label": {
                 "type": "string"
@@ -78619,6 +78612,12 @@
               },
               "config": {
                 "type": "object"
+              },
+              "technicalName": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -78678,7 +78677,6 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "technicalName",
           "label",
           "sourceEntity",
           "fileType",
@@ -78691,13 +78689,6 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of import-export profile."
-          },
-          "name": {
-            "type": "string",
-            "description": "Unique name of the import-export file."
-          },
-          "technicalName": {
-            "type": "string"
           },
           "label": {
             "type": "string",
@@ -78736,6 +78727,13 @@
           "config": {
             "type": "object",
             "description": "Specifies detailed information about the component."
+          },
+          "technicalName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Unique name of the import-export file."
           },
           "createdAt": {
             "type": "string",
