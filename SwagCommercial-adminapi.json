@@ -25259,43 +25259,51 @@
         }
       }
     },
-    "/_info/routes": {
-      "get": {
-        "summary": "Get API routes",
-        "operationId": "getRoutes",
+    "/_proxy/generate-imitate-customer-token": {
+      "post": {
+        "tags": [
+          "Customer impersonation"
+        ],
+        "summary": "Generate a customer impersonation token",
+        "description": "Generates a customer impersonation token for the given customer and sales channel.\n\nThe token can be used to authenticate as the customer in the sales channel.",
+        "operationId": "generateImitateCustomerToken",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "customerId",
+                  "salesChannelId"
+                ],
+                "properties": {
+                  "customerId": {
+                    "description": "ID of the customer",
+                    "type": "string"
+                  },
+                  "salesChannelId": {
+                    "description": "ID of the sales channel",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "The generated customer impersonation token.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "required": [
-                    "endpoints"
-                  ],
                   "properties": {
-                    "endpoints": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "required": [
-                          "methods",
-                          "path"
-                        ],
-                        "properties": {
-                          "methods": {
-                            "type": "array",
-                            "items": {
-                              "type": "string"
-                            }
-                          },
-                          "path": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                    "token": {
+                      "description": "The generated customer impersonation token",
+                      "type": "string"
                     }
-                  }
+                  },
+                  "type": "object"
                 }
               }
             }
@@ -28075,6 +28083,9 @@
               "sourceConfig": {
                 "type": "object"
               },
+              "selfManaged": {
+                "type": "boolean"
+              },
               "label": {
                 "type": "string"
               },
@@ -28577,6 +28588,9 @@
           },
           "sourceConfig": {
             "type": "object"
+          },
+          "selfManaged": {
+            "type": "boolean"
           },
           "label": {
             "type": "string"
