@@ -65785,7 +65785,7 @@
     "/_info/flow-actions.json": {
       "get": {
         "tags": [
-          "System Info & Healthcheck"
+          "System Info & Health Check"
         ],
         "summary": "Get actions for flow builder",
         "description": "Get a list of action for flow builder.",
@@ -65796,7 +65796,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/flowBulderActionsResponse"
+                  "$ref": "#/components/schemas/flowBuilderActionsResponse"
                 }
               }
             }
@@ -66006,7 +66006,7 @@
     "/_info/events.json": {
       "get": {
         "tags": [
-          "System Info & Healthcheck"
+          "System Info & Health Check"
         ],
         "summary": "Get Business events",
         "description": "Get a list of about the business events.",
@@ -66028,7 +66028,7 @@
     "/_info/openapi3.json": {
       "get": {
         "tags": [
-          "System Info & Healthcheck"
+          "System Info & Health Check"
         ],
         "summary": "Get OpenAPI Specification",
         "description": "Get information about the admin API in OpenAPI format.",
@@ -66395,7 +66395,7 @@
     "/_info/version": {
       "get": {
         "tags": [
-          "System Info & Healthcheck"
+          "System Info & Health Check"
         ],
         "summary": "Get the Shopware version",
         "description": "Get the version of the Shopware instance",
@@ -66630,7 +66630,7 @@
                   ],
                   "properties": {
                     "action": {
-                      "description": "The action indicates what should happen with the provided payload.\n    * `upsert`: The Sync API does not differ between create and update operations,\n    but always performs an upsert operation. During an upsert, the system checks whether the entity already exists in the\n    system and updates it if an identifier has been passed, otherwise a new entity is created with this identifier.\n    * `delete`: Deletes entites with the provided identifiers",
+                      "description": "The action indicates what should happen with the provided payload.\n    * `upsert`: The Sync API does not differ between create and update operations,\n    but always performs an upsert operation. During an upsert, the system checks whether the entity already exists in the\n    system and updates it if an identifier has been passed, otherwise a new entity is created with this identifier.\n    * `delete`: Deletes entities with the provided identifiers",
                       "type": "string",
                       "enum": [
                         "upsert",
@@ -66664,15 +66664,15 @@
                 "schema": {
                   "properties": {
                     "data": {
-                      "description": "Object with information about updated entites",
+                      "description": "Object with information about updated entities",
                       "type": "object"
                     },
                     "notFound": {
-                      "description": "Object with information about not found entites",
+                      "description": "Object with information about not found entities",
                       "type": "object"
                     },
                     "deleted": {
-                      "description": "Object with information about deleted entites",
+                      "description": "Object with information about deleted entities",
                       "type": "object"
                     }
                   },
@@ -66687,7 +66687,7 @@
     "/_info/config": {
       "get": {
         "tags": [
-          "System Info & Healthcheck"
+          "System Info & Health Check"
         ],
         "summary": "Get API information",
         "description": "Get information about the API",
@@ -66739,7 +66739,7 @@
     "/_info/health-check": {
       "get": {
         "tags": [
-          "System Info & Healthcheck"
+          "System Info & Health Check"
         ],
         "summary": "Check that the Application is running",
         "operationId": "healthCheck",
@@ -66833,7 +66833,7 @@
           "System Operations"
         ],
         "summary": "Consume messages from the message queue.",
-        "description": "This route can be used to consume messenges from the message queue. It is intended to be used if\nno cronjob is configured to consume messages regulary.",
+        "description": "This route can be used to consume messages from the message queue. It is intended to be used if\nno cronjob is configured to consume messages regularly.",
         "operationId": "consumeMessages",
         "requestBody": {
           "required": true,
@@ -108225,7 +108225,7 @@
           }
         }
       },
-      "flowBulderActionsResponse": {
+      "flowBuilderActionsResponse": {
         "type": "array",
         "items": {
           "type": "object",
@@ -108248,14 +108248,6 @@
               },
               "description": "Extensions data of event"
             }
-          }
-        },
-        "properties": {
-          "name": {
-            "description": "Unique name of the flowBulderActionsResponse."
-          },
-          "extensions": {
-            "description": "Internal field."
           }
         }
       },
@@ -109537,6 +109529,16 @@
           },
           "priority": {
             "description": "A numerical value to prioritize one the WarehouseGroupWarehouse from the list."
+          }
+        }
+      },
+      "flowBulderActionsResponse": {
+        "properties": {
+          "name": {
+            "description": "Unique name of the flowBulderActionsResponse."
+          },
+          "extensions": {
+            "description": "Internal field."
           }
         }
       },
