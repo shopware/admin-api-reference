@@ -11238,7 +11238,6 @@
             "required": [
               "id",
               "groupId",
-              "defaultPaymentMethodId",
               "salesChannelId",
               "languageId",
               "defaultBillingAddressId",
@@ -11248,6 +11247,7 @@
               "lastName",
               "email",
               "accountType",
+              "defaultPaymentMethodId",
               "createdAt"
             ],
             "properties": {
@@ -11256,10 +11256,6 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "groupId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "defaultPaymentMethodId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -11406,6 +11402,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "defaultPaymentMethodId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -11477,35 +11477,6 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "db0f6f37ebeb6ea09489124345af2a45"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "defaultPaymentMethod": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/defaultPaymentMethod"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "payment_method"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "8f35e31802b72bf010a333999b26f3a6"
                           }
                         }
                       }
@@ -12016,6 +11987,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "defaultPaymentMethod": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/defaultPaymentMethod"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "payment_method"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "8f35e31802b72bf010a333999b26f3a6"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -12030,7 +12030,6 @@
         "required": [
           "id",
           "groupId",
-          "defaultPaymentMethodId",
           "salesChannelId",
           "languageId",
           "defaultBillingAddressId",
@@ -12040,6 +12039,7 @@
           "lastName",
           "email",
           "accountType",
+          "defaultPaymentMethodId",
           "createdAt"
         ],
         "properties": {
@@ -12048,10 +12048,6 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "groupId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "defaultPaymentMethodId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -12198,6 +12194,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "defaultPaymentMethodId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -12246,9 +12246,6 @@
           },
           "group": {
             "$ref": "#/components/schemas/CustomerGroup"
-          },
-          "defaultPaymentMethod": {
-            "$ref": "#/components/schemas/PaymentMethod"
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
@@ -12318,6 +12315,9 @@
           },
           "updatedBy": {
             "$ref": "#/components/schemas/User"
+          },
+          "defaultPaymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethod"
           }
         },
         "type": "object"
