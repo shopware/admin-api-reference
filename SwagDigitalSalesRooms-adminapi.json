@@ -996,6 +996,491 @@
         }
       }
     },
+    "/dsr-appointment-request": {
+      "get": {
+        "tags": [
+          "Dsr Appointment Request"
+        ],
+        "summary": "List with basic information of Dsr Appointment Request resources.",
+        "description": "",
+        "operationId": "getDsrAppointmentRequestList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Dsr Appointment Request resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/DsrAppointmentRequest"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/dsr-appointment-request?limit=25"
+                                },
+                                "last": {
+                                  "example": "/dsr-appointment-request?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/dsr-appointment-request?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/dsr-appointment-request?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DsrAppointmentRequest"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Dsr Appointment Request"
+        ],
+        "summary": "Create a new Dsr Appointment Request resources.",
+        "description": "",
+        "operationId": "createDsrAppointmentRequest",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/DsrAppointmentRequest"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DsrAppointmentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of DsrAppointmentRequest",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/DsrAppointmentRequest"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/DsrAppointmentRequest"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/dsr-appointment-request": {
+      "post": {
+        "tags": [
+          "Dsr Appointment Request"
+        ],
+        "summary": "Search for the Dsr Appointment Request resources.",
+        "description": "",
+        "operationId": "searchDsrAppointmentRequest",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of DsrAppointmentRequest",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/DsrAppointmentRequest"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DsrAppointmentRequest"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/dsr-appointment-request/{id}": {
+      "get": {
+        "tags": [
+          "Dsr Appointment Request"
+        ],
+        "summary": "Detailed information about a Dsr Appointment Request resource.",
+        "description": "",
+        "operationId": "getDsrAppointmentRequest",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the dsr_appointment_request",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of DsrAppointmentRequest",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/DsrAppointmentRequest"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/DsrAppointmentRequest"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Dsr Appointment Request"
+        ],
+        "summary": "Delete a Dsr Appointment Request resource.",
+        "description": "",
+        "operationId": "deleteDsrAppointmentRequest",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the dsr_appointment_request",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Dsr Appointment Request"
+        ],
+        "summary": "Partially update information about a Dsr Appointment Request resource.",
+        "description": "",
+        "operationId": "updateDsrAppointmentRequest",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the dsr_appointment_request",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Dsr Appointment Request resource.",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/DsrAppointmentRequest"
+                  },
+                  "included": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/resource"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DsrAppointmentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of DsrAppointmentRequest",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/DsrAppointmentRequest"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/DsrAppointmentRequest"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/dsr-appointment-video-chat": {
       "get": {
         "tags": [
@@ -14552,6 +15037,15 @@
               "default": {
                 "type": "boolean"
               },
+              "canSendRequestEmail": {
+                "type": "boolean"
+              },
+              "canBookNewAppointment": {
+                "type": "boolean"
+              },
+              "bookingLink": {
+                "type": "string"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -14868,6 +15362,15 @@
           },
           "default": {
             "type": "boolean"
+          },
+          "canSendRequestEmail": {
+            "type": "boolean"
+          },
+          "canBookNewAppointment": {
+            "type": "boolean"
+          },
+          "bookingLink": {
+            "type": "string"
           },
           "customFields": {
             "type": "object"
@@ -15236,6 +15739,280 @@
             "items": {
               "$ref": "#/components/schemas/DsrAttendeeProductCollection"
             }
+          }
+        },
+        "type": "object"
+      },
+      "DsrAppointmentRequestJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "appointmentId",
+              "salutationId",
+              "firstName",
+              "lastName",
+              "emailAddress",
+              "subject",
+              "requestedById",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "appointmentId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "salutationId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "companyName": {
+                "type": "string"
+              },
+              "emailAddress": {
+                "type": "string"
+              },
+              "phoneNumber": {
+                "type": "string"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "requestedById": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "handledById": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "appointment": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/dsr-appointment-request/3c71739b4a19fe331ce2b32a35e8ef4d/appointment"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "dsr_appointment"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "b1caa385c37f1fec467494c8fde4f49b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "salutation": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/dsr-appointment-request/3c71739b4a19fe331ce2b32a35e8ef4d/salutation"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "salutation"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "7a6efb02514153b5aa9a8f40c6f8bcc3"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "requester": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/dsr-appointment-request/3c71739b4a19fe331ce2b32a35e8ef4d/requester"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "dsr_appointment_attendee"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "0bc2b09c07005b410cae62912ae70206"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "handler": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/dsr-appointment-request/3c71739b4a19fe331ce2b32a35e8ef4d/handler"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "user"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "c1cbfe271a40788a00e8bf8574d94d4b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "DsrAppointmentRequest": {
+        "required": [
+          "id",
+          "appointmentId",
+          "salutationId",
+          "firstName",
+          "lastName",
+          "emailAddress",
+          "subject",
+          "requestedById",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "appointmentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "salutationId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "companyName": {
+            "type": "string"
+          },
+          "emailAddress": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "requestedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "handledById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "appointment": {
+            "$ref": "#/components/schemas/DsrAppointment"
+          },
+          "salutation": {
+            "$ref": "#/components/schemas/Salutation"
+          },
+          "requester": {
+            "$ref": "#/components/schemas/DsrAppointmentAttendee"
+          },
+          "handler": {
+            "$ref": "#/components/schemas/User"
           }
         },
         "type": "object"
@@ -48167,6 +48944,10 @@
     {
       "name": "Dsr Appointment Attendee",
       "description": "The endpoint for operations on Dsr Appointment Attendee"
+    },
+    {
+      "name": "Dsr Appointment Request",
+      "description": "The endpoint for operations on Dsr Appointment Request"
     },
     {
       "name": "Dsr Appointment Video Chat",
