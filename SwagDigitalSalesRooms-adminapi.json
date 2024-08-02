@@ -129,11 +129,11 @@
       },
       "post": {
         "tags": [
-          "Appointment"
+          "Dsr Appointment"
         ],
-        "summary": "Create a new appointment",
+        "summary": "Create a new Dsr Appointment resources.",
         "description": "",
-        "operationId": "createAppointment",
+        "operationId": "createDsrAppointment",
         "parameters": [
           {
             "name": "_response",
@@ -169,11 +169,10 @@
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Appointment"
+                "$ref": "#/components/schemas/DsrAppointment"
               }
             }
-          },
-          "required": false
+          }
         },
         "responses": {
           "200": {
@@ -216,9 +215,6 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-          },
-          "204": {
-            "description": ""
           }
         }
       }
@@ -226,13 +222,13 @@
     "/search/dsr-appointment": {
       "post": {
         "tags": [
-          "Appointment"
+          "Dsr Appointment"
         ],
-        "summary": "Search appointments",
-        "description": "Return list of appointments",
-        "operationId": "searchAppointments",
+        "summary": "Search for the Dsr Appointment resources.",
+        "description": "",
+        "operationId": "searchDsrAppointment",
         "requestBody": {
-          "required": false,
+          "required": true,
           "content": {
             "application/vnd.api+json": {
               "schema": {
@@ -241,14 +237,14 @@
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetListBodyRequest"
+                "$ref": "#/components/schemas/Criteria"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "",
+            "description": "List of DsrAppointment",
             "content": {
               "application/vnd.api+json": {
                 "schema": {
@@ -280,13 +276,7 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Appointment"
-                      }
-                    },
-                    "aggregations": {
-                      "type": "array",
-                      "items": {
-                        "type": "object"
+                        "$ref": "#/components/schemas/DsrAppointment"
                       }
                     }
                   }
@@ -300,8 +290,7 @@
           "401": {
             "$ref": "#/components/responses/401"
           }
-        },
-        "parameters": []
+        }
       }
     },
     "/dsr-appointment/{id}": {
@@ -3050,11 +3039,11 @@
       },
       "post": {
         "tags": [
-          "Presentation"
+          "Dsr Presentation"
         ],
-        "summary": "Create a new presentation",
+        "summary": "Create a new Dsr Presentation resources.",
         "description": "",
-        "operationId": "createPresentation",
+        "operationId": "createDsrPresentation",
         "parameters": [
           {
             "name": "_response",
@@ -3090,11 +3079,10 @@
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Presentation"
+                "$ref": "#/components/schemas/DsrPresentation"
               }
             }
-          },
-          "required": false
+          }
         },
         "responses": {
           "200": {
@@ -3137,9 +3125,6 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-          },
-          "204": {
-            "description": ""
           }
         }
       }
@@ -3147,13 +3132,13 @@
     "/search/dsr-presentation": {
       "post": {
         "tags": [
-          "Presentation"
+          "Dsr Presentation"
         ],
-        "summary": "Search presentations",
-        "description": "Return list of presentations",
-        "operationId": "searchPresentations",
+        "summary": "Search for the Dsr Presentation resources.",
+        "description": "",
+        "operationId": "searchDsrPresentation",
         "requestBody": {
-          "required": false,
+          "required": true,
           "content": {
             "application/vnd.api+json": {
               "schema": {
@@ -3162,14 +3147,14 @@
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetListBodyRequest"
+                "$ref": "#/components/schemas/Criteria"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "",
+            "description": "List of DsrPresentation",
             "content": {
               "application/vnd.api+json": {
                 "schema": {
@@ -3201,13 +3186,7 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Presentation"
-                      }
-                    },
-                    "aggregations": {
-                      "type": "array",
-                      "items": {
-                        "type": "object"
+                        "$ref": "#/components/schemas/DsrPresentation"
                       }
                     }
                   }
@@ -3221,8 +3200,7 @@
           "401": {
             "$ref": "#/components/responses/401"
           }
-        },
-        "parameters": []
+        }
       }
     },
     "/dsr-presentation/{id}": {
@@ -3917,105 +3895,6 @@
         }
       }
     },
-    "/dsr-presentation/{presentationId}": {
-      "get": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Get detail of presentation",
-        "description": "",
-        "operationId": "getPresentation",
-        "parameters": [
-          {
-            "name": "presentationId",
-            "in": "path",
-            "description": "Presentation id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Presentation"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Update partially the existing presentation",
-        "description": "",
-        "operationId": "updatePresentation",
-        "parameters": [
-          {
-            "name": "presentationId",
-            "in": "path",
-            "description": "Presentation id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Presentation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Presentation"
-        ],
-        "summary": "Delete presentation",
-        "description": "",
-        "operationId": "deletePresentation",
-        "parameters": [
-          {
-            "name": "presentationId",
-            "in": "path",
-            "description": "Presentation id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/_action/dsr/appointment/{appointmentId}/join-as-guide": {
       "post": {
         "tags": [
@@ -4651,105 +4530,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/dsr-appointment/{appointmentId}": {
-      "get": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Get detail of appointment",
-        "description": "",
-        "operationId": "getAppointment",
-        "parameters": [
-          {
-            "name": "appointmentId",
-            "in": "path",
-            "description": "Appointment id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Appointment"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Update partially the existing appointment",
-        "description": "",
-        "operationId": "updateAppointment",
-        "parameters": [
-          {
-            "name": "appointmentId",
-            "in": "path",
-            "description": "Appointment id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Appointment"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Appointment"
-        ],
-        "summary": "Delete appointment",
-        "description": "",
-        "operationId": "deleteAppointment",
-        "parameters": [
-          {
-            "name": "appointmentId",
-            "in": "path",
-            "description": "Appointment id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
           }
         }
       }
@@ -22373,7 +22153,7 @@
       "MediaThumbnail": {
         "description": "Added since version: 6.0.0.0",
         "required": [
-          "id",
+          "url",
           "mediaId",
           "width",
           "height",
@@ -32804,6 +32584,9 @@
             "items": {
               "$ref": "#/components/schemas/Product"
             }
+          },
+          "thumbnails": {
+            "$ref": "#/components/schemas/MediaThumbnail"
           }
         },
         "type": "object"
@@ -47163,79 +46946,6 @@
           }
         }
       },
-      "Attendee": {
-        "type": "object",
-        "required": [
-          "appointmentId",
-          "type"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointmentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "CLIENT",
-              "GUIDE"
-            ]
-          },
-          "attendeeName": {
-            "type": "string"
-          },
-          "attendeeEmail": {
-            "type": "string"
-          },
-          "videoUserId": {
-            "type": "string"
-          },
-          "guideCartPermissionsGranted": {
-            "type": "boolean"
-          },
-          "customerId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "customer": {
-            "$ref": "#/components/schemas/Customer"
-          },
-          "userId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
-          "invitationStatus": {
-            "type": "string"
-          },
-          "joinedAt": {
-            "type": "string",
-            "format": "date-timme"
-          },
-          "lastActive": {
-            "type": "string",
-            "format": "date-timme"
-          },
-          "interaction": {
-            "$ref": "#/components/schemas/Interaction"
-          },
-          "productCollections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AttendeeProductCollection"
-            }
-          }
-        }
-      },
       "GetAttendeeInsightsResponse": {
         "type": "object",
         "description": "Returns aggregations for the current attendees within the appointment.",
@@ -47268,6 +46978,167 @@
           "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
           "currencySymbol": "$"
         }
+      },
+      "CartError": {
+        "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+        "properties": {
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "level": {
+                "type": "number",
+                "enum": [
+                  0,
+                  10,
+                  20
+                ],
+                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
+              },
+              "message": {
+                "type": "string"
+              },
+              "messageKey": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "CalculatedPrice": {
+        "type": "object",
+        "description": "Represents a product along with detailed information required to display a variant selection.",
+        "properties": {
+          "unitPrice": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "rawTotal": {
+            "type": "number"
+          },
+          "totalPrice": {
+            "type": "number"
+          },
+          "calculatedTaxes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "apiAlias": {
+                  "type": "string",
+                  "enum": [
+                    "cart_tax_calculated"
+                  ]
+                },
+                "tax": {
+                  "type": "number"
+                },
+                "taxRate": {
+                  "type": "number"
+                },
+                "price": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "apiAlias",
+                "tax",
+                "taxRate",
+                "price"
+              ]
+            }
+          },
+          "referencePrice": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CartPriceReference"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "listPrice": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CartListPrice"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "positionPrice": {
+            "type": "number"
+          },
+          "netPrice": {
+            "type": "number"
+          },
+          "regulationPrice": {
+            "type": "object",
+            "properties": {
+              "price": {
+                "type": "number"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_regulation_price"
+                ]
+              }
+            },
+            "nullable": true
+          },
+          "hasRange": {
+            "type": "boolean"
+          },
+          "variantId": {
+            "type": "string",
+            "format": "^[0-9a-f]{32}$",
+            "nullable": true
+          },
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "calculated_price"
+            ]
+          },
+          "taxRules": {
+            "type": "array",
+            "description": "Currently active tax rules and/or rates",
+            "items": {
+              "type": "object",
+              "properties": {
+                "taxRate": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "apiAlias",
+          "hasRange",
+          "regulationPrice",
+          "listPrice",
+          "referencePrice",
+          "calculatedTaxes",
+          "totalPrice",
+          "quantity",
+          "unitPrice",
+          "positionPrice",
+          "netPrice",
+          "taxRules"
+        ]
       },
       "PresentationCmsPage": {
         "type": "object",
@@ -47726,6 +47597,17 @@
           }
         }
       },
+      "CartItems": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          }
+        }
+      },
       "GuidePresentationStateResponse": {
         "type": "object",
         "properties": {
@@ -47835,6 +47717,57 @@
           }
         }
       },
+      "CartDelivery": {
+        "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+        "properties": {
+          "deliveryDate": {
+            "type": "object",
+            "properties": {
+              "earliest": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "latest": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_delivery_shipping_location"
+                ]
+              },
+              "country": {
+                "$ref": "#/components/schemas/Country"
+              },
+              "address": {
+                "$ref": "#/components/schemas/CustomerAddress"
+              },
+              "state": {
+                "$ref": "#/components/schemas/CountryState"
+              }
+            }
+          },
+          "positions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartDeliveryPosition"
+            }
+          },
+          "shippingCosts": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          },
+          "shippingMethod": {
+            "$ref": "#/components/schemas/ShippingMethod"
+          }
+        }
+      },
       "StateForMe": {
         "type": "object",
         "properties": {
@@ -47878,98 +47811,129 @@
           }
         }
       },
-      "Presentation": {
+      "CartPriceReference": {
         "type": "object",
-        "required": [
-          "name"
-        ],
         "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+          "purchaseUnit": {
+            "type": "number"
           },
-          "versionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+          "referenceUnit": {
+            "type": "number"
           },
-          "active": {
-            "type": "boolean"
-          },
-          "parentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "parentVersionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
+          "unitName": {
             "type": "string"
           },
-          "createdById": {
+          "price": {
+            "type": "number"
+          },
+          "apiAlias": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "enum": [
+              "cart_price_reference"
+            ]
           },
-          "createdBy": {
-            "$ref": "#/components/schemas/User"
+          "listPrice": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CartListPrice"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
-          "updatedById": {
+          "regulationPrice": {
+            "type": "object",
+            "properties": {
+              "price": {
+                "type": "number"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_regulation_price"
+                ]
+              }
+            },
+            "nullable": true
+          },
+          "hasRange": {
+            "type": "boolean"
+          },
+          "variantId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "updatedBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "translations": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "cmsPages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PresentationCmsPage"
-            }
-          },
-          "translated": {
-            "type": "object"
+            "format": "^[0-9a-f]{32}$",
+            "nullable": true
           }
-        }
+        },
+        "required": [
+          "apiAlias",
+          "hasRange",
+          "regulationPrice",
+          "listPrice",
+          "calculatedTaxes",
+          "totalPrice",
+          "quantity",
+          "unitName"
+        ]
       },
-      "VideoChat": {
+      "CartDeliveryInformation": {
         "type": "object",
-        "required": [
-          "appointmentId"
-        ],
         "properties": {
-          "id": {
+          "apiAlias": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "enum": [
+              "cart_delivery_information"
+            ]
           },
-          "appointmentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "appointment": {
-            "$ref": "#/components/schemas/Appointment"
-          },
-          "ownerToken": {
-            "type": "string"
-          },
-          "userToken": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "startAsBroadcast": {
+          "freeDelivery": {
             "type": "boolean"
+          },
+          "deliveryTime": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "min": {
+                "type": "integer"
+              },
+              "max": {
+                "type": "integer"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_delivery_time"
+                ]
+              }
+            }
+          },
+          "height": {
+            "type": "integer"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "restockTime": {
+            "type": "integer"
+          },
+          "stock": {
+            "type": "integer"
+          },
+          "weight": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
           }
-        }
+        },
+        "required": [
+          "apiAlias"
+        ]
       },
       "JoinAppointmentResponse": {
         "type": "object",
@@ -48201,43 +48165,31 @@
           }
         }
       },
-      "AttendeeProductCollection": {
+      "CartDeliveryPosition": {
         "type": "object",
-        "required": [
-          "attendeeId",
-          "productId",
-          "productVersionId",
-          "alias"
-        ],
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
         "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+          "deliveryDate": {
+            "type": "object",
+            "properties": {
+              "earliest": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "latest": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
           },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+          "identifier": {
+            "type": "string"
           },
-          "attendee": {
-            "$ref": "#/components/schemas/Attendee"
+          "lineItem": {
+            "$ref": "#/components/schemas/LineItem"
           },
-          "productId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "product": {
-            "$ref": "#/components/schemas/Product"
-          },
-          "productVersionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "alias": {
-            "type": "string",
-            "enum": [
-              "liked",
-              "disliked"
-            ]
+          "price": {
+            "$ref": "#/components/schemas/CalculatedPrice"
           }
         }
       },
@@ -48275,40 +48227,82 @@
           "extensions": []
         }
       },
-      "Interaction": {
+      "CartPriceQuantity": {
         "type": "object",
-        "required": [
-          "name",
-          "triggeredAt",
-          "attendeeId"
-        ],
         "properties": {
-          "id": {
+          "apiAlias": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "enum": [
+              "cart_price_quantity"
+            ]
           },
-          "name": {
+          "isCalculated": {
+            "type": "boolean"
+          },
+          "listPrice": {
+            "$ref": "#/components/schemas/CartListPrice"
+          },
+          "price": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "regulationPrice": {
+            "properties": {
+              "price": {
+                "type": "number",
+                "format": "float"
+              }
+            },
+            "type": "object"
+          },
+          "taxRules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "taxRate": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "type": {
             "type": "string"
-          },
-          "expiresAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "triggeredAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "payload": {
-            "type": "string"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "attendee": {
-            "$ref": "#/components/schemas/Attendee"
           }
-        }
+        },
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "CartListPrice": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "discount": {
+            "type": "number"
+          },
+          "percentage": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_list_price"
+            ]
+          }
+        },
+        "required": [
+          "apiAlias"
+        ]
       },
       "DynamicPageOpenedPayload": {
         "allOf": [
@@ -48317,123 +48311,72 @@
           }
         ]
       },
-      "Appointment": {
+      "Cart": {
         "type": "object",
-        "required": [
-          "name",
-          "guideUserId",
-          "salesChannelDomainId",
-          "presentationPath"
-        ],
         "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
           "name": {
+            "description": "Name of the cart - for example `guest-cart`",
             "type": "string"
           },
-          "presentationId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "presentation": {
-            "$ref": "#/components/schemas/Presentation"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "isPreview": {
-            "type": "boolean"
-          },
-          "default": {
-            "type": "boolean"
-          },
-          "guideUserId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "guideUser": {
-            "$ref": "#/components/schemas/User"
-          },
-          "mode": {
-            "type": "string",
-            "enum": [
-              "guide",
-              "self"
-            ]
-          },
-          "salesChannelDomainId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "presentationPath": {
+          "token": {
+            "description": "Context token identifying the cart and the user session",
             "type": "string"
           },
-          "attendeeRestrictionType": {
-            "type": "string",
-            "enum": [
-              "open",
-              "customer",
-              "rules"
-            ]
+          "price": {
+            "$ref": "#/components/schemas/CalculatedPrice"
           },
-          "accessibleFrom": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "accessibleTo": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "attendeeRuleIds": {
+          "lineItems": {
+            "description": "All items within the cart",
             "type": "array",
             "items": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
+              "$ref": "#/components/schemas/LineItem"
             }
           },
-          "attendees": {
+          "errors": {
+            "type": "array",
+            "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+            "items": {
+              "$ref": "#/components/schemas/CartError"
+            }
+          },
+          "deliveries": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Attendee"
+              "$ref": "#/components/schemas/CartDelivery"
             }
           },
-          "message": {
-            "type": "string"
+          "transactions": {
+            "description": "A list of all payment transactions associated with the current cart.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "paymentMethodId": {
+                  "type": "string"
+                },
+                "amount": {
+                  "$ref": "#/components/schemas/CalculatedPrice"
+                }
+              }
+            }
           },
-          "videoAudioSettings": {
+          "modified": {
+            "type": "boolean"
+          },
+          "customerComment": {
             "type": "string",
-            "enum": [
-              "none",
-              "both",
-              "audio_only"
-            ]
+            "description": "A comment that can be added to the cart.",
+            "nullable": true
           },
-          "videoChat": {
-            "$ref": "#/components/schemas/VideoChat"
-          },
-          "startedAt": {
+          "affiliateCode": {
             "type": "string",
-            "format": "date-time"
+            "description": "An affiliate tracking code",
+            "nullable": true
           },
-          "endedAt": {
+          "campaignCode": {
             "type": "string",
-            "format": "date-time"
-          },
-          "createdById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "createdBy": {
-            "$ref": "#/components/schemas/User"
-          },
-          "updatedById": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "updatedBy": {
-            "$ref": "#/components/schemas/User"
+            "description": "A campaign tracking code",
+            "nullable": true
           }
         }
       }
