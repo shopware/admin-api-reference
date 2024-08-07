@@ -83038,6 +83038,32 @@
         },
         "type": "object"
       },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -83395,28 +83421,111 @@
           }
         }
       },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
+      "CustomPricingUpsertOperation": {
+        "type": "object",
+        "required": [
+          "action",
+          "payload"
+        ],
+        "properties": {
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "upsert"
+            ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "productId",
+                "prices"
+              ],
+              "description": "A definition almost symmetric with Sync API payload",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "productVersionId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "productId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "This parameter should be specified, or 'customerGroupId', not both",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerGroupId": {
+                  "type": "string",
+                  "description": "This parameter should be specified, or 'customerId', not both",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "price": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomPricingPrice"
+                  }
+                }
               }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
+      "CustomPricingDeleteOperation": {
+        "type": "object",
+        "required": [
+          "action",
+          "payload"
+        ],
+        "properties": {
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "delete"
+            ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "title": "productIds",
+                  "type": "array",
+                  "description": "An array of product entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerIds",
+                  "type": "array",
+                  "description": "An array of customer entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerGroupIds",
+                  "type": "array",
+                  "description": "An array of customerGroup entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                }
+              ]
             }
           }
         }
@@ -83548,115 +83657,6 @@
                   "type": "array",
                   "items": {
                     "type": "object"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "CustomPricingDeleteOperation": {
-        "type": "object",
-        "required": [
-          "action",
-          "payload"
-        ],
-        "properties": {
-          "action": {
-            "description": "A specific verb defining what operation should be actioned for a specific data record",
-            "type": "string",
-            "enum": [
-              "delete"
-            ]
-          },
-          "payload": {
-            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "title": "productIds",
-                  "type": "array",
-                  "description": "An array of product entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                {
-                  "title": "customerIds",
-                  "type": "array",
-                  "description": "An array of customer entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                {
-                  "title": "customerGroupIds",
-                  "type": "array",
-                  "description": "An array of customerGroup entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
-      "CustomPricingUpsertOperation": {
-        "type": "object",
-        "required": [
-          "action",
-          "payload"
-        ],
-        "properties": {
-          "action": {
-            "description": "A specific verb defining what operation should be actioned for a specific data record",
-            "type": "string",
-            "enum": [
-              "upsert"
-            ]
-          },
-          "payload": {
-            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "productId",
-                "prices"
-              ],
-              "description": "A definition almost symmetric with Sync API payload",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "productVersionId": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "productId": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "customerId": {
-                  "type": "string",
-                  "description": "This parameter should be specified, or 'customerGroupId', not both",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "customerGroupId": {
-                  "type": "string",
-                  "description": "This parameter should be specified, or 'customerId', not both",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "price": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CustomPricingPrice"
                   }
                 }
               }
