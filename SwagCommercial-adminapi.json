@@ -25259,6 +25259,71 @@
         }
       }
     },
+    "/_info/system-health-check": {
+      "get": {
+        "tags": [
+          "System Info & Health Check"
+        ],
+        "summary": "Perform a detailed system health check",
+        "operationId": "systemHealthCheck",
+        "parameters": [
+          {
+            "name": "verbose",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Include detailed information in the response"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the system health check results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "healthy": {
+                            "type": "boolean"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "extra": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Application is not working properly"
+          }
+        }
+      }
+    },
     "/_action/custom-price": {
       "post": {
         "tags": [
@@ -74708,6 +74773,7 @@
               "sceneId",
               "mediaId",
               "name",
+              "visible",
               "createdAt"
             ],
             "properties": {
@@ -74725,6 +74791,9 @@
               },
               "name": {
                 "type": "string"
+              },
+              "visible": {
+                "type": "boolean"
               },
               "position": {
                 "type": "object"
@@ -74819,6 +74888,7 @@
           "sceneId",
           "mediaId",
           "name",
+          "visible",
           "createdAt"
         ],
         "properties": {
@@ -74836,6 +74906,9 @@
           },
           "name": {
             "type": "string"
+          },
+          "visible": {
+            "type": "boolean"
           },
           "position": {
             "type": "object"
