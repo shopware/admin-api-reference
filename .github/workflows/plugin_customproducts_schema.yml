@@ -1,0 +1,84 @@
+name: Update Custom Products Admin API
+
+on:
+  workflow_call:
+    inputs:
+      shopware_version:
+        description: "Shopware version"
+        required: true
+        type: string
+      php_version:
+        description: "PHP version"
+        required: false
+        type: string
+
+env:
+  PLUGIN_NAME: SwagCustomizedProducts
+  PLUGIN_URL: gitlab.shopware.com/shopware/6/services/customized-product.git
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  vars:
+    runs-on: ubuntu-22.04
+    outputs:
+      PLUGIN_NAME: ${{ env.PLUGIN_NAME }}
+      PLUGIN_URL: ${{ env.PLUGIN_URL }}
+      COMPOSER_PACKAGES: ${{ env.COMPOSER_PACKAGES }}
+    steps:
+      - run: echo "Exposing env vars"
+  # This workflow contains a single job called "build" 
+  generate-schema:
+    needs: vars
+    uses: shopware/docs-ci/.github/workflows/generate_schema.yml@main
+    with:
+      schema_flags: ""
+      schema_file: ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
+      plugin_name: ${{ needs.vars.outputs.PLUGIN_NAME }}
+      plugin_url: ${{ needs.vars.outputs.PLUGIN_URL }}
+      composer_packages: ${{ needs.vars.outputs.COMPOSER_PACKAGES }}
+      shopware_version: ${{ inputs.shopware_version }}
+      php_version: ${{ inputs.php_version }}
+    secrets:
+      DEPLOY_USER: ${{ secrets.CUSTOMPRODUCTS_DEPLOY_USER }}
+      DEPLOY_TOKEN: ${{ secrets.CUSTOMPRODUCTS_DEPLOY_TOKEN }}
+
+  open-pr:
+    name: "Open a pull request"
+    runs-on: ubuntu-latest
+    needs: [generate-schema,vars]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: download api schema
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{needs.generate-schema.outputs.api_schema}}
+
+      - name: install yq
+        uses: cachix/install-nix-action@v18
+
+      - name: Prettify
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y moreutils
+          jq . ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json | sponge ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
+          ./.github/scripts/find_delta_paths.sh ${{ needs.vars.outputs.PLUGIN_NAME }}
+
+      - name: Extract summary
+        run: |
+          chmod +x ./.github/scripts/extract.sh
+          ./.github/scripts/extract.sh ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.summary.json
+
+      - name: Create DSR PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          add-paths: |
+            ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
+            ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.summary.json
+          author: shopwareBot <example@example.com>
+          committer: shopwareBot <example@example.com>
+          assignees: Isengo1989, sushmangupta, bojanrajh
+          branch: ${{ needs.vars.outputs.PLUGIN_NAME }}-schema-update
+          delete-branch: true
+          title: 'Update ${{ needs.vars.outputs.PLUGIN_NAME }} admin API schema'
