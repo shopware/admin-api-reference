@@ -4051,8 +4051,7 @@
             "application/json": {
               "schema": {
                 "required": [
-                  "productIds",
-                  "currentPageGroupId"
+                  "productIds"
                 ],
                 "properties": {
                   "productIds": {
@@ -4067,6 +4066,17 @@
                     "type": "string",
                     "description": "Id of the current cms page",
                     "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "pageName": {
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "description": "The name of the instant listing page"
                   }
                 },
                 "type": "object"
@@ -4146,6 +4156,17 @@
                     "type": "string",
                     "description": "Id of the current cms page",
                     "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "pageName": {
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "description": "The name of the instant listing page"
                   }
                 },
                 "type": "object"
@@ -47305,32 +47326,6 @@
           "isPreview": {
             "type": "boolean",
             "description": "To see if it's a preview appointment"
-          },
-          "attendeeName": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The name of the attendee"
-          },
-          "videoUserId": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The video user id that attendee could use"
-          },
-          "b2bFeatures": {
-            "type": "object",
-            "description": "The b2b features that available for the appointment"
           }
         },
         "example": {
@@ -47343,12 +47338,6 @@
           "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
           "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
           "JWTMercurePublisherToken": "jwt token for publishing updates",
-          "attendeeName": "attendee name",
-          "videoUserId": null,
-          "b2bFeatures": {
-            "feature1": false,
-            "feature2": true
-          },
           "id": "2d2c358f1ca04098aacf12873c2eed82",
           "newContextToken": "new context token to call the other routes",
           "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
@@ -47835,6 +47824,16 @@
             "type": "integer",
             "default": 0
           },
+          "currentSlideData": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DynamicProductListingPageOpenedPayload"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "currentDynamicPage": {
             "$ref": "#/components/schemas/DynamicPageOpenedPayload"
           },
@@ -47969,6 +47968,15 @@
           "broadcastMode": {
             "type": "boolean",
             "default": false
+          },
+          "viewMode": {
+            "type": "string",
+            "enum": [
+              "onlyYou",
+              "presentation",
+              "videoGrid"
+            ],
+            "default": "presentation"
           },
           "extensions": {
             "type": "array",
