@@ -90418,7 +90418,10 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "price": {
-                "type": "object"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Price"
+                }
               },
               "productNumber": {
                 "type": "string"
@@ -90497,7 +90500,10 @@
                 "type": "boolean"
               },
               "purchasePrices": {
-                "type": "object"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Price"
+                }
               },
               "markAsTopseller": {
                 "type": "boolean"
@@ -91656,7 +91662,10 @@
             "description": "Unique identity of CMS page's version."
           },
           "price": {
-            "type": "object",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Price"
+            },
             "description": "Price of the product."
           },
           "productNumber": {
@@ -91756,7 +91765,10 @@
             "description": "Indicates weather the shipping price is free or not."
           },
           "purchasePrices": {
-            "type": "object",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Price"
+            },
             "description": "Actual/cost price of the product."
           },
           "markAsTopseller": {
@@ -94121,7 +94133,10 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "price": {
-                "type": "object"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Price"
+                }
               },
               "quantityStart": {
                 "type": "integer",
@@ -94249,7 +94264,10 @@
             "description": "Unique identity of the rule."
           },
           "price": {
-            "type": "object",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Price"
+            },
             "description": "Price of the Product."
           },
           "quantityStart": {
@@ -103042,7 +103060,10 @@
                 "format": "float"
               },
               "currencyPrice": {
-                "type": "object"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Price"
+                }
               },
               "customFields": {
                 "type": "object"
@@ -103198,7 +103219,10 @@
             "description": "Ending range of quantity of an item."
           },
           "currencyPrice": {
-            "type": "object",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Price"
+            },
             "description": "Contains currency-based price."
           },
           "customFields": {
@@ -107986,6 +108010,85 @@
           }
         },
         "type": "object"
+      },
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "",
+            "type": "number"
+          },
+          "net": {
+            "description": "",
+            "type": "number"
+          },
+          "linked": {
+            "description": "",
+            "type": "boolean"
+          },
+          "listPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          },
+          "regulationPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net"
+        ]
       },
       "flowBuilderActionsResponse": {
         "type": "array",
