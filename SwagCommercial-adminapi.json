@@ -83171,94 +83171,6 @@
           "net"
         ]
       },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
-      "infoConfigResponse": {
-        "type": "object",
-        "properties": {
-          "version": {
-            "type": "string",
-            "description": "The Shopware version."
-          },
-          "versionRevision": {
-            "type": "string",
-            "description": "The Shopware version revision."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Information about the admin worker.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "State of the admin worker."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured transports.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Asset files of active extensions",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "css": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the css file."
-                  }
-                },
-                "js": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the js file."
-                  }
-                }
-              }
-            }
-          },
-          "settings": {
-            "type": "object",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the `urlFeature` setting."
-              }
-            }
-          }
-        }
-      },
       "Criteria": {
         "type": "object",
         "description": "Search parameters. For more information, see our documentation on [Search Queries](https://shopware.stoplight.io/docs/store-api/docs/concepts/search-queries.md#structure)",
@@ -83393,6 +83305,32 @@
               "exact",
               "next-pages"
             ]
+          }
+        }
+      },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
           }
         }
       },
@@ -83554,6 +83492,68 @@
           }
         }
       },
+      "infoConfigResponse": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "The Shopware version."
+          },
+          "versionRevision": {
+            "type": "string",
+            "description": "The Shopware version revision."
+          },
+          "adminWorker": {
+            "type": "object",
+            "description": "Information about the admin worker.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "State of the admin worker."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured transports.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Asset files of active extensions",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "css": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the css file."
+                  }
+                },
+                "js": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the js file."
+                  }
+                }
+              }
+            }
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the `urlFeature` setting."
+              }
+            }
+          }
+        }
+      },
       "CustomPricingUpsertOperation": {
         "type": "object",
         "required": [
@@ -83612,53 +83612,55 @@
           }
         }
       },
-      "CustomPricingDeleteOperation": {
+      "CustomPricingResponse": {
         "type": "object",
         "required": [
-          "action",
-          "payload"
+          "success",
+          "data"
         ],
         "properties": {
-          "action": {
-            "description": "A specific verb defining what operation should be actioned for a specific data record",
-            "type": "string",
-            "enum": [
-              "delete"
-            ]
+          "success": {
+            "type": "boolean"
           },
-          "payload": {
-            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+          "data": {
             "type": "array",
             "items": {
-              "anyOf": [
-                {
-                  "title": "productIds",
+              "type": "object",
+              "properties": {
+                "result": {
                   "type": "array",
-                  "description": "An array of product entity UUIDs",
                   "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
+                    "type": "object",
+                    "required": [
+                      "entities",
+                      "errors"
+                    ],
+                    "properties": {
+                      "entities": {
+                        "type": "array",
+                        "maxItems": 1,
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{32}$"
+                        }
+                      },
+                      "errors": {
+                        "type": "array",
+                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   }
                 },
-                {
-                  "title": "customerIds",
+                "extensions": {
                   "type": "array",
-                  "description": "An array of customer entity UUIDs",
                   "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                {
-                  "title": "customerGroupIds",
-                  "type": "array",
-                  "description": "An array of customerGroup entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
+                    "type": "object"
                   }
                 }
-              ]
+              }
             }
           }
         }
@@ -83744,55 +83746,53 @@
           }
         }
       },
-      "CustomPricingResponse": {
+      "CustomPricingDeleteOperation": {
         "type": "object",
         "required": [
-          "success",
-          "data"
+          "action",
+          "payload"
         ],
         "properties": {
-          "success": {
-            "type": "boolean"
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "delete"
+            ]
           },
-          "data": {
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "result": {
+              "anyOf": [
+                {
+                  "title": "productIds",
                   "type": "array",
+                  "description": "An array of product entity UUIDs",
                   "items": {
-                    "type": "object",
-                    "required": [
-                      "entities",
-                      "errors"
-                    ],
-                    "properties": {
-                      "entities": {
-                        "type": "array",
-                        "maxItems": 1,
-                        "items": {
-                          "type": "string",
-                          "pattern": "^[0-9a-f]{32}$"
-                        }
-                      },
-                      "errors": {
-                        "type": "array",
-                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
                   }
                 },
-                "extensions": {
+                {
+                  "title": "customerIds",
                   "type": "array",
+                  "description": "An array of customer entity UUIDs",
                   "items": {
-                    "type": "object"
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerGroupIds",
+                  "type": "array",
+                  "description": "An array of customerGroup entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
                   }
                 }
-              }
+              ]
             }
           }
         }
