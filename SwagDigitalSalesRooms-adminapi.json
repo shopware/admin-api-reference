@@ -46656,6 +46656,192 @@
         },
         "type": "object"
       },
+      "infoConfigResponse": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "The Shopware version."
+          },
+          "versionRevision": {
+            "type": "string",
+            "description": "The Shopware version revision."
+          },
+          "adminWorker": {
+            "type": "object",
+            "description": "Information about the admin worker.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "State of the admin worker."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured transports.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Asset files of active extensions",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "css": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the css file."
+                  }
+                },
+                "js": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the js file."
+                  }
+                }
+              }
+            }
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the `urlFeature` setting."
+              }
+            }
+          }
+        }
+      },
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scopes": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scopes",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scopes": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scopes",
+              "refresh_token"
+            ]
+          }
+        ]
+      },
       "Price": {
         "type": "object",
         "description": "Price object",
@@ -46734,6 +46920,40 @@
           "gross",
           "net"
         ]
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
       },
       "Criteria": {
         "type": "object",
@@ -46898,359 +47118,51 @@
           }
         }
       },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
+      "DynamicPageOpenedPayload": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
+          }
         ]
       },
-      "OAuthGrant": {
+      "CartDeliveryPosition": {
         "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
         "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
-          }
-        },
-        "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
-          }
-        }
-      },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
+          "deliveryDate": {
             "type": "object",
             "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
+              "earliest": {
                 "type": "string",
-                "enum": [
-                  "administration"
-                ]
+                "format": "date-time"
               },
-              "scopes": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scopes",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
+              "latest": {
                 "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scopes": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scopes",
-              "refresh_token"
-            ]
-          }
-        ]
-      },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "infoConfigResponse": {
-        "type": "object",
-        "properties": {
-          "version": {
-            "type": "string",
-            "description": "The Shopware version."
-          },
-          "versionRevision": {
-            "type": "string",
-            "description": "The Shopware version revision."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Information about the admin worker.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "State of the admin worker."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured transports.",
-                "items": {
-                  "type": "string"
-                }
+                "format": "date-time"
               }
             }
           },
-          "bundles": {
-            "type": "object",
-            "description": "Asset files of active extensions",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "css": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the css file."
-                  }
-                },
-                "js": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the js file."
-                  }
-                }
-              }
-            }
-          },
-          "settings": {
-            "type": "object",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the `urlFeature` setting."
-              }
-            }
-          }
-        }
-      },
-      "StateForGuides": {
-        "type": "object",
-        "properties": {
-          "clients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "inactiveClients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "guides": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "videoGuideToken": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickViewState": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "WidgetProductListing": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "extensions": {
-            "type": "array",
-            "description": "List of extensions",
-            "default": []
-          },
-          "products": {
-            "type": "array",
-            "description": "List of last seen products",
-            "items": {
-              "$ref": "#/components/schemas/Product"
-            }
-          },
-          "total": {
-            "type": "integer",
-            "description": "The total number of products"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The current page"
-          },
-          "limit": {
-            "type": "integer",
-            "description": "The number of products per page"
-          }
-        }
-      },
-      "GetAttendeeInsightsResponse": {
-        "type": "object",
-        "description": "Returns aggregations for the current attendees within the appointment.",
-        "properties": {
-          "attendees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AttendeeInsights"
-            }
-          },
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "currencySymbol": {
+          "identifier": {
             "type": "string"
-          }
-        },
-        "example": {
-          "extensions": [],
-          "attendees": {
-            "04da9d8572494ae68391a471d4c3a470": {
-              "extensions": [],
-              "id": "04da9d8572494ae68391a471d4c3a470",
-              "cartSum": 6770.53,
-              "productCount": 3,
-              "lineItemCount": 3
-            }
           },
-          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
-          "currencySymbol": "$"
-        }
-      },
-      "CartListPrice": {
-        "type": "object",
-        "description": "",
-        "properties": {
-          "discount": {
-            "type": "number"
-          },
-          "percentage": {
-            "type": "number"
+          "lineItem": {
+            "$ref": "#/components/schemas/LineItem"
           },
           "price": {
-            "type": "number"
-          },
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_list_price"
-            ]
+            "$ref": "#/components/schemas/CalculatedPrice"
           }
-        },
-        "required": [
-          "apiAlias"
-        ]
+        }
+      },
+      "CartItems": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          }
+        }
       },
       "CalculatedPrice": {
         "type": "object",
@@ -47384,145 +47296,565 @@
           "taxRules"
         ]
       },
-      "Cart": {
+      "JoinAppointmentResponse": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "mercureSubscriberTopics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "mercure topic"
+            },
+            "description": "The topics to which the attendee/guide can subscribe for"
+          },
+          "mercurePublisherTopic": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The topic to which the attendee/guide can send updates"
+          },
+          "JWTMercureSubscriberToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to publish updates"
+          },
+          "mercureHubPublicUrl": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The mercure hub url to connect for subscribing and updating"
+          },
+          "JWTMercurePublisherToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to subscribe for updates"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The appointment id"
+          },
+          "newContextToken": {
+            "type": "string",
+            "description": "The new context token"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The created Id for the attendee"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id of the current sales channel"
+          },
+          "salesChannelName": {
+            "type": "string",
+            "description": "The name of the current sales channel"
+          },
+          "appointmentName": {
+            "type": "string",
+            "description": "The name of the appointment"
+          },
+          "presentationGuideMode": {
+            "type": "string",
+            "enum": [
+              "self",
+              "guided"
+            ],
+            "description": "The type of the appointment"
+          },
+          "isPreview": {
+            "type": "boolean",
+            "description": "To see if it's a preview appointment"
+          }
+        },
+        "example": {
+          "mercureSubscriberTopics": [
+            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
+          ],
+          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
+          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
+          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
+          "JWTMercurePublisherToken": "jwt token for publishing updates",
+          "id": "2d2c358f1ca04098aacf12873c2eed82",
+          "newContextToken": "new context token to call the other routes",
+          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
+          "salesChannelName": "Storefront",
+          "appointmentName": "Test Appointment",
+          "presentationGuideMode": "guided",
+          "isPreview": false,
+          "apiAlias": "swag_digital_sales_rooms_content_appointment_struct_appointment_join_struct"
+        }
+      },
+      "WidgetProductListing": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "extensions": {
+            "type": "array",
+            "description": "List of extensions",
+            "default": []
+          },
+          "products": {
+            "type": "array",
+            "description": "List of last seen products",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of products"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The current page"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The number of products per page"
+          }
+        }
+      },
+      "StateForMe": {
         "type": "object",
         "properties": {
-          "name": {
-            "description": "Name of the cart - for example `guest-cart`",
-            "type": "string"
+          "attendeeId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
-          "token": {
-            "description": "Context token identifying the cart and the user session",
-            "type": "string"
+          "attendeeName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
-          "price": {
-            "$ref": "#/components/schemas/CalculatedPrice"
+          "videoUserId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
-          "lineItems": {
-            "description": "All items within the cart",
+          "guideCartPermissionGranted": {
+            "type": "boolean",
+            "default": false
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
+      "AttendeeInsights": {
+        "type": "object",
+        "description": "Attendee Insights",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Id of the attendee"
+          },
+          "cartSum": {
+            "type": "number",
+            "description": "Sum of the cart net in base currency"
+          },
+          "productCount": {
+            "type": "number",
+            "description": "Sum of all quantities in the cart which were added during the appointment"
+          }
+        },
+        "example": {
+          "04da9d8572494ae68391a471d4c3a470": {
+            "extensions": [],
+            "id": "04da9d8572494ae68391a471d4c3a470",
+            "cartSum": 6770.53,
+            "productCount": 3,
+            "lineItemCount": 3
+          }
+        }
+      },
+      "LineItemType": {
+        "type": "string",
+        "enum": [
+          "product",
+          "credit",
+          "custom",
+          "promotion",
+          "discount",
+          "container",
+          "quantity"
+        ]
+      },
+      "LineItem": {
+        "type": "object",
+        "properties": {
+          "children": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/LineItem"
             }
           },
-          "errors": {
-            "type": "array",
-            "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-            "items": {
-              "$ref": "#/components/schemas/CartError"
-            }
+          "cover": {
+            "$ref": "#/components/schemas/ProductMedia"
           },
-          "deliveries": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CartDelivery"
-            }
+          "dataContextHash": {
+            "type": "string"
           },
-          "transactions": {
-            "description": "A list of all payment transactions associated with the current cart.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "paymentMethodId": {
-                  "type": "string"
-                },
-                "amount": {
-                  "$ref": "#/components/schemas/CalculatedPrice"
-                }
-              }
-            }
+          "dataTimestamp": {
+            "type": "string"
+          },
+          "deliveryInformation": {
+            "$ref": "#/components/schemas/CartDeliveryInformation"
+          },
+          "description": {
+            "type": "string"
+          },
+          "good": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
           },
           "modified": {
             "type": "boolean"
           },
-          "customerComment": {
-            "type": "string",
-            "description": "A comment that can be added to the cart.",
-            "nullable": true
-          },
-          "affiliateCode": {
-            "type": "string",
-            "description": "An affiliate tracking code",
-            "nullable": true
-          },
-          "campaignCode": {
-            "type": "string",
-            "description": "A campaign tracking code",
-            "nullable": true
-          }
-        }
-      },
-      "GetListBodyRequest": {
-        "type": "object",
-        "properties": {
-          "limit": {
-            "type": "integer",
-            "description": "Max amount of resources to be returned in a page"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The page to be returned"
-          }
-        }
-      },
-      "CartDeliveryInformation": {
-        "type": "object",
-        "properties": {
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_delivery_information"
-            ]
-          },
-          "freeDelivery": {
+          "modifiedByApp": {
             "type": "boolean"
           },
-          "deliveryTime": {
+          "payload": {
+            "$ref": "#/components/schemas/ProductJsonApi"
+          },
+          "price": {
             "type": "object",
             "properties": {
-              "name": {
-                "type": "string"
-              },
-              "min": {
-                "type": "integer"
-              },
-              "max": {
-                "type": "integer"
-              },
-              "unit": {
-                "type": "string"
-              },
               "apiAlias": {
                 "type": "string",
                 "enum": [
-                  "cart_delivery_time"
+                  "calculated_price"
                 ]
+              },
+              "calculatedTaxes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "apiAlias": {
+                      "type": "string",
+                      "enum": [
+                        "cart_tax_calculated"
+                      ]
+                    },
+                    "tax": {
+                      "type": "number"
+                    },
+                    "taxRate": {
+                      "type": "number"
+                    },
+                    "price": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "apiAlias",
+                    "tax",
+                    "taxRate",
+                    "price"
+                  ]
+                }
+              },
+              "listPrice": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CartListPrice"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "quantity": {
+                "type": "number"
+              },
+              "referencePrice": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CartPriceReference"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "regulationPrice": {
+                "type": "object",
+                "properties": {
+                  "price": {
+                    "type": "number"
+                  },
+                  "apiAlias": {
+                    "type": "string",
+                    "enum": [
+                      "cart_regulation_price"
+                    ]
+                  }
+                },
+                "nullable": true
+              },
+              "totalPrice": {
+                "type": "number"
+              },
+              "unitPrice": {
+                "type": "number"
+              },
+              "taxRules": {
+                "type": "array",
+                "description": "Currently active tax rules and/or rates",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "taxRate": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "apiAlias",
+              "totalPrice",
+              "quantity",
+              "unitPrice"
+            ]
+          },
+          "priceDefinition": {
+            "$ref": "#/components/schemas/CartPriceQuantity"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "quantityInformation": {
+            "type": "object",
+            "properties": {
+              "maxPurchase": {
+                "type": "number"
+              },
+              "minPurchase": {
+                "type": "number"
+              },
+              "purchaseSteps": {
+                "type": "number"
               }
             }
           },
-          "height": {
-            "type": "integer"
+          "referencedId": {
+            "type": "string"
           },
-          "length": {
-            "type": "integer"
+          "removable": {
+            "type": "boolean"
           },
-          "restockTime": {
-            "type": "integer"
+          "stackable": {
+            "type": "boolean"
           },
-          "stock": {
-            "type": "integer"
+          "states": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "is-physical",
+                "is-download"
+              ]
+            }
           },
-          "weight": {
-            "type": "integer"
+          "type": {
+            "$ref": "#/components/schemas/LineItemType"
           },
-          "width": {
-            "type": "integer"
+          "uniqueIdentifier": {
+            "type": "string"
           }
         },
         "required": [
-          "apiAlias"
+          "id",
+          "type"
         ]
+      },
+      "PresentationCmsPage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The presentation cms page id"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The title of presentation cms page"
+          },
+          "presentationId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The presentation using this presentation cms page"
+          },
+          "dsrPresentationVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "cmsPageId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The CMS page id the presentation using"
+          },
+          "cmsPage": {
+            "$ref": "#/components/schemas/CmsPage"
+          },
+          "cmsPageVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The CMS page version id the presentation using"
+          },
+          "productId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The product id is assigned to presentation if it's product detail"
+          },
+          "productStreamId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The product stream id is assigned to presentation if it's product listing"
+          },
+          "pickedProductIds": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$",
+                  "description": "Product id"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The product id is assigned to presentation if it's product listing or instant listing"
+          },
+          "position": {
+            "type": "integer",
+            "description": "The position of slide"
+          },
+          "isInstantListing": {
+            "type": "boolean",
+            "description": "True if this slide is an instant listing"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "customFields": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "translated": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        }
       },
       "CartDelivery": {
         "type": "object",
@@ -47572,70 +47904,6 @@
           },
           "shippingMethod": {
             "$ref": "#/components/schemas/ShippingMethod"
-          }
-        }
-      },
-      "CartError": {
-        "type": "object",
-        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-        "properties": {
-          "items": {
-            "type": "object",
-            "properties": {
-              "key": {
-                "type": "string"
-              },
-              "level": {
-                "type": "number",
-                "enum": [
-                  0,
-                  10,
-                  20
-                ],
-                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
-              },
-              "message": {
-                "type": "string"
-              },
-              "messageKey": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "DynamicPageOpenedPayload": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
-          }
-        ]
-      },
-      "AttendeeInsights": {
-        "type": "object",
-        "description": "Attendee Insights",
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "Id of the attendee"
-          },
-          "cartSum": {
-            "type": "number",
-            "description": "Sum of the cart net in base currency"
-          },
-          "productCount": {
-            "type": "number",
-            "description": "Sum of all quantities in the cart which were added during the appointment"
-          }
-        },
-        "example": {
-          "04da9d8572494ae68391a471d4c3a470": {
-            "extensions": [],
-            "id": "04da9d8572494ae68391a471d4c3a470",
-            "cartSum": 6770.53,
-            "productCount": 3,
-            "lineItemCount": 3
           }
         }
       },
@@ -47748,20 +48016,71 @@
           }
         }
       },
-      "AbstractDynamicPageOpenedPayload": {
+      "GetAttendeeInsightsResponse": {
         "type": "object",
-        "required": [
-          "type"
-        ],
+        "description": "Returns aggregations for the current attendees within the appointment.",
         "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of the current dynamic page"
+          "attendees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttendeeInsights"
+            }
           },
-          "opened": {
-            "type": "boolean",
-            "default": true
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "currencySymbol": {
+            "type": "string"
           }
+        },
+        "example": {
+          "extensions": [],
+          "attendees": {
+            "04da9d8572494ae68391a471d4c3a470": {
+              "extensions": [],
+              "id": "04da9d8572494ae68391a471d4c3a470",
+              "cartSum": 6770.53,
+              "productCount": 3,
+              "lineItemCount": 3
+            }
+          },
+          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
+          "currencySymbol": "$"
+        }
+      },
+      "VideoChatCreateStruct": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "roomUrl": {
+            "type": "string",
+            "description": "Url of the video room in daily"
+          },
+          "roomName": {
+            "type": "string",
+            "description": "Name of the video room in daily"
+          },
+          "userToken": {
+            "type": "string",
+            "description": "Token for the end users to connect to the daily room"
+          },
+          "ownerToken": {
+            "type": "string",
+            "description": "Token for the room owner (guide) to connect to the daily room"
+          },
+          "startAsBroadcast": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "example": {
+          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
+          "userToken": "dummy user token",
+          "ownerToken": "dummy owner token",
+          "roomName": "rSq20mrgwsj4eIXo1u95",
+          "startAsBroadcast": false,
+          "extensions": []
         }
       },
       "StateForAll": {
@@ -47979,6 +48298,170 @@
           }
         }
       },
+      "CartPriceQuantity": {
+        "type": "object",
+        "properties": {
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_price_quantity"
+            ]
+          },
+          "isCalculated": {
+            "type": "boolean"
+          },
+          "listPrice": {
+            "$ref": "#/components/schemas/CartListPrice"
+          },
+          "price": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "regulationPrice": {
+            "properties": {
+              "price": {
+                "type": "number",
+                "format": "float"
+              }
+            },
+            "type": "object"
+          },
+          "taxRules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "taxRate": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "GetListBodyRequest": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "Max amount of resources to be returned in a page"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The page to be returned"
+          }
+        }
+      },
+      "CartError": {
+        "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+        "properties": {
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "level": {
+                "type": "number",
+                "enum": [
+                  0,
+                  10,
+                  20
+                ],
+                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
+              },
+              "message": {
+                "type": "string"
+              },
+              "messageKey": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "Cart": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of the cart - for example `guest-cart`",
+            "type": "string"
+          },
+          "token": {
+            "description": "Context token identifying the cart and the user session",
+            "type": "string"
+          },
+          "price": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          },
+          "lineItems": {
+            "description": "All items within the cart",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+            "items": {
+              "$ref": "#/components/schemas/CartError"
+            }
+          },
+          "deliveries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartDelivery"
+            }
+          },
+          "transactions": {
+            "description": "A list of all payment transactions associated with the current cart.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "paymentMethodId": {
+                  "type": "string"
+                },
+                "amount": {
+                  "$ref": "#/components/schemas/CalculatedPrice"
+                }
+              }
+            }
+          },
+          "modified": {
+            "type": "boolean"
+          },
+          "customerComment": {
+            "type": "string",
+            "description": "A comment that can be added to the cart.",
+            "nullable": true
+          },
+          "affiliateCode": {
+            "type": "string",
+            "description": "An affiliate tracking code",
+            "nullable": true
+          },
+          "campaignCode": {
+            "type": "string",
+            "description": "A campaign tracking code",
+            "nullable": true
+          }
+        }
+      },
       "CartPriceReference": {
         "type": "object",
         "properties": {
@@ -48044,600 +48527,6 @@
           "quantity",
           "unitName"
         ]
-      },
-      "CartItems": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LineItem"
-            }
-          }
-        }
-      },
-      "LineItemType": {
-        "type": "string",
-        "enum": [
-          "product",
-          "credit",
-          "custom",
-          "promotion",
-          "discount",
-          "container",
-          "quantity"
-        ]
-      },
-      "LineItem": {
-        "type": "object",
-        "properties": {
-          "children": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LineItem"
-            }
-          },
-          "cover": {
-            "$ref": "#/components/schemas/ProductMedia"
-          },
-          "dataContextHash": {
-            "type": "string"
-          },
-          "dataTimestamp": {
-            "type": "string"
-          },
-          "deliveryInformation": {
-            "$ref": "#/components/schemas/CartDeliveryInformation"
-          },
-          "description": {
-            "type": "string"
-          },
-          "good": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          },
-          "modified": {
-            "type": "boolean"
-          },
-          "modifiedByApp": {
-            "type": "boolean"
-          },
-          "payload": {
-            "$ref": "#/components/schemas/ProductJsonApi"
-          },
-          "price": {
-            "type": "object",
-            "properties": {
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "calculated_price"
-                ]
-              },
-              "calculatedTaxes": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "apiAlias": {
-                      "type": "string",
-                      "enum": [
-                        "cart_tax_calculated"
-                      ]
-                    },
-                    "tax": {
-                      "type": "number"
-                    },
-                    "taxRate": {
-                      "type": "number"
-                    },
-                    "price": {
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "apiAlias",
-                    "tax",
-                    "taxRate",
-                    "price"
-                  ]
-                }
-              },
-              "listPrice": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/CartListPrice"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              "quantity": {
-                "type": "number"
-              },
-              "referencePrice": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/CartPriceReference"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              "regulationPrice": {
-                "type": "object",
-                "properties": {
-                  "price": {
-                    "type": "number"
-                  },
-                  "apiAlias": {
-                    "type": "string",
-                    "enum": [
-                      "cart_regulation_price"
-                    ]
-                  }
-                },
-                "nullable": true
-              },
-              "totalPrice": {
-                "type": "number"
-              },
-              "unitPrice": {
-                "type": "number"
-              },
-              "taxRules": {
-                "type": "array",
-                "description": "Currently active tax rules and/or rates",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "taxRate": {
-                      "type": "number",
-                      "format": "float"
-                    },
-                    "name": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "required": [
-              "apiAlias",
-              "totalPrice",
-              "quantity",
-              "unitPrice"
-            ]
-          },
-          "priceDefinition": {
-            "$ref": "#/components/schemas/CartPriceQuantity"
-          },
-          "quantity": {
-            "type": "number"
-          },
-          "quantityInformation": {
-            "type": "object",
-            "properties": {
-              "maxPurchase": {
-                "type": "number"
-              },
-              "minPurchase": {
-                "type": "number"
-              },
-              "purchaseSteps": {
-                "type": "number"
-              }
-            }
-          },
-          "referencedId": {
-            "type": "string"
-          },
-          "removable": {
-            "type": "boolean"
-          },
-          "stackable": {
-            "type": "boolean"
-          },
-          "states": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "is-physical",
-                "is-download"
-              ]
-            }
-          },
-          "type": {
-            "$ref": "#/components/schemas/LineItemType"
-          },
-          "uniqueIdentifier": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "type"
-        ]
-      },
-      "CartPriceQuantity": {
-        "type": "object",
-        "properties": {
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_price_quantity"
-            ]
-          },
-          "isCalculated": {
-            "type": "boolean"
-          },
-          "listPrice": {
-            "$ref": "#/components/schemas/CartListPrice"
-          },
-          "price": {
-            "type": "number"
-          },
-          "quantity": {
-            "type": "number"
-          },
-          "regulationPrice": {
-            "properties": {
-              "price": {
-                "type": "number",
-                "format": "float"
-              }
-            },
-            "type": "object"
-          },
-          "taxRules": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "taxRate": {
-                  "type": "number",
-                  "format": "float"
-                },
-                "name": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "apiAlias"
-        ]
-      },
-      "JoinAppointmentResponse": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "mercureSubscriberTopics": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "mercure topic"
-            },
-            "description": "The topics to which the attendee/guide can subscribe for"
-          },
-          "mercurePublisherTopic": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The topic to which the attendee/guide can send updates"
-          },
-          "JWTMercureSubscriberToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to publish updates"
-          },
-          "mercureHubPublicUrl": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The mercure hub url to connect for subscribing and updating"
-          },
-          "JWTMercurePublisherToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to subscribe for updates"
-          },
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The appointment id"
-          },
-          "newContextToken": {
-            "type": "string",
-            "description": "The new context token"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The created Id for the attendee"
-          },
-          "salesChannelId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id of the current sales channel"
-          },
-          "salesChannelName": {
-            "type": "string",
-            "description": "The name of the current sales channel"
-          },
-          "appointmentName": {
-            "type": "string",
-            "description": "The name of the appointment"
-          },
-          "presentationGuideMode": {
-            "type": "string",
-            "enum": [
-              "self",
-              "guided"
-            ],
-            "description": "The type of the appointment"
-          },
-          "isPreview": {
-            "type": "boolean",
-            "description": "To see if it's a preview appointment"
-          }
-        },
-        "example": {
-          "mercureSubscriberTopics": [
-            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
-          ],
-          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
-          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
-          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
-          "JWTMercurePublisherToken": "jwt token for publishing updates",
-          "id": "2d2c358f1ca04098aacf12873c2eed82",
-          "newContextToken": "new context token to call the other routes",
-          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
-          "salesChannelName": "Storefront",
-          "appointmentName": "Test Appointment",
-          "presentationGuideMode": "guided",
-          "isPreview": false,
-          "apiAlias": "swag_digital_sales_rooms_content_appointment_struct_appointment_join_struct"
-        }
-      },
-      "PresentationCmsPage": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The presentation cms page id"
-          },
-          "title": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The title of presentation cms page"
-          },
-          "presentationId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The presentation using this presentation cms page"
-          },
-          "dsrPresentationVersionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "cmsPageId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The CMS page id the presentation using"
-          },
-          "cmsPage": {
-            "$ref": "#/components/schemas/CmsPage"
-          },
-          "cmsPageVersionId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The CMS page version id the presentation using"
-          },
-          "productId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The product id is assigned to presentation if it's product detail"
-          },
-          "productStreamId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The product stream id is assigned to presentation if it's product listing"
-          },
-          "pickedProductIds": {
-            "anyOf": [
-              {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$",
-                  "description": "Product id"
-                }
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The product id is assigned to presentation if it's product listing or instant listing"
-          },
-          "position": {
-            "type": "integer",
-            "description": "The position of slide"
-          },
-          "isInstantListing": {
-            "type": "boolean",
-            "description": "True if this slide is an instant listing"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "customFields": {
-            "anyOf": [
-              {
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "translated": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              }
-            }
-          }
-        }
-      },
-      "StateForMe": {
-        "type": "object",
-        "properties": {
-          "attendeeId": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "attendeeName": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "videoUserId": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "guideCartPermissionGranted": {
-            "type": "boolean",
-            "default": false
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "CartDeliveryPosition": {
-        "type": "object",
-        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-        "properties": {
-          "deliveryDate": {
-            "type": "object",
-            "properties": {
-              "earliest": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "latest": {
-                "type": "string",
-                "format": "date-time"
-              }
-            }
-          },
-          "identifier": {
-            "type": "string"
-          },
-          "lineItem": {
-            "$ref": "#/components/schemas/LineItem"
-          },
-          "price": {
-            "$ref": "#/components/schemas/CalculatedPrice"
-          }
-        }
       },
       "GetCartInsightsResponse": {
         "type": "object",
@@ -48752,39 +48641,150 @@
           }
         }
       },
-      "VideoChatCreateStruct": {
+      "StateForGuides": {
         "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
         "properties": {
-          "roomUrl": {
-            "type": "string",
-            "description": "Url of the video room in daily"
+          "clients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
           },
-          "roomName": {
-            "type": "string",
-            "description": "Name of the video room in daily"
+          "inactiveClients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
           },
-          "userToken": {
-            "type": "string",
-            "description": "Token for the end users to connect to the daily room"
+          "guides": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
           },
-          "ownerToken": {
-            "type": "string",
-            "description": "Token for the room owner (guide) to connect to the daily room"
+          "videoGuideToken": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
-          "startAsBroadcast": {
+          "quickViewState": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
+      "AbstractDynamicPageOpenedPayload": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of the current dynamic page"
+          },
+          "opened": {
             "type": "boolean",
-            "default": false
+            "default": true
+          }
+        }
+      },
+      "CartListPrice": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "discount": {
+            "type": "number"
+          },
+          "percentage": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_list_price"
+            ]
           }
         },
-        "example": {
-          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
-          "userToken": "dummy user token",
-          "ownerToken": "dummy owner token",
-          "roomName": "rSq20mrgwsj4eIXo1u95",
-          "startAsBroadcast": false,
-          "extensions": []
-        }
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "CartDeliveryInformation": {
+        "type": "object",
+        "properties": {
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_delivery_information"
+            ]
+          },
+          "freeDelivery": {
+            "type": "boolean"
+          },
+          "deliveryTime": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "min": {
+                "type": "integer"
+              },
+              "max": {
+                "type": "integer"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_delivery_time"
+                ]
+              }
+            }
+          },
+          "height": {
+            "type": "integer"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "restockTime": {
+            "type": "integer"
+          },
+          "stock": {
+            "type": "integer"
+          },
+          "weight": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "apiAlias"
+        ]
       }
     },
     "responses": {
