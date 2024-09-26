@@ -16,12 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - shell: bash
         run: |
           cp adminapi.json adminapi-original.json
       - name: Upload original file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: original-file
           path: adminapi-original.json
@@ -43,10 +43,10 @@ jobs:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     - name: download api schema
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: ${{needs.generate-schema.outputs.api_schema}}
 
@@ -62,7 +62,7 @@ jobs:
         done
 
     - name: Download original file
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: original-file
 
