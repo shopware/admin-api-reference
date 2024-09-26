@@ -7,7 +7,10 @@ on:
         description: "Shopware version"
         required: true
         type: string
-
+      php_version:
+        description: "PHP version"
+        required: false
+        type: string
 
 jobs:
   
@@ -32,6 +35,7 @@ jobs:
       schema_flags: ""
       schema_file: adminapi.json
       shopware_version: ${{ inputs.shopware_version }}
+      php_version: ${{ inputs.php_version }}
     secrets: inherit
         
   open-pr:
@@ -61,6 +65,16 @@ jobs:
           yq  -I 4 -o json -i "$k.description = \"${newDescription}\"" adminapi.json
         done
 
+        for k in $(yq '. | keys | .[]' enhance.yml); do
+          newData=$(yq ".\"${k}\"" enhance.yml);
+          # escape all keys by default
+          j=$(echo "$k" | sed -r 's/[.]+/"."/g')
+          # remove first extra quote
+          j=${j#*\"}
+          # add one extra quote at the end
+          yq -I 4 -o json -i "${j}\" = \"${newData}\"" adminapi.json
+        done
+                  
     - name: Download original file
       uses: actions/download-artifact@v4
       with:
@@ -73,12 +87,19 @@ jobs:
         jq . adminapi.json | sponge adminapi.json
         cmp <(sort adminapi.json) <(sort adminapi-original.json) || echo "FILE_DIFFERENCE=1" >> $GITHUB_ENV
         rm adminapi-original.json
-      
+
+    - name: Extract summary
+      run: |
+        chmod +x ./.github/scripts/extract.sh
+        ./.github/scripts/extract.sh adminapi.json adminapi.summary.json
+
     - name: Create PR
       if: ${{ env.FILE_DIFFERENCE == 1 }}
       uses: peter-evans/create-pull-request@v7
       with:
-        add-paths: adminapi.json
+        add-paths: |
+          adminapi.json
+          adminapi.summary.json
         author: shopwareBot <example@example.com>
         committer: shopwareBot <example@example.com>
         assignees: sushmangupta, Isengo1989, bojanrajh

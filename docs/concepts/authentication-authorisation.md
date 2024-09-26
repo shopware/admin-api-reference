@@ -122,7 +122,7 @@ which will return
 
 ## Use the access token
 
-Once you've obtained an access token, simply provide it in your requests `Authorization` header as as a Bearer token and you're ready to go.
+Once you've obtained an access token, simply provide it in your requests `Authorization` header as a Bearer token and you're ready to go.
 
 ```yaml
 // GET /api/product/b7d2554b0ce847cd82f3ac9bd1c0dfad

@@ -1,4 +1,4 @@
-name: Update Digital Sales Room Store API
+name: Update Custom Products Admin API
 
 on:
   workflow_call:
@@ -13,9 +13,8 @@ on:
         type: string
 
 env:
-  PLUGIN_NAME: SwagDigitalSalesRooms
-  PLUGIN_URL: gitlab.shopware.com/shopware/6/services/swagdigitalsalesrooms.git
-  COMPOSER_PACKAGES: shopware-pwa/shopware-pwa ^0.5 symfony/mercure ^0.6.4 spatie/icalendar-generator ^2.6
+  PLUGIN_NAME: SwagCustomizedProducts
+  PLUGIN_URL: gitlab.shopware.com/shopware/6/services/customized-product.git
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -40,9 +39,9 @@ jobs:
       shopware_version: ${{ inputs.shopware_version }}
       php_version: ${{ inputs.php_version }}
     secrets:
-      DEPLOY_USER: ${{ secrets.DIGITALSALESROOM_DEPLOY_USER }}
-      DEPLOY_TOKEN: ${{ secrets.DIGITALSALESROOM_DEPLOY_TOKEN }}
-      DAILY_CO_API_KEY: ${{ secrets.DAILY_CO_API_KEY }}
+      DEPLOY_USER: ${{ secrets.CUSTOMPRODUCTS_DEPLOY_USER }}
+      DEPLOY_TOKEN: ${{ secrets.CUSTOMPRODUCTS_DEPLOY_TOKEN }}
+
   open-pr:
     name: "Open a pull request"
     runs-on: ubuntu-latest

@@ -7,6 +7,10 @@ on:
         description: "Shopware version"
         required: true
         type: string
+      php_version:
+        description: "PHP version"
+        required: false
+        type: string
         
 env:
   PLUGIN_NAME: SwagCommercial
@@ -32,6 +36,7 @@ jobs:
       plugin_url: ${{ needs.vars.outputs.PLUGIN_URL }}
       #git_options: '-b 6.6.x'
       shopware_version: ${{ inputs.shopware_version }}
+      php_version: ${{ inputs.php_version }}
     secrets: inherit
   open-pr:
     name: "Open a pull request"
@@ -56,10 +61,17 @@ jobs:
         jq . ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json | sponge ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
         ./.github/scripts/find_delta_paths.sh ${{ needs.vars.outputs.PLUGIN_NAME }}
 
+    - name: Extract summary
+      run: |
+        chmod +x ./.github/scripts/extract.sh
+        ./.github/scripts/extract.sh ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.summary.json
+
     - name: Create DSR PR
       uses: peter-evans/create-pull-request@v7
       with:
-        add-paths: ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
+        add-paths: |
+          ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
+          ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.summary.json
         author: shopwareBot <example@example.com>
         committer: shopwareBot <example@example.com>
         assignees: Isengo1989, sushmangupta, bojanrajh

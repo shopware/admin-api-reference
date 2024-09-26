@@ -7,12 +7,14 @@ on:
 
 env:
   SHOPWARE_VERSION: 'trunk'
+  PHP_VERSION: '8.2'
 
 jobs:
   vars:
     runs-on: ubuntu-22.04
     outputs:
       SHOPWARE_VERSION: ${{ env.SHOPWARE_VERSION }}
+      PHP_VERSION: ${{ env.PHP_VERSION }}
     steps:
       - run: echo "Exposing env vars"
   generate-trunk:
@@ -20,15 +22,21 @@ jobs:
     uses: ./.github/workflows/base_schema.yml
     with:
       shopware_version: ${{ needs.vars.outputs.SHOPWARE_VERSION }}
-  
+      php_version: ${{ needs.vars.outputs.PHP_VERSION }}
+    secrets: inherit
+    
   generate-commercial-trunk:
     needs: vars
     uses: ./.github/workflows/plugin_commercial_schema.yml
     with:
       shopware_version: ${{ needs.vars.outputs.SHOPWARE_VERSION }}
-  
+      php_version: ${{ needs.vars.outputs.PHP_VERSION }}
+    secrets: inherit
+    
   generate-digitalsalesroom-trunk:
     needs: vars
     uses: ./.github/workflows/plugin_digitalsalesroom_schema.yml
     with:
       shopware_version: ${{ needs.vars.outputs.SHOPWARE_VERSION }}
+      php_version: ${{ needs.vars.outputs.PHP_VERSION }}
+    secrets: inherit
