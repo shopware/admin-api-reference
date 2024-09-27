@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.6.9999999.9999999-dev"
+    "version": "6.6.6.1"
   },
   "servers": [
     {
@@ -67601,7 +67601,9 @@
           {
             "required": [
               "id",
-              "name"
+              "name",
+              "privileges",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -67740,7 +67742,9 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "name"
+          "name",
+          "privileges",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -67801,7 +67805,8 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "userId",
-          "aclRoleId"
+          "aclRoleId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -67849,9 +67854,13 @@
               "id",
               "name",
               "path",
+              "active",
+              "configurable",
               "version",
+              "allowDisable",
               "integrationId",
               "aclRoleId",
+              "createdAt",
               "label"
             ],
             "properties": {
@@ -67924,15 +67933,6 @@
               },
               "checkoutGatewayUrl": {
                 "type": "string"
-              },
-              "sourceType": {
-                "type": "string"
-              },
-              "sourceConfig": {
-                "type": "object"
-              },
-              "selfManaged": {
-                "type": "boolean"
               },
               "label": {
                 "type": "string"
@@ -68351,9 +68351,13 @@
           "id",
           "name",
           "path",
+          "active",
+          "configurable",
           "version",
+          "allowDisable",
           "integrationId",
           "aclRoleId",
+          "createdAt",
           "label"
         ],
         "properties": {
@@ -68443,15 +68447,6 @@
           },
           "checkoutGatewayUrl": {
             "type": "string"
-          },
-          "sourceType": {
-            "type": "string"
-          },
-          "sourceConfig": {
-            "type": "object"
-          },
-          "selfManaged": {
-            "type": "boolean"
           },
           "label": {
             "type": "string",
@@ -68576,6 +68571,7 @@
               "url",
               "action",
               "appId",
+              "createdAt",
               "label"
             ],
             "properties": {
@@ -68663,6 +68659,7 @@
           "url",
           "action",
           "appId",
+          "createdAt",
           "label"
         ],
         "properties": {
@@ -68727,7 +68724,8 @@
               "id",
               "value",
               "appId",
-              "localeId"
+              "localeId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -68766,7 +68764,8 @@
           "id",
           "value",
           "appId",
-          "localeId"
+          "localeId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -68815,6 +68814,7 @@
               "template",
               "styles",
               "appId",
+              "createdAt",
               "label"
             ],
             "properties": {
@@ -68902,6 +68902,7 @@
           "template",
           "styles",
           "appId",
+          "createdAt",
           "label"
         ],
         "properties": {
@@ -68967,6 +68968,7 @@
               "appId",
               "name",
               "url",
+              "createdAt",
               "label"
             ],
             "properties": {
@@ -69118,6 +69120,7 @@
           "appId",
           "name",
           "url",
+          "createdAt",
           "label"
         ],
         "properties": {
@@ -69227,7 +69230,8 @@
               "id",
               "appId",
               "name",
-              "aware"
+              "aware",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -69336,7 +69340,8 @@
           "id",
           "appId",
           "name",
-          "aware"
+          "aware",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -69397,7 +69402,8 @@
               "id",
               "appName",
               "identifier",
-              "paymentMethodId"
+              "paymentMethodId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -69553,7 +69559,8 @@
           "id",
           "appName",
           "identifier",
-          "paymentMethodId"
+          "paymentMethodId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -69642,6 +69649,7 @@
               "identifier",
               "active",
               "appId",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -69761,6 +69769,7 @@
           "identifier",
           "active",
           "appId",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -69835,7 +69844,8 @@
               "id",
               "appName",
               "identifier",
-              "shippingMethodId"
+              "shippingMethodId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -69973,7 +69983,8 @@
           "id",
           "appName",
           "identifier",
-          "shippingMethodId"
+          "shippingMethodId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -70032,7 +70043,8 @@
               "template",
               "path",
               "active",
-              "appId"
+              "appId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -70108,7 +70120,8 @@
           "template",
           "path",
           "active",
-          "appId"
+          "appId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -70158,6 +70171,10 @@
           {
             "required": [
               "id",
+              "displayNestedProducts",
+              "type",
+              "productAssignmentType",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -70712,6 +70729,10 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "displayNestedProducts",
+          "type",
+          "productAssignmentType",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -71005,7 +71026,8 @@
               "id",
               "position",
               "type",
-              "sectionId"
+              "sectionId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -71197,7 +71219,8 @@
           "id",
           "position",
           "type",
-          "sectionId"
+          "sectionId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -71329,7 +71352,8 @@
           {
             "required": [
               "id",
-              "type"
+              "type",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -71581,7 +71605,8 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "type"
+          "type",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -71693,7 +71718,8 @@
               "id",
               "position",
               "type",
-              "pageId"
+              "pageId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -71876,7 +71902,8 @@
           "id",
           "position",
           "type",
-          "pageId"
+          "pageId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -71998,7 +72025,8 @@
               "id",
               "type",
               "slot",
-              "blockId"
+              "blockId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -72097,7 +72125,8 @@
           "id",
           "type",
           "slot",
-          "blockId"
+          "blockId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -72180,6 +72209,8 @@
           {
             "required": [
               "id",
+              "isEu",
+              "createdAt",
               "name",
               "addressFormat"
             ],
@@ -72530,6 +72561,8 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "isEu",
+          "createdAt",
           "name",
           "addressFormat"
         ],
@@ -72731,6 +72764,7 @@
               "id",
               "countryId",
               "shortCode",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -72878,6 +72912,7 @@
           "id",
           "countryId",
           "shortCode",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -72958,6 +72993,7 @@
               "isoCode",
               "itemRounding",
               "totalRounding",
+              "createdAt",
               "shortName",
               "name"
             ],
@@ -73288,6 +73324,7 @@
           "isoCode",
           "itemRounding",
           "totalRounding",
+          "createdAt",
           "shortName",
           "name"
         ],
@@ -73455,7 +73492,8 @@
               "currencyId",
               "countryId",
               "itemRounding",
-              "totalRounding"
+              "totalRounding",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -73597,7 +73635,8 @@
           "currencyId",
           "countryId",
           "itemRounding",
-          "totalRounding"
+          "totalRounding",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -73692,7 +73731,8 @@
             "required": [
               "id",
               "name",
-              "fields"
+              "fields",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -73754,7 +73794,8 @@
         "required": [
           "id",
           "name",
-          "fields"
+          "fields",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -73827,7 +73868,8 @@
             "required": [
               "id",
               "name",
-              "type"
+              "type",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -73941,7 +73983,8 @@
         "required": [
           "id",
           "name",
-          "type"
+          "type",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -74009,7 +74052,8 @@
           {
             "required": [
               "id",
-              "name"
+              "name",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -74182,7 +74226,8 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "name"
+          "name",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -74260,7 +74305,8 @@
             "required": [
               "id",
               "customFieldSetId",
-              "entityName"
+              "entityName",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -74328,7 +74374,8 @@
         "required": [
           "id",
           "customFieldSetId",
-          "entityName"
+          "entityName",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -74379,7 +74426,9 @@
               "firstName",
               "lastName",
               "email",
-              "defaultPaymentMethodId"
+              "accountType",
+              "defaultPaymentMethodId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -75133,7 +75182,9 @@
           "firstName",
           "lastName",
           "email",
-          "defaultPaymentMethodId"
+          "accountType",
+          "defaultPaymentMethodId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -75431,7 +75482,8 @@
               "firstName",
               "lastName",
               "city",
-              "street"
+              "street",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -75635,7 +75687,8 @@
           "firstName",
           "lastName",
           "city",
-          "street"
+          "street",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -75745,6 +75798,7 @@
           {
             "required": [
               "id",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -75896,6 +75950,7 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -75975,7 +76030,8 @@
         "description": "Added since version: 6.3.1.0",
         "required": [
           "customerGroupId",
-          "salesChannelId"
+          "salesChannelId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -76017,7 +76073,8 @@
             "required": [
               "id",
               "hash",
-              "customerId"
+              "customerId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -76085,7 +76142,8 @@
         "required": [
           "id",
           "hash",
-          "customerId"
+          "customerId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -76159,7 +76217,8 @@
             "required": [
               "id",
               "customerId",
-              "salesChannelId"
+              "salesChannelId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -76291,7 +76350,8 @@
         "required": [
           "id",
           "customerId",
-          "salesChannelId"
+          "salesChannelId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -76348,7 +76408,8 @@
             "required": [
               "id",
               "productId",
-              "wishlistId"
+              "wishlistId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -76450,7 +76511,8 @@
         "required": [
           "id",
           "productId",
-          "wishlistId"
+          "wishlistId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -76504,7 +76566,8 @@
               "name",
               "min",
               "max",
-              "unit"
+              "unit",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -76620,7 +76683,8 @@
           "name",
           "min",
           "max",
-          "unit"
+          "unit",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -76692,7 +76756,8 @@
               "fileType",
               "orderId",
               "config",
-              "deepLinkCode"
+              "deepLinkCode",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -76915,7 +76980,8 @@
           "fileType",
           "orderId",
           "config",
-          "deepLinkCode"
+          "deepLinkCode",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -77016,7 +77082,9 @@
             "required": [
               "id",
               "documentTypeId",
-              "name"
+              "name",
+              "global",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -77166,7 +77234,9 @@
         "required": [
           "id",
           "documentTypeId",
-          "name"
+          "name",
+          "global",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -77247,7 +77317,8 @@
           {
             "required": [
               "id",
-              "documentBaseConfigId"
+              "documentBaseConfigId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -77377,7 +77448,8 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "documentBaseConfigId"
+          "documentBaseConfigId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -77432,6 +77504,7 @@
             "required": [
               "id",
               "technicalName",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -77569,6 +77642,7 @@
         "required": [
           "id",
           "technicalName",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -77634,7 +77708,8 @@
             "required": [
               "id",
               "name",
-              "eventName"
+              "eventName",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -77753,7 +77828,8 @@
         "required": [
           "id",
           "name",
-          "eventName"
+          "eventName",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -77827,7 +77903,8 @@
           {
             "required": [
               "id",
-              "flowId"
+              "flowId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -78041,7 +78118,8 @@
         "description": "Added since version: 6.4.6.0",
         "required": [
           "id",
-          "flowId"
+          "flowId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -78136,7 +78214,8 @@
           {
             "required": [
               "id",
-              "name"
+              "name",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -78168,7 +78247,8 @@
         "description": "Added since version: 6.4.18.0",
         "required": [
           "id",
-          "name"
+          "name",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -78208,7 +78288,8 @@
               "id",
               "originalName",
               "path",
-              "expireDate"
+              "expireDate",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -78287,7 +78368,8 @@
           "id",
           "originalName",
           "path",
-          "expireDate"
+          "expireDate",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -78345,7 +78427,8 @@
               "activity",
               "state",
               "records",
-              "config"
+              "config",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -78562,7 +78645,8 @@
           "activity",
           "state",
           "records",
-          "config"
+          "config",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -78660,7 +78744,8 @@
               "sourceEntity",
               "fileType",
               "delimiter",
-              "enclosure"
+              "enclosure",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -78765,7 +78850,8 @@
           "sourceEntity",
           "fileType",
           "delimiter",
-          "enclosure"
+          "enclosure",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -78852,7 +78938,8 @@
               "id",
               "label",
               "accessKey",
-              "secretAccessKey"
+              "secretAccessKey",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -79004,7 +79091,8 @@
           "id",
           "label",
           "accessKey",
-          "secretAccessKey"
+          "secretAccessKey",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -79147,6 +79235,7 @@
           {
             "required": [
               "id",
+              "createdAt",
               "name",
               "url"
             ],
@@ -79340,6 +79429,7 @@
         "description": "Added since version: 6.4.0.0",
         "required": [
           "id",
+          "createdAt",
           "name",
           "url"
         ],
@@ -79516,7 +79606,8 @@
             "required": [
               "id",
               "localeId",
-              "name"
+              "name",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -79992,7 +80083,8 @@
         "required": [
           "id",
           "localeId",
-          "name"
+          "name",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -80118,6 +80210,7 @@
             "required": [
               "id",
               "code",
+              "createdAt",
               "name",
               "territory"
             ],
@@ -80228,6 +80321,7 @@
         "required": [
           "id",
           "code",
+          "createdAt",
           "name",
           "territory"
         ],
@@ -80290,7 +80384,8 @@
           },
           {
             "required": [
-              "id"
+              "id",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -80331,7 +80426,8 @@
       "LogEntry": {
         "description": "Added since version: 6.0.0.0",
         "required": [
-          "id"
+          "id",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -80381,6 +80477,7 @@
           {
             "required": [
               "id",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -80467,6 +80564,7 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -80536,6 +80634,7 @@
             "required": [
               "id",
               "mailTemplateTypeId",
+              "createdAt",
               "subject",
               "contentHtml",
               "contentPlain"
@@ -80658,6 +80757,7 @@
         "required": [
           "id",
           "mailTemplateTypeId",
+          "createdAt",
           "subject",
           "contentHtml",
           "contentPlain"
@@ -80780,6 +80880,7 @@
             "required": [
               "id",
               "technicalName",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -80861,6 +80962,7 @@
         "required": [
           "id",
           "technicalName",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -80923,7 +81025,8 @@
               "id",
               "productId",
               "categoryId",
-              "salesChannelId"
+              "salesChannelId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -81063,7 +81166,8 @@
           "id",
           "productId",
           "categoryId",
-          "salesChannelId"
+          "salesChannelId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -81126,7 +81230,8 @@
           },
           {
             "required": [
-              "id"
+              "id",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -81999,7 +82104,8 @@
       "Media": {
         "description": "Added since version: 6.0.0.0",
         "required": [
-          "id"
+          "id",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -82310,7 +82416,8 @@
           {
             "required": [
               "id",
-              "entity"
+              "entity",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -82376,7 +82483,8 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "entity"
+          "entity",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -82418,7 +82526,8 @@
             "required": [
               "id",
               "configurationId",
-              "name"
+              "name",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -82629,7 +82738,8 @@
         "required": [
           "id",
           "configurationId",
-          "name"
+          "name",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -82717,7 +82827,8 @@
           },
           {
             "required": [
-              "id"
+              "id",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -82828,7 +82939,8 @@
       "MediaFolderConfiguration": {
         "description": "Added since version: 6.0.0.0",
         "required": [
-          "id"
+          "id",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -82955,7 +83067,8 @@
               "id",
               "mediaId",
               "width",
-              "height"
+              "height",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -83041,7 +83154,8 @@
           "id",
           "mediaId",
           "width",
-          "height"
+          "height",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -83103,7 +83217,8 @@
             "required": [
               "id",
               "width",
-              "height"
+              "height",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -83177,7 +83292,8 @@
         "required": [
           "id",
           "width",
-          "height"
+          "height",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -83231,7 +83347,8 @@
               "status",
               "hash",
               "languageId",
-              "salesChannelId"
+              "salesChannelId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -83430,7 +83547,8 @@
           "status",
           "hash",
           "languageId",
-          "salesChannelId"
+          "salesChannelId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -83567,7 +83685,8 @@
             "required": [
               "id",
               "status",
-              "message"
+              "message",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -83681,7 +83800,8 @@
         "required": [
           "id",
           "status",
-          "message"
+          "message",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -83751,6 +83871,7 @@
               "global",
               "pattern",
               "start",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -83901,6 +84022,7 @@
           "global",
           "pattern",
           "start",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -83978,7 +84100,8 @@
             "required": [
               "id",
               "numberRangeId",
-              "salesChannelId"
+              "salesChannelId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -84109,7 +84232,8 @@
         "required": [
           "id",
           "numberRangeId",
-          "salesChannelId"
+          "salesChannelId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -84164,7 +84288,8 @@
             "required": [
               "id",
               "numberRangeId",
-              "lastValue"
+              "lastValue",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -84233,7 +84358,8 @@
         "required": [
           "id",
           "numberRangeId",
-          "lastValue"
+          "lastValue",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -84276,6 +84402,7 @@
             "required": [
               "id",
               "global",
+              "createdAt",
               "typeName"
             ],
             "properties": {
@@ -84385,6 +84512,7 @@
         "required": [
           "id",
           "global",
+          "createdAt",
           "typeName"
         ],
         "properties": {
@@ -84455,7 +84583,8 @@
               "currencyFactor",
               "stateId",
               "itemRounding",
-              "totalRounding"
+              "totalRounding",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -85152,7 +85281,8 @@
           "currencyFactor",
           "stateId",
           "itemRounding",
-          "totalRounding"
+          "totalRounding",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -85536,7 +85666,8 @@
               "firstName",
               "lastName",
               "street",
-              "city"
+              "city",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -85782,7 +85913,8 @@
           "firstName",
           "lastName",
           "street",
-          "city"
+          "city",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -85915,7 +86047,8 @@
               "orderId",
               "email",
               "firstName",
-              "lastName"
+              "lastName",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -86086,7 +86219,8 @@
           "orderId",
           "email",
           "firstName",
-          "lastName"
+          "lastName",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -86193,8 +86327,10 @@
               "shippingOrderAddressId",
               "shippingMethodId",
               "stateId",
+              "trackingCodes",
               "shippingDateEarliest",
-              "shippingDateLatest"
+              "shippingDateLatest",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -86478,8 +86614,10 @@
           "shippingOrderAddressId",
           "shippingMethodId",
           "stateId",
+          "trackingCodes",
           "shippingDateEarliest",
-          "shippingDateLatest"
+          "shippingDateLatest",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -86651,7 +86789,8 @@
             "required": [
               "id",
               "orderDeliveryId",
-              "orderLineItemId"
+              "orderLineItemId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -86833,7 +86972,8 @@
         "required": [
           "id",
           "orderDeliveryId",
-          "orderLineItemId"
+          "orderLineItemId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -86984,9 +87124,11 @@
               "identifier",
               "quantity",
               "label",
+              "position",
               "states",
               "price",
-              "children"
+              "children",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -87438,9 +87580,11 @@
           "identifier",
           "quantity",
           "label",
+          "position",
           "states",
           "price",
-          "children"
+          "children",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -87695,7 +87839,8 @@
               "orderLineItemId",
               "mediaId",
               "position",
-              "accessGranted"
+              "accessGranted",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -87813,7 +87958,8 @@
           "orderLineItemId",
           "mediaId",
           "position",
-          "accessGranted"
+          "accessGranted",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -87921,7 +88067,8 @@
               "orderId",
               "paymentMethodId",
               "amount",
-              "stateId"
+              "stateId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -88156,7 +88303,8 @@
           "orderId",
           "paymentMethodId",
           "amount",
-          "stateId"
+          "stateId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -88328,7 +88476,8 @@
               "id",
               "orderTransactionId",
               "stateId",
-              "amount"
+              "amount",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -88529,7 +88678,8 @@
           "id",
           "orderTransactionId",
           "stateId",
-          "amount"
+          "amount",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -88694,7 +88844,8 @@
               "id",
               "captureId",
               "stateId",
-              "amount"
+              "amount",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -88898,7 +89049,8 @@
           "id",
           "captureId",
           "stateId",
-          "amount"
+          "amount",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -89067,7 +89219,8 @@
               "id",
               "refundId",
               "orderLineItemId",
-              "amount"
+              "amount",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -89248,7 +89401,8 @@
           "id",
           "refundId",
           "orderLineItemId",
-          "amount"
+          "amount",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -89419,6 +89573,7 @@
           {
             "required": [
               "id",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -89768,6 +89923,7 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -89928,6 +90084,7 @@
               "name",
               "autoload",
               "version",
+              "createdAt",
               "label"
             ],
             "properties": {
@@ -90061,6 +90218,7 @@
           "name",
           "autoload",
           "version",
+          "createdAt",
           "label"
         ],
         "properties": {
@@ -90191,6 +90349,7 @@
               "price",
               "productNumber",
               "stock",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -90259,10 +90418,7 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "price": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "productNumber": {
                 "type": "string"
@@ -90341,10 +90497,7 @@
                 "type": "boolean"
               },
               "purchasePrices": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "markAsTopseller": {
                 "type": "boolean"
@@ -91419,6 +91572,7 @@
           "price",
           "productNumber",
           "stock",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -91502,10 +91656,7 @@
             "description": "Unique identity of CMS page's version."
           },
           "price": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            },
+            "type": "object",
             "description": "Price of the product."
           },
           "productNumber": {
@@ -91605,10 +91756,7 @@
             "description": "Indicates weather the shipping price is free or not."
           },
           "purchasePrices": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            },
+            "type": "object",
             "description": "Actual/cost price of the product."
           },
           "markAsTopseller": {
@@ -92030,7 +92178,8 @@
             "required": [
               "id",
               "productId",
-              "optionId"
+              "optionId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -92179,7 +92328,8 @@
         "required": [
           "id",
           "productId",
-          "optionId"
+          "optionId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -92257,7 +92407,10 @@
             "required": [
               "id",
               "name",
-              "productId"
+              "position",
+              "type",
+              "productId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -92416,7 +92569,10 @@
         "required": [
           "id",
           "name",
-          "productId"
+          "position",
+          "type",
+          "productId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -92508,7 +92664,8 @@
             "required": [
               "id",
               "crossSellingId",
-              "productId"
+              "productId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -92614,7 +92771,8 @@
         "required": [
           "id",
           "crossSellingId",
-          "productId"
+          "productId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -92707,7 +92865,8 @@
             "required": [
               "id",
               "productId",
-              "mediaId"
+              "mediaId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -92820,7 +92979,8 @@
         "required": [
           "id",
           "productId",
-          "mediaId"
+          "mediaId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -92895,7 +93055,8 @@
               "encoding",
               "fileFormat",
               "generateByCronjob",
-              "interval"
+              "interval",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -93142,7 +93303,8 @@
           "encoding",
           "fileFormat",
           "generateByCronjob",
-          "interval"
+          "interval",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -93266,6 +93428,7 @@
           {
             "required": [
               "id",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -93340,6 +93503,7 @@
         "description": "Added since version: 6.3.0.0",
         "required": [
           "id",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -93490,6 +93654,7 @@
           {
             "required": [
               "id",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -93604,6 +93769,7 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -93674,7 +93840,8 @@
             "required": [
               "id",
               "productId",
-              "mediaId"
+              "mediaId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -93818,7 +93985,8 @@
         "required": [
           "id",
           "productId",
-          "mediaId"
+          "mediaId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -93928,7 +94096,8 @@
               "productId",
               "ruleId",
               "price",
-              "quantityStart"
+              "quantityStart",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -93952,10 +94121,7 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "price": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "quantityStart": {
                 "type": "integer",
@@ -94053,7 +94219,8 @@
           "productId",
           "ruleId",
           "price",
-          "quantityStart"
+          "quantityStart",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -94082,10 +94249,7 @@
             "description": "Unique identity of the rule."
           },
           "price": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            },
+            "type": "object",
             "description": "Price of the Product."
           },
           "quantityStart": {
@@ -94170,7 +94334,8 @@
               "salesChannelId",
               "languageId",
               "title",
-              "content"
+              "content",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -94366,7 +94531,8 @@
           "salesChannelId",
           "languageId",
           "title",
-          "content"
+          "content",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -94466,7 +94632,10 @@
           {
             "required": [
               "id",
-              "languageId"
+              "languageId",
+              "andLogic",
+              "minSearchLength",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -94574,7 +94743,10 @@
         "description": "Added since version: 6.3.5.0",
         "required": [
           "id",
-          "languageId"
+          "languageId",
+          "andLogic",
+          "minSearchLength",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -94635,7 +94807,11 @@
             "required": [
               "id",
               "searchConfigId",
-              "field"
+              "field",
+              "tokenize",
+              "searchable",
+              "ranking",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -94746,7 +94922,11 @@
         "required": [
           "id",
           "searchConfigId",
-          "field"
+          "field",
+          "tokenize",
+          "searchable",
+          "ranking",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -94812,7 +94992,8 @@
               "languageId",
               "productId",
               "keyword",
-              "ranking"
+              "ranking",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -94927,7 +95108,8 @@
           "languageId",
           "productId",
           "keyword",
-          "ranking"
+          "ranking",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -94996,6 +95178,7 @@
               "priority",
               "active",
               "fields",
+              "createdAt",
               "label"
             ],
             "properties": {
@@ -95048,6 +95231,7 @@
           "priority",
           "active",
           "fields",
+          "createdAt",
           "label"
         ],
         "properties": {
@@ -95107,6 +95291,7 @@
           {
             "required": [
               "id",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -95282,6 +95467,7 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -95363,7 +95549,8 @@
             "required": [
               "id",
               "productStreamId",
-              "type"
+              "type",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -95514,7 +95701,8 @@
         "required": [
           "id",
           "productStreamId",
-          "type"
+          "type",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -95671,7 +95859,8 @@
               "id",
               "productId",
               "salesChannelId",
-              "visibility"
+              "visibility",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -95778,7 +95967,8 @@
           "id",
           "productId",
           "salesChannelId",
-          "visibility"
+          "visibility",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -95834,6 +96024,14 @@
           {
             "required": [
               "id",
+              "active",
+              "priority",
+              "exclusive",
+              "useCodes",
+              "useIndividualCodes",
+              "useSetGroups",
+              "preventCombination",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -96216,6 +96414,14 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "active",
+          "priority",
+          "exclusive",
+          "useCodes",
+          "useIndividualCodes",
+          "useSetGroups",
+          "preventCombination",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -96427,7 +96633,8 @@
               "scope",
               "type",
               "value",
-              "considerAdvancedRules"
+              "considerAdvancedRules",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -96586,7 +96793,8 @@
           "scope",
           "type",
           "value",
-          "considerAdvancedRules"
+          "considerAdvancedRules",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -96676,7 +96884,8 @@
               "id",
               "discountId",
               "currencyId",
-              "price"
+              "price",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -96779,7 +96988,8 @@
           "id",
           "discountId",
           "currencyId",
-          "price"
+          "price",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -96862,7 +97072,8 @@
             "required": [
               "id",
               "promotionId",
-              "code"
+              "code",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -96933,7 +97144,8 @@
         "required": [
           "id",
           "promotionId",
-          "code"
+          "code",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -97074,7 +97286,8 @@
               "id",
               "promotionId",
               "salesChannelId",
-              "priority"
+              "priority",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -97177,7 +97390,8 @@
           "id",
           "promotionId",
           "salesChannelId",
-          "priority"
+          "priority",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -97231,7 +97445,8 @@
               "promotionId",
               "packagerKey",
               "sorterKey",
-              "value"
+              "value",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -97339,7 +97554,8 @@
           "promotionId",
           "packagerKey",
           "sorterKey",
-          "value"
+          "value",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -97427,6 +97643,9 @@
           {
             "required": [
               "id",
+              "displayType",
+              "sortingType",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -97517,6 +97736,9 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "displayType",
+          "sortingType",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -97591,6 +97813,7 @@
             "required": [
               "id",
               "groupId",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -97798,6 +98021,7 @@
         "required": [
           "id",
           "groupId",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -97884,7 +98108,8 @@
             "required": [
               "id",
               "name",
-              "priority"
+              "priority",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -98378,7 +98603,8 @@
         "required": [
           "id",
           "name",
-          "priority"
+          "priority",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -98531,7 +98757,8 @@
             "required": [
               "id",
               "type",
-              "ruleId"
+              "ruleId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -98706,7 +98933,8 @@
         "required": [
           "id",
           "type",
-          "ruleId"
+          "ruleId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -98823,6 +99051,7 @@
               "countryId",
               "navigationCategoryId",
               "accessKey",
+              "createdAt",
               "name",
               "homeEnabled"
             ],
@@ -100158,6 +100387,7 @@
           "countryId",
           "navigationCategoryId",
           "accessKey",
+          "createdAt",
           "name",
           "homeEnabled"
         ],
@@ -100580,7 +100810,8 @@
           },
           {
             "required": [
-              "id"
+              "id",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -100651,7 +100882,8 @@
       "SalesChannelAnalytics": {
         "description": "Added since version: 6.2.0.0",
         "required": [
-          "id"
+          "id",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -100766,7 +100998,8 @@
               "salesChannelId",
               "languageId",
               "currencyId",
-              "snippetSetId"
+              "snippetSetId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -101002,7 +101235,8 @@
           "salesChannelId",
           "languageId",
           "currencyId",
-          "snippetSetId"
+          "snippetSetId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -101178,6 +101412,7 @@
           {
             "required": [
               "id",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -101270,6 +101505,7 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -101345,6 +101581,7 @@
             "required": [
               "id",
               "salutationKey",
+              "createdAt",
               "displayName",
               "letterName"
             ],
@@ -101548,6 +101785,7 @@
         "required": [
           "id",
           "salutationKey",
+          "createdAt",
           "displayName",
           "letterName"
         ],
@@ -101633,7 +101871,9 @@
               "scheduledTaskClass",
               "runInterval",
               "defaultRunInterval",
-              "status"
+              "status",
+              "nextExecutionTime",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -101688,7 +101928,9 @@
           "scheduledTaskClass",
           "runInterval",
           "defaultRunInterval",
-          "status"
+          "status",
+          "nextExecutionTime",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -101753,7 +101995,8 @@
               "script",
               "hook",
               "name",
-              "active"
+              "active",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -101832,7 +102075,8 @@
           "script",
           "hook",
           "name",
-          "active"
+          "active",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -101889,7 +102133,8 @@
               "foreignKey",
               "routeName",
               "pathInfo",
-              "seoPathInfo"
+              "seoPathInfo",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -102023,7 +102268,8 @@
           "foreignKey",
           "routeName",
           "pathInfo",
-          "seoPathInfo"
+          "seoPathInfo",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -102111,7 +102357,8 @@
             "required": [
               "id",
               "entityName",
-              "routeName"
+              "routeName",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -102191,7 +102438,8 @@
         "required": [
           "id",
           "entityName",
-          "routeName"
+          "routeName",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -102250,6 +102498,8 @@
             "required": [
               "id",
               "deliveryTimeId",
+              "taxType",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -102626,6 +102876,8 @@
         "required": [
           "id",
           "deliveryTimeId",
+          "taxType",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -102757,7 +103009,8 @@
           {
             "required": [
               "id",
-              "shippingMethodId"
+              "shippingMethodId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -102789,10 +103042,7 @@
                 "format": "float"
               },
               "currencyPrice": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "customFields": {
                 "type": "object"
@@ -102908,7 +103158,8 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "shippingMethodId"
+          "shippingMethodId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -102947,10 +103198,7 @@
             "description": "Ending range of quantity of an item."
           },
           "currencyPrice": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            },
+            "type": "object",
             "description": "Contains currency-based price."
           },
           "customFields": {
@@ -103022,7 +103270,8 @@
               "setId",
               "translationKey",
               "value",
-              "author"
+              "author",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -103101,7 +103350,8 @@
           "setId",
           "translationKey",
           "value",
-          "author"
+          "author",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -103157,7 +103407,8 @@
               "id",
               "name",
               "baseFile",
-              "iso"
+              "iso",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -103264,7 +103515,8 @@
           "id",
           "name",
           "baseFile",
-          "iso"
+          "iso",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -103322,6 +103574,7 @@
             "required": [
               "id",
               "technicalName",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -103463,6 +103716,7 @@
         "required": [
           "id",
           "technicalName",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -103535,7 +103789,8 @@
               "stateMachineId",
               "entityName",
               "fromStateId",
-              "toStateId"
+              "toStateId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -103717,7 +103972,8 @@
           "stateMachineId",
           "entityName",
           "fromStateId",
-          "toStateId"
+          "toStateId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -103802,6 +104058,7 @@
               "id",
               "technicalName",
               "stateMachineId",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -104159,6 +104416,7 @@
           "id",
           "technicalName",
           "stateMachineId",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -104270,7 +104528,8 @@
               "actionName",
               "stateMachineId",
               "fromStateId",
-              "toStateId"
+              "toStateId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -104409,7 +104668,8 @@
           "actionName",
           "stateMachineId",
           "fromStateId",
-          "toStateId"
+          "toStateId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -104472,7 +104732,8 @@
             "required": [
               "id",
               "configurationKey",
-              "configurationValue"
+              "configurationValue",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -104548,7 +104809,8 @@
         "required": [
           "id",
           "configurationKey",
-          "configurationValue"
+          "configurationValue",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -104599,7 +104861,8 @@
           {
             "required": [
               "id",
-              "name"
+              "name",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -104912,7 +105175,8 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "name"
+          "name",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -105001,7 +105265,9 @@
             "required": [
               "id",
               "taxRate",
-              "name"
+              "name",
+              "position",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -105141,7 +105407,9 @@
         "required": [
           "id",
           "taxRate",
-          "name"
+          "name",
+          "position",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -105209,6 +105477,7 @@
               "id",
               "identifier",
               "priority",
+              "createdAt",
               "name"
             ],
             "properties": {
@@ -105330,6 +105599,7 @@
           "id",
           "identifier",
           "priority",
+          "createdAt",
           "name"
         ],
         "properties": {
@@ -105408,7 +105678,8 @@
               "taxRuleTypeId",
               "countryId",
               "taxRate",
-              "taxId"
+              "taxId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -105570,7 +105841,8 @@
           "taxRuleTypeId",
           "countryId",
           "taxRate",
-          "taxId"
+          "taxId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -105661,6 +105933,7 @@
               "id",
               "technicalName",
               "position",
+              "createdAt",
               "typeName"
             ],
             "properties": {
@@ -105739,6 +106012,7 @@
           "id",
           "technicalName",
           "position",
+          "createdAt",
           "typeName"
         ],
         "properties": {
@@ -105795,7 +106069,8 @@
               "id",
               "name",
               "author",
-              "active"
+              "active",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -105994,7 +106269,8 @@
           "id",
           "name",
           "author",
-          "active"
+          "active",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -106196,6 +106472,7 @@
           {
             "required": [
               "id",
+              "createdAt",
               "shortCode",
               "name"
             ],
@@ -106271,6 +106548,7 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
+          "createdAt",
           "shortCode",
           "name"
         ],
@@ -106328,7 +106606,9 @@
               "username",
               "firstName",
               "lastName",
-              "email"
+              "email",
+              "timeZone",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -106835,7 +107115,9 @@
           "username",
           "firstName",
           "lastName",
-          "email"
+          "email",
+          "timeZone",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -107023,7 +107305,8 @@
               "id",
               "userId",
               "accessKey",
-              "secretAccessKey"
+              "secretAccessKey",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -107102,7 +107385,8 @@
           "id",
           "userId",
           "accessKey",
-          "secretAccessKey"
+          "secretAccessKey",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -107158,7 +107442,8 @@
             "required": [
               "id",
               "userId",
-              "key"
+              "key",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -107229,7 +107514,8 @@
         "required": [
           "id",
           "userId",
-          "key"
+          "key",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -107276,7 +107562,8 @@
             "required": [
               "id",
               "hash",
-              "userId"
+              "userId",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -107344,7 +107631,8 @@
         "required": [
           "id",
           "hash",
-          "userId"
+          "userId",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -107388,7 +107676,9 @@
               "id",
               "name",
               "eventName",
-              "url"
+              "url",
+              "errorCount",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -107474,7 +107764,9 @@
           "id",
           "name",
           "eventName",
-          "url"
+          "url",
+          "errorCount",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -107540,7 +107832,8 @@
               "webhookName",
               "eventName",
               "deliveryStatus",
-              "url"
+              "url",
+              "createdAt"
             ],
             "properties": {
               "id": {
@@ -107614,7 +107907,8 @@
           "webhookName",
           "eventName",
           "deliveryStatus",
-          "url"
+          "url",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -107877,85 +108171,6 @@
               "refresh_token"
             ]
           }
-        ]
-      },
-      "Price": {
-        "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "",
-            "type": "number"
-          },
-          "net": {
-            "description": "",
-            "type": "number"
-          },
-          "linked": {
-            "description": "",
-            "type": "boolean"
-          },
-          "listPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          },
-          "regulationPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net"
         ]
       },
       "businessEventsResponse": {
