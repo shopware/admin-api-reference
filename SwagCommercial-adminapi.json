@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.6.9999999.9999999-dev"
+    "version": "6.6.6.1"
   },
   "servers": [
     {
@@ -28055,15 +28055,6 @@
               "checkoutGatewayUrl": {
                 "type": "string"
               },
-              "sourceType": {
-                "type": "string"
-              },
-              "sourceConfig": {
-                "type": "object"
-              },
-              "selfManaged": {
-                "type": "boolean"
-              },
               "label": {
                 "type": "string"
               },
@@ -28560,15 +28551,6 @@
           },
           "checkoutGatewayUrl": {
             "type": "string"
-          },
-          "sourceType": {
-            "type": "string"
-          },
-          "sourceConfig": {
-            "type": "object"
-          },
-          "selfManaged": {
-            "type": "boolean"
           },
           "label": {
             "type": "string"
@@ -32152,10 +32134,7 @@
                 "type": "object"
               },
               "price": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "createdAt": {
                 "type": "string",
@@ -32396,10 +32375,7 @@
             "type": "object"
           },
           "price": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            }
+            "type": "object"
           },
           "createdAt": {
             "type": "string",
@@ -32465,10 +32441,7 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "price": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "quantity": {
                 "type": "integer",
@@ -32580,10 +32553,7 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "price": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            }
+            "type": "object"
           },
           "quantity": {
             "type": "integer",
@@ -56731,10 +56701,7 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "price": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "productNumber": {
                 "type": "string"
@@ -56813,10 +56780,7 @@
                 "type": "boolean"
               },
               "purchasePrices": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "markAsTopseller": {
                 "type": "boolean"
@@ -58216,10 +58180,7 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "price": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            }
+            "type": "object"
           },
           "productNumber": {
             "type": "string"
@@ -58298,10 +58259,7 @@
             "type": "boolean"
           },
           "purchasePrices": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            }
+            "type": "object"
           },
           "markAsTopseller": {
             "type": "boolean"
@@ -60815,10 +60773,7 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "price": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "quantityStart": {
                 "type": "integer",
@@ -60941,10 +60896,7 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "price": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            }
+            "type": "object"
           },
           "quantityStart": {
             "type": "integer",
@@ -67586,16 +67538,10 @@
                 "type": "object"
               },
               "productPrice": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "purchasePrice": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "discount": {
                 "properties": {
@@ -67974,16 +67920,10 @@
             "type": "object"
           },
           "productPrice": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            }
+            "type": "object"
           },
           "purchasePrice": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            }
+            "type": "object"
           },
           "discount": {
             "properties": {
@@ -73721,10 +73661,7 @@
                 "format": "float"
               },
               "currencyPrice": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Price"
-                }
+                "type": "object"
               },
               "customFields": {
                 "type": "object"
@@ -73873,10 +73810,7 @@
             "format": "float"
           },
           "currencyPrice": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Price"
-            }
+            "type": "object"
           },
           "customFields": {
             "type": "object"
@@ -83324,85 +83258,6 @@
               "refresh_token"
             ]
           }
-        ]
-      },
-      "Price": {
-        "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "",
-            "type": "number"
-          },
-          "net": {
-            "description": "",
-            "type": "number"
-          },
-          "linked": {
-            "description": "",
-            "type": "boolean"
-          },
-          "listPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          },
-          "regulationPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net"
         ]
       },
       "businessEventsResponse": {
