@@ -15817,9 +15817,6 @@
               "url": {
                 "type": "string"
               },
-              "startAsBroadcast": {
-                "type": "boolean"
-              },
               "customFields": {
                 "type": "object"
               },
@@ -15897,9 +15894,6 @@
           },
           "url": {
             "type": "string"
-          },
-          "startAsBroadcast": {
-            "type": "boolean"
           },
           "customFields": {
             "type": "object"
@@ -46790,9 +46784,6 @@
           },
           "stateForClients": {
             "$ref": "#/components/schemas/StateForGuides"
-          },
-          "stateForMe": {
-            "$ref": "#/components/schemas/StateForMe"
           }
         },
         "example": {
@@ -46880,13 +46871,6 @@
             },
             "videoGuideToken": null,
             "quickViewState": [],
-            "extensions": []
-          },
-          "stateForMe": {
-            "attendeeId": "018e789e117c701b8d12a64eae0faac8",
-            "attendeeName": " admin",
-            "videoUserId": "e57c6922-903e-4b08-a612-20ad921d9b6f",
-            "guideCartPermissionsGranted": false,
             "extensions": []
           }
         }
@@ -47597,6 +47581,32 @@
           "isPreview": {
             "type": "boolean",
             "description": "To see if it's a preview appointment"
+          },
+          "attendeeName": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The name of the attendee"
+          },
+          "videoUserId": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The video user id that attendee could use"
+          },
+          "b2bFeatures": {
+            "type": "object",
+            "description": "The b2b features that available for the appointment"
           }
         },
         "example": {
@@ -47609,6 +47619,12 @@
           "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
           "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
           "JWTMercurePublisherToken": "jwt token for publishing updates",
+          "attendeeName": "attendee name",
+          "videoUserId": null,
+          "b2bFeatures": {
+            "feature1": false,
+            "feature2": true
+          },
           "id": "2d2c358f1ca04098aacf12873c2eed82",
           "newContextToken": "new context token to call the other routes",
           "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
@@ -47645,49 +47661,6 @@
             "cartSum": 6770.53,
             "productCount": 3,
             "lineItemCount": 3
-          }
-        }
-      },
-      "StateForMe": {
-        "type": "object",
-        "properties": {
-          "attendeeId": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "attendeeName": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "videoUserId": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "guideCartPermissionGranted": {
-            "type": "boolean",
-            "default": false
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
           }
         }
       },
@@ -47964,10 +47937,6 @@
           "ownerToken": {
             "type": "string",
             "description": "Token for the room owner (guide) to connect to the daily room"
-          },
-          "startAsBroadcast": {
-            "type": "boolean",
-            "default": false
           }
         },
         "example": {
@@ -47975,7 +47944,6 @@
           "userToken": "dummy user token",
           "ownerToken": "dummy owner token",
           "roomName": "rSq20mrgwsj4eIXo1u95",
-          "startAsBroadcast": false,
           "extensions": []
         }
       },
@@ -48439,6 +48407,10 @@
               "videoGrid"
             ],
             "default": "presentation"
+          },
+          "allowScreenSharing": {
+            "type": "boolean",
+            "default": false
           },
           "extensions": {
             "type": "array",
