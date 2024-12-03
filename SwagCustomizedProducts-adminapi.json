@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.6.8.2"
+    "version": "6.6.9.0"
   },
   "servers": [
     {
@@ -4474,21 +4474,6 @@
           }
         }
       }
-    },
-    "/_action/cache-delayed": {
-      "delete": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Clear all invalidated caches",
-        "description": "Directly triggers invalidation of all cache tags that were marked for invalidation.",
-        "operationId": "clearCacheDelayed",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the cache has been cleared."
-          }
-        }
-      }
     }
   },
   "components": {
@@ -5168,6 +5153,9 @@
               "checkoutGatewayUrl": {
                 "type": "string"
               },
+              "inAppPurchasesGatewayUrl": {
+                "type": "string"
+              },
               "sourceType": {
                 "type": "string"
               },
@@ -5668,6 +5656,9 @@
             "format": "int64"
           },
           "checkoutGatewayUrl": {
+            "type": "string"
+          },
+          "inAppPurchasesGatewayUrl": {
             "type": "string"
           },
           "sourceType": {
