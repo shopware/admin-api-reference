@@ -80004,20 +80004,11 @@
               "lastName": {
                 "type": "string"
               },
-              "company": {
-                "type": "string"
-              },
               "email": {
                 "type": "string"
               },
               "title": {
                 "type": "string"
-              },
-              "vatIds": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "affiliateCode": {
                 "type": "string"
@@ -80097,9 +80088,6 @@
               "boundSalesChannelId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
-              },
-              "accountType": {
-                "type": "string"
               },
               "createdById": {
                 "type": "string",
@@ -80770,10 +80758,6 @@
             "type": "string",
             "description": "Last name of the customer."
           },
-          "company": {
-            "type": "string",
-            "description": "Company name of the customer."
-          },
           "email": {
             "type": "string",
             "description": "Email ID of the customer."
@@ -80781,13 +80765,6 @@
           "title": {
             "type": "string",
             "description": "Titles or honorifics like Mr, Mrs, etc."
-          },
-          "vatIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Unique identity of VAT."
           },
           "affiliateCode": {
             "type": "string",
@@ -80888,10 +80865,6 @@
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of bonus sales channel."
           },
-          "accountType": {
-            "type": "string",
-            "description": "Account type can be personal or business."
-          },
           "createdById": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
@@ -80989,6 +80962,15 @@
           },
           "defaultPaymentMethod": {
             "$ref": "#/components/schemas/PaymentMethod"
+          },
+          "company": {
+            "description": "Company name of the customer."
+          },
+          "vatIds": {
+            "description": "Unique identity of VAT."
+          },
+          "accountType": {
+            "description": "Account type can be personal or business."
           }
         },
         "type": "object"
