@@ -82253,10 +82253,10 @@
             "required": [
               "id",
               "documentTypeId",
-              "fileType",
               "orderId",
               "config",
-              "deepLinkCode"
+              "deepLinkCode",
+              "fileType"
             ],
             "properties": {
               "id": {
@@ -82267,9 +82267,6 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
-              "fileType": {
-                "type": "string"
-              },
               "referencedDocumentId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -82279,6 +82276,10 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "documentMediaFileId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "documentA11yMediaFileId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -82303,6 +82304,9 @@
               },
               "customFields": {
                 "type": "object"
+              },
+              "fileType": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -82462,6 +82466,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentA11yMediaFile": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document/0945359809dad1fbf3dea1c95a0da951/documentA11yMediaFile"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "0ea973a1104089c9d0f93bdb06c47cab"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -82476,10 +82509,10 @@
         "required": [
           "id",
           "documentTypeId",
-          "fileType",
           "orderId",
           "config",
-          "deepLinkCode"
+          "deepLinkCode",
+          "fileType"
         ],
         "properties": {
           "id": {
@@ -82491,10 +82524,6 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of document type."
-          },
-          "fileType": {
-            "type": "string",
-            "description": "Type of file like PDF."
           },
           "referencedDocumentId": {
             "type": "string",
@@ -82510,6 +82539,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of document media file."
+          },
+          "documentA11yMediaFileId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
           },
           "orderVersionId": {
             "type": "string",
@@ -82539,6 +82572,10 @@
             "type": "object",
             "description": "Additional fields that offer a possibility to add own fields for the different program-areas."
           },
+          "fileType": {
+            "type": "string",
+            "description": "Type of file like PDF."
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -82565,6 +82602,9 @@
             }
           },
           "documentMediaFile": {
+            "$ref": "#/components/schemas/Media"
+          },
+          "documentA11yMediaFile": {
             "$ref": "#/components/schemas/Media"
           }
         },
