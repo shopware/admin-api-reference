@@ -84597,6 +84597,37 @@
                     },
                     "type": "object"
                   },
+                  "stateMachineHistoryEntries": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/integration/1115b855bb2a508bc2ca0609cc2d0f65/stateMachineHistoryEntries"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "state_machine_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "c78c7ea361b7def0876b75bd1bd37879"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "aclRoles": {
                     "properties": {
                       "links": {
@@ -84728,6 +84759,12 @@
           },
           "app": {
             "$ref": "#/components/schemas/App"
+          },
+          "stateMachineHistoryEntries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StateMachineHistory"
+            }
           },
           "aclRoles": {
             "type": "array",
@@ -103220,6 +103257,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "combinable": {
+                "description": "Runtime field, cannot be used as part of the criteria.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -103432,6 +103473,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of media."
+          },
+          "combinable": {
+            "description": "Runtime field, cannot be used as part of the criteria.",
+            "type": "boolean"
           },
           "customFields": {
             "type": "object",
@@ -109178,6 +109223,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "integrationId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -109305,6 +109354,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "integration": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/state-machine-history/2981354377022484094791c3f19ffec8/integration"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "integration"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "776ea3bf11df5829827f7afb43c37174"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -109369,6 +109447,10 @@
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of user."
           },
+          "integrationId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -109390,6 +109472,9 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          },
+          "integration": {
+            "$ref": "#/components/schemas/Integration"
           },
           "entityId": {
             "description": "Unique identity of entity."
