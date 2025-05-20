@@ -24885,6 +24885,22 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "primaryOrderDeliveryId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "primaryOrderDeliveryVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "primaryOrderTransactionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "primaryOrderTransactionVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "currencyId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -25143,6 +25159,64 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "1ab22d393154f21e3be76aca3ec3ee31"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "primaryOrderDelivery": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/order/a240fa27925a635b08dc28c9e4f9216d/primaryOrderDelivery"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order_delivery"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "fdeeebdae32b4dfa39d3f4372d0554e9"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "primaryOrderTransaction": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/order/a240fa27925a635b08dc28c9e4f9216d/primaryOrderTransaction"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order_transaction"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "bbaa9e50388c524d97853a4fc4476b0e"
                           }
                         }
                       }
@@ -25585,6 +25659,22 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "primaryOrderDeliveryId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "primaryOrderDeliveryVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "primaryOrderTransactionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "primaryOrderTransactionVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "currencyId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
@@ -25820,6 +25910,12 @@
           },
           "stateMachineState": {
             "$ref": "#/components/schemas/StateMachineState"
+          },
+          "primaryOrderDelivery": {
+            "$ref": "#/components/schemas/OrderDelivery"
+          },
+          "primaryOrderTransaction": {
+            "$ref": "#/components/schemas/OrderTransaction"
           },
           "orderCustomer": {
             "$ref": "#/components/schemas/OrderCustomer"
@@ -26793,6 +26889,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "primaryOrder": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/order-delivery/ec47a00e89a14dee454b699af8831df4/primaryOrder"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "f3654baea1bb37cbbd3b86e9793c3766"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -26947,6 +27072,9 @@
             "items": {
               "$ref": "#/components/schemas/OrderDeliveryPosition"
             }
+          },
+          "primaryOrder": {
+            "$ref": "#/components/schemas/Order"
           }
         },
         "type": "object"
@@ -28382,6 +28510,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "primaryOrder": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/order-transaction/117c998b69fea8e51bd46a905f8cdbeb/primaryOrder"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "f3654baea1bb37cbbd3b86e9793c3766"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -28512,6 +28669,9 @@
             "items": {
               "$ref": "#/components/schemas/OrderTransactionCapture"
             }
+          },
+          "primaryOrder": {
+            "$ref": "#/components/schemas/Order"
           }
         },
         "type": "object"
