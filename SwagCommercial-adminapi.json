@@ -38999,8 +38999,7 @@
               "id",
               "orderId",
               "firstName",
-              "lastName",
-              "employeeId"
+              "lastName"
             ],
             "properties": {
               "id": {
@@ -39112,8 +39111,7 @@
           "id",
           "orderId",
           "firstName",
-          "lastName",
-          "employeeId"
+          "lastName"
         ],
         "properties": {
           "id": {
@@ -49989,6 +49987,37 @@
                     },
                     "type": "object"
                   },
+                  "stateMachineHistoryEntries": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/integration/1115b855bb2a508bc2ca0609cc2d0f65/stateMachineHistoryEntries"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "state_machine_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "c78c7ea361b7def0876b75bd1bd37879"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "aclRoles": {
                     "properties": {
                       "links": {
@@ -50112,6 +50141,12 @@
           },
           "app": {
             "$ref": "#/components/schemas/App"
+          },
+          "stateMachineHistoryEntries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StateMachineHistory"
+            }
           },
           "aclRoles": {
             "type": "array",
@@ -56151,6 +56186,22 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "primaryOrderDeliveryId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "primaryOrderDeliveryVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "primaryOrderTransactionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "primaryOrderTransactionVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "currencyId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -56693,6 +56744,64 @@
                     },
                     "type": "object"
                   },
+                  "primaryOrderDelivery": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/order/a240fa27925a635b08dc28c9e4f9216d/primaryOrderDelivery"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order_delivery"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "fdeeebdae32b4dfa39d3f4372d0554e9"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "primaryOrderTransaction": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/order/a240fa27925a635b08dc28c9e4f9216d/primaryOrderTransaction"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order_transaction"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "bbaa9e50388c524d97853a4fc4476b0e"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "orderCustomer": {
                     "properties": {
                       "links": {
@@ -57126,6 +57235,22 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "billingAddressVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "primaryOrderDeliveryId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "primaryOrderDeliveryVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "primaryOrderTransactionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "primaryOrderTransactionVersionId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -57642,6 +57767,12 @@
           },
           "stateMachineState": {
             "$ref": "#/components/schemas/StateMachineState"
+          },
+          "primaryOrderDelivery": {
+            "$ref": "#/components/schemas/OrderDelivery"
+          },
+          "primaryOrderTransaction": {
+            "$ref": "#/components/schemas/OrderTransaction"
           },
           "orderCustomer": {
             "$ref": "#/components/schemas/OrderCustomer"
@@ -58615,6 +58746,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "primaryOrder": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/order-delivery/ec47a00e89a14dee454b699af8831df4/primaryOrder"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "f3654baea1bb37cbbd3b86e9793c3766"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -58769,6 +58929,9 @@
             "items": {
               "$ref": "#/components/schemas/OrderDeliveryPosition"
             }
+          },
+          "primaryOrder": {
+            "$ref": "#/components/schemas/Order"
           }
         },
         "type": "object"
@@ -61571,6 +61734,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "primaryOrder": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/order-transaction/117c998b69fea8e51bd46a905f8cdbeb/primaryOrder"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "f3654baea1bb37cbbd3b86e9793c3766"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -61701,6 +61893,9 @@
             "items": {
               "$ref": "#/components/schemas/OrderTransactionCapture"
             }
+          },
+          "primaryOrder": {
+            "$ref": "#/components/schemas/Order"
           }
         },
         "type": "object"
@@ -71838,6 +72033,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "combinable": {
+                "description": "Runtime field, cannot be used as part of the criteria.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -72044,6 +72243,10 @@
           "mediaId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "combinable": {
+            "description": "Runtime field, cannot be used as part of the criteria.",
+            "type": "boolean"
           },
           "customFields": {
             "type": "object"
@@ -84064,6 +84267,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "integrationId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -84191,6 +84398,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "integration": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/state-machine-history/2981354377022484094791c3f19ffec8/integration"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "integration"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "776ea3bf11df5829827f7afb43c37174"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -84246,6 +84482,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "integrationId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -84267,6 +84507,9 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          },
+          "integration": {
+            "$ref": "#/components/schemas/Integration"
           }
         },
         "type": "object"
@@ -91784,6 +92027,85 @@
         },
         "type": "object"
       },
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "",
+            "type": "number"
+          },
+          "net": {
+            "description": "",
+            "type": "number"
+          },
+          "linked": {
+            "description": "",
+            "type": "boolean"
+          },
+          "listPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          },
+          "regulationPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net"
+        ]
+      },
       "Criteria": {
         "type": "object",
         "description": "Search parameters. For more information, see our documentation on [Search Queries](https://shopware.stoplight.io/docs/store-api/docs/concepts/search-queries.md#structure)",
@@ -92477,147 +92799,6 @@
           "field"
         ]
       },
-      "Price": {
-        "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "",
-            "type": "number"
-          },
-          "net": {
-            "description": "",
-            "type": "number"
-          },
-          "linked": {
-            "description": "",
-            "type": "boolean"
-          },
-          "listPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          },
-          "regulationPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net"
-        ]
-      },
-      "infoConfigResponse": {
-        "type": "object",
-        "properties": {
-          "version": {
-            "type": "string",
-            "description": "The Shopware version."
-          },
-          "versionRevision": {
-            "type": "string",
-            "description": "The Shopware version revision."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Information about the admin worker.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "State of the admin worker."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured transports.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Asset files of active extensions",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "css": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the css file."
-                  }
-                },
-                "js": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the js file."
-                  }
-                }
-              }
-            }
-          },
-          "settings": {
-            "type": "object",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the `urlFeature` setting."
-              }
-            }
-          }
-        }
-      },
       "OAuthScopes": {
         "description": "OAuth scopes that should be requested.",
         "type": "string",
@@ -92802,112 +92983,63 @@
           }
         }
       },
-      "CustomPricingUpsertOperation": {
+      "infoConfigResponse": {
         "type": "object",
-        "required": [
-          "action",
-          "payload"
-        ],
         "properties": {
-          "action": {
-            "description": "A specific verb defining what operation should be actioned for a specific data record",
+          "version": {
             "type": "string",
-            "enum": [
-              "upsert"
-            ]
+            "description": "The Shopware version."
           },
-          "payload": {
-            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
-            "type": "array",
-            "items": {
+          "versionRevision": {
+            "type": "string",
+            "description": "The Shopware version revision."
+          },
+          "adminWorker": {
+            "type": "object",
+            "description": "Information about the admin worker.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "State of the admin worker."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured transports.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Asset files of active extensions",
+            "additionalProperties": {
               "type": "object",
-              "required": [
-                "productId",
-                "prices"
-              ],
-              "description": "A definition almost symmetric with Sync API payload",
               "properties": {
-                "id": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "productVersionId": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "productId": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "customerId": {
-                  "type": "string",
-                  "description": "This parameter should be specified, or 'customerGroupId', not both",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "customerGroupId": {
-                  "type": "string",
-                  "description": "This parameter should be specified, or 'customerId', not both",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "price": {
+                "css": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CustomPricingPrice"
+                    "type": "string",
+                    "description": "Url to the css file."
+                  }
+                },
+                "js": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the js file."
                   }
                 }
               }
             }
-          }
-        }
-      },
-      "CustomPricingResponse": {
-        "type": "object",
-        "required": [
-          "success",
-          "data"
-        ],
-        "properties": {
-          "success": {
-            "type": "boolean"
           },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "entities",
-                      "errors"
-                    ],
-                    "properties": {
-                      "entities": {
-                        "type": "array",
-                        "maxItems": 1,
-                        "items": {
-                          "type": "string",
-                          "pattern": "^[0-9a-f]{32}$"
-                        }
-                      },
-                      "errors": {
-                        "type": "array",
-                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "extensions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                }
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the `urlFeature` setting."
               }
             }
           }
@@ -93041,6 +93173,117 @@
                   }
                 }
               ]
+            }
+          }
+        }
+      },
+      "CustomPricingUpsertOperation": {
+        "type": "object",
+        "required": [
+          "action",
+          "payload"
+        ],
+        "properties": {
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "upsert"
+            ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "productId",
+                "prices"
+              ],
+              "description": "A definition almost symmetric with Sync API payload",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "productVersionId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "productId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "This parameter should be specified, or 'customerGroupId', not both",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerGroupId": {
+                  "type": "string",
+                  "description": "This parameter should be specified, or 'customerId', not both",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "price": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomPricingPrice"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingResponse": {
+        "type": "object",
+        "required": [
+          "success",
+          "data"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "entities",
+                      "errors"
+                    ],
+                    "properties": {
+                      "entities": {
+                        "type": "array",
+                        "maxItems": 1,
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{32}$"
+                        }
+                      },
+                      "errors": {
+                        "type": "array",
+                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "extensions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
             }
           }
         }
