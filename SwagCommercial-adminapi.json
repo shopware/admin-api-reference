@@ -12113,6 +12113,1058 @@
         }
       }
     },
+    "/measurement-display-unit": {
+      "get": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "List with basic information of Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementDisplayUnitList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Measurement Display Unit resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/measurement-display-unit?limit=25"
+                                },
+                                "last": {
+                                  "example": "/measurement-display-unit?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/measurement-display-unit?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/measurement-display-unit?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Create a new Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "createMeasurementDisplayUnit",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementDisplayUnit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/measurement-display-unit": {
+      "post": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Search for the Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "searchMeasurementDisplayUnit",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/measurement-display-unit/{id}": {
+      "get": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Detailed information about a Measurement Display Unit resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementDisplayUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_display_unit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Delete a Measurement Display Unit resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "deleteMeasurementDisplayUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_display_unit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Partially update information about a Measurement Display Unit resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "updateMeasurementDisplayUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_display_unit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Measurement Display Unit resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementDisplayUnit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/measurement-display-unit": {
+      "post": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Aggregate for the Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "aggregateMeasurementDisplayUnit",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/measurement-system": {
+      "get": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "List with basic information of Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementSystemList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Measurement System resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/MeasurementSystem"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/measurement-system?limit=25"
+                                },
+                                "last": {
+                                  "example": "/measurement-system?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/measurement-system?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/measurement-system?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementSystem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Create a new Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "createMeasurementSystem",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementSystem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementSystem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementSystem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/measurement-system": {
+      "post": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Search for the Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "searchMeasurementSystem",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementSystem"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementSystem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/measurement-system/{id}": {
+      "get": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Detailed information about a Measurement System resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementSystem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_system",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementSystem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementSystem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Delete a Measurement System resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "deleteMeasurementSystem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_system",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Partially update information about a Measurement System resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "updateMeasurementSystem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_system",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Measurement System resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementSystem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementSystem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementSystem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/measurement-system": {
+      "post": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Aggregate for the Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "aggregateMeasurementSystem",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementSystem"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementSystem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/media-ai-tag": {
       "get": {
         "tags": [
@@ -30067,313 +31119,364 @@
         }
       }
     },
-    "/_action/increment/{pool}": {
+    "/_action/media/upload": {
       "post": {
         "tags": [
-          "Increment Storage"
+          "Asset Management"
         ],
-        "summary": "Increment a value in the specified pool",
-        "description": "Increments a value by key in the specified increment pool. This operation increments the counter for the given key and returns a success response.",
-        "operationId": "incrementValue",
-        "parameters": [
-          {
-            "name": "pool",
-            "in": "path",
-            "description": "The name of the increment pool (e.g., 'user_activity', 'message_queue').",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cluster",
-            "in": "query",
-            "description": "Optional cluster identifier for the increment operation.",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Upload a new media file",
+        "description": "Creates a new media entity and uploads a file to it using form-data file upload.",
+        "operationId": "uploadV2",
         "requestBody": {
-          "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "key"
-                ],
                 "properties": {
-                  "key": {
+                  "file": {
                     "type": "string",
-                    "description": "The key to increment in the pool."
+                    "format": "binary",
+                    "description": "The file to upload"
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "Custom ID for the media entity"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the uploaded file"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "description": "Whether the media should be private"
+                  },
+                  "mediaFolderId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of the media folder"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file"
+                  },
+                  "deduplicate": {
+                    "type": "boolean",
+                    "description": "Whether to deduplicate based on file hash"
                   }
-                }
+                },
+                "required": [
+                  "file"
+                ]
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successfully incremented the value",
+            "description": "Media file uploaded successfully",
             "content": {
-              "application/json": {
+              "application\\/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the created media entity"
                     }
                   }
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad request - key parameter missing or cluster parameter missing"
           }
         }
-      },
+      }
+    },
+    "/_action/media/upload_by_url": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Upload a media file from URL",
+        "description": "Creates a new media entity by downloading and uploading a file from the provided URL. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.",
+        "operationId": "uploadByUrl",
+        "requestBody": {
+          "content": {
+            "application\\/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "URL of the file to download and upload"
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "Custom ID for the media entity"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the uploaded file"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "description": "Whether the media should be private"
+                  },
+                  "mediaFolderId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of the media folder"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file"
+                  },
+                  "deduplicate": {
+                    "type": "boolean",
+                    "description": "Whether to deduplicate based on file hash"
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Media file uploaded successfully",
+            "content": {
+              "application\\/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the created media entity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/media/external-link": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Create external media link",
+        "description": "Creates a new media entity that links to an external URL without downloading the file.",
+        "operationId": "externalLink",
+        "requestBody": {
+          "content": {
+            "application\\/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "URL of the external media file"
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "Custom ID for the media entity"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the file"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "description": "Whether the media should be private"
+                  },
+                  "mediaFolderId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of the media folder"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file"
+                  },
+                  "deduplicate": {
+                    "type": "boolean",
+                    "description": "Whether to deduplicate based on path"
+                  }
+                },
+                "required": [
+                  "url",
+                  "mimeType"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "External media link created successfully",
+            "content": {
+              "application\\/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the created media entity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app-system/privileges/requested": {
       "get": {
         "tags": [
-          "Increment Storage"
+          "App System"
         ],
-        "summary": "List increment values from pool",
-        "description": "Retrieves a list of increment values from the specified pool with pagination support.",
-        "operationId": "getIncrementValues",
-        "parameters": [
+        "summary": "Get requested privileges for all apps",
+        "description": "Returns the list of requested privileges for all apps. Requires admin scope and `acl_role:read` permission to read.",
+        "operationId": "getRequestedPrivileges",
+        "security": [
           {
-            "name": "pool",
-            "in": "path",
-            "description": "The name of the increment pool to list values from.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cluster",
-            "in": "query",
-            "description": "Cluster identifier for the increment operation.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Maximum number of items to return.",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 5,
-              "minimum": 1
-            }
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "description": "Number of items to skip for pagination.",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "minimum": 0
-            }
+            "oAuth": [
+              "admin"
+            ]
           }
         ],
         "responses": {
           "200": {
-            "description": "List of increment values",
+            "description": "A JSON object containing requested privileges.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "key": {
-                        "type": "string",
-                        "description": "The increment key"
-                      },
-                      "count": {
-                        "type": "integer",
-                        "description": "The current count value"
+                  "type": "object",
+                  "properties": {
+                    "privileges": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
+                },
+                "example": {
+                  "privileges": {
+                    "SwagAnalytics": [
+                      "customer:read",
+                      "order:read"
+                    ],
+                    "SwagExample": [
+                      "product:write"
+                    ]
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request - cluster parameter missing"
+            "description": "Malformed request."
+          },
+          "401": {
+            "description": "Unauthorized Access."
+          },
+          "403": {
+            "description": "Forbidden. Not a valid integration source."
           }
         }
       }
     },
-    "/_action/decrement/{pool}": {
-      "post": {
+    "/app-system/{appName}/privileges/accepted": {
+      "get": {
         "tags": [
-          "Increment Storage"
+          "App System"
         ],
-        "summary": "Decrement a value in the specified pool",
-        "description": "Decrements a value by key in the specified increment pool. This operation decrements the counter for the given key and returns a success response.",
-        "operationId": "decrementValue",
+        "summary": "Get accepted privileges for an app",
+        "description": "Returns the list of accepted privileges for the current integration. Requires admin scope with an integration.",
+        "operationId": "getAcceptedPrivileges",
         "parameters": [
           {
-            "name": "pool",
+            "name": "appName",
             "in": "path",
-            "description": "The name of the increment pool.",
             "required": true,
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "cluster",
-            "in": "query",
-            "description": "Optional cluster identifier for the decrement operation.",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "key"
-                ],
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "description": "The key to decrement in the pool."
-                  }
-                }
-              }
-            }
+        "security": [
+          {
+            "oAuth": [
+              "admin"
+            ]
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Successfully decremented the value",
+            "description": "A JSON object containing accepted privileges.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
+                    "privileges": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      }
                     }
+                  }
+                },
+                "example": {
+                  "privileges": {
+                    "customer:read": true,
+                    "order:read": true
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request - key parameter missing or cluster parameter missing"
+            "description": "Malformed request."
+          },
+          "401": {
+            "description": "Unauthorized Access."
+          },
+          "403": {
+            "description": "Forbidden. Not a valid integration source."
+          },
+          "404": {
+            "description": "App not found."
           }
         }
       }
     },
-    "/_action/reset-increment/{pool}": {
-      "post": {
+    "/app-system/{appName}/privileges": {
+      "patch": {
         "tags": [
-          "Increment Storage"
+          "App System"
         ],
-        "summary": "Reset increment values in pool",
-        "description": "Resets increment values in the specified pool. Can reset all values or a specific key if provided.",
-        "operationId": "resetIncrementValues",
+        "summary": "Accept or revoke privileges for an app",
+        "description": "Accepts or revokes specified privileges for the given app.",
+        "operationId": "managePrivileges",
         "parameters": [
           {
-            "name": "pool",
+            "name": "appName",
             "in": "path",
-            "description": "The name of the increment pool to reset.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cluster",
-            "in": "query",
-            "description": "Cluster identifier for the reset operation.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "description": "Optional specific key to reset. If not provided, all values in the pool will be reset."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully reset the increment values",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request - cluster parameter missing"
-          }
-        }
-      }
-    },
-    "/_action/delete-increment/{pool}": {
-      "delete": {
-        "tags": [
-          "Increment Storage"
-        ],
-        "summary": "Delete increment keys from pool",
-        "description": "Deletes specific increment keys from the specified pool.",
-        "operationId": "deleteIncrementKeys",
-        "parameters": [
-          {
-            "name": "pool",
-            "in": "path",
-            "description": "The name of the increment pool to delete keys from.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cluster",
-            "in": "query",
-            "description": "Cluster identifier for the delete operation.",
             "required": true,
             "schema": {
               "type": "string"
@@ -30386,521 +31489,121 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "keys"
-                ],
                 "properties": {
-                  "keys": {
+                  "accept": {
                     "type": "array",
                     "items": {
                       "type": "string"
-                    },
-                    "description": "Array of keys to delete from the pool."
+                    }
+                  },
+                  "revoke": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
+              },
+              "example": {
+                "accept": [
+                  "customer:read",
+                  "order:read"
+                ],
+                "revoke": [
+                  "product:write"
+                ]
               }
             }
           }
         },
         "responses": {
           "204": {
-            "description": "Successfully deleted the increment keys"
+            "description": "Returns no content if privileges were managed successfully."
           },
           "400": {
-            "description": "Bad request - invalid keys parameter or cluster parameter missing"
-          }
-        }
-      }
-    },
-    "/_info/message-stats.json": {
-      "get": {
-        "summary": "Get statistics for recently processed messages in the message queue",
-        "operationId": "getMessageStats",
-        "responses": {
-          "200": {
-            "description": "Statistics received",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "enabled"
-                  ],
-                  "properties": {
-                    "enabled": {
-                      "type": "boolean",
-                      "description": "Whether message queue statistics are enabled in configuration"
-                    },
-                    "stats": {
-                      "type": [
-                        "object",
-                        "null"
-                      ],
-                      "properties": {
-                        "totalMessagesProcessed": {
-                          "type": "integer"
-                        },
-                        "processedSince": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "averageTimeInQueue": {
-                          "type": "number",
-                          "format": "float"
-                        },
-                        "messageTypeStats": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "type": "string"
-                              },
-                              "count": {
-                                "type": "integer"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/theme/{themeId}/configuration": {
-      "get": {
-        "tags": [
-          "Theme"
-        ],
-        "summary": "Get theme configuration",
-        "description": "Returns the theme configuration including fields, blocks, and current values",
-        "operationId": "getThemeConfiguration",
-        "parameters": [
-          {
-            "name": "themeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Theme merged configuration",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "fields": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          },
-                          "label": {
-                            "type": "string",
-                            "deprecated": true,
-                            "description": "This field is deprecated and will be removed in v6.8.0.0"
-                          },
-                          "helpText": {
-                            "type": [
-                              "string",
-                              "null"
-                            ],
-                            "deprecated": true,
-                            "description": "This field is deprecated and will be removed in v6.8.0.0"
-                          },
-                          "type": {
-                            "type": "string"
-                          },
-                          "value": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          "editable": {
-                            "type": "boolean"
-                          },
-                          "block": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          "section": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          "tab": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          "order": {
-                            "type": [
-                              "integer",
-                              "null"
-                            ]
-                          },
-                          "sectionOrder": {
-                            "type": [
-                              "integer",
-                              "null"
-                            ]
-                          },
-                          "blockOrder": {
-                            "type": [
-                              "integer",
-                              "null"
-                            ]
-                          },
-                          "tabOrder": {
-                            "type": [
-                              "integer",
-                              "null"
-                            ]
-                          },
-                          "custom": {
-                            "type": [
-                              "object",
-                              "null"
-                            ],
-                            "additionalProperties": true
-                          },
-                          "scss": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          "fullWidth": {
-                            "type": [
-                              "boolean",
-                              "null"
-                            ]
-                          }
-                        },
-                        "required": [
-                          "name",
-                          "label",
-                          "type",
-                          "value",
-                          "editable"
-                        ]
-                      }
-                    },
-                    "blocks": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "label": {
-                            "type": "object",
-                            "deprecated": true,
-                            "description": "This field is deprecated and will be removed in v6.8.0.0",
-                            "additionalProperties": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "required": [
-                          "label"
-                        ]
-                      }
-                    },
-                    "configInheritance": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "themeTechnicalName": {
-                      "type": "string"
-                    },
-                    "currentFields": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "isInherited": {
-                            "type": "boolean"
-                          },
-                          "value": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          }
-                        },
-                        "required": [
-                          "isInherited",
-                          "value"
-                        ]
-                      }
-                    },
-                    "baseThemeFields": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "isInherited": {
-                            "type": "boolean"
-                          },
-                          "value": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          }
-                        },
-                        "required": [
-                          "isInherited",
-                          "value"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "fields",
-                    "blocks",
-                    "themeTechnicalName",
-                    "currentFields",
-                    "baseThemeFields"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/theme/{themeId}/assign/{salesChannelId}": {
-      "post": {
-        "tags": [
-          "Theme"
-        ],
-        "summary": "Assign theme to sales channel",
-        "description": "Assigns a theme to a specific sales channel",
-        "operationId": "assignTheme",
-        "parameters": [
-          {
-            "name": "themeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "Malformed request."
           },
+          "401": {
+            "description": "Unauthorized Access."
+          },
+          "403": {
+            "description": "Forbidden. Not a valid integration source."
+          },
+          "404": {
+            "description": "App not found."
+          }
+        },
+        "security": [
           {
-            "name": "salesChannelId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "oAuth": [
+              "admin"
+            ]
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Theme assigned successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
+        ]
       }
     },
-    "/_action/theme/{themeId}/reset": {
+    "/_action/theme/{themeId}": {
       "patch": {
         "tags": [
           "Theme"
         ],
-        "summary": "Reset theme configuration",
-        "description": "Resets the theme configuration to its default values",
-        "operationId": "resetTheme",
+        "summary": "Update theme configuration",
+        "description": "Updates the configuration of a theme. The theme configuration is a collection of fields that are provided as variables in the theme's SCSS files and the templates.",
+        "operationId": "updateThemeConfiguration",
         "parameters": [
           {
             "name": "themeId",
+            "description": "The ID of the theme to update",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "parentThemeId",
+            "description": "The ID of the parent theme to inherit the configuration from.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reset",
+            "description": "If true, the theme configuration will be reset to the default values from the theme.json file.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "validate",
+            "description": "If true, the theme configuration will be validated before being updated.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sanitize",
+            "description": "If true, the theme configuration will be sanitized during validation. before being updated. Only applies if validate is true.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Theme reset successfully",
+            "description": "Theme updated successfully.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/theme/{themeId}/structured-fields": {
-      "get": {
-        "tags": [
-          "Theme"
-        ],
-        "summary": "Get theme configuration fields in structured format",
-        "description": "Returns the theme configuration fields in a structured format with tabs, blocks, sections and fields",
-        "operationId": "getThemeConfigurationStructuredFields",
-        "parameters": [
-          {
-            "name": "themeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Structured theme configuration",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "tabs": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "labelSnippetKey": {
-                            "type": "string"
-                          },
-                          "label": {
-                            "type": "string",
-                            "deprecated": true,
-                            "description": "This field is deprecated and will be removed in v6.8.0.0"
-                          },
-                          "blocks": {
-                            "type": "object",
-                            "additionalProperties": {
-                              "type": "object",
-                              "properties": {
-                                "labelSnippetKey": {
-                                  "type": "string"
-                                },
-                                "label": {
-                                  "type": "string",
-                                  "deprecated": true,
-                                  "description": "This field is deprecated and will be removed in v6.8.0.0"
-                                },
-                                "sections": {
-                                  "type": "object",
-                                  "additionalProperties": {
-                                    "type": "object",
-                                    "properties": {
-                                      "labelSnippetKey": {
-                                        "type": "string"
-                                      },
-                                      "label": {
-                                        "type": "string",
-                                        "deprecated": true,
-                                        "description": "This field is deprecated and will be removed in v6.8.0.0"
-                                      },
-                                      "fields": {
-                                        "type": "object",
-                                        "additionalProperties": {
-                                          "type": "object",
-                                          "properties": {
-                                            "labelSnippetKey": {
-                                              "type": "string"
-                                            },
-                                            "helpTextSnippetKey": {
-                                              "type": "string"
-                                            },
-                                            "type": {
-                                              "type": "string"
-                                            },
-                                            "custom": {
-                                              "type": [
-                                                "object",
-                                                "null"
-                                              ],
-                                              "additionalProperties": true
-                                            },
-                                            "fullWidth": {
-                                              "type": [
-                                                "boolean",
-                                                "null"
-                                              ]
-                                            },
-                                            "label": {
-                                              "type": "string",
-                                              "deprecated": true,
-                                              "description": "This field is deprecated and will be removed in v6.8.0.0"
-                                            },
-                                            "helpText": {
-                                              "type": [
-                                                "string",
-                                                "null"
-                                              ],
-                                              "deprecated": true,
-                                              "description": "This field is deprecated and will be removed in v6.8.0.0"
-                                            }
-                                          },
-                                          "required": [
-                                            "labelSnippetKey",
-                                            "helpTextSnippetKey",
-                                            "type",
-                                            "label"
-                                          ]
-                                        }
-                                      }
-                                    },
-                                    "required": [
-                                      "labelSnippetKey",
-                                      "label",
-                                      "fields"
-                                    ]
-                                  }
-                                }
-                              },
-                              "required": [
-                                "labelSnippetKey",
-                                "label",
-                                "sections"
-                              ]
-                            }
-                          }
-                        },
-                        "required": [
-                          "labelSnippetKey",
-                          "label",
-                          "blocks"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "tabs"
-                  ]
                 }
               }
             }
@@ -33769,6 +34472,12 @@
               "selfManaged": {
                 "type": "boolean"
               },
+              "requestedPrivileges": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "label": {
                 "type": "string"
               },
@@ -34276,6 +34985,12 @@
           },
           "selfManaged": {
             "type": "boolean"
+          },
+          "requestedPrivileges": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "label": {
             "type": "string"
@@ -51411,6 +52126,9 @@
               "name": {
                 "type": "string"
               },
+              "active": {
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -52077,6 +52795,9 @@
           },
           "name": {
             "type": "string"
+          },
+          "active": {
+            "type": "boolean"
           },
           "customFields": {
             "type": "object"
@@ -53315,6 +54036,289 @@
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
+          }
+        },
+        "type": "object"
+      },
+      "MeasurementDisplayUnitJsonApi": {
+        "description": "Added since version: 6.7.1.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "measurementSystemId",
+              "default",
+              "type",
+              "shortName",
+              "factor",
+              "precision"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "measurementSystemId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "default": {
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string"
+              },
+              "shortName": {
+                "type": "string"
+              },
+              "factor": {
+                "type": "number",
+                "format": "float"
+              },
+              "precision": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "name": {
+                "type": "string"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "translated": {
+                "type": "object"
+              },
+              "relationships": {
+                "properties": {
+                  "measurementSystem": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/measurement-display-unit/6e9d57f5c7acc720b0168c16387bbc61/measurementSystem"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "measurement_system"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "c0484ac171c930ce54e78cd2e0d80e5a"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "MeasurementDisplayUnit": {
+        "description": "Added since version: 6.7.1.0",
+        "required": [
+          "id",
+          "measurementSystemId",
+          "default",
+          "type",
+          "shortName",
+          "factor",
+          "precision"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "measurementSystemId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          },
+          "shortName": {
+            "type": "string"
+          },
+          "factor": {
+            "type": "number",
+            "format": "float"
+          },
+          "precision": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "translated": {
+            "type": "object"
+          },
+          "measurementSystem": {
+            "$ref": "#/components/schemas/MeasurementSystem"
+          }
+        },
+        "type": "object"
+      },
+      "MeasurementSystemJsonApi": {
+        "description": "Added since version: 6.7.1.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "technicalName"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "technicalName": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "translated": {
+                "type": "object"
+              },
+              "relationships": {
+                "properties": {
+                  "units": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/measurement-system/67b401daf737cc26c1bbe7e50b9d9acb/units"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "measurement_display_unit"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "b98b3dfbd27e710e6c3ceeae58770b52"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "MeasurementSystem": {
+        "description": "Added since version: 6.7.1.0",
+        "required": [
+          "id",
+          "technicalName"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "technicalName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "translated": {
+            "type": "object"
+          },
+          "units": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeasurementDisplayUnit"
+            }
           }
         },
         "type": "object"
@@ -55570,6 +56574,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "mediaThumbnailSizeId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "width": {
                 "type": "integer",
                 "format": "int64",
@@ -55630,6 +56638,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "mediaThumbnailSize": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media-thumbnail/3863c110ff436b51dbc09a6ea14c56e0/mediaThumbnailSize"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media_thumbnail_size"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "0d0b8659a3a47e9d7e1481961f127fd0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -55653,6 +56690,10 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "mediaId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "mediaThumbnailSizeId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -55688,6 +56729,9 @@
           },
           "media": {
             "$ref": "#/components/schemas/Media"
+          },
+          "mediaThumbnailSize": {
+            "$ref": "#/components/schemas/MediaThumbnailSize"
           }
         },
         "type": "object"
@@ -55762,6 +56806,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "mediaThumbnails": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media-thumbnail-size/122652279edf3cc398ca024851b6f53f/mediaThumbnails"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "media_thumbnail"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "76ebc340ac8f9754c760c3ec742d2407"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -55808,6 +56883,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/MediaFolderConfiguration"
+            }
+          },
+          "mediaThumbnails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaThumbnail"
             }
           }
         },
@@ -77788,6 +78869,9 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "measurementUnits": {
+                "$ref": "#/components/schemas/MeasurementUnits"
+              },
               "name": {
                 "type": "string"
               },
@@ -79247,6 +80331,9 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "measurementUnits": {
+            "$ref": "#/components/schemas/MeasurementUnits"
+          },
           "name": {
             "type": "string"
           },
@@ -79880,6 +80967,9 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "measurementUnits": {
+                "$ref": "#/components/schemas/MeasurementUnits"
+              },
               "hreflangUseOnlyLocale": {
                 "type": "boolean"
               },
@@ -80115,6 +81205,9 @@
           "snippetSetId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "measurementUnits": {
+            "$ref": "#/components/schemas/MeasurementUnits"
           },
           "hreflangUseOnlyLocale": {
             "type": "boolean"
@@ -86519,6 +87612,7 @@
               "convertedOrder",
               "subscriptionNumber",
               "nextSchedule",
+              "followingNextSchedule",
               "salesChannelId",
               "subscriptionPlanName",
               "subscriptionIntervalName",
@@ -86551,6 +87645,11 @@
                 "readOnly": true
               },
               "nextSchedule": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "followingNextSchedule": {
+                "description": "Runtime field, cannot be used as part of the criteria.",
                 "type": "string",
                 "format": "date-time"
               },
@@ -87097,6 +88196,7 @@
           "convertedOrder",
           "subscriptionNumber",
           "nextSchedule",
+          "followingNextSchedule",
           "salesChannelId",
           "subscriptionPlanName",
           "subscriptionIntervalName",
@@ -87129,6 +88229,11 @@
             "readOnly": true
           },
           "nextSchedule": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "followingNextSchedule": {
+            "description": "Runtime field, cannot be used as part of the criteria.",
             "type": "string",
             "format": "date-time"
           },
@@ -92918,32 +94023,6 @@
         },
         "type": "object"
       },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
       "Criteria": {
         "type": "object",
         "description": "Search parameters. For more information, see our documentation on [Search Queries](https://shopware.stoplight.io/docs/store-api/docs/concepts/search-queries.md#structure)",
@@ -93637,181 +94716,6 @@
           "field"
         ]
       },
-      "Price": {
-        "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "",
-            "type": "number"
-          },
-          "net": {
-            "description": "",
-            "type": "number"
-          },
-          "linked": {
-            "description": "",
-            "type": "boolean"
-          },
-          "listPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          },
-          "regulationPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net"
-        ]
-      },
-      "infoConfigResponse": {
-        "type": "object",
-        "properties": {
-          "version": {
-            "type": "string",
-            "description": "The Shopware version."
-          },
-          "versionRevision": {
-            "type": "string",
-            "description": "The Shopware version revision."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Information about the admin worker.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "State of the admin worker."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured transports.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Asset files of active extensions",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "css": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the css file."
-                  }
-                },
-                "js": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the js file."
-                  }
-                }
-              }
-            }
-          },
-          "settings": {
-            "type": "object",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the `urlFeature` setting."
-              }
-            }
-          }
-        }
-      },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
       "OAuthScopes": {
         "description": "OAuth scopes that should be requested.",
         "type": "string",
@@ -93936,53 +94840,250 @@
           }
         ]
       },
-      "CustomPricingDeleteOperation": {
+      "infoConfigResponse": {
         "type": "object",
-        "required": [
-          "action",
-          "payload"
-        ],
         "properties": {
-          "action": {
-            "description": "A specific verb defining what operation should be actioned for a specific data record",
+          "version": {
             "type": "string",
-            "enum": [
-              "delete"
-            ]
+            "description": "The Shopware version."
           },
-          "payload": {
-            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "title": "productIds",
+          "versionRevision": {
+            "type": "string",
+            "description": "The Shopware version revision."
+          },
+          "adminWorker": {
+            "type": "object",
+            "description": "Information about the admin worker.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "State of the admin worker."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured transports.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Asset files of active extensions",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "css": {
                   "type": "array",
-                  "description": "An array of product entity UUIDs",
                   "items": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
+                    "description": "Url to the css file."
                   }
                 },
-                {
-                  "title": "customerIds",
+                "js": {
                   "type": "array",
-                  "description": "An array of customer entity UUIDs",
                   "items": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                {
-                  "title": "customerGroupIds",
-                  "type": "array",
-                  "description": "An array of customerGroup entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
+                    "description": "Url to the js file."
                   }
                 }
-              ]
+              }
+            }
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the `urlFeature` setting."
+              }
+            }
+          }
+        }
+      },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
+      "MeasurementUnits": {
+        "type": "object",
+        "description": "Configuration of the measurement system",
+        "properties": {
+          "system": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+          },
+          "units": {
+            "type": "object",
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
+              }
+            }
+          }
+        }
+      },
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "",
+            "type": "number"
+          },
+          "net": {
+            "description": "",
+            "type": "number"
+          },
+          "linked": {
+            "description": "",
+            "type": "boolean"
+          },
+          "listPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          },
+          "regulationPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
+        ]
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
             }
           }
         }
@@ -94068,59 +95169,6 @@
           }
         }
       },
-      "CustomPricingResponse": {
-        "type": "object",
-        "required": [
-          "success",
-          "data"
-        ],
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "entities",
-                      "errors"
-                    ],
-                    "properties": {
-                      "entities": {
-                        "type": "array",
-                        "maxItems": 1,
-                        "items": {
-                          "type": "string",
-                          "pattern": "^[0-9a-f]{32}$"
-                        }
-                      },
-                      "errors": {
-                        "type": "array",
-                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "extensions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "CustomPricingUpsertOperation": {
         "type": "object",
         "required": [
@@ -94175,6 +95223,110 @@
                   }
                 }
               }
+            }
+          }
+        }
+      },
+      "CustomPricingResponse": {
+        "type": "object",
+        "required": [
+          "success",
+          "data"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "entities",
+                      "errors"
+                    ],
+                    "properties": {
+                      "entities": {
+                        "type": "array",
+                        "maxItems": 1,
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{32}$"
+                        }
+                      },
+                      "errors": {
+                        "type": "array",
+                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "extensions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingDeleteOperation": {
+        "type": "object",
+        "required": [
+          "action",
+          "payload"
+        ],
+        "properties": {
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "delete"
+            ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "title": "productIds",
+                  "type": "array",
+                  "description": "An array of product entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerIds",
+                  "type": "array",
+                  "description": "An array of customer entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerGroupIds",
+                  "type": "array",
+                  "description": "An array of customerGroup entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                }
+              ]
             }
           }
         }
@@ -94509,12 +95661,13 @@
     "securitySchemes": {
       "oAuth": {
         "type": "oauth2",
-        "description": "Authentication API",
+        "description": "Authentication using OAuth 2.0",
         "flows": {
           "password": {
-            "tokenUrl": "http://localhost:8000/api/oauth/token",
+            "tokenUrl": "/api/oauth/token",
             "scopes": {
-              "write": "Full write access"
+              "write": "Full write access",
+              "admin": "Admin scope for administrative operations"
             }
           },
           "clientCredentials": {
@@ -94830,6 +95983,14 @@
     {
       "name": "Main Category",
       "description": "The endpoint for operations on Main Category"
+    },
+    {
+      "name": "Measurement Display Unit",
+      "description": "The endpoint for operations on Measurement Display Unit"
+    },
+    {
+      "name": "Measurement System",
+      "description": "The endpoint for operations on Measurement System"
     },
     {
       "name": "Media",
