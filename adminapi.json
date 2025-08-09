@@ -26315,6 +26315,1058 @@
         }
       }
     },
+    "/measurement-display-unit": {
+      "get": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "List with basic information of Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementDisplayUnitList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Measurement Display Unit resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/measurement-display-unit?limit=25"
+                                },
+                                "last": {
+                                  "example": "/measurement-display-unit?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/measurement-display-unit?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/measurement-display-unit?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Create a new Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "createMeasurementDisplayUnit",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementDisplayUnit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/measurement-display-unit": {
+      "post": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Search for the Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "searchMeasurementDisplayUnit",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/measurement-display-unit/{id}": {
+      "get": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Detailed information about a Measurement Display Unit resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementDisplayUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_display_unit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Delete a Measurement Display Unit resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "deleteMeasurementDisplayUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_display_unit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Partially update information about a Measurement Display Unit resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "updateMeasurementDisplayUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_display_unit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Measurement Display Unit resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementDisplayUnit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/measurement-display-unit": {
+      "post": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Aggregate for the Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "aggregateMeasurementDisplayUnit",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/measurement-system": {
+      "get": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "List with basic information of Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementSystemList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Measurement System resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/MeasurementSystem"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/measurement-system?limit=25"
+                                },
+                                "last": {
+                                  "example": "/measurement-system?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/measurement-system?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/measurement-system?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementSystem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Create a new Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "createMeasurementSystem",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementSystem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementSystem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementSystem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/measurement-system": {
+      "post": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Search for the Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "searchMeasurementSystem",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementSystem"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementSystem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/measurement-system/{id}": {
+      "get": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Detailed information about a Measurement System resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementSystem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_system",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementSystem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementSystem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Delete a Measurement System resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "deleteMeasurementSystem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_system",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Partially update information about a Measurement System resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "updateMeasurementSystem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_system",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Measurement System resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementSystem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementSystem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementSystem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/measurement-system": {
+      "post": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Aggregate for the Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "aggregateMeasurementSystem",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementSystem"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementSystem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/media": {
       "get": {
         "tags": [
@@ -71025,17 +72077,1121 @@
         }
       }
     },
-    "/_action/cleanup": {
+    "/_action/container_cache": {
       "delete": {
         "tags": [
           "System Operations"
         ],
-        "summary": "Clear old cache folders",
-        "description": "Removes cache folders that are not needed anymore.",
-        "operationId": "clearOldCacheFolders",
+        "summary": "Clear container caches",
+        "description": "The container cache is immediately cleared synchronously.",
+        "operationId": "clearContainerCache",
         "responses": {
           "204": {
-            "description": "Returns a no content response indicating that the cleanup finished."
+            "description": "Returns a no content response indicating that the container cache is cleared."
+          }
+        }
+      }
+    },
+    "/_info/message-stats.json": {
+      "get": {
+        "summary": "Get statistics for recently processed messages in the message queue",
+        "operationId": "getMessageStats",
+        "responses": {
+          "200": {
+            "description": "Statistics received",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "enabled"
+                  ],
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean",
+                      "description": "Whether message queue statistics are enabled in configuration"
+                    },
+                    "stats": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "totalMessagesProcessed": {
+                          "type": "integer"
+                        },
+                        "processedSince": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "averageTimeInQueue": {
+                          "type": "number",
+                          "format": "float"
+                        },
+                        "messageTypeStats": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "count": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/order/{orderId}/order-address": {
+      "post": {
+        "tags": [
+          "Order address"
+        ],
+        "summary": "Update order addresses",
+        "description": "Endpoint which takes a list of mapping objects as payload and updates the order addresses accordingly",
+        "operationId": "updateOrderAddresses",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "Identifier of the order.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mapping": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "customerAddressId": {
+                          "type": "string",
+                          "description": "The ID of the customer address"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "The type of the address"
+                        },
+                        "deliveryId": {
+                          "description": "The ID of the delivery (optional)",
+                          "oneOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "customerAddressId",
+                        "type"
+                      ]
+                    },
+                    "description": "The mapping of order addresses"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the update has been made."
+          }
+        }
+      }
+    },
+    "/_info/routes": {
+      "get": {
+        "summary": "Get API routes",
+        "operationId": "getRoutes",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "endpoints"
+                  ],
+                  "properties": {
+                    "endpoints": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "methods",
+                          "path"
+                        ],
+                        "properties": {
+                          "methods": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/mail-template/send": {
+      "post": {
+        "tags": [
+          "Mail Operations"
+        ],
+        "summary": "Send a mail",
+        "description": "Generates a mail from a mail template and sends it to the customer.\n\nTake a look at the `salesChannel` entity for possible values. For example `{{ salesChannel.name }}` can be used.",
+        "operationId": "send",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "recipients",
+                  "salesChannelId",
+                  "contentHtml",
+                  "contentPlain",
+                  "subject",
+                  "senderName"
+                ],
+                "properties": {
+                  "recipients": {
+                    "description": "A list of recipients with name and mail address.",
+                    "type": "object",
+                    "example": {
+                      "test1@example.com": "Test user 1",
+                      "test2@example.com": "Test user 2"
+                    },
+                    "additionalProperties": {
+                      "description": "Name of the recipient.",
+                      "type": "string"
+                    }
+                  },
+                  "salesChannelId": {
+                    "description": "Identifier of the sales channel from which the mail should be send.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "contentHtml": {
+                    "description": "The content of the mail in HTML format.",
+                    "type": "string"
+                  },
+                  "contentPlain": {
+                    "description": "The content of the mail as plain text.",
+                    "type": "string"
+                  },
+                  "subject": {
+                    "description": "Subject of the mail.",
+                    "type": "string"
+                  },
+                  "senderName": {
+                    "description": "Name of the sender.",
+                    "type": "string"
+                  },
+                  "senderEmail": {
+                    "description": "Mail address of the sender. If not set, `core.basicInformation.email` or `core.mailerSettings.senderAddress` will be used from the shop configuration.",
+                    "type": "string"
+                  },
+                  "mediaIds": {
+                    "description": "List of media identifiers which should be attached to the mail.",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "binAttachments": {
+                    "description": "A list of binary attachments which should be added to the mail.",
+                    "required": [
+                      "content",
+                      "fileName",
+                      "mimeType"
+                    ],
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "content": {
+                          "description": "Binary content of the attachment.",
+                          "type": "string"
+                        },
+                        "fileName": {
+                          "description": "File name of the attachment.",
+                          "type": "string"
+                        },
+                        "mimeType": {
+                          "description": "Mime type of the attachment.",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "recipientsBcc": {
+                    "description": "A list of recipients with name and mail address to be set in BCC.",
+                    "type": "object",
+                    "example": {
+                      "test1@example.com": "Test user 1",
+                      "test2@example.com": "Test user 2"
+                    },
+                    "additionalProperties": {
+                      "description": "Name of the recipient.",
+                      "type": "string"
+                    }
+                  },
+                  "recipientsCc": {
+                    "description": "A list of recipients with name and mail address to be set in CC.",
+                    "type": "object",
+                    "example": {
+                      "test1@example.com": "Test user 1",
+                      "test2@example.com": "Test user 2"
+                    },
+                    "additionalProperties": {
+                      "description": "Name of the recipient.",
+                      "type": "string"
+                    }
+                  },
+                  "replyTo": {
+                    "description": "A list of mail addresses with name and mail address to be set in reply to.",
+                    "type": "object",
+                    "example": {
+                      "test1@example.com": "Test user 1",
+                      "test2@example.com": "Test user 2"
+                    },
+                    "additionalProperties": {
+                      "description": "Name of the recipient.",
+                      "type": "string"
+                    }
+                  },
+                  "returnPath": {
+                    "description": "A list of mail addresses with name and mail address to be set in return path.",
+                    "type": "object",
+                    "example": {
+                      "test1@example.com": "Test user 1",
+                      "test2@example.com": "Test user 2"
+                    },
+                    "additionalProperties": {
+                      "description": "Name of the recipient.",
+                      "type": "string"
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The mail was sent successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "size": {
+                      "description": "Length of the email message",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/mail-template/validate": {
+      "post": {
+        "tags": [
+          "Mail Operations"
+        ],
+        "summary": "Validate a mail content",
+        "description": "Validates if content for a mail can be rendered without sending an email.",
+        "operationId": "validate",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "contentHtml",
+                  "contentPlain"
+                ],
+                "properties": {
+                  "contentHtml": {
+                    "description": "The content of the mail in HTML format.",
+                    "type": "string"
+                  },
+                  "contentPlain": {
+                    "description": "The content of the mail as plain text.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating the mail content was rendered successfully."
+          }
+        }
+      }
+    },
+    "/_action/mail-template/build": {
+      "post": {
+        "tags": [
+          "Mail Operations"
+        ],
+        "summary": "Preview a mail template",
+        "description": "Generates a preview of a mail template.",
+        "operationId": "build",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "mailTemplateType",
+                  "mailTemplate"
+                ],
+                "properties": {
+                  "mailTemplateType": {
+                    "description": "Only the property `templateData` is used. It provides additional variables to the templating engine.",
+                    "properties": {
+                      "templateData": {
+                        "description": "An associative array that is handed over to the templating engine and can be used as variables in the mail content.",
+                        "type": "object",
+                        "example": {
+                          "order": {
+                            "orderNumber": 5000,
+                            "customerName": "Example Customer"
+                          },
+                          "messageOfTheDay": "An apple a day keeps the doctor away!"
+                        },
+                        "additionalProperties": true
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "mailTemplate": {
+                    "description": "The content of the mail as plain text.",
+                    "properties": {
+                      "contentHtml": {
+                        "description": "The content of mail mail template in html format.",
+                        "type": "string",
+                        "example": "Hello {{ order.customerName }}, this is example mail content, the current date is {{ 'now'|date('d/m/Y') }}"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The rendered preview of the mail template.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/media/{mediaId}/upload": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Upload a file to a media entity",
+        "description": "Adds a new file to a media entity. If the entity has an existing file, it will be replaced.\n\nThe are two methods of providing a file to this route:\n * Use a typical file upload and provide the file in the request\n * Fetch the file from an url. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.\nTo use file upload via url, the content type has to be `application/json` and the parameter `url` has to be provided.",
+        "operationId": "upload",
+        "parameters": [
+          {
+            "name": "mediaId",
+            "in": "path",
+            "description": "Identifier of the media entity.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Name of the uploaded file. If not provided the media identifier will be used as name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "extension",
+            "in": "query",
+            "description": "Extension of the uploaded file. For example `png`",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "description": "The url of the media file that will be downloaded.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Media file uploaded successful",
+            "headers": {
+              "Location": {
+                "description": "Contains the url to the uploaded media for a redirect.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/media/upload": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Upload a new media file",
+        "description": "Creates a new media entity and uploads a file to it using form-data file upload.",
+        "operationId": "uploadV2",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The file to upload"
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "Custom ID for the media entity"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the uploaded file"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "description": "Whether the media should be private"
+                  },
+                  "mediaFolderId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of the media folder"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file"
+                  },
+                  "deduplicate": {
+                    "type": "boolean",
+                    "description": "Whether to deduplicate based on file hash"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Media file uploaded successfully",
+            "content": {
+              "application\\/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the created media entity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/media/upload_by_url": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Upload a media file from URL",
+        "description": "Creates a new media entity by downloading and uploading a file from the provided URL. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.",
+        "operationId": "uploadByUrl",
+        "requestBody": {
+          "content": {
+            "application\\/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "URL of the file to download and upload"
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "Custom ID for the media entity"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the uploaded file"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "description": "Whether the media should be private"
+                  },
+                  "mediaFolderId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of the media folder"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file"
+                  },
+                  "deduplicate": {
+                    "type": "boolean",
+                    "description": "Whether to deduplicate based on file hash"
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Media file uploaded successfully",
+            "content": {
+              "application\\/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the created media entity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/media/external-link": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Create external media link",
+        "description": "Creates a new media entity that links to an external URL without downloading the file.",
+        "operationId": "externalLink",
+        "requestBody": {
+          "content": {
+            "application\\/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "URL of the external media file"
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "Custom ID for the media entity"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the file"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "description": "Whether the media should be private"
+                  },
+                  "mediaFolderId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of the media folder"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file"
+                  },
+                  "deduplicate": {
+                    "type": "boolean",
+                    "description": "Whether to deduplicate based on path"
+                  }
+                },
+                "required": [
+                  "url",
+                  "mimeType"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "External media link created successfully",
+            "content": {
+              "application\\/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the created media entity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/order_transaction_capture_refund/{refundId}": {
+      "post": {
+        "tags": [
+          "Order Management"
+        ],
+        "summary": "Refund an order transaction capture",
+        "description": "Refunds an order transaction capture.",
+        "operationId": "orderTransactionCaptureRefund",
+        "parameters": [
+          {
+            "name": "refundId",
+            "in": "path",
+            "description": "Identifier of the order transaction capture refund.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Refund was successful"
+          },
+          "400": {
+            "description": "Something went wrong, while processing the refund"
+          },
+          "404": {
+            "description": "Refund with id not found"
+          }
+        }
+      }
+    },
+    "/_proxy/generate-imitate-customer-token": {
+      "post": {
+        "tags": [
+          "Customer impersonation"
+        ],
+        "summary": "Generate a customer impersonation token",
+        "description": "Generates a customer impersonation token for the given customer and sales channel.\n\nThe token can be used to authenticate as the customer in the sales channel.",
+        "operationId": "generateImitateCustomerToken",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "customerId",
+                  "salesChannelId"
+                ],
+                "properties": {
+                  "customerId": {
+                    "description": "ID of the customer",
+                    "type": "string"
+                  },
+                  "salesChannelId": {
+                    "description": "ID of the sales channel",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The generated customer impersonation token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "token": {
+                      "description": "The generated customer impersonation token",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app-system/privileges/requested": {
+      "get": {
+        "tags": [
+          "App System"
+        ],
+        "summary": "Get requested privileges for all apps",
+        "description": "Returns the list of requested privileges for all apps. Requires admin scope and `acl_role:read` permission to read.",
+        "operationId": "getRequestedPrivileges",
+        "security": [
+          {
+            "oAuth": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON object containing requested privileges.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "privileges": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "privileges": {
+                    "SwagAnalytics": [
+                      "customer:read",
+                      "order:read"
+                    ],
+                    "SwagExample": [
+                      "product:write"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request."
+          },
+          "401": {
+            "description": "Unauthorized Access."
+          },
+          "403": {
+            "description": "Forbidden. Not a valid integration source."
+          }
+        }
+      }
+    },
+    "/app-system/{appName}/privileges/accepted": {
+      "get": {
+        "tags": [
+          "App System"
+        ],
+        "summary": "Get accepted privileges for an app",
+        "description": "Returns the list of accepted privileges for the current integration. Requires admin scope with an integration.",
+        "operationId": "getAcceptedPrivileges",
+        "parameters": [
+          {
+            "name": "appName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "oAuth": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON object containing accepted privileges.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "privileges": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "privileges": {
+                    "customer:read": true,
+                    "order:read": true
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request."
+          },
+          "401": {
+            "description": "Unauthorized Access."
+          },
+          "403": {
+            "description": "Forbidden. Not a valid integration source."
+          },
+          "404": {
+            "description": "App not found."
+          }
+        }
+      }
+    },
+    "/app-system/{appName}/privileges": {
+      "patch": {
+        "tags": [
+          "App System"
+        ],
+        "summary": "Accept or revoke privileges for an app",
+        "description": "Accepts or revokes specified privileges for the given app.",
+        "operationId": "managePrivileges",
+        "parameters": [
+          {
+            "name": "appName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accept": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "revoke": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "example": {
+                "accept": [
+                  "customer:read",
+                  "order:read"
+                ],
+                "revoke": [
+                  "product:write"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Returns no content if privileges were managed successfully."
+          },
+          "400": {
+            "description": "Malformed request."
+          },
+          "401": {
+            "description": "Unauthorized Access."
+          },
+          "403": {
+            "description": "Forbidden. Not a valid integration source."
+          },
+          "404": {
+            "description": "App not found."
+          }
+        },
+        "security": [
+          {
+            "oAuth": [
+              "admin"
+            ]
+          }
+        ]
+      }
+    },
+    "/_action/order_transaction/{orderTransactionId}/state/{transition}": {
+      "post": {
+        "tags": [
+          "Order Management"
+        ],
+        "summary": "Transition an order transaction to a new state",
+        "description": "Changes the order transaction state and informs the customer via email if configured.",
+        "operationId": "orderTransactionStateTransition",
+        "parameters": [
+          {
+            "name": "orderTransactionId",
+            "in": "path",
+            "description": "Identifier of the order transaction.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "transition",
+            "in": "path",
+            "description": "The `action_name` of the `state_machine_transition`. For example `process` if the order state should change from open to in progress.\n\nNote: If you choose a transition that is not available, you will get an error that lists possible transitions for the current state.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "sendMail": {
+                    "description": "Controls if a mail should be sent to the customer."
+                  },
+                  "documentIds": {
+                    "description": "A list of document identifiers that should be attached",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "mediaIds": {
+                    "description": "A list of media identifiers that should be attached",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  },
+                  "stateFieldName": {
+                    "description": "This is the state column within the order transaction database table. There should be no need to change it from the default.",
+                    "type": "string",
+                    "default": "stateId"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns information about the transition that was made. `#/components/schemas/StateMachineTransition`"
           }
         }
       }
@@ -71224,6 +73380,540 @@
         }
       }
     },
+    "/oauth/token": {
+      "post": {
+        "tags": [
+          "Authorization & Authentication"
+        ],
+        "summary": "Fetch an access token",
+        "description": "Fetch a access token that can be used to perform authenticated requests. For more information take a look at the [Authentication documentation](https://shopware.stoplight.io/docs/admin-api/docs/concepts/authentication-authorisation.md).",
+        "operationId": "token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/OAuthPasswordGrant"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OAuthRefreshTokenGrant"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OAuthClientCredentialsGrant"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authorized successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "token_type",
+                    "expires_in",
+                    "access_token"
+                  ],
+                  "properties": {
+                    "token_type": {
+                      "description": "Type of the token.",
+                      "type": "string"
+                    },
+                    "expires_in": {
+                      "description": "Token lifetime in seconds.",
+                      "type": "integer"
+                    },
+                    "access_token": {
+                      "description": "The access token that can be used for subsequent requests",
+                      "type": "string"
+                    },
+                    "refresh_token": {
+                      "description": "The refresh token that can be used to refresh the access token. This field is not returned on grant type `refresh_token`.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/_action/index": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Run indexer",
+        "description": "Runs all registered indexer in the shop asynchronously.",
+        "operationId": "index",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "skip": {
+                    "description": "Array of indexers/updaters to be skipped.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the indexing progress startet."
+          }
+        }
+      }
+    },
+    "/_action/sync": {
+      "post": {
+        "tags": [
+          "Bulk Operations"
+        ],
+        "summary": "Bulk edit entities",
+        "description": "Starts a sync process for the list of provided actions. This can be upserts and deletes on different entities to an asynchronous process in the background. You can control the behaviour with the `indexing-behavior` header.",
+        "operationId": "sync",
+        "parameters": [
+          {
+            "name": "fail-on-error",
+            "in": "header",
+            "description": "To continue upcoming actions on errors, set the `fail-on-error` header to `false`.",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "indexing-behavior",
+            "in": "header",
+            "description": "Controls the indexing behavior.\n    - `disable-indexing`: Data indexing is completely disabled",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "use-queue-indexing",
+                "disable-indexing"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "required": [
+                    "action",
+                    "entity",
+                    "payload"
+                  ],
+                  "properties": {
+                    "action": {
+                      "description": "The action indicates what should happen with the provided payload.\n    * `upsert`: The Sync API does not differ between create and update operations,\n    but always performs an upsert operation. During an upsert, the system checks whether the entity already exists in the\n    system and updates it if an identifier has been passed, otherwise a new entity is created with this identifier.\n    * `delete`: Deletes entities with the provided identifiers",
+                      "type": "string",
+                      "enum": [
+                        "upsert",
+                        "delete"
+                      ]
+                    },
+                    "entity": {
+                      "description": "The entity that should be processed with the payload.",
+                      "type": "string",
+                      "example": "product"
+                    },
+                    "payload": {
+                      "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "filter": {
+                      "description": "Only for delete operations: Instead of providing IDs in the payload, the filter by which should be deleted can be provided directly.",
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "$ref": "#/components/schemas/SimpleFilter"
+                          },
+                          {
+                            "$ref": "#/components/schemas/EqualsFilter"
+                          },
+                          {
+                            "$ref": "#/components/schemas/MultiNotFilter"
+                          },
+                          {
+                            "$ref": "#/components/schemas/RangeFilter"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns a sync result containing information about the updated entities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "description": "Object with information about updated entities",
+                      "type": "object"
+                    },
+                    "notFound": {
+                      "description": "Object with information about not found entities",
+                      "type": "object"
+                    },
+                    "deleted": {
+                      "description": "Object with information about deleted entities",
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/message-queue/consume": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Consume messages from the message queue.",
+        "description": "This route can be used to consume messages from the message queue. It is intended to be used if\nno cronjob is configured to consume messages regularly.",
+        "operationId": "consumeMessages",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "receiver"
+                ],
+                "properties": {
+                  "receiver": {
+                    "description": "The name of the transport in the messenger that should be processed.\nSee the [Symfony Messenger documentation](https://symfony.com/doc/current/messenger.html) for more information",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns information about handled messages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "handledMessages": {
+                      "description": "The number of messages processed.",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/index-products": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Send product indexing message",
+        "description": "Dispatches a product indexing message to the message bus, with the provided ids",
+        "operationId": "productIndexing",
+        "responses": {
+          "204": {
+            "description": "Returns an empty response indicating that the message dispatched."
+          }
+        }
+      }
+    },
+    "/_action/cache": {
+      "delete": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Clear caches",
+        "description": "The cache is immediately cleared synchronously for all used adapters.",
+        "operationId": "clearCache",
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the cache has been cleared."
+          }
+        }
+      }
+    },
+    "/_action/cache-delayed": {
+      "delete": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Clear all invalidated caches",
+        "description": "Directly triggers invalidation of all cache tags that were marked for invalidation.",
+        "operationId": "clearCacheDelayed",
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the cache has been cleared."
+          }
+        }
+      }
+    },
+    "/_action/number-range/reserve/{type}/{saleschannel}": {
+      "get": {
+        "tags": [
+          "Document Management"
+        ],
+        "summary": "Reserve or preview a number-range / document number.",
+        "description": "This endpoint provides functionality to reserve or preview a document number which can be used to create a new document using the `/_action/order/{orderId}/document/{documentTypeName}` endpoint.\n\nThe number generated by the endpoint will be reserved and the number pointer will be incremented with every call. For preview purposes, you can add the `?preview=1` parameter to the request. In that case, the number will not be incremented.",
+        "operationId": "numberRangeReserve",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "`technicalName` of the document type (e.g. `document_invoice`). Available types can be fetched with the `/api/document-type endpoint`.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "saleschannel",
+            "in": "path",
+            "description": "Sales channel for the number range. Number ranges can be defined per sales channel, so you can pass a sales channel ID here.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "preview",
+            "in": "query",
+            "description": "If this parameter has a true value, the number will not actually be incremented, but only previewed.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The generated number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "number": {
+                      "description": "The generated (or previewed) document number.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Number range not found"
+          }
+        }
+      }
+    },
+    "/_action/cache_info": {
+      "get": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Get cache information",
+        "description": "Get information about the cache configuration",
+        "operationId": "info",
+        "responses": {
+          "200": {
+            "description": "Information about the cache state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "environment": {
+                      "description": "The active environment.",
+                      "type": "string"
+                    },
+                    "httpCache": {
+                      "description": "State of the HTTP cache.",
+                      "type": "boolean"
+                    },
+                    "cacheAdapter": {
+                      "description": "The active cache adapter.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_info/events.json": {
+      "get": {
+        "tags": [
+          "System Info & Health Check"
+        ],
+        "summary": "Get Business events",
+        "description": "Get a list of about the business events.",
+        "operationId": "business-events",
+        "responses": {
+          "200": {
+            "description": "Returns a list of about the business events.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/businessEventsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_info/health-check": {
+      "get": {
+        "tags": [
+          "System Info & Health Check"
+        ],
+        "summary": "Check that the Application is running",
+        "operationId": "healthCheck",
+        "responses": {
+          "200": {
+            "description": "Returns empty response"
+          },
+          "500": {
+            "description": "Application is not working properly"
+          }
+        }
+      }
+    },
+    "/_info/system-health-check": {
+      "get": {
+        "tags": [
+          "System Info & Health Check"
+        ],
+        "summary": "Perform a detailed system health check",
+        "operationId": "systemHealthCheck",
+        "parameters": [
+          {
+            "name": "verbose",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Include detailed information in the response"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the system health check results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "healthy": {
+                            "type": "boolean"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "extra": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Application is not working properly"
+          }
+        }
+      }
+    },
+    "/_info/flow-actions.json": {
+      "get": {
+        "tags": [
+          "System Info & Health Check"
+        ],
+        "summary": "Get actions for flow builder",
+        "description": "Get a list of action for flow builder.",
+        "operationId": "flow-actions",
+        "responses": {
+          "200": {
+            "description": "Returns a list of action for flow builder.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/flowBuilderActionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/_action/document/{documentId}/{deepLinkCode}": {
       "get": {
         "tags": [
@@ -71354,6 +74044,108 @@
                     "documentDeepLink": {
                       "description": "A unique hash code which is required to open the document.",
                       "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_info/version": {
+      "get": {
+        "tags": [
+          "System Info & Health Check"
+        ],
+        "summary": "Get the Shopware version",
+        "description": "Get the version of the Shopware instance",
+        "operationId": "infoShopwareVersion",
+        "responses": {
+          "200": {
+            "description": "Returns the version of the Shopware instance.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "version": {
+                      "description": "The Shopware version.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/indexing": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Run indexer",
+        "description": "Runs all registered indexer in the shop asynchronously.",
+        "operationId": "indexing",
+        "responses": {
+          "200": {
+            "description": "Returns an empty response indicating that the indexing process started."
+          }
+        }
+      }
+    },
+    "/_action/indexing/{indexer}": {
+      "post": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Iterate an indexer",
+        "description": "Starts a defined indexer with an offset.\n\nfor the next request. `finish: true` in the response indicates that the indexer is finished",
+        "operationId": "iterate",
+        "parameters": [
+          {
+            "name": "indexer",
+            "in": "path",
+            "description": "Name of the indexer to iterate.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "offset": {
+                    "description": "The offset for the iteration.",
+                    "type": "integer"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns information about the iteration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "finish": {
+                      "description": "Indicates if the indexing process finished.",
+                      "type": "boolean"
+                    },
+                    "offset": {
+                      "description": "Offset to be used for the next iteration.",
+                      "type": "integer"
                     }
                   },
                   "type": "object"
@@ -71709,484 +74501,6 @@
         }
       }
     },
-    "/_action/order/{orderId}/order-address": {
-      "post": {
-        "tags": [
-          "Order address"
-        ],
-        "summary": "Update order addresses",
-        "description": "Endpoint which takes a list of mapping objects as payload and updates the order addresses accordingly",
-        "operationId": "updateOrderAddresses",
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "description": "Identifier of the order.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "mapping": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "customerAddressId": {
-                          "type": "string",
-                          "description": "The ID of the customer address"
-                        },
-                        "type": {
-                          "type": "string",
-                          "description": "The type of the address"
-                        },
-                        "deliveryId": {
-                          "description": "The ID of the delivery (optional)",
-                          "oneOf": [
-                            {
-                              "type": "string"
-                            },
-                            {
-                              "type": "null"
-                            }
-                          ]
-                        }
-                      },
-                      "required": [
-                        "customerAddressId",
-                        "type"
-                      ]
-                    },
-                    "description": "The mapping of order addresses"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the update has been made."
-          }
-        }
-      }
-    },
-    "/_info/events.json": {
-      "get": {
-        "tags": [
-          "System Info & Health Check"
-        ],
-        "summary": "Get Business events",
-        "description": "Get a list of about the business events.",
-        "operationId": "business-events",
-        "responses": {
-          "200": {
-            "description": "Returns a list of about the business events.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/businessEventsResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/oauth/token": {
-      "post": {
-        "tags": [
-          "Authorization & Authentication"
-        ],
-        "summary": "Fetch an access token",
-        "description": "Fetch a access token that can be used to perform authenticated requests. For more information take a look at the [Authentication documentation](https://shopware.stoplight.io/docs/admin-api/docs/concepts/authentication-authorisation.md).",
-        "operationId": "token",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/OAuthPasswordGrant"
-                  },
-                  {
-                    "$ref": "#/components/schemas/OAuthRefreshTokenGrant"
-                  },
-                  {
-                    "$ref": "#/components/schemas/OAuthClientCredentialsGrant"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Authorized successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "required": [
-                    "token_type",
-                    "expires_in",
-                    "access_token"
-                  ],
-                  "properties": {
-                    "token_type": {
-                      "description": "Type of the token.",
-                      "type": "string"
-                    },
-                    "expires_in": {
-                      "description": "Token lifetime in seconds.",
-                      "type": "integer"
-                    },
-                    "access_token": {
-                      "description": "The access token that can be used for subsequent requests",
-                      "type": "string"
-                    },
-                    "refresh_token": {
-                      "description": "The refresh token that can be used to refresh the access token. This field is not returned on grant type `refresh_token`.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          }
-        }
-      }
-    },
-    "/_action/mail-template/send": {
-      "post": {
-        "tags": [
-          "Mail Operations"
-        ],
-        "summary": "Send a mail",
-        "description": "Generates a mail from a mail template and sends it to the customer.\n\nTake a look at the `salesChannel` entity for possible values. For example `{{ salesChannel.name }}` can be used.",
-        "operationId": "send",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "recipients",
-                  "salesChannelId",
-                  "contentHtml",
-                  "contentPlain",
-                  "subject",
-                  "senderName"
-                ],
-                "properties": {
-                  "recipients": {
-                    "description": "A list of recipients with name and mail address.",
-                    "type": "object",
-                    "example": {
-                      "test1@example.com": "Test user 1",
-                      "test2@example.com": "Test user 2"
-                    },
-                    "additionalProperties": {
-                      "description": "Name of the recipient.",
-                      "type": "string"
-                    }
-                  },
-                  "salesChannelId": {
-                    "description": "Identifier of the sales channel from which the mail should be send.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "contentHtml": {
-                    "description": "The content of the mail in HTML format.",
-                    "type": "string"
-                  },
-                  "contentPlain": {
-                    "description": "The content of the mail as plain text.",
-                    "type": "string"
-                  },
-                  "subject": {
-                    "description": "Subject of the mail.",
-                    "type": "string"
-                  },
-                  "senderName": {
-                    "description": "Name of the sender.",
-                    "type": "string"
-                  },
-                  "senderEmail": {
-                    "description": "Mail address of the sender. If not set, `core.basicInformation.email` or `core.mailerSettings.senderAddress` will be used from the shop configuration.",
-                    "type": "string"
-                  },
-                  "mediaIds": {
-                    "description": "List of media identifiers which should be attached to the mail.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "binAttachments": {
-                    "description": "A list of binary attachments which should be added to the mail.",
-                    "required": [
-                      "content",
-                      "fileName",
-                      "mimeType"
-                    ],
-                    "type": "array",
-                    "items": {
-                      "properties": {
-                        "content": {
-                          "description": "Binary content of the attachment.",
-                          "type": "string"
-                        },
-                        "fileName": {
-                          "description": "File name of the attachment.",
-                          "type": "string"
-                        },
-                        "mimeType": {
-                          "description": "Mime type of the attachment.",
-                          "type": "string"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  },
-                  "recipientsBcc": {
-                    "description": "A list of recipients with name and mail address to be set in BCC.",
-                    "type": "object",
-                    "example": {
-                      "test1@example.com": "Test user 1",
-                      "test2@example.com": "Test user 2"
-                    },
-                    "additionalProperties": {
-                      "description": "Name of the recipient.",
-                      "type": "string"
-                    }
-                  },
-                  "recipientsCc": {
-                    "description": "A list of recipients with name and mail address to be set in CC.",
-                    "type": "object",
-                    "example": {
-                      "test1@example.com": "Test user 1",
-                      "test2@example.com": "Test user 2"
-                    },
-                    "additionalProperties": {
-                      "description": "Name of the recipient.",
-                      "type": "string"
-                    }
-                  },
-                  "replyTo": {
-                    "description": "A list of mail addresses with name and mail address to be set in reply to.",
-                    "type": "object",
-                    "example": {
-                      "test1@example.com": "Test user 1",
-                      "test2@example.com": "Test user 2"
-                    },
-                    "additionalProperties": {
-                      "description": "Name of the recipient.",
-                      "type": "string"
-                    }
-                  },
-                  "returnPath": {
-                    "description": "A list of mail addresses with name and mail address to be set in return path.",
-                    "type": "object",
-                    "example": {
-                      "test1@example.com": "Test user 1",
-                      "test2@example.com": "Test user 2"
-                    },
-                    "additionalProperties": {
-                      "description": "Name of the recipient.",
-                      "type": "string"
-                    }
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The mail was sent successful",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "size": {
-                      "description": "Length of the email message",
-                      "type": "integer"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/mail-template/validate": {
-      "post": {
-        "tags": [
-          "Mail Operations"
-        ],
-        "summary": "Validate a mail content",
-        "description": "Validates if content for a mail can be rendered without sending an email.",
-        "operationId": "validate",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "contentHtml",
-                  "contentPlain"
-                ],
-                "properties": {
-                  "contentHtml": {
-                    "description": "The content of the mail in HTML format.",
-                    "type": "string"
-                  },
-                  "contentPlain": {
-                    "description": "The content of the mail as plain text.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating the mail content was rendered successfully."
-          }
-        }
-      }
-    },
-    "/_action/mail-template/build": {
-      "post": {
-        "tags": [
-          "Mail Operations"
-        ],
-        "summary": "Preview a mail template",
-        "description": "Generates a preview of a mail template.",
-        "operationId": "build",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "mailTemplateType",
-                  "mailTemplate"
-                ],
-                "properties": {
-                  "mailTemplateType": {
-                    "description": "Only the property `templateData` is used. It provides additional variables to the templating engine.",
-                    "properties": {
-                      "templateData": {
-                        "description": "An associative array that is handed over to the templating engine and can be used as variables in the mail content.",
-                        "type": "object",
-                        "example": {
-                          "order": {
-                            "orderNumber": 5000,
-                            "customerName": "Example Customer"
-                          },
-                          "messageOfTheDay": "An apple a day keeps the doctor away!"
-                        },
-                        "additionalProperties": true
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "mailTemplate": {
-                    "description": "The content of the mail as plain text.",
-                    "properties": {
-                      "contentHtml": {
-                        "description": "The content of mail mail template in html format.",
-                        "type": "string",
-                        "example": "Hello {{ order.customerName }}, this is example mail content, the current date is {{ 'now'|date('d/m/Y') }}"
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The rendered preview of the mail template.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_info/config": {
-      "get": {
-        "tags": [
-          "System Info & Health Check"
-        ],
-        "summary": "Get API information",
-        "description": "Get information about the API",
-        "operationId": "config",
-        "responses": {
-          "200": {
-            "description": "Returns information about the API.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/infoConfigResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_info/flow-actions.json": {
-      "get": {
-        "tags": [
-          "System Info & Health Check"
-        ],
-        "summary": "Get actions for flow builder",
-        "description": "Get a list of action for flow builder.",
-        "operationId": "flow-actions",
-        "responses": {
-          "200": {
-            "description": "Returns a list of action for flow builder.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/flowBuilderActionsResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/_action/scheduled-task/run": {
       "post": {
         "tags": [
@@ -72232,399 +74546,6 @@
                   "properties": {
                     "minRunInterval": {
                       "description": "Minimal interval in seconds.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/indexing": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Run indexer",
-        "description": "Runs all registered indexer in the shop asynchronously.",
-        "operationId": "indexing",
-        "responses": {
-          "200": {
-            "description": "Returns an empty response indicating that the indexing process started."
-          }
-        }
-      }
-    },
-    "/_action/indexing/{indexer}": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Iterate an indexer",
-        "description": "Starts a defined indexer with an offset.\n\nfor the next request. `finish: true` in the response indicates that the indexer is finished",
-        "operationId": "iterate",
-        "parameters": [
-          {
-            "name": "indexer",
-            "in": "path",
-            "description": "Name of the indexer to iterate.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "offset": {
-                    "description": "The offset for the iteration.",
-                    "type": "integer"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Returns information about the iteration.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "finish": {
-                      "description": "Indicates if the indexing process finished.",
-                      "type": "boolean"
-                    },
-                    "offset": {
-                      "description": "Offset to be used for the next iteration.",
-                      "type": "integer"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_info/health-check": {
-      "get": {
-        "tags": [
-          "System Info & Health Check"
-        ],
-        "summary": "Check that the Application is running",
-        "operationId": "healthCheck",
-        "responses": {
-          "200": {
-            "description": "Returns empty response"
-          },
-          "500": {
-            "description": "Application is not working properly"
-          }
-        }
-      }
-    },
-    "/_info/system-health-check": {
-      "get": {
-        "tags": [
-          "System Info & Health Check"
-        ],
-        "summary": "Perform a detailed system health check",
-        "operationId": "systemHealthCheck",
-        "parameters": [
-          {
-            "name": "verbose",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false
-            },
-            "description": "Include detailed information in the response"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns the system health check results",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "checks": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          },
-                          "healthy": {
-                            "type": "boolean"
-                          },
-                          "status": {
-                            "type": "string"
-                          },
-                          "message": {
-                            "type": "string"
-                          },
-                          "extra": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "additionalProperties": true
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Application is not working properly"
-          }
-        }
-      }
-    },
-    "/_action/cache": {
-      "delete": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Clear caches",
-        "description": "The cache is immediately cleared synchronously for all used adapters.",
-        "operationId": "clearCache",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the cache has been cleared."
-          }
-        }
-      }
-    },
-    "/_action/cache-delayed": {
-      "delete": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Clear all invalidated caches",
-        "description": "Directly triggers invalidation of all cache tags that were marked for invalidation.",
-        "operationId": "clearCacheDelayed",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the cache has been cleared."
-          }
-        }
-      }
-    },
-    "/_action/index": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Run indexer",
-        "description": "Runs all registered indexer in the shop asynchronously.",
-        "operationId": "index",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "skip": {
-                    "description": "Array of indexers/updaters to be skipped.",
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the indexing progress startet."
-          }
-        }
-      }
-    },
-    "/_action/number-range/reserve/{type}/{saleschannel}": {
-      "get": {
-        "tags": [
-          "Document Management"
-        ],
-        "summary": "Reserve or preview a number-range / document number.",
-        "description": "This endpoint provides functionality to reserve or preview a document number which can be used to create a new document using the `/_action/order/{orderId}/document/{documentTypeName}` endpoint.\n\nThe number generated by the endpoint will be reserved and the number pointer will be incremented with every call. For preview purposes, you can add the `?preview=1` parameter to the request. In that case, the number will not be incremented.",
-        "operationId": "numberRangeReserve",
-        "parameters": [
-          {
-            "name": "type",
-            "in": "path",
-            "description": "`technicalName` of the document type (e.g. `document_invoice`). Available types can be fetched with the `/api/document-type endpoint`.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "saleschannel",
-            "in": "path",
-            "description": "Sales channel for the number range. Number ranges can be defined per sales channel, so you can pass a sales channel ID here.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "preview",
-            "in": "query",
-            "description": "If this parameter has a true value, the number will not actually be incremented, but only previewed.",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The generated number",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "number": {
-                      "description": "The generated (or previewed) document number.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Number range not found"
-          }
-        }
-      }
-    },
-    "/_action/order_transaction_capture_refund/{refundId}": {
-      "post": {
-        "tags": [
-          "Order Management"
-        ],
-        "summary": "Refund an order transaction capture",
-        "description": "Refunds an order transaction capture.",
-        "operationId": "orderTransactionCaptureRefund",
-        "parameters": [
-          {
-            "name": "refundId",
-            "in": "path",
-            "description": "Identifier of the order transaction capture refund.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Refund was successful"
-          },
-          "400": {
-            "description": "Something went wrong, while processing the refund"
-          },
-          "404": {
-            "description": "Refund with id not found"
-          }
-        }
-      }
-    },
-    "/_info/openapi3.json": {
-      "get": {
-        "tags": [
-          "System Info & Health Check"
-        ],
-        "summary": "Get OpenAPI Specification",
-        "description": "Get information about the admin API in OpenAPI format.",
-        "operationId": "api-info",
-        "parameters": [
-          {
-            "name": "type",
-            "in": "query",
-            "description": "Type of the api",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "jsonapi",
-                "json"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/OpenApi3"
-          }
-        }
-      }
-    },
-    "/_proxy/generate-imitate-customer-token": {
-      "post": {
-        "tags": [
-          "Customer impersonation"
-        ],
-        "summary": "Generate a customer impersonation token",
-        "description": "Generates a customer impersonation token for the given customer and sales channel.\n\nThe token can be used to authenticate as the customer in the sales channel.",
-        "operationId": "generateImitateCustomerToken",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "customerId",
-                  "salesChannelId"
-                ],
-                "properties": {
-                  "customerId": {
-                    "description": "ID of the customer",
-                    "type": "string"
-                  },
-                  "salesChannelId": {
-                    "description": "ID of the sales channel",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The generated customer impersonation token.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "token": {
-                      "description": "The generated customer impersonation token",
                       "type": "string"
                     }
                   },
@@ -72708,464 +74629,65 @@
         }
       }
     },
-    "/_info/routes": {
-      "get": {
-        "summary": "Get API routes",
-        "operationId": "getRoutes",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "endpoints"
-                  ],
-                  "properties": {
-                    "endpoints": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "required": [
-                          "methods",
-                          "path"
-                        ],
-                        "properties": {
-                          "methods": {
-                            "type": "array",
-                            "items": {
-                              "type": "string"
-                            }
-                          },
-                          "path": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/order_transaction/{orderTransactionId}/state/{transition}": {
-      "post": {
-        "tags": [
-          "Order Management"
-        ],
-        "summary": "Transition an order transaction to a new state",
-        "description": "Changes the order transaction state and informs the customer via email if configured.",
-        "operationId": "orderTransactionStateTransition",
-        "parameters": [
-          {
-            "name": "orderTransactionId",
-            "in": "path",
-            "description": "Identifier of the order transaction.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "transition",
-            "in": "path",
-            "description": "The `action_name` of the `state_machine_transition`. For example `process` if the order state should change from open to in progress.\n\nNote: If you choose a transition that is not available, you will get an error that lists possible transitions for the current state.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "sendMail": {
-                    "description": "Controls if a mail should be sent to the customer."
-                  },
-                  "documentIds": {
-                    "description": "A list of document identifiers that should be attached",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "mediaIds": {
-                    "description": "A list of media identifiers that should be attached",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "stateFieldName": {
-                    "description": "This is the state column within the order transaction database table. There should be no need to change it from the default.",
-                    "type": "string",
-                    "default": "stateId"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Returns information about the transition that was made. `#/components/schemas/StateMachineTransition`"
-          }
-        }
-      }
-    },
-    "/_action/index-products": {
-      "post": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Send product indexing message",
-        "description": "Dispatches a product indexing message to the message bus, with the provided ids",
-        "operationId": "productIndexing",
-        "responses": {
-          "204": {
-            "description": "Returns an empty response indicating that the message dispatched."
-          }
-        }
-      }
-    },
-    "/_action/container_cache": {
-      "delete": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Clear container caches",
-        "description": "The container cache is immediately cleared synchronously.",
-        "operationId": "clearContainerCache",
-        "responses": {
-          "204": {
-            "description": "Returns a no content response indicating that the container cache is cleared."
-          }
-        }
-      }
-    },
-    "/_info/message-stats.json": {
-      "get": {
-        "summary": "Get statistics for recently processed messages in the message queue",
-        "operationId": "getMessageStats",
-        "responses": {
-          "200": {
-            "description": "Statistics received",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "enabled"
-                  ],
-                  "properties": {
-                    "enabled": {
-                      "type": "boolean",
-                      "description": "Whether message queue statistics are enabled in configuration"
-                    },
-                    "stats": {
-                      "type": [
-                        "object",
-                        "null"
-                      ],
-                      "properties": {
-                        "totalMessagesProcessed": {
-                          "type": "integer"
-                        },
-                        "processedSince": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "averageTimeInQueue": {
-                          "type": "number",
-                          "format": "float"
-                        },
-                        "messageTypeStats": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "type": "string"
-                              },
-                              "count": {
-                                "type": "integer"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/media/{mediaId}/upload": {
-      "post": {
-        "tags": [
-          "Asset Management"
-        ],
-        "summary": "Upload a file to a media entity",
-        "description": "Adds a new file to a media entity. If the entity has an existing file, it will be replaced.\n\nThe are two methods of providing a file to this route:\n * Use a typical file upload and provide the file in the request\n * Fetch the file from an url. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.\nTo use file upload via url, the content type has to be `application/json` and the parameter `url` has to be provided.",
-        "operationId": "upload",
-        "parameters": [
-          {
-            "name": "mediaId",
-            "in": "path",
-            "description": "Identifier of the media entity.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "fileName",
-            "in": "query",
-            "description": "Name of the uploaded file. If not provided the media identifier will be used as name",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "extension",
-            "in": "query",
-            "description": "Extension of the uploaded file. For example `png`",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/octet-stream": {
-              "schema": {
-                "type": "string",
-                "format": "binary"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "required": [
-                  "url"
-                ],
-                "properties": {
-                  "url": {
-                    "description": "The url of the media file that will be downloaded.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Media file uploaded successful",
-            "headers": {
-              "Location": {
-                "description": "Contains the url to the uploaded media for a redirect.",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/cache_info": {
-      "get": {
-        "tags": [
-          "System Operations"
-        ],
-        "summary": "Get cache information",
-        "description": "Get information about the cache configuration",
-        "operationId": "info",
-        "responses": {
-          "200": {
-            "description": "Information about the cache state.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "environment": {
-                      "description": "The active environment.",
-                      "type": "string"
-                    },
-                    "httpCache": {
-                      "description": "State of the HTTP cache.",
-                      "type": "boolean"
-                    },
-                    "cacheAdapter": {
-                      "description": "The active cache adapter.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_info/version": {
+    "/_info/openapi3.json": {
       "get": {
         "tags": [
           "System Info & Health Check"
         ],
-        "summary": "Get the Shopware version",
-        "description": "Get the version of the Shopware instance",
-        "operationId": "infoShopwareVersion",
-        "responses": {
-          "200": {
-            "description": "Returns the version of the Shopware instance.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "version": {
-                      "description": "The Shopware version.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/sync": {
-      "post": {
-        "tags": [
-          "Bulk Operations"
-        ],
-        "summary": "Bulk edit entities",
-        "description": "Starts a sync process for the list of provided actions. This can be upserts and deletes on different entities to an asynchronous process in the background. You can control the behaviour with the `indexing-behavior` header.",
-        "operationId": "sync",
+        "summary": "Get OpenAPI Specification",
+        "description": "Get information about the admin API in OpenAPI format.",
+        "operationId": "api-info",
         "parameters": [
           {
-            "name": "fail-on-error",
-            "in": "header",
-            "description": "To continue upcoming actions on errors, set the `fail-on-error` header to `false`.",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
-          },
-          {
-            "name": "indexing-behavior",
-            "in": "header",
-            "description": "Controls the indexing behavior.\n    - `disable-indexing`: Data indexing is completely disabled",
+            "name": "type",
+            "in": "query",
+            "description": "Type of the api",
             "schema": {
               "type": "string",
               "enum": [
-                "use-queue-indexing",
-                "disable-indexing"
+                "jsonapi",
+                "json"
               ]
             }
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "required": [
-                    "action",
-                    "entity",
-                    "payload"
-                  ],
-                  "properties": {
-                    "action": {
-                      "description": "The action indicates what should happen with the provided payload.\n    * `upsert`: The Sync API does not differ between create and update operations,\n    but always performs an upsert operation. During an upsert, the system checks whether the entity already exists in the\n    system and updates it if an identifier has been passed, otherwise a new entity is created with this identifier.\n    * `delete`: Deletes entities with the provided identifiers",
-                      "type": "string",
-                      "enum": [
-                        "upsert",
-                        "delete"
-                      ]
-                    },
-                    "entity": {
-                      "description": "The entity that should be processed with the payload.",
-                      "type": "string",
-                      "example": "product"
-                    },
-                    "payload": {
-                      "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
-                      "type": "array",
-                      "items": {
-                        "type": "object"
-                      }
-                    },
-                    "filter": {
-                      "description": "Only for delete operations: Instead of providing IDs in the payload, the filter by which should be deleted can be provided directly.",
-                      "type": "array",
-                      "items": {
-                        "anyOf": [
-                          {
-                            "$ref": "#/components/schemas/SimpleFilter"
-                          },
-                          {
-                            "$ref": "#/components/schemas/EqualsFilter"
-                          },
-                          {
-                            "$ref": "#/components/schemas/MultiNotFilter"
-                          },
-                          {
-                            "$ref": "#/components/schemas/RangeFilter"
-                          }
-                        ]
-                      }
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "Returns a sync result containing information about the updated entities",
+            "$ref": "#/components/responses/OpenApi3"
+          }
+        }
+      }
+    },
+    "/_action/cleanup": {
+      "delete": {
+        "tags": [
+          "System Operations"
+        ],
+        "summary": "Clear old cache folders",
+        "description": "Removes cache folders that are not needed anymore.",
+        "operationId": "clearOldCacheFolders",
+        "responses": {
+          "204": {
+            "description": "Returns a no content response indicating that the cleanup finished."
+          }
+        }
+      }
+    },
+    "/_info/config": {
+      "get": {
+        "tags": [
+          "System Info & Health Check"
+        ],
+        "summary": "Get API information",
+        "description": "Get information about the API",
+        "operationId": "config",
+        "responses": {
+          "200": {
+            "description": "Returns information about the API.",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "data": {
-                      "description": "Object with information about updated entities",
-                      "type": "object"
-                    },
-                    "notFound": {
-                      "description": "Object with information about not found entities",
-                      "type": "object"
-                    },
-                    "deleted": {
-                      "description": "Object with information about deleted entities",
-                      "type": "object"
-                    }
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/infoConfigResponse"
                 }
               }
             }
@@ -73173,45 +74695,67 @@
         }
       }
     },
-    "/_action/message-queue/consume": {
-      "post": {
+    "/_action/theme/{themeId}": {
+      "patch": {
         "tags": [
-          "System Operations"
+          "Theme"
         ],
-        "summary": "Consume messages from the message queue.",
-        "description": "This route can be used to consume messages from the message queue. It is intended to be used if\nno cronjob is configured to consume messages regularly.",
-        "operationId": "consumeMessages",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "receiver"
-                ],
-                "properties": {
-                  "receiver": {
-                    "description": "The name of the transport in the messenger that should be processed.\nSee the [Symfony Messenger documentation](https://symfony.com/doc/current/messenger.html) for more information",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
+        "summary": "Update theme configuration",
+        "description": "Updates the configuration of a theme. The theme configuration is a collection of fields that are provided as variables in the theme's SCSS files and the templates.",
+        "operationId": "updateThemeConfiguration",
+        "parameters": [
+          {
+            "name": "themeId",
+            "description": "The ID of the theme to update",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parentThemeId",
+            "description": "The ID of the parent theme to inherit the configuration from.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reset",
+            "description": "If true, the theme configuration will be reset to the default values from the theme.json file.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "validate",
+            "description": "If true, the theme configuration will be validated before being updated.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sanitize",
+            "description": "If true, the theme configuration will be sanitized during validation. before being updated. Only applies if validate is true.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Returns information about handled messages",
+            "description": "Theme updated successfully.",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "handledMessages": {
-                      "description": "The number of messages processed.",
-                      "type": "integer"
-                    }
-                  },
                   "type": "object"
                 }
               }
@@ -74355,6 +75899,12 @@
               "selfManaged": {
                 "type": "boolean"
               },
+              "requestedPrivileges": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "label": {
                 "type": "string"
               },
@@ -74879,6 +76429,12 @@
           },
           "selfManaged": {
             "type": "boolean"
+          },
+          "requestedPrivileges": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "label": {
             "type": "string",
@@ -86060,6 +87616,9 @@
               "name": {
                 "type": "string"
               },
+              "active": {
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -86540,6 +88099,9 @@
           "name": {
             "type": "string",
             "description": "Name of the language."
+          },
+          "active": {
+            "type": "boolean"
           },
           "customFields": {
             "type": "object",
@@ -87636,6 +89198,289 @@
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
+          }
+        },
+        "type": "object"
+      },
+      "MeasurementDisplayUnitJsonApi": {
+        "description": "Added since version: 6.7.1.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "measurementSystemId",
+              "default",
+              "type",
+              "shortName",
+              "factor",
+              "precision"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "measurementSystemId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "default": {
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string"
+              },
+              "shortName": {
+                "type": "string"
+              },
+              "factor": {
+                "type": "number",
+                "format": "float"
+              },
+              "precision": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "name": {
+                "type": "string"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "translated": {
+                "type": "object"
+              },
+              "relationships": {
+                "properties": {
+                  "measurementSystem": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/measurement-display-unit/6e9d57f5c7acc720b0168c16387bbc61/measurementSystem"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "measurement_system"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "c0484ac171c930ce54e78cd2e0d80e5a"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "MeasurementDisplayUnit": {
+        "description": "Added since version: 6.7.1.0",
+        "required": [
+          "id",
+          "measurementSystemId",
+          "default",
+          "type",
+          "shortName",
+          "factor",
+          "precision"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "measurementSystemId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          },
+          "shortName": {
+            "type": "string"
+          },
+          "factor": {
+            "type": "number",
+            "format": "float"
+          },
+          "precision": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "translated": {
+            "type": "object"
+          },
+          "measurementSystem": {
+            "$ref": "#/components/schemas/MeasurementSystem"
+          }
+        },
+        "type": "object"
+      },
+      "MeasurementSystemJsonApi": {
+        "description": "Added since version: 6.7.1.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "technicalName"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "technicalName": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "translated": {
+                "type": "object"
+              },
+              "relationships": {
+                "properties": {
+                  "units": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/measurement-system/67b401daf737cc26c1bbe7e50b9d9acb/units"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "measurement_display_unit"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "b98b3dfbd27e710e6c3ceeae58770b52"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "MeasurementSystem": {
+        "description": "Added since version: 6.7.1.0",
+        "required": [
+          "id",
+          "technicalName"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "technicalName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "translated": {
+            "type": "object"
+          },
+          "units": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeasurementDisplayUnit"
+            }
           }
         },
         "type": "object"
@@ -89488,6 +91333,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "mediaThumbnailSizeId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "width": {
                 "type": "integer",
                 "format": "int64",
@@ -89548,6 +91397,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "mediaThumbnailSize": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media-thumbnail/3863c110ff436b51dbc09a6ea14c56e0/mediaThumbnailSize"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media_thumbnail_size"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "0d0b8659a3a47e9d7e1481961f127fd0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -89575,6 +91453,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of media."
+          },
+          "mediaThumbnailSizeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
           },
           "width": {
             "type": "integer",
@@ -89611,6 +91493,9 @@
           },
           "media": {
             "$ref": "#/components/schemas/Media"
+          },
+          "mediaThumbnailSize": {
+            "$ref": "#/components/schemas/MediaThumbnailSize"
           }
         },
         "type": "object"
@@ -89685,6 +91570,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "mediaThumbnails": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media-thumbnail-size/122652279edf3cc398ca024851b6f53f/mediaThumbnails"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "media_thumbnail"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "76ebc340ac8f9754c760c3ec742d2407"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -89735,6 +91651,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/MediaFolderConfiguration"
+            }
+          },
+          "mediaThumbnails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaThumbnail"
             }
           }
         },
@@ -105559,6 +107481,9 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "measurementUnits": {
+                "$ref": "#/components/schemas/MeasurementUnits"
+              },
               "name": {
                 "type": "string"
               },
@@ -106912,6 +108837,9 @@
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of hreflangDefaultDomain."
           },
+          "measurementUnits": {
+            "$ref": "#/components/schemas/MeasurementUnits"
+          },
           "name": {
             "type": "string",
             "description": "Name of the sales channel."
@@ -107452,6 +109380,9 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "measurementUnits": {
+                "$ref": "#/components/schemas/MeasurementUnits"
+              },
               "hreflangUseOnlyLocale": {
                 "type": "boolean"
               },
@@ -107693,6 +109624,9 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of snippet set."
+          },
+          "measurementUnits": {
+            "$ref": "#/components/schemas/MeasurementUnits"
           },
           "hreflangUseOnlyLocale": {
             "type": "boolean",
@@ -114395,32 +116329,6 @@
         },
         "type": "object"
       },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
       "Criteria": {
         "type": "object",
         "description": "Criteria to query entities.",
@@ -115147,201 +117055,6 @@
           "field"
         ]
       },
-      "Price": {
-        "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "",
-            "type": "number"
-          },
-          "net": {
-            "description": "",
-            "type": "number"
-          },
-          "linked": {
-            "description": "",
-            "type": "boolean"
-          },
-          "listPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          },
-          "regulationPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net",
-          "linked"
-        ]
-      },
-      "infoConfigResponse": {
-        "type": "object",
-        "properties": {
-          "version": {
-            "type": "string",
-            "description": "The Shopware version."
-          },
-          "versionRevision": {
-            "type": "string",
-            "description": "The Shopware version revision."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Information about the admin worker.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "State of the admin worker."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured transports.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Asset files of active extensions",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "css": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the css file."
-                  }
-                },
-                "js": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the js file."
-                  }
-                }
-              }
-            }
-          },
-          "settings": {
-            "type": "object",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the `urlFeature` setting."
-              }
-            }
-          }
-        }
-      },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "properties": {
-          "name": {
-            "description": "Unique name of the businessEventsResponse."
-          },
-          "class": {
-            "description": "Class name of business event."
-          },
-          "data": {
-            "description": "Internal field."
-          },
-          "aware": {
-            "description": "Parameter that indicates the areas in which the business event is supported."
-          },
-          "extensions": {
-            "description": "Internal field."
-          }
-        }
-      },
       "OAuthScopes": {
         "description": "OAuth scopes that should be requested.",
         "type": "string",
@@ -115465,6 +117178,271 @@
             ]
           }
         ]
+      },
+      "infoConfigResponse": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "The Shopware version."
+          },
+          "versionRevision": {
+            "type": "string",
+            "description": "The Shopware version revision."
+          },
+          "adminWorker": {
+            "type": "object",
+            "description": "Information about the admin worker.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "State of the admin worker."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured transports.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Asset files of active extensions",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "css": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the css file."
+                  }
+                },
+                "js": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the js file."
+                  }
+                }
+              }
+            }
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the `urlFeature` setting."
+              }
+            }
+          }
+        }
+      },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
+      "MeasurementUnits": {
+        "type": "object",
+        "description": "Configuration of the measurement system",
+        "properties": {
+          "system": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+          },
+          "units": {
+            "type": "object",
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
+              }
+            }
+          }
+        }
+      },
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "",
+            "type": "number"
+          },
+          "net": {
+            "description": "",
+            "type": "number"
+          },
+          "linked": {
+            "description": "",
+            "type": "boolean"
+          },
+          "listPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          },
+          "regulationPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
+        ]
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "properties": {
+          "name": {
+            "description": "Unique name of the businessEventsResponse."
+          },
+          "class": {
+            "description": "Class name of business event."
+          },
+          "data": {
+            "description": "Internal field."
+          },
+          "aware": {
+            "description": "Parameter that indicates the areas in which the business event is supported."
+          },
+          "extensions": {
+            "description": "Internal field."
+          }
+        }
       },
       "Cart": {
         "properties": {
@@ -117278,12 +119256,13 @@
     "securitySchemes": {
       "oAuth": {
         "type": "oauth2",
-        "description": "Authentication API",
+        "description": "Authentication using OAuth 2.0",
         "flows": {
           "password": {
-            "tokenUrl": "http://localhost:8000/api/oauth/token",
+            "tokenUrl": "/api/oauth/token",
             "scopes": {
-              "write": "Full write access"
+              "write": "Full write access",
+              "admin": "Admin scope for administrative operations"
             }
           },
           "clientCredentials": {
@@ -117507,6 +119486,14 @@
     {
       "name": "Main Category",
       "description": "The endpoint for operations on Main Category"
+    },
+    {
+      "name": "Measurement Display Unit",
+      "description": "The endpoint for operations on Measurement Display Unit"
+    },
+    {
+      "name": "Measurement System",
+      "description": "The endpoint for operations on Measurement System"
     },
     {
       "name": "Media",
