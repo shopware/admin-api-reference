@@ -4749,64 +4749,178 @@
         }
       }
     },
-    "/_action/increment/{pool}": {
-      "post": {
+    "/measurement-display-unit": {
+      "get": {
         "tags": [
-          "Increment Storage"
+          "Measurement Display Unit"
         ],
-        "summary": "Increment a value in the specified pool",
-        "description": "Increments a value by key in the specified increment pool. This operation increments the counter for the given key and returns a success response.",
-        "operationId": "incrementValue",
+        "summary": "List with basic information of Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementDisplayUnitList",
         "parameters": [
           {
-            "name": "pool",
-            "in": "path",
-            "description": "The name of the increment pool (e.g., 'user_activity', 'message_queue').",
-            "required": true,
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
-            "name": "cluster",
+            "name": "page",
             "in": "query",
-            "description": "Optional cluster identifier for the increment operation.",
-            "required": false,
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
             "schema": {
               "type": "string"
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "List of Measurement Display Unit resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/measurement-display-unit?limit=25"
+                                },
+                                "last": {
+                                  "example": "/measurement-display-unit?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/measurement-display-unit?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/measurement-display-unit?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Create a new Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "createMeasurementDisplayUnit",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "key"
-                ],
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "description": "The key to increment in the pool."
-                  }
-                }
+                "$ref": "#/components/schemas/MeasurementDisplayUnit"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successfully incremented the value",
+            "description": "Detail of MeasurementDisplayUnit",
             "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementDisplayUnit"
                     }
                   }
                 }
@@ -4814,76 +4928,67 @@
             }
           },
           "400": {
-            "description": "Bad request - key parameter missing or cluster parameter missing"
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
         }
-      },
-      "get": {
+      }
+    },
+    "/search/measurement-display-unit": {
+      "post": {
         "tags": [
-          "Increment Storage"
+          "Measurement Display Unit"
         ],
-        "summary": "List increment values from pool",
-        "description": "Retrieves a list of increment values from the specified pool with pagination support.",
-        "operationId": "getIncrementValues",
-        "parameters": [
-          {
-            "name": "pool",
-            "in": "path",
-            "description": "The name of the increment pool to list values from.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cluster",
-            "in": "query",
-            "description": "Cluster identifier for the increment operation.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Maximum number of items to return.",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 5,
-              "minimum": 1
-            }
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "description": "Number of items to skip for pagination.",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "minimum": 0
+        "summary": "Search for the Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "searchMeasurementDisplayUnit",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "List of increment values",
+            "description": "List of MeasurementDisplayUnit",
             "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "key": {
-                        "type": "string",
-                        "description": "The increment key"
-                      },
-                      "count": {
-                        "type": "integer",
-                        "description": "The current count value"
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementDisplayUnit"
                       }
                     }
                   }
@@ -4892,170 +4997,1168 @@
             }
           },
           "400": {
-            "description": "Bad request - cluster parameter missing"
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
         }
       }
     },
-    "/_action/decrement/{pool}": {
-      "post": {
+    "/measurement-display-unit/{id}": {
+      "get": {
         "tags": [
-          "Increment Storage"
+          "Measurement Display Unit"
         ],
-        "summary": "Decrement a value in the specified pool",
-        "description": "Decrements a value by key in the specified increment pool. This operation decrements the counter for the given key and returns a success response.",
-        "operationId": "decrementValue",
+        "summary": "Detailed information about a Measurement Display Unit resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementDisplayUnit",
         "parameters": [
           {
-            "name": "pool",
+            "name": "id",
             "in": "path",
-            "description": "The name of the increment pool.",
+            "description": "Identifier for the measurement_display_unit",
             "required": true,
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cluster",
-            "in": "query",
-            "description": "Optional cluster identifier for the decrement operation.",
-            "required": false,
-            "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
             }
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "key"
-                ],
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "description": "The key to decrement in the pool."
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "Successfully decremented the value",
+            "description": "Detail of MeasurementDisplayUnit",
             "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementDisplayUnit"
                     }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request - key parameter missing or cluster parameter missing"
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
         }
-      }
-    },
-    "/_action/reset-increment/{pool}": {
-      "post": {
-        "tags": [
-          "Increment Storage"
-        ],
-        "summary": "Reset increment values in pool",
-        "description": "Resets increment values in the specified pool. Can reset all values or a specific key if provided.",
-        "operationId": "resetIncrementValues",
-        "parameters": [
-          {
-            "name": "pool",
-            "in": "path",
-            "description": "The name of the increment pool to reset.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cluster",
-            "in": "query",
-            "description": "Cluster identifier for the reset operation.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "key": {
-                    "type": "string",
-                    "description": "Optional specific key to reset. If not provided, all values in the pool will be reset."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully reset the increment values",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request - cluster parameter missing"
-          }
-        }
-      }
-    },
-    "/_action/delete-increment/{pool}": {
+      },
       "delete": {
         "tags": [
-          "Increment Storage"
+          "Measurement Display Unit"
         ],
-        "summary": "Delete increment keys from pool",
-        "description": "Deletes specific increment keys from the specified pool.",
-        "operationId": "deleteIncrementKeys",
+        "summary": "Delete a Measurement Display Unit resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "deleteMeasurementDisplayUnit",
         "parameters": [
           {
-            "name": "pool",
+            "name": "id",
             "in": "path",
-            "description": "The name of the increment pool to delete keys from.",
+            "description": "Identifier for the measurement_display_unit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Partially update information about a Measurement Display Unit resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "updateMeasurementDisplayUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_display_unit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Measurement Display Unit resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementDisplayUnit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/measurement-display-unit": {
+      "post": {
+        "tags": [
+          "Measurement Display Unit"
+        ],
+        "summary": "Aggregate for the Measurement Display Unit resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "aggregateMeasurementDisplayUnit",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementDisplayUnit",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementDisplayUnit"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/measurement-system": {
+      "get": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "List with basic information of Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementSystemList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Measurement System resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/MeasurementSystem"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/measurement-system?limit=25"
+                                },
+                                "last": {
+                                  "example": "/measurement-system?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/measurement-system?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/measurement-system?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementSystem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Create a new Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "createMeasurementSystem",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementSystem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementSystem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementSystem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/measurement-system": {
+      "post": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Search for the Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "searchMeasurementSystem",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementSystem"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementSystem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/measurement-system/{id}": {
+      "get": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Detailed information about a Measurement System resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "getMeasurementSystem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_system",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementSystem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementSystem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Delete a Measurement System resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "deleteMeasurementSystem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_system",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Partially update information about a Measurement System resource.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "updateMeasurementSystem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the measurement_system",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Measurement System resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementSystem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/MeasurementSystem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MeasurementSystem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/measurement-system": {
+      "post": {
+        "tags": [
+          "Measurement System"
+        ],
+        "summary": "Aggregate for the Measurement System resources.",
+        "description": "Available since: 6.7.1.0",
+        "operationId": "aggregateMeasurementSystem",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of MeasurementSystem",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MeasurementSystem"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MeasurementSystem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/_action/media/upload": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Upload a new media file",
+        "description": "Creates a new media entity and uploads a file to it using form-data file upload.",
+        "operationId": "uploadV2",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The file to upload"
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "Custom ID for the media entity"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the uploaded file"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "description": "Whether the media should be private"
+                  },
+                  "mediaFolderId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of the media folder"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file"
+                  },
+                  "deduplicate": {
+                    "type": "boolean",
+                    "description": "Whether to deduplicate based on file hash"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Media file uploaded successfully",
+            "content": {
+              "application\\/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the created media entity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/media/upload_by_url": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Upload a media file from URL",
+        "description": "Creates a new media entity by downloading and uploading a file from the provided URL. This only works if the `shopware.media.enable_url_upload_feature` variable is set to true in the shop environment.",
+        "operationId": "uploadByUrl",
+        "requestBody": {
+          "content": {
+            "application\\/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "URL of the file to download and upload"
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "Custom ID for the media entity"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the uploaded file"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "description": "Whether the media should be private"
+                  },
+                  "mediaFolderId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of the media folder"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file"
+                  },
+                  "deduplicate": {
+                    "type": "boolean",
+                    "description": "Whether to deduplicate based on file hash"
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Media file uploaded successfully",
+            "content": {
+              "application\\/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the created media entity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/media/external-link": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Create external media link",
+        "description": "Creates a new media entity that links to an external URL without downloading the file.",
+        "operationId": "externalLink",
+        "requestBody": {
+          "content": {
+            "application\\/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "URL of the external media file"
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "Custom ID for the media entity"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the file"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "description": "Whether the media should be private"
+                  },
+                  "mediaFolderId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of the media folder"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file"
+                  },
+                  "deduplicate": {
+                    "type": "boolean",
+                    "description": "Whether to deduplicate based on path"
+                  }
+                },
+                "required": [
+                  "url",
+                  "mimeType"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "External media link created successfully",
+            "content": {
+              "application\\/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the created media entity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app-system/privileges/requested": {
+      "get": {
+        "tags": [
+          "App System"
+        ],
+        "summary": "Get requested privileges for all apps",
+        "description": "Returns the list of requested privileges for all apps. Requires admin scope and `acl_role:read` permission to read.",
+        "operationId": "getRequestedPrivileges",
+        "security": [
+          {
+            "oAuth": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON object containing requested privileges.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "privileges": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "privileges": {
+                    "SwagAnalytics": [
+                      "customer:read",
+                      "order:read"
+                    ],
+                    "SwagExample": [
+                      "product:write"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request."
+          },
+          "401": {
+            "description": "Unauthorized Access."
+          },
+          "403": {
+            "description": "Forbidden. Not a valid integration source."
+          }
+        }
+      }
+    },
+    "/app-system/{appName}/privileges/accepted": {
+      "get": {
+        "tags": [
+          "App System"
+        ],
+        "summary": "Get accepted privileges for an app",
+        "description": "Returns the list of accepted privileges for the current integration. Requires admin scope with an integration.",
+        "operationId": "getAcceptedPrivileges",
+        "parameters": [
+          {
+            "name": "appName",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
             }
-          },
+          }
+        ],
+        "security": [
           {
-            "name": "cluster",
-            "in": "query",
-            "description": "Cluster identifier for the delete operation.",
+            "oAuth": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON object containing accepted privileges.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "privileges": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "privileges": {
+                    "customer:read": true,
+                    "order:read": true
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request."
+          },
+          "401": {
+            "description": "Unauthorized Access."
+          },
+          "403": {
+            "description": "Forbidden. Not a valid integration source."
+          },
+          "404": {
+            "description": "App not found."
+          }
+        }
+      }
+    },
+    "/app-system/{appName}/privileges": {
+      "patch": {
+        "tags": [
+          "App System"
+        ],
+        "summary": "Accept or revoke privileges for an app",
+        "description": "Accepts or revokes specified privileges for the given app.",
+        "operationId": "managePrivileges",
+        "parameters": [
+          {
+            "name": "appName",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
@@ -5068,521 +6171,121 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "keys"
-                ],
                 "properties": {
-                  "keys": {
+                  "accept": {
                     "type": "array",
                     "items": {
                       "type": "string"
-                    },
-                    "description": "Array of keys to delete from the pool."
+                    }
+                  },
+                  "revoke": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
+              },
+              "example": {
+                "accept": [
+                  "customer:read",
+                  "order:read"
+                ],
+                "revoke": [
+                  "product:write"
+                ]
               }
             }
           }
         },
         "responses": {
           "204": {
-            "description": "Successfully deleted the increment keys"
+            "description": "Returns no content if privileges were managed successfully."
           },
           "400": {
-            "description": "Bad request - invalid keys parameter or cluster parameter missing"
-          }
-        }
-      }
-    },
-    "/_info/message-stats.json": {
-      "get": {
-        "summary": "Get statistics for recently processed messages in the message queue",
-        "operationId": "getMessageStats",
-        "responses": {
-          "200": {
-            "description": "Statistics received",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "enabled"
-                  ],
-                  "properties": {
-                    "enabled": {
-                      "type": "boolean",
-                      "description": "Whether message queue statistics are enabled in configuration"
-                    },
-                    "stats": {
-                      "type": [
-                        "object",
-                        "null"
-                      ],
-                      "properties": {
-                        "totalMessagesProcessed": {
-                          "type": "integer"
-                        },
-                        "processedSince": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "averageTimeInQueue": {
-                          "type": "number",
-                          "format": "float"
-                        },
-                        "messageTypeStats": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "type": "string"
-                              },
-                              "count": {
-                                "type": "integer"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/theme/{themeId}/configuration": {
-      "get": {
-        "tags": [
-          "Theme"
-        ],
-        "summary": "Get theme configuration",
-        "description": "Returns the theme configuration including fields, blocks, and current values",
-        "operationId": "getThemeConfiguration",
-        "parameters": [
-          {
-            "name": "themeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Theme merged configuration",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "fields": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          },
-                          "label": {
-                            "type": "string",
-                            "deprecated": true,
-                            "description": "This field is deprecated and will be removed in v6.8.0.0"
-                          },
-                          "helpText": {
-                            "type": [
-                              "string",
-                              "null"
-                            ],
-                            "deprecated": true,
-                            "description": "This field is deprecated and will be removed in v6.8.0.0"
-                          },
-                          "type": {
-                            "type": "string"
-                          },
-                          "value": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          "editable": {
-                            "type": "boolean"
-                          },
-                          "block": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          "section": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          "tab": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          "order": {
-                            "type": [
-                              "integer",
-                              "null"
-                            ]
-                          },
-                          "sectionOrder": {
-                            "type": [
-                              "integer",
-                              "null"
-                            ]
-                          },
-                          "blockOrder": {
-                            "type": [
-                              "integer",
-                              "null"
-                            ]
-                          },
-                          "tabOrder": {
-                            "type": [
-                              "integer",
-                              "null"
-                            ]
-                          },
-                          "custom": {
-                            "type": [
-                              "object",
-                              "null"
-                            ],
-                            "additionalProperties": true
-                          },
-                          "scss": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          },
-                          "fullWidth": {
-                            "type": [
-                              "boolean",
-                              "null"
-                            ]
-                          }
-                        },
-                        "required": [
-                          "name",
-                          "label",
-                          "type",
-                          "value",
-                          "editable"
-                        ]
-                      }
-                    },
-                    "blocks": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "label": {
-                            "type": "object",
-                            "deprecated": true,
-                            "description": "This field is deprecated and will be removed in v6.8.0.0",
-                            "additionalProperties": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "required": [
-                          "label"
-                        ]
-                      }
-                    },
-                    "configInheritance": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "themeTechnicalName": {
-                      "type": "string"
-                    },
-                    "currentFields": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "isInherited": {
-                            "type": "boolean"
-                          },
-                          "value": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          }
-                        },
-                        "required": [
-                          "isInherited",
-                          "value"
-                        ]
-                      }
-                    },
-                    "baseThemeFields": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "isInherited": {
-                            "type": "boolean"
-                          },
-                          "value": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
-                          }
-                        },
-                        "required": [
-                          "isInherited",
-                          "value"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "fields",
-                    "blocks",
-                    "themeTechnicalName",
-                    "currentFields",
-                    "baseThemeFields"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/theme/{themeId}/assign/{salesChannelId}": {
-      "post": {
-        "tags": [
-          "Theme"
-        ],
-        "summary": "Assign theme to sales channel",
-        "description": "Assigns a theme to a specific sales channel",
-        "operationId": "assignTheme",
-        "parameters": [
-          {
-            "name": "themeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "Malformed request."
           },
+          "401": {
+            "description": "Unauthorized Access."
+          },
+          "403": {
+            "description": "Forbidden. Not a valid integration source."
+          },
+          "404": {
+            "description": "App not found."
+          }
+        },
+        "security": [
           {
-            "name": "salesChannelId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "oAuth": [
+              "admin"
+            ]
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Theme assigned successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
+        ]
       }
     },
-    "/_action/theme/{themeId}/reset": {
+    "/_action/theme/{themeId}": {
       "patch": {
         "tags": [
           "Theme"
         ],
-        "summary": "Reset theme configuration",
-        "description": "Resets the theme configuration to its default values",
-        "operationId": "resetTheme",
+        "summary": "Update theme configuration",
+        "description": "Updates the configuration of a theme. The theme configuration is a collection of fields that are provided as variables in the theme's SCSS files and the templates.",
+        "operationId": "updateThemeConfiguration",
         "parameters": [
           {
             "name": "themeId",
+            "description": "The ID of the theme to update",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "parentThemeId",
+            "description": "The ID of the parent theme to inherit the configuration from.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reset",
+            "description": "If true, the theme configuration will be reset to the default values from the theme.json file.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "validate",
+            "description": "If true, the theme configuration will be validated before being updated.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sanitize",
+            "description": "If true, the theme configuration will be sanitized during validation. before being updated. Only applies if validate is true.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Theme reset successfully",
+            "description": "Theme updated successfully.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/theme/{themeId}/structured-fields": {
-      "get": {
-        "tags": [
-          "Theme"
-        ],
-        "summary": "Get theme configuration fields in structured format",
-        "description": "Returns the theme configuration fields in a structured format with tabs, blocks, sections and fields",
-        "operationId": "getThemeConfigurationStructuredFields",
-        "parameters": [
-          {
-            "name": "themeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Structured theme configuration",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "tabs": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "properties": {
-                          "labelSnippetKey": {
-                            "type": "string"
-                          },
-                          "label": {
-                            "type": "string",
-                            "deprecated": true,
-                            "description": "This field is deprecated and will be removed in v6.8.0.0"
-                          },
-                          "blocks": {
-                            "type": "object",
-                            "additionalProperties": {
-                              "type": "object",
-                              "properties": {
-                                "labelSnippetKey": {
-                                  "type": "string"
-                                },
-                                "label": {
-                                  "type": "string",
-                                  "deprecated": true,
-                                  "description": "This field is deprecated and will be removed in v6.8.0.0"
-                                },
-                                "sections": {
-                                  "type": "object",
-                                  "additionalProperties": {
-                                    "type": "object",
-                                    "properties": {
-                                      "labelSnippetKey": {
-                                        "type": "string"
-                                      },
-                                      "label": {
-                                        "type": "string",
-                                        "deprecated": true,
-                                        "description": "This field is deprecated and will be removed in v6.8.0.0"
-                                      },
-                                      "fields": {
-                                        "type": "object",
-                                        "additionalProperties": {
-                                          "type": "object",
-                                          "properties": {
-                                            "labelSnippetKey": {
-                                              "type": "string"
-                                            },
-                                            "helpTextSnippetKey": {
-                                              "type": "string"
-                                            },
-                                            "type": {
-                                              "type": "string"
-                                            },
-                                            "custom": {
-                                              "type": [
-                                                "object",
-                                                "null"
-                                              ],
-                                              "additionalProperties": true
-                                            },
-                                            "fullWidth": {
-                                              "type": [
-                                                "boolean",
-                                                "null"
-                                              ]
-                                            },
-                                            "label": {
-                                              "type": "string",
-                                              "deprecated": true,
-                                              "description": "This field is deprecated and will be removed in v6.8.0.0"
-                                            },
-                                            "helpText": {
-                                              "type": [
-                                                "string",
-                                                "null"
-                                              ],
-                                              "deprecated": true,
-                                              "description": "This field is deprecated and will be removed in v6.8.0.0"
-                                            }
-                                          },
-                                          "required": [
-                                            "labelSnippetKey",
-                                            "helpTextSnippetKey",
-                                            "type",
-                                            "label"
-                                          ]
-                                        }
-                                      }
-                                    },
-                                    "required": [
-                                      "labelSnippetKey",
-                                      "label",
-                                      "fields"
-                                    ]
-                                  }
-                                }
-                              },
-                              "required": [
-                                "labelSnippetKey",
-                                "label",
-                                "sections"
-                              ]
-                            }
-                          }
-                        },
-                        "required": [
-                          "labelSnippetKey",
-                          "label",
-                          "blocks"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "tabs"
-                  ]
                 }
               }
             }
@@ -6579,6 +7282,73 @@
           }
         }
       }
+    },
+    "/_action/dsr/appointment/{appointmentId}/shopping-lists/{shoppingListId}": {
+      "post": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Load line item ids of a shopping lists from the appointment",
+        "description": "Load line item ids of a shopping lists from the appointment",
+        "operationId": "setSharingShoppingList",
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "description": "The appointment id you are joining",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "shoppingListId",
+            "in": "path",
+            "description": "The shopping list id you want to load",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "data": {
+                          "01938f89c632709ba4d65eb53604bf5b": {
+                            "quantity": "1"
+                          },
+                          "01938f89c8647036a617b7d88e1e24f5": {
+                            "quantity": "1"
+                          },
+                          "01938f8a23d47305b1e289163cea5074": {
+                            "quantity": "1"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -7271,6 +8041,12 @@
               "selfManaged": {
                 "type": "boolean"
               },
+              "requestedPrivileges": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "label": {
                 "type": "string"
               },
@@ -7778,6 +8554,12 @@
           },
           "selfManaged": {
             "type": "boolean"
+          },
+          "requestedPrivileges": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "label": {
             "type": "string"
@@ -20860,6 +21642,9 @@
               "name": {
                 "type": "string"
               },
+              "active": {
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -21371,6 +22156,9 @@
           },
           "name": {
             "type": "string"
+          },
+          "active": {
+            "type": "boolean"
           },
           "customFields": {
             "type": "object"
@@ -22454,6 +23242,289 @@
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
+          }
+        },
+        "type": "object"
+      },
+      "MeasurementDisplayUnitJsonApi": {
+        "description": "Added since version: 6.7.1.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "measurementSystemId",
+              "default",
+              "type",
+              "shortName",
+              "factor",
+              "precision"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "measurementSystemId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "default": {
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string"
+              },
+              "shortName": {
+                "type": "string"
+              },
+              "factor": {
+                "type": "number",
+                "format": "float"
+              },
+              "precision": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "name": {
+                "type": "string"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "translated": {
+                "type": "object"
+              },
+              "relationships": {
+                "properties": {
+                  "measurementSystem": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/measurement-display-unit/6e9d57f5c7acc720b0168c16387bbc61/measurementSystem"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "measurement_system"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "c0484ac171c930ce54e78cd2e0d80e5a"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "MeasurementDisplayUnit": {
+        "description": "Added since version: 6.7.1.0",
+        "required": [
+          "id",
+          "measurementSystemId",
+          "default",
+          "type",
+          "shortName",
+          "factor",
+          "precision"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "measurementSystemId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          },
+          "shortName": {
+            "type": "string"
+          },
+          "factor": {
+            "type": "number",
+            "format": "float"
+          },
+          "precision": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "translated": {
+            "type": "object"
+          },
+          "measurementSystem": {
+            "$ref": "#/components/schemas/MeasurementSystem"
+          }
+        },
+        "type": "object"
+      },
+      "MeasurementSystemJsonApi": {
+        "description": "Added since version: 6.7.1.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "technicalName"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "technicalName": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "translated": {
+                "type": "object"
+              },
+              "relationships": {
+                "properties": {
+                  "units": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/measurement-system/67b401daf737cc26c1bbe7e50b9d9acb/units"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "measurement_display_unit"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "b98b3dfbd27e710e6c3ceeae58770b52"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "MeasurementSystem": {
+        "description": "Added since version: 6.7.1.0",
+        "required": [
+          "id",
+          "technicalName"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "technicalName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "translated": {
+            "type": "object"
+          },
+          "units": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeasurementDisplayUnit"
+            }
           }
         },
         "type": "object"
@@ -24269,6 +25340,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "mediaThumbnailSizeId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "width": {
                 "type": "integer",
                 "format": "int64",
@@ -24329,6 +25404,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "mediaThumbnailSize": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media-thumbnail/3863c110ff436b51dbc09a6ea14c56e0/mediaThumbnailSize"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media_thumbnail_size"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "0d0b8659a3a47e9d7e1481961f127fd0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -24352,6 +25456,10 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "mediaId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "mediaThumbnailSizeId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -24387,6 +25495,9 @@
           },
           "media": {
             "$ref": "#/components/schemas/Media"
+          },
+          "mediaThumbnailSize": {
+            "$ref": "#/components/schemas/MediaThumbnailSize"
           }
         },
         "type": "object"
@@ -24461,6 +25572,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "mediaThumbnails": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media-thumbnail-size/122652279edf3cc398ca024851b6f53f/mediaThumbnails"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "media_thumbnail"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "76ebc340ac8f9754c760c3ec742d2407"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -24507,6 +25649,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/MediaFolderConfiguration"
+            }
+          },
+          "mediaThumbnails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaThumbnail"
             }
           }
         },
@@ -39757,6 +40905,9 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "measurementUnits": {
+                "$ref": "#/components/schemas/MeasurementUnits"
+              },
               "name": {
                 "type": "string"
               },
@@ -41092,6 +42243,9 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "measurementUnits": {
+            "$ref": "#/components/schemas/MeasurementUnits"
+          },
           "name": {
             "type": "string"
           },
@@ -41601,6 +42755,9 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "measurementUnits": {
+                "$ref": "#/components/schemas/MeasurementUnits"
+              },
               "hreflangUseOnlyLocale": {
                 "type": "boolean"
               },
@@ -41872,6 +43029,9 @@
           "snippetSetId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "measurementUnits": {
+            "$ref": "#/components/schemas/MeasurementUnits"
           },
           "hreflangUseOnlyLocale": {
             "type": "boolean"
@@ -48751,32 +49911,6 @@
         },
         "type": "object"
       },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
       "Criteria": {
         "type": "object",
         "description": "Search parameters. For more information, see our documentation on [Search Queries](https://shopware.stoplight.io/docs/store-api/docs/concepts/search-queries.md#structure)",
@@ -49470,181 +50604,6 @@
           "field"
         ]
       },
-      "Price": {
-        "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "",
-            "type": "number"
-          },
-          "net": {
-            "description": "",
-            "type": "number"
-          },
-          "linked": {
-            "description": "",
-            "type": "boolean"
-          },
-          "listPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          },
-          "regulationPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net"
-        ]
-      },
-      "infoConfigResponse": {
-        "type": "object",
-        "properties": {
-          "version": {
-            "type": "string",
-            "description": "The Shopware version."
-          },
-          "versionRevision": {
-            "type": "string",
-            "description": "The Shopware version revision."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Information about the admin worker.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "State of the admin worker."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured transports.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Asset files of active extensions",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "css": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the css file."
-                  }
-                },
-                "js": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "description": "Url to the js file."
-                  }
-                }
-              }
-            }
-          },
-          "settings": {
-            "type": "object",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the `urlFeature` setting."
-              }
-            }
-          }
-        }
-      },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
       "OAuthScopes": {
         "description": "OAuth scopes that should be requested.",
         "type": "string",
@@ -49769,111 +50728,251 @@
           }
         ]
       },
-      "AbstractDynamicPageOpenedPayload": {
+      "infoConfigResponse": {
         "type": "object",
-        "required": [
-          "type"
-        ],
         "properties": {
-          "type": {
+          "version": {
             "type": "string",
-            "description": "The type of the current dynamic page"
+            "description": "The Shopware version."
           },
-          "opened": {
-            "type": "boolean",
-            "default": true
+          "versionRevision": {
+            "type": "string",
+            "description": "The Shopware version revision."
+          },
+          "adminWorker": {
+            "type": "object",
+            "description": "Information about the admin worker.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "State of the admin worker."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured transports.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Asset files of active extensions",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "css": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the css file."
+                  }
+                },
+                "js": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Url to the js file."
+                  }
+                }
+              }
+            }
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the `urlFeature` setting."
+              }
+            }
           }
         }
       },
-      "GuidePresentationStateResponse": {
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
+      "MeasurementUnits": {
         "type": "object",
+        "description": "Configuration of the measurement system",
         "properties": {
-          "stateForAll": {
-            "$ref": "#/components/schemas/StateForAll"
+          "system": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
           },
-          "stateForClients": {
-            "$ref": "#/components/schemas/StateForGuides"
+          "units": {
+            "type": "object",
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
+              }
+            }
+          }
+        }
+      },
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "",
+            "type": "number"
+          },
+          "net": {
+            "description": "",
+            "type": "number"
+          },
+          "linked": {
+            "description": "",
+            "type": "boolean"
+          },
+          "listPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          },
+          "regulationPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
           }
         },
-        "example": {
-          "extensions": [],
-          "stateForAll": {
-            "currentGuideProductId": null,
-            "lastActiveGuideSection": null,
-            "currentPageId": null,
-            "currentSectionId": null,
-            "currentSlideAlias": 0,
-            "currentDynamicPage": null,
-            "started": false,
-            "running": false,
-            "ended": false,
-            "startedAt": null,
-            "endedAt": null,
-            "accessibleFrom": {
-              "date": "2023-08-04 00:00:00.000000",
-              "timezone_type": 3,
-              "timezone": "UTC"
+        "required": [
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
+        ]
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
             },
-            "accessibleTo": {
-              "date": "2023-08-05 00:00:00.000000",
-              "timezone_type": 3,
-              "timezone": "UTC"
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
             },
-            "appointmentMode": "guided",
-            "videoAudioSettings": "both",
-            "videoRoomUrl": "",
-            "attendeeRestrictionType": "open",
-            "productDetailDefaultPageId": "bea211b5099241719830df8026624f7f",
-            "quickviewPageId": "182d3f7f988044adbba449b70c8bc472",
-            "productListingDefaultPageId": "33e88c7994fa4cf79a1265e5105b93b2",
-            "broadcastMode": false,
-            "extensions": []
-          },
-          "stateForGuides": {
-            "clients": [],
-            "inactiveClients": {
-              "2b4066cd37a341088e32a81e04a56817": {
-                "attendeeId": "2b4066cd37a341088e32a81e04a56817",
-                "attendeeName": "Attendee 1",
-                "videoUserId": null,
-                "hasJoined": false
-              },
-              "302108ad602b4ac687f5247aae5d0297": {
-                "attendeeId": "302108ad602b4ac687f5247aae5d0297",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "5a3b4e84acab47119b8a6bceb79e732e": {
-                "attendeeId": "5a3b4e84acab47119b8a6bceb79e732e",
-                "attendeeName": "Test attende name",
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "b6358241e4ad4a4e99d0f729d21d63be": {
-                "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "f1bb9374308d4e088c29d10a2fc8cc07": {
-                "attendeeId": "f1bb9374308d4e088c29d10a2fc8cc07",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": false
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
               }
             },
-            "guides": {
-              "1850bbdc12dc44aba95bc78b16c3643c": {
-                "attendeeId": "1850bbdc12dc44aba95bc78b16c3643c",
-                "attendeeName": " admin",
-                "videoUserId": null,
-                "hasJoined": true
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
               }
-            },
-            "videoGuideToken": null,
-            "quickViewState": [],
-            "extensions": []
+            }
           }
         }
       },
@@ -50377,6 +51476,385 @@
           "apiAlias": "pwa_page_result"
         }
       },
+      "JoinAppointmentResponse": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "mercureSubscriberTopics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "mercure topic"
+            },
+            "description": "The topics to which the attendee/guide can subscribe for"
+          },
+          "mercurePublisherTopic": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The topic to which the attendee/guide can send updates"
+          },
+          "JWTMercureSubscriberToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to publish updates"
+          },
+          "mercureHubPublicUrl": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The mercure hub url to connect for subscribing and updating"
+          },
+          "JWTMercurePublisherToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to subscribe for updates"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The appointment id"
+          },
+          "newContextToken": {
+            "type": "string",
+            "description": "The new context token will be used in the header (sw-context-token) for calling the other routes"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The created Id for the attendee"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id of the current sales channel"
+          },
+          "salesChannelName": {
+            "type": "string",
+            "description": "The name of the current sales channel"
+          },
+          "appointmentName": {
+            "type": "string",
+            "description": "The name of the appointment"
+          },
+          "presentationGuideMode": {
+            "type": "string",
+            "enum": [
+              "self",
+              "guided"
+            ],
+            "description": "The type of the appointment"
+          },
+          "isPreview": {
+            "type": "boolean",
+            "description": "To see if it's a preview appointment"
+          },
+          "attendeeName": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The name of the attendee"
+          },
+          "videoUserId": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The video user id that attendee could use"
+          },
+          "b2bFeatures": {
+            "type": "object",
+            "description": "The b2b features that available for the appointment",
+            "properties": {
+              "quoteManagement": {
+                "type": "boolean",
+                "description": "To know if the quote management is enabled for current customer"
+              }
+            }
+          }
+        },
+        "example": {
+          "mercureSubscriberTopics": [
+            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
+          ],
+          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
+          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
+          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
+          "JWTMercurePublisherToken": "jwt token for publishing updates",
+          "attendeeName": "attendee name",
+          "videoUserId": null,
+          "b2bFeatures": {
+            "feature1": false,
+            "feature2": true
+          },
+          "id": "2d2c358f1ca04098aacf12873c2eed82",
+          "newContextToken": "new context token to call the other routes",
+          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
+          "salesChannelName": "Storefront",
+          "appointmentName": "Test Appointment",
+          "presentationGuideMode": "guided",
+          "isPreview": false,
+          "apiAlias": "swag_digital_sales_rooms_content_appointment_struct_appointment_join_struct"
+        }
+      },
+      "StateForAll": {
+        "type": "object",
+        "properties": {
+          "currentGuideProductId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lastActiveGuideSection": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentSectionId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentSlideAlias": {
+            "type": "integer",
+            "default": 0
+          },
+          "currentSlideData": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DynamicProductListingPageOpenedPayload"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentDynamicPage": {
+            "$ref": "#/components/schemas/DynamicPageOpenedPayload"
+          },
+          "started": {
+            "type": "boolean",
+            "default": false
+          },
+          "running": {
+            "type": "boolean",
+            "default": false
+          },
+          "ended": {
+            "type": "boolean",
+            "default": false
+          },
+          "startedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "endedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accessibleFrom": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accessibleTo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "appointmentMode": {
+            "type": "string",
+            "enum": [
+              "guided",
+              "self"
+            ]
+          },
+          "videoAudioSettings": {
+            "type": "string",
+            "enum": [
+              "both",
+              "none",
+              "audio-only"
+            ],
+            "default": "none"
+          },
+          "videoRoomUrl": {
+            "type": "string",
+            "default": ""
+          },
+          "attendeeRestrictionType": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "customer",
+                  "rules"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "productDetailDefaultPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quickviewPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "productListingDefaultPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "broadcastMode": {
+            "type": "boolean",
+            "default": false
+          },
+          "viewMode": {
+            "type": "string",
+            "enum": [
+              "onlyYou",
+              "presentation",
+              "videoGrid"
+            ],
+            "default": "presentation"
+          },
+          "allowScreenSharing": {
+            "type": "boolean",
+            "default": false
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
+      "GetListBodyRequest": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "Max amount of resources to be returned in a page"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The page to be returned"
+          }
+        }
+      },
       "VideoChatCreateStruct": {
         "type": "object",
         "description": "Includes all data you will need to attend to a appointment.",
@@ -50404,6 +51882,768 @@
           "ownerToken": "dummy owner token",
           "roomName": "rSq20mrgwsj4eIXo1u95",
           "extensions": []
+        }
+      },
+      "PresentationCmsPage": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DsrPresentationCmsPage"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "pickedProductIds": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "Product id"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The product id is assigned to presentation if it's product listing or instant listing"
+              }
+            }
+          }
+        ]
+      },
+      "CartDelivery": {
+        "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+        "properties": {
+          "deliveryDate": {
+            "type": "object",
+            "properties": {
+              "earliest": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "latest": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_delivery_shipping_location"
+                ]
+              },
+              "country": {
+                "$ref": "#/components/schemas/Country"
+              },
+              "address": {
+                "$ref": "#/components/schemas/CustomerAddress"
+              },
+              "state": {
+                "$ref": "#/components/schemas/CountryState"
+              }
+            }
+          },
+          "positions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartDeliveryPosition"
+            }
+          },
+          "shippingCosts": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          },
+          "shippingMethod": {
+            "$ref": "#/components/schemas/ShippingMethod"
+          }
+        }
+      },
+      "StateForGuides": {
+        "type": "object",
+        "properties": {
+          "clients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "inactiveClients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "guides": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "videoGuideToken": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quickViewState": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
+      "WidgetProductListing": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "extensions": {
+            "type": "array",
+            "description": "List of extensions",
+            "default": []
+          },
+          "products": {
+            "type": "array",
+            "description": "List of last seen products",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Product"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "customFields": {
+                      "type": "object",
+                      "properties": {
+                        "wishlistAttendeeIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of products"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The current page"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The number of products per page"
+          }
+        }
+      },
+      "AttendeeInsights": {
+        "type": "object",
+        "description": "Attendee Insights",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Id of the attendee"
+          },
+          "cartSum": {
+            "type": "number",
+            "description": "Sum of the cart net in base currency"
+          },
+          "productCount": {
+            "type": "number",
+            "description": "Sum of all quantities in the cart which were added during the appointment"
+          }
+        },
+        "example": {
+          "04da9d8572494ae68391a471d4c3a470": {
+            "extensions": [],
+            "id": "04da9d8572494ae68391a471d4c3a470",
+            "cartSum": 6770.53,
+            "productCount": 3,
+            "lineItemCount": 3
+          }
+        }
+      },
+      "DiscountType": {
+        "type": "string",
+        "description": "Type of the discount",
+        "enum": [
+          "percentage",
+          "absolute"
+        ]
+      },
+      "AddTempDiscountRequestBody": {
+        "type": "object",
+        "required": [
+          "discountType",
+          "discountValue",
+          "appliedItemIds"
+        ],
+        "properties": {
+          "discountType": {
+            "$ref": "#/components/schemas/DiscountType"
+          },
+          "discountValue": {
+            "type": "number",
+            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
+            "maximum": 0
+          },
+          "appliedItemIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            "description": "Ids of the items to which the discount should be applied"
+          }
+        }
+      },
+      "AddCartDiscountRequestBody": {
+        "type": "object",
+        "required": [
+          "discountType",
+          "discountValue"
+        ],
+        "properties": {
+          "discountType": {
+            "$ref": "#/components/schemas/DiscountType"
+          },
+          "discountValue": {
+            "type": "number",
+            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
+            "maximum": 0
+          }
+        }
+      },
+      "CartPriceReference": {
+        "type": "object",
+        "properties": {
+          "purchaseUnit": {
+            "type": "number"
+          },
+          "referenceUnit": {
+            "type": "number"
+          },
+          "unitName": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_price_reference"
+            ]
+          },
+          "listPrice": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CartListPrice"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "regulationPrice": {
+            "type": "object",
+            "properties": {
+              "price": {
+                "type": "number"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_regulation_price"
+                ]
+              }
+            },
+            "nullable": true
+          },
+          "hasRange": {
+            "type": "boolean"
+          },
+          "variantId": {
+            "type": "string",
+            "format": "^[0-9a-f]{32}$",
+            "nullable": true
+          }
+        },
+        "required": [
+          "apiAlias",
+          "hasRange",
+          "regulationPrice",
+          "listPrice",
+          "calculatedTaxes",
+          "totalPrice",
+          "quantity",
+          "unitName"
+        ]
+      },
+      "CartItems": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          }
+        }
+      },
+      "CartDeliveryInformation": {
+        "type": "object",
+        "properties": {
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_delivery_information"
+            ]
+          },
+          "freeDelivery": {
+            "type": "boolean"
+          },
+          "deliveryTime": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "min": {
+                "type": "integer"
+              },
+              "max": {
+                "type": "integer"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_delivery_time"
+                ]
+              }
+            }
+          },
+          "height": {
+            "type": "integer"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "restockTime": {
+            "type": "integer"
+          },
+          "stock": {
+            "type": "integer"
+          },
+          "weight": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "CartListPrice": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "discount": {
+            "type": "number"
+          },
+          "percentage": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_list_price"
+            ]
+          }
+        },
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "CartPriceQuantity": {
+        "type": "object",
+        "properties": {
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_price_quantity"
+            ]
+          },
+          "isCalculated": {
+            "type": "boolean"
+          },
+          "listPrice": {
+            "$ref": "#/components/schemas/CartListPrice"
+          },
+          "price": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "regulationPrice": {
+            "properties": {
+              "price": {
+                "type": "number",
+                "format": "float"
+              }
+            },
+            "type": "object"
+          },
+          "taxRules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "taxRate": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "GetAttendeeInsightsResponse": {
+        "type": "object",
+        "description": "Returns aggregations for the current attendees within the appointment.",
+        "properties": {
+          "attendees": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AttendeeInsights"
+            }
+          },
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "currencySymbol": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "extensions": [],
+          "attendees": {
+            "04da9d8572494ae68391a471d4c3a470": {
+              "extensions": [],
+              "id": "04da9d8572494ae68391a471d4c3a470",
+              "cartSum": 6770.53,
+              "productCount": 3,
+              "lineItemCount": 3
+            }
+          },
+          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
+          "currencySymbol": "$"
+        }
+      },
+      "Cart": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of the cart - for example `guest-cart`",
+            "type": "string"
+          },
+          "token": {
+            "description": "Context token identifying the cart and the user session",
+            "type": "string"
+          },
+          "price": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          },
+          "lineItems": {
+            "description": "All items within the cart",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+            "items": {
+              "$ref": "#/components/schemas/CartError"
+            }
+          },
+          "deliveries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartDelivery"
+            }
+          },
+          "transactions": {
+            "description": "A list of all payment transactions associated with the current cart.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "paymentMethodId": {
+                  "type": "string"
+                },
+                "amount": {
+                  "$ref": "#/components/schemas/CalculatedPrice"
+                }
+              }
+            }
+          },
+          "modified": {
+            "type": "boolean"
+          },
+          "customerComment": {
+            "type": "string",
+            "description": "A comment that can be added to the cart.",
+            "nullable": true
+          },
+          "affiliateCode": {
+            "type": "string",
+            "description": "An affiliate tracking code",
+            "nullable": true
+          },
+          "campaignCode": {
+            "type": "string",
+            "description": "A campaign tracking code",
+            "nullable": true
+          }
+        }
+      },
+      "DynamicPageOpenedPayload": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
+          }
+        ]
+      },
+      "CartDeliveryPosition": {
+        "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+        "properties": {
+          "deliveryDate": {
+            "type": "object",
+            "properties": {
+              "earliest": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "latest": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "lineItem": {
+            "$ref": "#/components/schemas/LineItem"
+          },
+          "price": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          }
+        }
+      },
+      "CartError": {
+        "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+        "properties": {
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "level": {
+                "type": "number",
+                "enum": [
+                  0,
+                  10,
+                  20
+                ],
+                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
+              },
+              "message": {
+                "type": "string"
+              },
+              "messageKey": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "AbstractDynamicPageOpenedPayload": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of the current dynamic page"
+          },
+          "opened": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "GetCartInsightsResponse": {
+        "type": "object",
+        "description": "Returns aggregations for the current carts within the appointment.",
+        "properties": {
+          "cartSum": {
+            "type": "number",
+            "description": "Sum of all products from all attenddees which were added to the cart during the appointment"
+          },
+          "productCount": {
+            "type": "number",
+            "description": "Sum of all product quantities from all attendees which were added to the cart during the appointment"
+          },
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id from the shown currency"
+          },
+          "currencySymbol": {
+            "type": "string",
+            "description": "The currency symbol from the shown currency"
+          },
+          "topProducts": {
+            "type": "object",
+            "required": [
+              "byQuantity",
+              "byRevenue"
+            ],
+            "properties": {
+              "byQuantity": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "productId": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "The id from the product"
+                    },
+                    "value": {
+                      "type": "number",
+                      "description": "The quantity in carts of this product"
+                    }
+                  },
+                  "required": [
+                    "productId",
+                    "value"
+                  ]
+                }
+              },
+              "byRevenue": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "productId": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "The id from the product"
+                    },
+                    "value": {
+                      "type": "number",
+                      "description": "The net revenue in the shown currency in carts of this product"
+                    }
+                  },
+                  "required": [
+                    "productId",
+                    "value"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "extensions": [],
+          "cartSum": 6770.53,
+          "productCount": 3,
+          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
+          "currencySymbol": "$",
+          "topProducts": {
+            "byQuantity": [
+              {
+                "productId": "01ae0dee60ea48fdafaf881b96361d59",
+                "value": 1
+              },
+              {
+                "productId": "fee3ca762be94bb49b692e359d529563",
+                "value": 1
+              },
+              {
+                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
+                "value": 1
+              }
+            ],
+            "byRevenue": [
+              {
+                "productId": "fee3ca762be94bb49b692e359d529563",
+                "value": 5333.03
+              },
+              {
+                "productId": "01ae0dee60ea48fdafaf881b96361d59",
+                "value": 1152.62
+              },
+              {
+                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
+                "value": 284.88
+              }
+            ]
+          }
         }
       },
       "LineItemType": {
@@ -50695,6 +52935,17 @@
           "type"
         ]
       },
+      "DynamicProductListingPageOpenedPayload": {
+        "required": [
+          "page"
+        ],
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Current page position in the pagination"
+          }
+        }
+      },
       "CalculatedPrice": {
         "type": "object",
         "description": "Represents a product along with detailed information required to display a variant selection.",
@@ -50827,1130 +53078,97 @@
           "taxRules"
         ]
       },
-      "CartError": {
-        "type": "object",
-        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-        "properties": {
-          "items": {
-            "type": "object",
-            "properties": {
-              "key": {
-                "type": "string"
-              },
-              "level": {
-                "type": "number",
-                "enum": [
-                  0,
-                  10,
-                  20
-                ],
-                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
-              },
-              "message": {
-                "type": "string"
-              },
-              "messageKey": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "CartItems": {
+      "GuidePresentationStateResponse": {
         "type": "object",
         "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LineItem"
-            }
-          }
-        }
-      },
-      "GetCartInsightsResponse": {
-        "type": "object",
-        "description": "Returns aggregations for the current carts within the appointment.",
-        "properties": {
-          "cartSum": {
-            "type": "number",
-            "description": "Sum of all products from all attenddees which were added to the cart during the appointment"
+          "stateForAll": {
+            "$ref": "#/components/schemas/StateForAll"
           },
-          "productCount": {
-            "type": "number",
-            "description": "Sum of all product quantities from all attendees which were added to the cart during the appointment"
-          },
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id from the shown currency"
-          },
-          "currencySymbol": {
-            "type": "string",
-            "description": "The currency symbol from the shown currency"
-          },
-          "topProducts": {
-            "type": "object",
-            "required": [
-              "byQuantity",
-              "byRevenue"
-            ],
-            "properties": {
-              "byQuantity": {
-                "type": "array",
-                "uniqueItems": true,
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "productId": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "The id from the product"
-                    },
-                    "value": {
-                      "type": "number",
-                      "description": "The quantity in carts of this product"
-                    }
-                  },
-                  "required": [
-                    "productId",
-                    "value"
-                  ]
-                }
-              },
-              "byRevenue": {
-                "type": "array",
-                "uniqueItems": true,
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "productId": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "The id from the product"
-                    },
-                    "value": {
-                      "type": "number",
-                      "description": "The net revenue in the shown currency in carts of this product"
-                    }
-                  },
-                  "required": [
-                    "productId",
-                    "value"
-                  ]
-                }
-              }
-            }
+          "stateForClients": {
+            "$ref": "#/components/schemas/StateForGuides"
           }
         },
         "example": {
           "extensions": [],
-          "cartSum": 6770.53,
-          "productCount": 3,
-          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
-          "currencySymbol": "$",
-          "topProducts": {
-            "byQuantity": [
-              {
-                "productId": "01ae0dee60ea48fdafaf881b96361d59",
-                "value": 1
-              },
-              {
-                "productId": "fee3ca762be94bb49b692e359d529563",
-                "value": 1
-              },
-              {
-                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
-                "value": 1
-              }
-            ],
-            "byRevenue": [
-              {
-                "productId": "fee3ca762be94bb49b692e359d529563",
-                "value": 5333.03
-              },
-              {
-                "productId": "01ae0dee60ea48fdafaf881b96361d59",
-                "value": 1152.62
-              },
-              {
-                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
-                "value": 284.88
-              }
-            ]
-          }
-        }
-      },
-      "DiscountType": {
-        "type": "string",
-        "description": "Type of the discount",
-        "enum": [
-          "percentage",
-          "absolute"
-        ]
-      },
-      "AddTempDiscountRequestBody": {
-        "type": "object",
-        "required": [
-          "discountType",
-          "discountValue",
-          "appliedItemIds"
-        ],
-        "properties": {
-          "discountType": {
-            "$ref": "#/components/schemas/DiscountType"
-          },
-          "discountValue": {
-            "type": "number",
-            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
-            "maximum": 0
-          },
-          "appliedItemIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
+          "stateForAll": {
+            "currentGuideProductId": null,
+            "lastActiveGuideSection": null,
+            "currentPageId": null,
+            "currentSectionId": null,
+            "currentSlideAlias": 0,
+            "currentDynamicPage": null,
+            "started": false,
+            "running": false,
+            "ended": false,
+            "startedAt": null,
+            "endedAt": null,
+            "accessibleFrom": {
+              "date": "2023-08-04 00:00:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
             },
-            "description": "Ids of the items to which the discount should be applied"
-          }
-        }
-      },
-      "AddCartDiscountRequestBody": {
-        "type": "object",
-        "required": [
-          "discountType",
-          "discountValue"
-        ],
-        "properties": {
-          "discountType": {
-            "$ref": "#/components/schemas/DiscountType"
-          },
-          "discountValue": {
-            "type": "number",
-            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
-            "maximum": 0
-          }
-        }
-      },
-      "GetAttendeeInsightsResponse": {
-        "type": "object",
-        "description": "Returns aggregations for the current attendees within the appointment.",
-        "properties": {
-          "attendees": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/AttendeeInsights"
-            }
-          },
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "currencySymbol": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "extensions": [],
-          "attendees": {
-            "04da9d8572494ae68391a471d4c3a470": {
-              "extensions": [],
-              "id": "04da9d8572494ae68391a471d4c3a470",
-              "cartSum": 6770.53,
-              "productCount": 3,
-              "lineItemCount": 3
-            }
-          },
-          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
-          "currencySymbol": "$"
-        }
-      },
-      "PresentationCmsPage": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/DsrPresentationCmsPage"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "pickedProductIds": {
-                "anyOf": [
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "Product id"
-                    }
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "description": "The product id is assigned to presentation if it's product listing or instant listing"
-              }
-            }
-          }
-        ]
-      },
-      "StateForAll": {
-        "type": "object",
-        "properties": {
-          "currentGuideProductId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "lastActiveGuideSection": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentSectionId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentSlideAlias": {
-            "type": "integer",
-            "default": 0
-          },
-          "currentSlideData": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/DynamicProductListingPageOpenedPayload"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentDynamicPage": {
-            "$ref": "#/components/schemas/DynamicPageOpenedPayload"
-          },
-          "started": {
-            "type": "boolean",
-            "default": false
-          },
-          "running": {
-            "type": "boolean",
-            "default": false
-          },
-          "ended": {
-            "type": "boolean",
-            "default": false
-          },
-          "startedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "endedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "accessibleFrom": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "accessibleTo": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "appointmentMode": {
-            "type": "string",
-            "enum": [
-              "guided",
-              "self"
-            ]
-          },
-          "videoAudioSettings": {
-            "type": "string",
-            "enum": [
-              "both",
-              "none",
-              "audio-only"
-            ],
-            "default": "none"
-          },
-          "videoRoomUrl": {
-            "type": "string",
-            "default": ""
-          },
-          "attendeeRestrictionType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "open",
-                  "customer",
-                  "rules"
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "productDetailDefaultPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickviewPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "productListingDefaultPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "broadcastMode": {
-            "type": "boolean",
-            "default": false
-          },
-          "viewMode": {
-            "type": "string",
-            "enum": [
-              "onlyYou",
-              "presentation",
-              "videoGrid"
-            ],
-            "default": "presentation"
-          },
-          "allowScreenSharing": {
-            "type": "boolean",
-            "default": false
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "JoinAppointmentResponse": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "mercureSubscriberTopics": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "mercure topic"
+            "accessibleTo": {
+              "date": "2023-08-05 00:00:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
             },
-            "description": "The topics to which the attendee/guide can subscribe for"
+            "appointmentMode": "guided",
+            "videoAudioSettings": "both",
+            "videoRoomUrl": "",
+            "attendeeRestrictionType": "open",
+            "productDetailDefaultPageId": "bea211b5099241719830df8026624f7f",
+            "quickviewPageId": "182d3f7f988044adbba449b70c8bc472",
+            "productListingDefaultPageId": "33e88c7994fa4cf79a1265e5105b93b2",
+            "broadcastMode": false,
+            "extensions": []
           },
-          "mercurePublisherTopic": {
-            "oneOf": [
-              {
-                "type": "string"
+          "stateForGuides": {
+            "clients": [],
+            "inactiveClients": {
+              "2b4066cd37a341088e32a81e04a56817": {
+                "attendeeId": "2b4066cd37a341088e32a81e04a56817",
+                "attendeeName": "Attendee 1",
+                "videoUserId": null,
+                "hasJoined": false
               },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The topic to which the attendee/guide can send updates"
-          },
-          "JWTMercureSubscriberToken": {
-            "oneOf": [
-              {
-                "type": "string"
+              "302108ad602b4ac687f5247aae5d0297": {
+                "attendeeId": "302108ad602b4ac687f5247aae5d0297",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": true
               },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to publish updates"
-          },
-          "mercureHubPublicUrl": {
-            "oneOf": [
-              {
-                "type": "string"
+              "5a3b4e84acab47119b8a6bceb79e732e": {
+                "attendeeId": "5a3b4e84acab47119b8a6bceb79e732e",
+                "attendeeName": "Test attende name",
+                "videoUserId": null,
+                "hasJoined": true
               },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The mercure hub url to connect for subscribing and updating"
-          },
-          "JWTMercurePublisherToken": {
-            "oneOf": [
-              {
-                "type": "string"
+              "b6358241e4ad4a4e99d0f729d21d63be": {
+                "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": true
               },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to subscribe for updates"
-          },
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The appointment id"
-          },
-          "newContextToken": {
-            "type": "string",
-            "description": "The new context token will be used in the header (sw-context-token) for calling the other routes"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The created Id for the attendee"
-          },
-          "salesChannelId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id of the current sales channel"
-          },
-          "salesChannelName": {
-            "type": "string",
-            "description": "The name of the current sales channel"
-          },
-          "appointmentName": {
-            "type": "string",
-            "description": "The name of the appointment"
-          },
-          "presentationGuideMode": {
-            "type": "string",
-            "enum": [
-              "self",
-              "guided"
-            ],
-            "description": "The type of the appointment"
-          },
-          "isPreview": {
-            "type": "boolean",
-            "description": "To see if it's a preview appointment"
-          },
-          "attendeeName": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The name of the attendee"
-          },
-          "videoUserId": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The video user id that attendee could use"
-          },
-          "b2bFeatures": {
-            "type": "object",
-            "description": "The b2b features that available for the appointment",
-            "properties": {
-              "quoteManagement": {
-                "type": "boolean",
-                "description": "To know if the quote management is enabled for current customer"
-              }
-            }
-          }
-        },
-        "example": {
-          "mercureSubscriberTopics": [
-            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
-          ],
-          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
-          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
-          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
-          "JWTMercurePublisherToken": "jwt token for publishing updates",
-          "attendeeName": "attendee name",
-          "videoUserId": null,
-          "b2bFeatures": {
-            "feature1": false,
-            "feature2": true
-          },
-          "id": "2d2c358f1ca04098aacf12873c2eed82",
-          "newContextToken": "new context token to call the other routes",
-          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
-          "salesChannelName": "Storefront",
-          "appointmentName": "Test Appointment",
-          "presentationGuideMode": "guided",
-          "isPreview": false,
-          "apiAlias": "swag_digital_sales_rooms_content_appointment_struct_appointment_join_struct"
-        }
-      },
-      "CartListPrice": {
-        "type": "object",
-        "description": "",
-        "properties": {
-          "discount": {
-            "type": "number"
-          },
-          "percentage": {
-            "type": "number"
-          },
-          "price": {
-            "type": "number"
-          },
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_list_price"
-            ]
-          }
-        },
-        "required": [
-          "apiAlias"
-        ]
-      },
-      "CartPriceReference": {
-        "type": "object",
-        "properties": {
-          "purchaseUnit": {
-            "type": "number"
-          },
-          "referenceUnit": {
-            "type": "number"
-          },
-          "unitName": {
-            "type": "string"
-          },
-          "price": {
-            "type": "number"
-          },
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_price_reference"
-            ]
-          },
-          "listPrice": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CartListPrice"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "regulationPrice": {
-            "type": "object",
-            "properties": {
-              "price": {
-                "type": "number"
-              },
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "cart_regulation_price"
-                ]
+              "f1bb9374308d4e088c29d10a2fc8cc07": {
+                "attendeeId": "f1bb9374308d4e088c29d10a2fc8cc07",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": false
               }
             },
-            "nullable": true
-          },
-          "hasRange": {
-            "type": "boolean"
-          },
-          "variantId": {
-            "type": "string",
-            "format": "^[0-9a-f]{32}$",
-            "nullable": true
-          }
-        },
-        "required": [
-          "apiAlias",
-          "hasRange",
-          "regulationPrice",
-          "listPrice",
-          "calculatedTaxes",
-          "totalPrice",
-          "quantity",
-          "unitName"
-        ]
-      },
-      "AttendeeInsights": {
-        "type": "object",
-        "description": "Attendee Insights",
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "Id of the attendee"
-          },
-          "cartSum": {
-            "type": "number",
-            "description": "Sum of the cart net in base currency"
-          },
-          "productCount": {
-            "type": "number",
-            "description": "Sum of all quantities in the cart which were added during the appointment"
-          }
-        },
-        "example": {
-          "04da9d8572494ae68391a471d4c3a470": {
-            "extensions": [],
-            "id": "04da9d8572494ae68391a471d4c3a470",
-            "cartSum": 6770.53,
-            "productCount": 3,
-            "lineItemCount": 3
-          }
-        }
-      },
-      "GetListBodyRequest": {
-        "type": "object",
-        "properties": {
-          "limit": {
-            "type": "integer",
-            "description": "Max amount of resources to be returned in a page"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The page to be returned"
-          }
-        }
-      },
-      "DynamicPageOpenedPayload": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
-          }
-        ]
-      },
-      "WidgetProductListing": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "extensions": {
-            "type": "array",
-            "description": "List of extensions",
-            "default": []
-          },
-          "products": {
-            "type": "array",
-            "description": "List of last seen products",
-            "items": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Product"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "customFields": {
-                      "type": "object",
-                      "properties": {
-                        "wishlistAttendeeIds": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "total": {
-            "type": "integer",
-            "description": "The total number of products"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The current page"
-          },
-          "limit": {
-            "type": "integer",
-            "description": "The number of products per page"
-          }
-        }
-      },
-      "CartDeliveryInformation": {
-        "type": "object",
-        "properties": {
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_delivery_information"
-            ]
-          },
-          "freeDelivery": {
-            "type": "boolean"
-          },
-          "deliveryTime": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "min": {
-                "type": "integer"
-              },
-              "max": {
-                "type": "integer"
-              },
-              "unit": {
-                "type": "string"
-              },
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "cart_delivery_time"
-                ]
-              }
-            }
-          },
-          "height": {
-            "type": "integer"
-          },
-          "length": {
-            "type": "integer"
-          },
-          "restockTime": {
-            "type": "integer"
-          },
-          "stock": {
-            "type": "integer"
-          },
-          "weight": {
-            "type": "integer"
-          },
-          "width": {
-            "type": "integer"
-          }
-        },
-        "required": [
-          "apiAlias"
-        ]
-      },
-      "Cart": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "Name of the cart - for example `guest-cart`",
-            "type": "string"
-          },
-          "token": {
-            "description": "Context token identifying the cart and the user session",
-            "type": "string"
-          },
-          "price": {
-            "$ref": "#/components/schemas/CalculatedPrice"
-          },
-          "lineItems": {
-            "description": "All items within the cart",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LineItem"
-            }
-          },
-          "errors": {
-            "type": "array",
-            "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-            "items": {
-              "$ref": "#/components/schemas/CartError"
-            }
-          },
-          "deliveries": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CartDelivery"
-            }
-          },
-          "transactions": {
-            "description": "A list of all payment transactions associated with the current cart.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "paymentMethodId": {
-                  "type": "string"
-                },
-                "amount": {
-                  "$ref": "#/components/schemas/CalculatedPrice"
-                }
-              }
-            }
-          },
-          "modified": {
-            "type": "boolean"
-          },
-          "customerComment": {
-            "type": "string",
-            "description": "A comment that can be added to the cart.",
-            "nullable": true
-          },
-          "affiliateCode": {
-            "type": "string",
-            "description": "An affiliate tracking code",
-            "nullable": true
-          },
-          "campaignCode": {
-            "type": "string",
-            "description": "A campaign tracking code",
-            "nullable": true
-          }
-        }
-      },
-      "CartDelivery": {
-        "type": "object",
-        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-        "properties": {
-          "deliveryDate": {
-            "type": "object",
-            "properties": {
-              "earliest": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "latest": {
-                "type": "string",
-                "format": "date-time"
-              }
-            }
-          },
-          "location": {
-            "type": "object",
-            "properties": {
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "cart_delivery_shipping_location"
-                ]
-              },
-              "country": {
-                "$ref": "#/components/schemas/Country"
-              },
-              "address": {
-                "$ref": "#/components/schemas/CustomerAddress"
-              },
-              "state": {
-                "$ref": "#/components/schemas/CountryState"
-              }
-            }
-          },
-          "positions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CartDeliveryPosition"
-            }
-          },
-          "shippingCosts": {
-            "$ref": "#/components/schemas/CalculatedPrice"
-          },
-          "shippingMethod": {
-            "$ref": "#/components/schemas/ShippingMethod"
-          }
-        }
-      },
-      "CartDeliveryPosition": {
-        "type": "object",
-        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-        "properties": {
-          "deliveryDate": {
-            "type": "object",
-            "properties": {
-              "earliest": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "latest": {
-                "type": "string",
-                "format": "date-time"
-              }
-            }
-          },
-          "identifier": {
-            "type": "string"
-          },
-          "lineItem": {
-            "$ref": "#/components/schemas/LineItem"
-          },
-          "price": {
-            "$ref": "#/components/schemas/CalculatedPrice"
-          }
-        }
-      },
-      "StateForGuides": {
-        "type": "object",
-        "properties": {
-          "clients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "inactiveClients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "guides": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "videoGuideToken": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickViewState": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "CartPriceQuantity": {
-        "type": "object",
-        "properties": {
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_price_quantity"
-            ]
-          },
-          "isCalculated": {
-            "type": "boolean"
-          },
-          "listPrice": {
-            "$ref": "#/components/schemas/CartListPrice"
-          },
-          "price": {
-            "type": "number"
-          },
-          "quantity": {
-            "type": "number"
-          },
-          "regulationPrice": {
-            "properties": {
-              "price": {
-                "type": "number",
-                "format": "float"
+            "guides": {
+              "1850bbdc12dc44aba95bc78b16c3643c": {
+                "attendeeId": "1850bbdc12dc44aba95bc78b16c3643c",
+                "attendeeName": " admin",
+                "videoUserId": null,
+                "hasJoined": true
               }
             },
-            "type": "object"
-          },
-          "taxRules": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "taxRate": {
-                  "type": "number",
-                  "format": "float"
-                },
-                "name": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "type": {
-            "type": "string"
+            "videoGuideToken": null,
+            "quickViewState": [],
+            "extensions": []
           }
-        },
-        "required": [
-          "apiAlias"
-        ]
+        }
       }
     },
     "responses": {
@@ -52282,12 +53500,13 @@
     "securitySchemes": {
       "oAuth": {
         "type": "oauth2",
-        "description": "Authentication API",
+        "description": "Authentication using OAuth 2.0",
         "flows": {
           "password": {
-            "tokenUrl": "http://localhost:8000/api/oauth/token",
+            "tokenUrl": "/api/oauth/token",
             "scopes": {
-              "write": "Full write access"
+              "write": "Full write access",
+              "admin": "Admin scope for administrative operations"
             }
           },
           "clientCredentials": {
@@ -52547,6 +53766,14 @@
     {
       "name": "Main Category",
       "description": "The endpoint for operations on Main Category"
+    },
+    {
+      "name": "Measurement Display Unit",
+      "description": "The endpoint for operations on Measurement Display Unit"
+    },
+    {
+      "name": "Measurement System",
+      "description": "The endpoint for operations on Measurement System"
     },
     {
       "name": "Media",
