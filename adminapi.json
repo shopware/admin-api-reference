@@ -72092,6 +72092,65 @@
         }
       }
     },
+    "/oauth/sso/config": {
+      "get": {
+        "tags": [
+          "Authorization & Authentication",
+          "SSO Login configuration"
+        ],
+        "summary": "Loads configuration for the admin login",
+        "description": "Loads the configuration for the admin login. This configuration is used to load and configure the default or Single Sign On (SSO) login for the admin.",
+        "operationId": "loadSsoLoginConfig",
+        "responses": {
+          "200": {
+            "description": "Config loaded successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "useDefault": {
+                      "description": "Experimental: Indicates which login is used. Default or SSO.",
+                      "type": "boolean"
+                    },
+                    "url": {
+                      "description": "Experimental: Contains the return url for the Shopware SSO login.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/sso/code": {
+      "get": {
+        "tags": [
+          "Authorization & Authentication",
+          "SSO Login callback"
+        ],
+        "summary": "Callback function. Fetch an authorization code",
+        "description": "Fetch an authorization code log in the user.",
+        "operationId": "callBackWithCode",
+        "responses": {
+          "302": {
+            "description": "Experimental: Forwards to the Shopware admin"
+          },
+          "200": {
+            "description": "Authorisation process continues",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/_info/message-stats.json": {
       "get": {
         "summary": "Get statistics for recently processed messages in the message queue",
