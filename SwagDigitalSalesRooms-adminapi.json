@@ -4884,113 +4884,6 @@
         }
       }
     },
-    "/oauth/sso/config": {
-      "get": {
-        "tags": [
-          "Authorization & Authentication",
-          "SSO Login configuration"
-        ],
-        "summary": "Loads configuration for the admin login",
-        "description": "Loads the configuration for the admin login. This configuration is used to load and configure the default or Single Sign On (SSO) login for the admin.",
-        "operationId": "loadSsoLoginConfig",
-        "responses": {
-          "200": {
-            "description": "Config loaded successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "useDefault": {
-                      "description": "Experimental: Indicates which login is used. Default or SSO.",
-                      "type": "boolean"
-                    },
-                    "url": {
-                      "description": "Experimental: Contains the return url for the Shopware SSO login.",
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/oauth/sso/code": {
-      "get": {
-        "tags": [
-          "Authorization & Authentication",
-          "SSO Login callback"
-        ],
-        "summary": "Callback function. Fetch an authorization code",
-        "description": "Fetch an authorization code log in the user.",
-        "operationId": "callBackWithCode",
-        "responses": {
-          "302": {
-            "description": "Experimental: Forwards to the Shopware admin"
-          },
-          "200": {
-            "description": "Authorisation process continues",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/oauth/sso/auth": {
-      "get": {
-        "tags": [
-          "Experimental",
-          "SSO Login forward"
-        ],
-        "summary": "Experimental: Redirect to SSO login",
-        "description": "Experimental: Creates a redirection to the SSO login page",
-        "operationId": "ssoAuth",
-        "responses": {
-          "302": {
-            "description": "Experimental: Forwards to SSO login Page"
-          }
-        }
-      }
-    },
-    "/_info/is-sso": {
-      "get": {
-        "tags": [
-          "Experimental",
-          "Is SSO environment"
-        ],
-        "summary": "Experimental: Is SSO environment",
-        "description": "Experimental: Returns a boolean which indicates the it is a SSO environment or not",
-        "operationId": "isSso",
-        "responses": {
-          "200": {
-            "description": "Experimental: Returns if it is a SSO environment or not"
-          }
-        }
-      }
-    },
-    "/_action/sso/invite-user": {
-      "post": {
-        "tags": [
-          "Experimental",
-          "Invite a new SSO user"
-        ],
-        "summary": "Experimental: Invite a new SSO user",
-        "description": "Experimental: Invite a new SSO user and sends a e-mail with the invite",
-        "operationId": "inviteUser",
-        "responses": {
-          "200": {
-            "description": "Experimental: Invite a new SSO user and sends a e-mail with the invite"
-          }
-        }
-      }
-    },
     "/_action/dsr/appointment/{appointmentId}/join-as-guide": {
       "post": {
         "tags": [
@@ -9077,6 +8970,7 @@
                     "type": "object"
                   },
                   "children": {
+                    "description": "Child categories within this category for hierarchical navigation",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -9108,6 +9002,7 @@
                     "type": "object"
                   },
                   "media": {
+                    "description": "Category image or banner",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -9199,6 +9094,7 @@
                     "type": "object"
                   },
                   "tags": {
+                    "description": "Tags for organizing and filtering categories",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -9230,6 +9126,7 @@
                     "type": "object"
                   },
                   "cmsPage": {
+                    "description": "CMS page layout for the category",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -9412,6 +9309,7 @@
                     "type": "object"
                   },
                   "seoUrls": {
+                    "description": "SEO-friendly URLs for the category across different sales channels",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -9603,13 +9501,15 @@
             "$ref": "#/components/schemas/Category"
           },
           "children": {
+            "description": "Child categories within this category for hierarchical navigation",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Category"
             }
           },
           "media": {
-            "$ref": "#/components/schemas/Media"
+            "$ref": "#/components/schemas/Media",
+            "description": "Category image or banner"
           },
           "products": {
             "type": "array",
@@ -9624,13 +9524,15 @@
             }
           },
           "tags": {
+            "description": "Tags for organizing and filtering categories",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Tag"
             }
           },
           "cmsPage": {
-            "$ref": "#/components/schemas/CmsPage"
+            "$ref": "#/components/schemas/CmsPage",
+            "description": "CMS page layout for the category"
           },
           "productStream": {
             "$ref": "#/components/schemas/ProductStream"
@@ -9660,6 +9562,7 @@
             }
           },
           "seoUrls": {
+            "description": "SEO-friendly URLs for the category across different sales channels",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SeoUrl"
@@ -10105,6 +10008,7 @@
               "relationships": {
                 "properties": {
                   "sections": {
+                    "description": "Content sections within the CMS page (layout blocks containing slots)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -10136,6 +10040,7 @@
                     "type": "object"
                   },
                   "previewMedia": {
+                    "description": "Preview image for the CMS page in admin panel and page selection",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -10196,6 +10101,7 @@
                     "type": "object"
                   },
                   "landingPages": {
+                    "description": "Landing pages using this CMS layout",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -10389,13 +10295,15 @@
             "type": "object"
           },
           "sections": {
+            "description": "Content sections within the CMS page (layout blocks containing slots)",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CmsSection"
             }
           },
           "previewMedia": {
-            "$ref": "#/components/schemas/Media"
+            "$ref": "#/components/schemas/Media",
+            "description": "Preview image for the CMS page in admin panel and page selection"
           },
           "categories": {
             "type": "array",
@@ -10404,6 +10312,7 @@
             }
           },
           "landingPages": {
+            "description": "Landing pages using this CMS layout",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/LandingPage"
@@ -11080,6 +10989,7 @@
               "relationships": {
                 "properties": {
                   "states": {
+                    "description": "States/provinces/regions within the country",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -11428,6 +11338,7 @@
             "type": "object"
           },
           "states": {
+            "description": "States/provinces/regions within the country",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CountryState"
@@ -13268,6 +13179,7 @@
               "relationships": {
                 "properties": {
                   "group": {
+                    "description": "Customer group determining pricing and permissions",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -13326,6 +13238,7 @@
                     "type": "object"
                   },
                   "language": {
+                    "description": "Preferred language for customer communication",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -13355,6 +13268,7 @@
                     "type": "object"
                   },
                   "lastPaymentMethod": {
+                    "description": "Last used payment method by the customer",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -13384,6 +13298,7 @@
                     "type": "object"
                   },
                   "defaultBillingAddress": {
+                    "description": "Default billing address for the customer",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -13413,6 +13328,7 @@
                     "type": "object"
                   },
                   "activeBillingAddress": {
+                    "description": "Currently active billing address in the session",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -13442,6 +13358,7 @@
                     "type": "object"
                   },
                   "defaultShippingAddress": {
+                    "description": "Default shipping address for the customer",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -13471,6 +13388,7 @@
                     "type": "object"
                   },
                   "activeShippingAddress": {
+                    "description": "Currently active shipping address in the session",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -13500,6 +13418,7 @@
                     "type": "object"
                   },
                   "salutation": {
+                    "description": "Customer salutation (e.g., Mr., Mrs., Ms.)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -13529,6 +13448,7 @@
                     "type": "object"
                   },
                   "addresses": {
+                    "description": "All addresses saved for the customer",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -13591,6 +13511,7 @@
                     "type": "object"
                   },
                   "tags": {
+                    "description": "Tags assigned to the customer for organization and segmentation",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -14068,33 +13989,42 @@
             "type": "object"
           },
           "group": {
-            "$ref": "#/components/schemas/CustomerGroup"
+            "$ref": "#/components/schemas/CustomerGroup",
+            "description": "Customer group determining pricing and permissions"
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
           },
           "language": {
-            "$ref": "#/components/schemas/Language"
+            "$ref": "#/components/schemas/Language",
+            "description": "Preferred language for customer communication"
           },
           "lastPaymentMethod": {
-            "$ref": "#/components/schemas/PaymentMethod"
+            "$ref": "#/components/schemas/PaymentMethod",
+            "description": "Last used payment method by the customer"
           },
           "defaultBillingAddress": {
-            "$ref": "#/components/schemas/CustomerAddress"
+            "$ref": "#/components/schemas/CustomerAddress",
+            "description": "Default billing address for the customer"
           },
           "activeBillingAddress": {
-            "$ref": "#/components/schemas/CustomerAddress"
+            "$ref": "#/components/schemas/CustomerAddress",
+            "description": "Currently active billing address in the session"
           },
           "defaultShippingAddress": {
-            "$ref": "#/components/schemas/CustomerAddress"
+            "$ref": "#/components/schemas/CustomerAddress",
+            "description": "Default shipping address for the customer"
           },
           "activeShippingAddress": {
-            "$ref": "#/components/schemas/CustomerAddress"
+            "$ref": "#/components/schemas/CustomerAddress",
+            "description": "Currently active shipping address in the session"
           },
           "salutation": {
-            "$ref": "#/components/schemas/Salutation"
+            "$ref": "#/components/schemas/Salutation",
+            "description": "Customer salutation (e.g., Mr., Mrs., Ms.)"
           },
           "addresses": {
+            "description": "All addresses saved for the customer",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CustomerAddress"
@@ -14107,6 +14037,7 @@
             }
           },
           "tags": {
+            "description": "Tags assigned to the customer for organization and segmentation",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Tag"
@@ -20061,6 +19992,7 @@
                     "type": "object"
                   },
                   "cmsPage": {
+                    "description": "CMS page layout for the landing page",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -20121,6 +20053,7 @@
                     "type": "object"
                   },
                   "seoUrls": {
+                    "description": "SEO-friendly URLs for the landing page across different sales channels",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -20227,7 +20160,8 @@
             }
           },
           "cmsPage": {
-            "$ref": "#/components/schemas/CmsPage"
+            "$ref": "#/components/schemas/CmsPage",
+            "description": "CMS page layout for the landing page"
           },
           "salesChannels": {
             "type": "array",
@@ -20236,6 +20170,7 @@
             }
           },
           "seoUrls": {
+            "description": "SEO-friendly URLs for the landing page across different sales channels",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SeoUrl"
@@ -20424,6 +20359,7 @@
                     "type": "object"
                   },
                   "locale": {
+                    "description": "Locale defining regional settings (date, time, number formats)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -20453,6 +20389,7 @@
                     "type": "object"
                   },
                   "translationCode": {
+                    "description": "Locale used for translating content",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -20482,6 +20419,7 @@
                     "type": "object"
                   },
                   "children": {
+                    "description": "Child languages inheriting from this parent language",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -20911,12 +20849,15 @@
             "$ref": "#/components/schemas/Language"
           },
           "locale": {
-            "$ref": "#/components/schemas/Locale"
+            "$ref": "#/components/schemas/Locale",
+            "description": "Locale defining regional settings (date, time, number formats)"
           },
           "translationCode": {
-            "$ref": "#/components/schemas/Locale"
+            "$ref": "#/components/schemas/Locale",
+            "description": "Locale used for translating content"
           },
           "children": {
+            "description": "Child languages inheriting from this parent language",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Language"
@@ -22420,6 +22361,7 @@
                     "type": "object"
                   },
                   "thumbnails": {
+                    "description": "Generated thumbnail images in various sizes",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -23297,6 +23239,7 @@
             }
           },
           "thumbnails": {
+            "description": "Generated thumbnail images in various sizes",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/MediaThumbnail"
@@ -25868,6 +25811,7 @@
               "relationships": {
                 "properties": {
                   "stateMachineState": {
+                    "description": "Current order state (e.g., open, in_progress, completed, cancelled)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -25897,6 +25841,7 @@
                     "type": "object"
                   },
                   "primaryOrderDelivery": {
+                    "description": "Primary delivery information for the order",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -25926,6 +25871,7 @@
                     "type": "object"
                   },
                   "primaryOrderTransaction": {
+                    "description": "Primary payment transaction for the order",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -25955,6 +25901,7 @@
                     "type": "object"
                   },
                   "orderCustomer": {
+                    "description": "Customer information associated with the order",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -25984,6 +25931,7 @@
                     "type": "object"
                   },
                   "currency": {
+                    "description": "Currency used for the order",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -26013,6 +25961,7 @@
                     "type": "object"
                   },
                   "language": {
+                    "description": "Language used when placing the order",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -26071,6 +26020,7 @@
                     "type": "object"
                   },
                   "addresses": {
+                    "description": "All addresses associated with the order (billing and shipping)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -26102,6 +26052,7 @@
                     "type": "object"
                   },
                   "billingAddress": {
+                    "description": "Billing address for the order",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -26131,6 +26082,7 @@
                     "type": "object"
                   },
                   "deliveries": {
+                    "description": "Delivery information including shipping address and tracking",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -26162,6 +26114,7 @@
                     "type": "object"
                   },
                   "lineItems": {
+                    "description": "Order line items (products, discounts, fees)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -26193,6 +26146,7 @@
                     "type": "object"
                   },
                   "transactions": {
+                    "description": "Payment transactions for the order",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -26224,6 +26178,7 @@
                     "type": "object"
                   },
                   "documents": {
+                    "description": "Generated documents (invoices, delivery notes, credit notes)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -26255,6 +26210,7 @@
                     "type": "object"
                   },
                   "tags": {
+                    "description": "Tags assigned to the order for organization and filtering",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -26643,60 +26599,73 @@
             "readOnly": true
           },
           "stateMachineState": {
-            "$ref": "#/components/schemas/StateMachineState"
+            "$ref": "#/components/schemas/StateMachineState",
+            "description": "Current order state (e.g., open, in_progress, completed, cancelled)"
           },
           "primaryOrderDelivery": {
-            "$ref": "#/components/schemas/OrderDelivery"
+            "$ref": "#/components/schemas/OrderDelivery",
+            "description": "Primary delivery information for the order"
           },
           "primaryOrderTransaction": {
-            "$ref": "#/components/schemas/OrderTransaction"
+            "$ref": "#/components/schemas/OrderTransaction",
+            "description": "Primary payment transaction for the order"
           },
           "orderCustomer": {
-            "$ref": "#/components/schemas/OrderCustomer"
+            "$ref": "#/components/schemas/OrderCustomer",
+            "description": "Customer information associated with the order"
           },
           "currency": {
-            "$ref": "#/components/schemas/Currency"
+            "$ref": "#/components/schemas/Currency",
+            "description": "Currency used for the order"
           },
           "language": {
-            "$ref": "#/components/schemas/Language"
+            "$ref": "#/components/schemas/Language",
+            "description": "Language used when placing the order"
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
           },
           "addresses": {
+            "description": "All addresses associated with the order (billing and shipping)",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/OrderAddress"
             }
           },
           "billingAddress": {
-            "$ref": "#/components/schemas/OrderAddress"
+            "$ref": "#/components/schemas/OrderAddress",
+            "description": "Billing address for the order"
           },
           "deliveries": {
+            "description": "Delivery information including shipping address and tracking",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/OrderDelivery"
             }
           },
           "lineItems": {
+            "description": "Order line items (products, discounts, fees)",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/OrderLineItem"
             }
           },
           "transactions": {
+            "description": "Payment transactions for the order",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/OrderTransaction"
             }
           },
           "documents": {
+            "description": "Generated documents (invoices, delivery notes, credit notes)",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Document"
             }
           },
           "tags": {
+            "description": "Tags assigned to the order for organization and filtering",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Tag"
@@ -27478,6 +27447,7 @@
               "relationships": {
                 "properties": {
                   "stateMachineState": {
+                    "description": "Current delivery state (e.g., open, shipped, delivered, cancelled)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -27536,6 +27506,7 @@
                     "type": "object"
                   },
                   "shippingOrderAddress": {
+                    "description": "Shipping address for this delivery",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -27565,6 +27536,7 @@
                     "type": "object"
                   },
                   "shippingMethod": {
+                    "description": "Shipping method used for this delivery",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -27594,6 +27566,7 @@
                     "type": "object"
                   },
                   "positions": {
+                    "description": "Line items included in this delivery",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -27790,18 +27763,22 @@
             "readOnly": true
           },
           "stateMachineState": {
-            "$ref": "#/components/schemas/StateMachineState"
+            "$ref": "#/components/schemas/StateMachineState",
+            "description": "Current delivery state (e.g., open, shipped, delivered, cancelled)"
           },
           "order": {
             "$ref": "#/components/schemas/Order"
           },
           "shippingOrderAddress": {
-            "$ref": "#/components/schemas/OrderAddress"
+            "$ref": "#/components/schemas/OrderAddress",
+            "description": "Shipping address for this delivery"
           },
           "shippingMethod": {
-            "$ref": "#/components/schemas/ShippingMethod"
+            "$ref": "#/components/schemas/ShippingMethod",
+            "description": "Shipping method used for this delivery"
           },
           "positions": {
+            "description": "Line items included in this delivery",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/OrderDeliveryPosition"
@@ -28306,6 +28283,7 @@
               "relationships": {
                 "properties": {
                   "cover": {
+                    "description": "Line item image or thumbnail",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -28364,6 +28342,7 @@
                     "type": "object"
                   },
                   "product": {
+                    "description": "Referenced product if this is a product line item",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -28422,6 +28401,7 @@
                     "type": "object"
                   },
                   "orderDeliveryPositions": {
+                    "description": "Delivery positions for this line item",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -28484,6 +28464,7 @@
                     "type": "object"
                   },
                   "downloads": {
+                    "description": "Digital downloads associated with this line item",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -28758,18 +28739,21 @@
             "readOnly": true
           },
           "cover": {
-            "$ref": "#/components/schemas/Media"
+            "$ref": "#/components/schemas/Media",
+            "description": "Line item image or thumbnail"
           },
           "order": {
             "$ref": "#/components/schemas/Order"
           },
           "product": {
-            "$ref": "#/components/schemas/Product"
+            "$ref": "#/components/schemas/Product",
+            "description": "Referenced product if this is a product line item"
           },
           "promotion": {
             "$ref": "#/components/schemas/Promotion"
           },
           "orderDeliveryPositions": {
+            "description": "Delivery positions for this line item",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/OrderDeliveryPosition"
@@ -28782,6 +28766,7 @@
             }
           },
           "downloads": {
+            "description": "Digital downloads associated with this line item",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/OrderLineItemDownload"
@@ -29128,6 +29113,7 @@
               "relationships": {
                 "properties": {
                   "stateMachineState": {
+                    "description": "Current payment transaction state (e.g., open, paid, cancelled)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -29186,6 +29172,7 @@
                     "type": "object"
                   },
                   "paymentMethod": {
+                    "description": "Payment method used for this transaction",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -29215,6 +29202,7 @@
                     "type": "object"
                   },
                   "captures": {
+                    "description": "Payment captures for this transaction",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -29390,15 +29378,18 @@
             "readOnly": true
           },
           "stateMachineState": {
-            "$ref": "#/components/schemas/StateMachineState"
+            "$ref": "#/components/schemas/StateMachineState",
+            "description": "Current payment transaction state (e.g., open, paid, cancelled)"
           },
           "order": {
             "$ref": "#/components/schemas/Order"
           },
           "paymentMethod": {
-            "$ref": "#/components/schemas/PaymentMethod"
+            "$ref": "#/components/schemas/PaymentMethod",
+            "description": "Payment method used for this transaction"
           },
           "captures": {
+            "description": "Payment captures for this transaction",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/OrderTransactionCapture"
@@ -30453,6 +30444,7 @@
               "relationships": {
                 "properties": {
                   "media": {
+                    "description": "Payment method logo or icon image",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -30776,7 +30768,8 @@
             "type": "object"
           },
           "media": {
-            "$ref": "#/components/schemas/Media"
+            "$ref": "#/components/schemas/Media",
+            "description": "Payment method logo or icon image"
           },
           "availabilityRule": {
             "$ref": "#/components/schemas/Rule"
@@ -31434,6 +31427,7 @@
               "relationships": {
                 "properties": {
                   "downloads": {
+                    "description": "Downloadable files associated with the product (e.g., manuals, digital content)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31494,6 +31488,7 @@
                     "type": "object"
                   },
                   "children": {
+                    "description": "Product variants that inherit from this parent product",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31525,6 +31520,7 @@
                     "type": "object"
                   },
                   "deliveryTime": {
+                    "description": "Estimated delivery time for the product",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31554,6 +31550,7 @@
                     "type": "object"
                   },
                   "tax": {
+                    "description": "Tax configuration (rate and calculation rules)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31583,6 +31580,7 @@
                     "type": "object"
                   },
                   "manufacturer": {
+                    "description": "Product manufacturer or brand information",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31612,6 +31610,7 @@
                     "type": "object"
                   },
                   "unit": {
+                    "description": "Product unit of measure (e.g., piece, liter, kg)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31641,6 +31640,7 @@
                     "type": "object"
                   },
                   "cover": {
+                    "description": "Main product image displayed in listings and detail pages",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31699,6 +31699,7 @@
                     "type": "object"
                   },
                   "cmsPage": {
+                    "description": "Custom CMS page layout for the product detail page",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31728,6 +31729,7 @@
                     "type": "object"
                   },
                   "canonicalProduct": {
+                    "description": "Canonical product reference for variant consolidation and SEO purposes",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31788,6 +31790,7 @@
                     "type": "object"
                   },
                   "media": {
+                    "description": "Product images and media gallery",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31819,6 +31822,7 @@
                     "type": "object"
                   },
                   "crossSellings": {
+                    "description": "Cross-selling configurations (related products, accessories, similar items)",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31881,6 +31885,7 @@
                     "type": "object"
                   },
                   "configuratorSettings": {
+                    "description": "Variant configurator settings defining available options for product variants",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -31974,6 +31979,7 @@
                     "type": "object"
                   },
                   "productReviews": {
+                    "description": "Customer reviews and ratings for the product",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -32005,6 +32011,7 @@
                     "type": "object"
                   },
                   "mainCategories": {
+                    "description": "Primary category assignments per sales channel for SEO and navigation",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -32036,6 +32043,7 @@
                     "type": "object"
                   },
                   "seoUrls": {
+                    "description": "SEO-friendly URLs for the product across different sales channels",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -32129,6 +32137,7 @@
                     "type": "object"
                   },
                   "options": {
+                    "description": "Product variant options (e.g., size, color) that define different variants",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -32160,6 +32169,7 @@
                     "type": "object"
                   },
                   "properties": {
+                    "description": "Product properties and characteristics for filtering",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -32191,6 +32201,7 @@
                     "type": "object"
                   },
                   "categories": {
+                    "description": "Categories this product is assigned to",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -32222,6 +32233,7 @@
                     "type": "object"
                   },
                   "streams": {
+                    "description": "Dynamic product streams this product belongs to based on defined filters",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -32253,6 +32265,7 @@
                     "type": "object"
                   },
                   "categoriesRo": {
+                    "description": "Read-only category tree including all parent categories for optimized queries",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -32284,6 +32297,7 @@
                     "type": "object"
                   },
                   "tags": {
+                    "description": "Tags for organizing and filtering products",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -32730,6 +32744,7 @@
             "type": "object"
           },
           "downloads": {
+            "description": "Downloadable files associated with the product (e.g., manuals, digital content)",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ProductDownload"
@@ -32739,34 +32754,42 @@
             "$ref": "#/components/schemas/Product"
           },
           "children": {
+            "description": "Product variants that inherit from this parent product",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Product"
             }
           },
           "deliveryTime": {
-            "$ref": "#/components/schemas/DeliveryTime"
+            "$ref": "#/components/schemas/DeliveryTime",
+            "description": "Estimated delivery time for the product"
           },
           "tax": {
-            "$ref": "#/components/schemas/Tax"
+            "$ref": "#/components/schemas/Tax",
+            "description": "Tax configuration (rate and calculation rules)"
           },
           "manufacturer": {
-            "$ref": "#/components/schemas/ProductManufacturer"
+            "$ref": "#/components/schemas/ProductManufacturer",
+            "description": "Product manufacturer or brand information"
           },
           "unit": {
-            "$ref": "#/components/schemas/Unit"
+            "$ref": "#/components/schemas/Unit",
+            "description": "Product unit of measure (e.g., piece, liter, kg)"
           },
           "cover": {
-            "$ref": "#/components/schemas/ProductMedia"
+            "$ref": "#/components/schemas/ProductMedia",
+            "description": "Main product image displayed in listings and detail pages"
           },
           "featureSet": {
             "$ref": "#/components/schemas/ProductFeatureSet"
           },
           "cmsPage": {
-            "$ref": "#/components/schemas/CmsPage"
+            "$ref": "#/components/schemas/CmsPage",
+            "description": "Custom CMS page layout for the product detail page"
           },
           "canonicalProduct": {
-            "$ref": "#/components/schemas/Product"
+            "$ref": "#/components/schemas/Product",
+            "description": "Canonical product reference for variant consolidation and SEO purposes"
           },
           "prices": {
             "type": "array",
@@ -32775,12 +32798,14 @@
             }
           },
           "media": {
+            "description": "Product images and media gallery",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ProductMedia"
             }
           },
           "crossSellings": {
+            "description": "Cross-selling configurations (related products, accessories, similar items)",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ProductCrossSelling"
@@ -32793,6 +32818,7 @@
             }
           },
           "configuratorSettings": {
+            "description": "Variant configurator settings defining available options for product variants",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ProductConfiguratorSetting"
@@ -32811,18 +32837,21 @@
             }
           },
           "productReviews": {
+            "description": "Customer reviews and ratings for the product",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ProductReview"
             }
           },
           "mainCategories": {
+            "description": "Primary category assignments per sales channel for SEO and navigation",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/MainCategory"
             }
           },
           "seoUrls": {
+            "description": "SEO-friendly URLs for the product across different sales channels",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SeoUrl"
@@ -32841,36 +32870,42 @@
             }
           },
           "options": {
+            "description": "Product variant options (e.g., size, color) that define different variants",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PropertyGroupOption"
             }
           },
           "properties": {
+            "description": "Product properties and characteristics for filtering",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PropertyGroupOption"
             }
           },
           "categories": {
+            "description": "Categories this product is assigned to",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Category"
             }
           },
           "streams": {
+            "description": "Dynamic product streams this product belongs to based on defined filters",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ProductStream"
             }
           },
           "categoriesRo": {
+            "description": "Read-only category tree including all parent categories for optimized queries",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Category"
             }
           },
           "tags": {
+            "description": "Tags for organizing and filtering products",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Tag"
@@ -39947,6 +39982,7 @@
                     "type": "object"
                   },
                   "language": {
+                    "description": "Default language for the sales channel",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -40005,6 +40041,7 @@
                     "type": "object"
                   },
                   "currency": {
+                    "description": "Default currency for the sales channel",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -40034,6 +40071,7 @@
                     "type": "object"
                   },
                   "paymentMethod": {
+                    "description": "Default payment method for the sales channel",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -40063,6 +40101,7 @@
                     "type": "object"
                   },
                   "shippingMethod": {
+                    "description": "Default shipping method for the sales channel",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -40092,6 +40131,7 @@
                     "type": "object"
                   },
                   "country": {
+                    "description": "Default country for the sales channel",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -40212,6 +40252,7 @@
                     "type": "object"
                   },
                   "domains": {
+                    "description": "Domain URLs configured for the sales channel",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -40274,6 +40315,7 @@
                     "type": "object"
                   },
                   "navigationCategory": {
+                    "description": "Root category for navigation menu",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -40303,6 +40345,7 @@
                     "type": "object"
                   },
                   "footerCategory": {
+                    "description": "Root category for footer navigation",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -40332,6 +40375,7 @@
                     "type": "object"
                   },
                   "serviceCategory": {
+                    "description": "Root category for service pages",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -41132,22 +41176,27 @@
             "$ref": "#/components/schemas/SalesChannelType"
           },
           "language": {
-            "$ref": "#/components/schemas/Language"
+            "$ref": "#/components/schemas/Language",
+            "description": "Default language for the sales channel"
           },
           "customerGroup": {
             "$ref": "#/components/schemas/CustomerGroup"
           },
           "currency": {
-            "$ref": "#/components/schemas/Currency"
+            "$ref": "#/components/schemas/Currency",
+            "description": "Default currency for the sales channel"
           },
           "paymentMethod": {
-            "$ref": "#/components/schemas/PaymentMethod"
+            "$ref": "#/components/schemas/PaymentMethod",
+            "description": "Default payment method for the sales channel"
           },
           "shippingMethod": {
-            "$ref": "#/components/schemas/ShippingMethod"
+            "$ref": "#/components/schemas/ShippingMethod",
+            "description": "Default shipping method for the sales channel"
           },
           "country": {
-            "$ref": "#/components/schemas/Country"
+            "$ref": "#/components/schemas/Country",
+            "description": "Default country for the sales channel"
           },
           "orders": {
             "type": "array",
@@ -41165,6 +41214,7 @@
             "$ref": "#/components/schemas/CmsPage"
           },
           "domains": {
+            "description": "Domain URLs configured for the sales channel",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SalesChannelDomain"
@@ -41177,13 +41227,16 @@
             }
           },
           "navigationCategory": {
-            "$ref": "#/components/schemas/Category"
+            "$ref": "#/components/schemas/Category",
+            "description": "Root category for navigation menu"
           },
           "footerCategory": {
-            "$ref": "#/components/schemas/Category"
+            "$ref": "#/components/schemas/Category",
+            "description": "Root category for footer navigation"
           },
           "serviceCategory": {
-            "$ref": "#/components/schemas/Category"
+            "$ref": "#/components/schemas/Category",
+            "description": "Root category for service pages"
           },
           "productVisibilities": {
             "type": "array",
@@ -43028,6 +43081,7 @@
               "relationships": {
                 "properties": {
                   "deliveryTime": {
+                    "description": "Estimated delivery time information",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -43057,6 +43111,7 @@
                     "type": "object"
                   },
                   "availabilityRule": {
+                    "description": "Rule defining when this shipping method is available",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -43086,6 +43141,7 @@
                     "type": "object"
                   },
                   "prices": {
+                    "description": "Shipping prices based on weight, volume, or cart value",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -43117,6 +43173,7 @@
                     "type": "object"
                   },
                   "media": {
+                    "description": "Shipping method logo or carrier image",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -43146,6 +43203,7 @@
                     "type": "object"
                   },
                   "tags": {
+                    "description": "Tags for organizing shipping methods",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -43270,6 +43328,7 @@
                     "type": "object"
                   },
                   "tax": {
+                    "description": "Tax configuration for shipping costs",
                     "properties": {
                       "links": {
                         "type": "object",
@@ -43403,21 +43462,26 @@
             "type": "object"
           },
           "deliveryTime": {
-            "$ref": "#/components/schemas/DeliveryTime"
+            "$ref": "#/components/schemas/DeliveryTime",
+            "description": "Estimated delivery time information"
           },
           "availabilityRule": {
-            "$ref": "#/components/schemas/Rule"
+            "$ref": "#/components/schemas/Rule",
+            "description": "Rule defining when this shipping method is available"
           },
           "prices": {
+            "description": "Shipping prices based on weight, volume, or cart value",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ShippingMethodPrice"
             }
           },
           "media": {
-            "$ref": "#/components/schemas/Media"
+            "$ref": "#/components/schemas/Media",
+            "description": "Shipping method logo or carrier image"
           },
           "tags": {
+            "description": "Tags for organizing shipping methods",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Tag"
@@ -43442,7 +43506,8 @@
             }
           },
           "tax": {
-            "$ref": "#/components/schemas/Tax"
+            "$ref": "#/components/schemas/Tax",
+            "description": "Tax configuration for shipping costs"
           },
           "appShippingMethod": {
             "$ref": "#/components/schemas/AppShippingMethod"
@@ -48860,7 +48925,7 @@
                   "administration"
                 ]
               },
-              "scopes": {
+              "scope": {
                 "$ref": "#/components/schemas/OAuthScopes"
               },
               "username": {
@@ -48874,7 +48939,7 @@
             },
             "required": [
               "client_id",
-              "scopes",
+              "scope",
               "username",
               "password"
             ]
@@ -48896,7 +48961,7 @@
                   "administration"
                 ]
               },
-              "scopes": {
+              "scope": {
                 "$ref": "#/components/schemas/OAuthScopes"
               },
               "refresh_token": {
@@ -48906,7 +48971,7 @@
             },
             "required": [
               "client_id",
-              "scopes",
+              "scope",
               "refresh_token"
             ]
           }
