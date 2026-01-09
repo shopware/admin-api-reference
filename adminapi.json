@@ -112316,6 +112316,10 @@
                 "description": "Unique identity of anonymize.",
                 "type": "boolean"
               },
+              "trackOffcanvasCart": {
+                "description": "When boolean value is `true`, it enables Google Analytics to track offcanvas cart.",
+                "type": "boolean"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -112366,9 +112370,14 @@
         ]
       },
       "SalesChannelAnalytics": {
-        "description": "Added since version: 6.2.0.0",
+        "description": "Sales channel analytics configuration",
         "required": [
-          "id"
+          "id",
+          "active",
+          "trackOrders",
+          "anonymizeIp",
+          "trackOffcanvasCart",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -112392,13 +112401,20 @@
             "description": "Unique identity of anonymize.",
             "type": "boolean"
           },
+          "trackOffcanvasCart": {
+            "description": "Track off-canvas cart interactions in Google Analytics",
+            "type": "boolean"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
             "readOnly": true
           },
           "updatedAt": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time",
             "readOnly": true
           },
