@@ -42581,6 +42581,10 @@
                 "description": "Unique identity of anonymize.",
                 "type": "boolean"
               },
+              "trackOffcanvasCart": {
+                "description": "When boolean value is `true`, it enables Google Analytics to track offcanvas cart.",
+                "type": "boolean"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -42631,9 +42635,14 @@
         ]
       },
       "SalesChannelAnalytics": {
-        "description": "Added since version: 6.2.0.0",
+        "description": "Sales channel analytics configuration",
         "required": [
-          "id"
+          "id",
+          "active",
+          "trackOrders",
+          "anonymizeIp",
+          "trackOffcanvasCart",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -42641,19 +42650,23 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "trackingId": {
-            "description": "Unique identity for tracking.",
+            "description": "Google Analytics tracking ID (e.g., UA-XXXXX-Y or G-XXXXXXXX)",
             "type": "string"
           },
           "active": {
-            "description": "When boolean value is `true`, the sales channel analytics are enabled.",
+            "description": "Whether Google Analytics tracking is enabled",
             "type": "boolean"
           },
           "trackOrders": {
-            "description": "When boolean value is `true`, it enables Google Analytics to track orders.",
+            "description": "Track order completions in Google Analytics",
             "type": "boolean"
           },
           "anonymizeIp": {
-            "description": "Unique identity of anonymize.",
+            "description": "Anonymize visitor IP addresses for GDPR compliance",
+            "type": "boolean"
+          },
+          "trackOffcanvasCart": {
+            "description": "Track off-canvas cart interactions in Google Analytics",
             "type": "boolean"
           },
           "createdAt": {
@@ -42662,7 +42675,10 @@
             "readOnly": true
           },
           "updatedAt": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time",
             "readOnly": true
           },
