@@ -219,11 +219,13 @@ This leads to a high load on the server and can be a problem with large imports.
 
 You can control the behaviour using the following headers:
 
-| Header | Value | Description |
-| :--- | :--- | :--- |
-| indexing-behavior | `null (default)` | Data will be indexed synchronously |
-|  | `use-queue-indexing` | Data will be indexed asynchronously |
-|  | `disable-indexing` | Data indexing is completely disabled |
+| Header            | Value                                                                       | Description                                        |
+|:------------------|:----------------------------------------------------------------------------|:---------------------------------------------------|
+| indexing-behavior | `null (default)`                                                            | Data will be indexed synchronously                 |
+|                   | `use-queue-indexing`                                                        | Data will be indexed asynchronously                |
+|                   | `disable-indexing`                                                          | Data indexing is completely disabled               |
+| indexing-skip     | Comma-separated indexer names (e.g. `product.search-keyword,product.stock`) | Skip the specified indexer(s) for this request     |
+| indexing-only     | Indexer name (e.g. `product.stock`)                                         | Run only the specified indexer(s) for this request |
 
 ```sample http
 {
