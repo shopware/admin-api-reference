@@ -18,11 +18,11 @@ A request always contains a **list of operations**. An operation defines the `ac
 
 **Format of an operation**
 
-| Field | Values |
-| :--- | :--- |
-| **entity** | Any entity in Shopware, e.g. `category`or `customer` |
-| **action** | The type of operation - either `upsert` or `delete` |
-| **payload** | A list containing objects or a list of IDs |
+| Field       | Values                                               |
+|:------------|:-----------------------------------------------------|
+| **entity**  | Any entity in Shopware, e.g. `category`or `customer` |
+| **action**  | The type of operation - either `upsert` or `delete`  |
+| **payload** | A list containing objects or a list of IDs           |
 
 ### Writing entities
 
@@ -217,7 +217,7 @@ Various indexing processes are triggered in the background, depending on which d
 
 This leads to a high load on the server and can be a problem with large imports. Therefore, it is possible that the indexing is moved to an asynchronous process in the background.
 
-You can control the behaviour using the following headers:
+You can control the behavior using the following headers:
 
 | Header            | Value                                                                       | Description                                        |
 |:------------------|:----------------------------------------------------------------------------|:---------------------------------------------------|
@@ -226,6 +226,8 @@ You can control the behaviour using the following headers:
 |                   | `disable-indexing`                                                          | Data indexing is completely disabled               |
 | indexing-skip     | Comma-separated indexer names (e.g. `product.search-keyword,product.stock`) | Skip the specified indexer(s) for this request     |
 | indexing-only     | Indexer name (e.g. `product.stock`)                                         | Run only the specified indexer(s) for this request |
+
+A list of all available indexes can be found [here](https://docs.shopware.com/en/shopware-6-en/configuration/caches-indexes#manage-caches-indexes).
 
 ```sample http
 {
