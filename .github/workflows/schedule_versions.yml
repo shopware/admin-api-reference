@@ -40,3 +40,11 @@ jobs:
       shopware_version: ${{ needs.vars.outputs.SHOPWARE_VERSION }}
       php_version: ${{ needs.vars.outputs.PHP_VERSION }}
     secrets: inherit
+
+  generate-customproducts-trunk:
+    needs: vars
+    uses: ./.github/workflows/plugin_customproducts_schema.yml
+    with:
+      shopware_version: ${{ needs.vars.outputs.SHOPWARE_VERSION }}
+      php_version: ${{ needs.vars.outputs.PHP_VERSION }}
+    secrets: inherit

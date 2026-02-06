@@ -14,7 +14,7 @@ on:
 
 env:
   PLUGIN_NAME: SwagCustomizedProducts
-  PLUGIN_URL: gitlab.shopware.com/shopware/6/services/customized-product.git
+  PLUGIN_URL: github.com/shopware/SwagCustomizedProducts.git
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -23,10 +23,9 @@ jobs:
     outputs:
       PLUGIN_NAME: ${{ env.PLUGIN_NAME }}
       PLUGIN_URL: ${{ env.PLUGIN_URL }}
-      COMPOSER_PACKAGES: ${{ env.COMPOSER_PACKAGES }}
     steps:
       - run: echo "Exposing env vars"
-  # This workflow contains a single job called "build" 
+
   generate-schema:
     needs: vars
     uses: shopware/docs-ci/.github/workflows/generate_schema.yml@main
@@ -35,17 +34,14 @@ jobs:
       schema_file: ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
       plugin_name: ${{ needs.vars.outputs.PLUGIN_NAME }}
       plugin_url: ${{ needs.vars.outputs.PLUGIN_URL }}
-      composer_packages: ${{ needs.vars.outputs.COMPOSER_PACKAGES }}
       shopware_version: ${{ inputs.shopware_version }}
       php_version: ${{ inputs.php_version }}
-    secrets:
-      DEPLOY_USER: ${{ secrets.CUSTOMPRODUCTS_DEPLOY_USER }}
-      DEPLOY_TOKEN: ${{ secrets.CUSTOMPRODUCTS_DEPLOY_TOKEN }}
+    secrets: inherit
 
   open-pr:
     name: "Open a pull request"
     runs-on: ubuntu-latest
-    needs: [generate-schema,vars]
+    needs: [generate-schema, vars]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
