@@ -1,0 +1,8 @@
+# When merging from main/trunk into version branches, keep this branch's
+# generated schema files (do not take the version from main).
+# Requires: git config merge.keepSchema.driver true
+adminapi.json merge=keepSchema
+adminapi.summary.json merge=keepSchema
+*-adminapi.json merge=keepSchema
+*-adminapi.summary.json merge=keepSchema
+toc.json merge=keepSchema
