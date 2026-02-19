@@ -49,7 +49,7 @@ If documents are assigned to `global,` they can be used on any sales channel. Th
   }
 ```
 
-These documents are associated with order events. The below endpoint creates a document of invoice type for a particular order.
+These documents are associated with order events. The below endpoint creates a document of invoice type for a particular order. The request body must be an **array** of document generation operations.
 
 ```sample http
 {
@@ -60,17 +60,23 @@ These documents are associated with order events. The below endpoint creates a d
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_ACCESS_TOKEN"
   },
-  "body": {
-    "orderId": "d84bbaaa3423495e8c98eef1444db7d0",
-    "type": "string",
-    "fileType": "pdf",
-    "static": false,
-    "referencedDocumentId": null,
-    "config": {},
-    "sent": true
-  }
+  "body": [
+    {
+      "orderId": "d84bbaaa3423495e8c98eef1444db7d0",
+      "fileType": "pdf",
+      "static": false,
+      "referencedDocumentId": null,
+      "config": {
+        "documentNumber": "1001",
+        "documentDate": "2024-01-15T10:30:00.000Z",
+        "documentComment": ""
+      }
+    }
+  ]
 }
 ```
+
+The document type (e.g., `invoice`, `delivery_note`, `storno`, `credit_note`) is specified in the URL path, not in the request body. The `config` object allows you to set a custom `documentNumber`, `documentDate`, and `documentComment`. If `documentNumber` is not provided, it will be generated automatically based on the configured number range.
 
 While placing an order, during order transaction or order delivery, you have the option to set the `sent` parameter to `true`. It is a boolean flag that determines whether to skip the creation of documents that have already been marked as sent while processing orders.
 
