@@ -78,8 +78,6 @@ These documents are associated with order events. The below endpoint creates a d
 
 The document type (e.g., `invoice`, `delivery_note`, `storno`, `credit_note`) is specified in the URL path, not in the request body. The `config` object allows you to set a custom `documentNumber`, `documentDate`, and `documentComment`. If `documentNumber` is not provided, it will be generated automatically based on the configured number range.
 
-While placing an order, during order transaction or order delivery, you have the option to set the `sent` parameter to `true`. It is a boolean flag that determines whether to skip the creation of documents that have already been marked as sent while processing orders.
-
 ## Download a document
 
 The below route allows you to download a document as a PDF. The document is followed by its ID and deeplink code.
