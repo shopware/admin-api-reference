@@ -74176,7 +74176,6 @@
                   "versionRevision": "98fcdbeab238fbef3b47bc258340124a1dba4852",
                   "adminWorker": {
                     "enableAdminWorker": true,
-                    "enableQueueStatsWorker": true,
                     "enableNotificationWorker": true,
                     "transports": [
                       "async",
@@ -74409,6 +74408,10 @@
                     "description": "This is the state column within the order delivery database table. There should be no need to change it from the default.",
                     "type": "string",
                     "default": "stateId"
+                  },
+                  "internalComment": {
+                    "description": "An optional internal comment that will be saved with the state transition.",
+                    "type": "string"
                   }
                 },
                 "type": "object"
@@ -75262,6 +75265,153 @@
         }
       }
     },
+    "/consents": {
+      "get": {
+        "tags": [
+          "Consent Management",
+          "Experimental"
+        ],
+        "summary": "List all consents for current user",
+        "description": "Returns a list of all available consents with their current status for the authenticated admin user. Each consent includes its name, identifier, and current state (requested, accepted, or revoked). Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "fetchConsents",
+        "responses": {
+          "200": {
+            "description": "List of consents with their status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/ConsentState"
+                  },
+                  "example": {
+                    "product_analytics": {
+                      "name": "product_analytics",
+                      "scopeName": "admin_user",
+                      "identifier": "userId-12345",
+                      "status": "accepted",
+                      "actor": "userId-12345",
+                      "updatedAt": "2024-01-15T10:20:30Z"
+                    },
+                    "backend_data": {
+                      "name": "backend_data",
+                      "scopeName": "system",
+                      "identifier": "system",
+                      "status": "requested",
+                      "actor": null,
+                      "updatedAt": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - User not logged in or invalid session"
+          }
+        }
+      }
+    },
+    "/consents/accept": {
+      "post": {
+        "tags": [
+          "Consent Management",
+          "Experimental"
+        ],
+        "summary": "Accept a consent",
+        "description": "Marks the specified consent as accepted for the authenticated admin user. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "acceptConsent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "consent": {
+                    "type": "string",
+                    "description": "The name of the consent to accept"
+                  }
+                },
+                "required": [
+                  "consent"
+                ],
+                "example": {
+                  "consent": "product_analytics"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Consent status changed successfully. Returns the updated consent status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsentState"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad request - Consent not found or consent property was empty"
+          },
+          "401": {
+            "description": "Unauthorized - User not logged in or invalid session"
+          }
+        }
+      }
+    },
+    "/consents/revoke": {
+      "post": {
+        "tags": [
+          "Consent Management",
+          "Experimental"
+        ],
+        "summary": "Revoke a consent",
+        "description": "Marks the specified consent as revoked for the authenticated admin user. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "revokeConsent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "consent": {
+                    "type": "string",
+                    "description": "The name of the consent to accept"
+                  }
+                },
+                "required": [
+                  "consent"
+                ],
+                "example": {
+                  "consent": "product_analytics"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Consent status changed successfully. Returns the updated consent status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsentState"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad request - Consent not found or consent property was empty"
+          },
+          "401": {
+            "description": "Unauthorized - User not logged in or invalid session"
+          }
+        }
+      }
+    },
     "/_action/order/{orderId}/order-address": {
       "post": {
         "tags": [
@@ -75329,6 +75479,56 @@
         "responses": {
           "204": {
             "description": "Returns a no content response indicating that the update has been made."
+          }
+        }
+      }
+    },
+    "/_info/queue.json": {
+      "get": {
+        "tags": [
+          "System Info & Health Check"
+        ],
+        "summary": "Get message queue statistics (deprecated)",
+        "description": "Returns increment-based message queue statistics.\n\n**Deprecated:** This endpoint is deprecated and will be removed in v6.8.0. Use `GET /_info/message-stats.json` instead for accurate message processing statistics.",
+        "operationId": "queue",
+        "deprecated": true,
+        "responses": {
+          "200": {
+            "description": "Message queue statistics returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Fully qualified class name of the message."
+                      },
+                      "size": {
+                        "type": "integer",
+                        "description": "Number of pending messages of this type."
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "size"
+                    ]
+                  }
+                },
+                "example": [
+                  {
+                    "name": "Shopware\\Core\\Content\\Product\\DataAbstractionLayer\\ProductIndexingMessage",
+                    "size": 150
+                  },
+                  {
+                    "name": "Shopware\\Core\\Content\\Media\\Message\\GenerateThumbnailsMessage",
+                    "size": 25
+                  }
+                ]
+              }
+            }
           }
         }
       }
@@ -76331,6 +76531,187 @@
         }
       }
     },
+    "/_action/state-machine/{entityName}/{entityId}/state": {
+      "get": {
+        "tags": [
+          "State Machine"
+        ],
+        "summary": "Get available transitions for an entity",
+        "description": "Retrieves the available state transitions for the specified entity.",
+        "operationId": "getEntityState",
+        "parameters": [
+          {
+            "name": "entityName",
+            "in": "path",
+            "description": "Name of the entity.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "in": "path",
+            "description": "Identifier of the entity.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "stateFieldName",
+            "in": "query",
+            "description": "This is the state column within the order delivery database table. There should be no need to change it from the default.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "stateId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Available transitions for the current state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transitions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the transition."
+                          },
+                          "technicalName": {
+                            "type": "string",
+                            "description": "The technical name of the transition."
+                          },
+                          "actionName": {
+                            "type": "string",
+                            "description": "The action name of the transition."
+                          },
+                          "fromStateName": {
+                            "type": "string",
+                            "description": "The technical name of the state the transition starts from."
+                          },
+                          "toStateName": {
+                            "type": "string",
+                            "description": "The technical name of the state the transition goes to."
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "The URL to trigger the transition."
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "technicalName",
+                          "actionName",
+                          "fromStateName",
+                          "toStateName",
+                          "url"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "transitions"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to read the entity or entity field."
+          },
+          "403": {
+            "description": "Forbidden. Missing privileges to access the entity."
+          }
+        }
+      }
+    },
+    "/_action/state-machine/{entityName}/{entityId}/state/{transition}": {
+      "post": {
+        "tags": [
+          "State Machine"
+        ],
+        "summary": "Transition an entity to a new state",
+        "description": "Changes the entity state by applying the given transition.",
+        "operationId": "transitionEntityState",
+        "parameters": [
+          {
+            "name": "entityName",
+            "in": "path",
+            "description": "Name of the entity.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "in": "path",
+            "description": "Identifier of the entity.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "transition",
+            "in": "path",
+            "description": "The `action_name` of the `state_machine_transition`.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stateFieldName",
+            "in": "query",
+            "description": "This is the state column within the order delivery database table. There should be no need to change it from the default.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "stateId"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Optional internal comment for the state transition.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "internalComment": {
+                    "type": "string",
+                    "description": "An optional internal comment that will be saved with the state transition."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "State transition applied successfully."
+          },
+          "400": {
+            "description": "Unable to read the entity or entity field, or invalid transition."
+          },
+          "403": {
+            "description": "Forbidden. Missing privileges to access the entity."
+          }
+        }
+      }
+    },
     "/_action/order_transaction/{orderTransactionId}/state/{transition}": {
       "post": {
         "tags": [
@@ -76389,6 +76770,10 @@
                     "description": "This is the state column within the order transaction database table. There should be no need to change it from the default.",
                     "type": "string",
                     "default": "stateId"
+                  },
+                  "internalComment": {
+                    "description": "An optional internal comment that will be saved with the state transition.",
+                    "type": "string"
                   }
                 },
                 "type": "object"
@@ -76985,6 +77370,10 @@
                     "description": "This is the state column within the order database table. There should be no need to change it from the default.",
                     "type": "string",
                     "default": "stateId"
+                  },
+                  "internalComment": {
+                    "description": "An optional internal comment that will be saved with the state transition.",
+                    "type": "string"
                   }
                 },
                 "type": "object"
@@ -96899,10 +97288,6 @@
                 "description": "Title name given to customer like DR. , Prof., etc.",
                 "type": "string"
               },
-              "vatId": {
-                "description": "Unique identity of VAT.",
-                "type": "string"
-              },
               "phoneNumber": {
                 "description": "Phone number of the customer.",
                 "type": "string"
@@ -96921,6 +97306,11 @@
               },
               "customFields": {
                 "type": "object"
+              },
+              "vatId": {
+                "description": "Unique identity of VAT.",
+                "type": "string",
+                "deprecated": true
               },
               "createdAt": {
                 "type": "string",
@@ -97168,10 +97558,6 @@
             "description": "Title name given to customer like DR. , Prof., etc.",
             "type": "string"
           },
-          "vatId": {
-            "description": "Unique identity of VAT.",
-            "type": "string"
-          },
           "phoneNumber": {
             "description": "Phone number of the customer.",
             "type": "string"
@@ -97191,6 +97577,11 @@
           "customFields": {
             "type": "object",
             "description": "Additional fields that offer a possibility to add own fields for the different program-areas."
+          },
+          "vatId": {
+            "description": "Unique identity of VAT.",
+            "type": "string",
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -106728,6 +107119,10 @@
               "customFields": {
                 "type": "object"
               },
+              "internal": {
+                "description": "When the boolean value is `true` indicating that it is for internal use only and will not appear in product stream listings.",
+                "type": "boolean"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -106908,6 +107303,10 @@
           "customFields": {
             "type": "object",
             "description": "Additional fields that offer a possibility to add own fields for the different program-areas."
+          },
+          "internal": {
+            "description": "When the boolean value is `true` indicating that it is for internal use only and will not appear in product stream listings.",
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
@@ -112316,6 +112715,10 @@
                 "description": "Unique identity of anonymize.",
                 "type": "boolean"
               },
+              "trackOffcanvasCart": {
+                "description": "When boolean value is `true`, it enables Google Analytics to track offcanvas cart.",
+                "type": "boolean"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -112366,9 +112769,14 @@
         ]
       },
       "SalesChannelAnalytics": {
-        "description": "Added since version: 6.2.0.0",
+        "description": "Sales channel analytics configuration",
         "required": [
-          "id"
+          "id",
+          "active",
+          "trackOrders",
+          "anonymizeIp",
+          "trackOffcanvasCart",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -112392,13 +112800,20 @@
             "description": "Unique identity of anonymize.",
             "type": "boolean"
           },
+          "trackOffcanvasCart": {
+            "description": "Track off-canvas cart interactions in Google Analytics",
+            "type": "boolean"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
             "readOnly": true
           },
           "updatedAt": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time",
             "readOnly": true
           },
@@ -115375,6 +115790,9 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "internalComment": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -115598,6 +116016,9 @@
           "integrationId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "internalComment": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -119584,6 +120005,55 @@
         },
         "type": "object"
       },
+      "ConsentState": {
+        "type": "object",
+        "required": [
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the consent"
+          },
+          "scopeName": {
+            "type": "string",
+            "description": "The scope of the consent that defines how the identifier is resolved"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unset",
+              "accepted",
+              "revoked"
+            ],
+            "description": "The current status of the consent (requested, accepted, revoked)"
+          },
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          }
+        }
+      },
       "businessEventsResponse": {
         "type": "array",
         "items": {
@@ -120675,7 +121145,8 @@
               },
               "enableQueueStatsWorker": {
                 "type": "boolean",
-                "description": "Whether the queue statistics worker is enabled."
+                "description": "Whether the queue statistics worker is enabled. Deprecated: This property will be removed in v6.8.0. The increment-based message queue statistics are deprecated.",
+                "deprecated": true
               },
               "enableNotificationWorker": {
                 "type": "boolean",
