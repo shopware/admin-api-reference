@@ -4884,6 +4884,153 @@
         }
       }
     },
+    "/consents": {
+      "get": {
+        "tags": [
+          "Consent Management",
+          "Experimental"
+        ],
+        "summary": "List all consents for current user",
+        "description": "Returns a list of all available consents with their current status for the authenticated admin user. Each consent includes its name, identifier, and current state (requested, accepted, or revoked). Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "fetchConsents",
+        "responses": {
+          "200": {
+            "description": "List of consents with their status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/ConsentState"
+                  },
+                  "example": {
+                    "product_analytics": {
+                      "name": "product_analytics",
+                      "scopeName": "admin_user",
+                      "identifier": "userId-12345",
+                      "status": "accepted",
+                      "actor": "userId-12345",
+                      "updatedAt": "2024-01-15T10:20:30Z"
+                    },
+                    "backend_data": {
+                      "name": "backend_data",
+                      "scopeName": "system",
+                      "identifier": "system",
+                      "status": "requested",
+                      "actor": null,
+                      "updatedAt": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - User not logged in or invalid session"
+          }
+        }
+      }
+    },
+    "/consents/accept": {
+      "post": {
+        "tags": [
+          "Consent Management",
+          "Experimental"
+        ],
+        "summary": "Accept a consent",
+        "description": "Marks the specified consent as accepted for the authenticated admin user. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "acceptConsent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "consent": {
+                    "type": "string",
+                    "description": "The name of the consent to accept"
+                  }
+                },
+                "required": [
+                  "consent"
+                ],
+                "example": {
+                  "consent": "product_analytics"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Consent status changed successfully. Returns the updated consent status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsentState"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad request - Consent not found or consent property was empty"
+          },
+          "401": {
+            "description": "Unauthorized - User not logged in or invalid session"
+          }
+        }
+      }
+    },
+    "/consents/revoke": {
+      "post": {
+        "tags": [
+          "Consent Management",
+          "Experimental"
+        ],
+        "summary": "Revoke a consent",
+        "description": "Marks the specified consent as revoked for the authenticated admin user. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "revokeConsent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "consent": {
+                    "type": "string",
+                    "description": "The name of the consent to accept"
+                  }
+                },
+                "required": [
+                  "consent"
+                ],
+                "example": {
+                  "consent": "product_analytics"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Consent status changed successfully. Returns the updated consent status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsentState"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad request - Consent not found or consent property was empty"
+          },
+          "401": {
+            "description": "Unauthorized - User not logged in or invalid session"
+          }
+        }
+      }
+    },
     "/_action/dsr/appointment/{appointmentId}/join-as-guide": {
       "post": {
         "tags": [
@@ -37015,6 +37162,10 @@
               "customFields": {
                 "type": "object"
               },
+              "internal": {
+                "description": "When the boolean value is `true` indicating that it is for internal use only and will not appear in product stream listings.",
+                "type": "boolean"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -37226,6 +37377,10 @@
           },
           "customFields": {
             "type": "object"
+          },
+          "internal": {
+            "description": "When the boolean value is `true` indicating that it is for internal use only and will not appear in product stream listings.",
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
@@ -42581,6 +42736,10 @@
                 "description": "Unique identity of anonymize.",
                 "type": "boolean"
               },
+              "trackOffcanvasCart": {
+                "description": "When boolean value is `true`, it enables Google Analytics to track offcanvas cart.",
+                "type": "boolean"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -42631,9 +42790,14 @@
         ]
       },
       "SalesChannelAnalytics": {
-        "description": "Added since version: 6.2.0.0",
+        "description": "Sales channel analytics configuration",
         "required": [
-          "id"
+          "id",
+          "active",
+          "trackOrders",
+          "anonymizeIp",
+          "trackOffcanvasCart",
+          "createdAt"
         ],
         "properties": {
           "id": {
@@ -42641,19 +42805,23 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "trackingId": {
-            "description": "Unique identity for tracking.",
+            "description": "Google Analytics tracking ID (e.g., UA-XXXXX-Y or G-XXXXXXXX)",
             "type": "string"
           },
           "active": {
-            "description": "When boolean value is `true`, the sales channel analytics are enabled.",
+            "description": "Whether Google Analytics tracking is enabled",
             "type": "boolean"
           },
           "trackOrders": {
-            "description": "When boolean value is `true`, it enables Google Analytics to track orders.",
+            "description": "Track order completions in Google Analytics",
             "type": "boolean"
           },
           "anonymizeIp": {
-            "description": "Unique identity of anonymize.",
+            "description": "Anonymize visitor IP addresses for GDPR compliance",
+            "type": "boolean"
+          },
+          "trackOffcanvasCart": {
+            "description": "Track off-canvas cart interactions in Google Analytics",
             "type": "boolean"
           },
           "createdAt": {
@@ -42662,7 +42830,10 @@
             "readOnly": true
           },
           "updatedAt": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time",
             "readOnly": true
           },
@@ -50162,6 +50333,55 @@
           }
         },
         "type": "object"
+      },
+      "ConsentState": {
+        "type": "object",
+        "required": [
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the consent"
+          },
+          "scopeName": {
+            "type": "string",
+            "description": "The scope of the consent that defines how the identifier is resolved"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unset",
+              "accepted",
+              "revoked"
+            ],
+            "description": "The current status of the consent (requested, accepted, revoked)"
+          },
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          }
+        }
       },
       "businessEventsResponse": {
         "type": "array",
