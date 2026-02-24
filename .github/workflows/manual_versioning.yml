@@ -27,6 +27,11 @@ on:
         required: false
         type: boolean
         default: true
+      trigger_customproducts_schema:
+        description: "Trigger custom products schema"
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   generate-trunk:
@@ -48,6 +53,13 @@ jobs:
   generate-digitalsalesroom-trunk:
     if: ${{ inputs.trigger_digitalsalesroom_schema }}
     uses: ./.github/workflows/plugin_digitalsalesroom_schema.yml
+    with:
+      shopware_version: ${{ inputs.shopware_version }}
+      php_version: ${{ inputs.php_version }}
+    secrets: inherit
+  generate-customproducts-trunk:
+    if: ${{ inputs.trigger_customproducts_schema }}
+    uses: ./.github/workflows/plugin_customproducts_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
       php_version: ${{ inputs.php_version }}

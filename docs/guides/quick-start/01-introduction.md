@@ -83,7 +83,7 @@ A typical Admin API request, including headers, will look as shown below:
   "body":{
     "client_id": "administration",
     "grant_type": "password",
-    "scopes": "write",
+    "scope": "write",
     "username": "your.username@shopware.com",
     "password": "your.password@123"
 }
