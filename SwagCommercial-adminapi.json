@@ -8130,6 +8130,2170 @@
         }
       }
     },
+    "/b2b-components-individual-pricing": {
+      "get": {
+        "tags": [
+          "B2b Components Individual Pricing"
+        ],
+        "summary": "List with basic information of B2b Components Individual Pricing resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "getB2bComponentsIndividualPricingList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of B2b Components Individual Pricing resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/b2b-components-individual-pricing?limit=25"
+                                },
+                                "last": {
+                                  "example": "/b2b-components-individual-pricing?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/b2b-components-individual-pricing?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/b2b-components-individual-pricing?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing"
+        ],
+        "summary": "Create a new B2b Components Individual Pricing resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "createB2bComponentsIndividualPricing",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricing",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/b2b-components-individual-pricing": {
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing"
+        ],
+        "summary": "Search for the B2b Components Individual Pricing resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "searchB2bComponentsIndividualPricing",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsIndividualPricing",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-individual-pricing/{id}": {
+      "get": {
+        "tags": [
+          "B2b Components Individual Pricing"
+        ],
+        "summary": "Detailed information about a B2b Components Individual Pricing resource.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "getB2bComponentsIndividualPricing",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricing",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "B2b Components Individual Pricing"
+        ],
+        "summary": "Delete a B2b Components Individual Pricing resource.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "deleteB2bComponentsIndividualPricing",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "B2b Components Individual Pricing"
+        ],
+        "summary": "Partially update information about a B2b Components Individual Pricing resource.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "updateB2bComponentsIndividualPricing",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a B2b Components Individual Pricing resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricing",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/b2b-components-individual-pricing": {
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing"
+        ],
+        "summary": "Aggregate for the B2b Components Individual Pricing resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "aggregateB2bComponentsIndividualPricing",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsIndividualPricing",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-individual-pricing-company-assignment": {
+      "get": {
+        "tags": [
+          "B2b Components Individual Pricing Company Assignment"
+        ],
+        "summary": "List with basic information of B2b Components Individual Pricing Company Assignment resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "getB2bComponentsIndividualPricingCompanyAssignmentList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of B2b Components Individual Pricing Company Assignment resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/b2b-components-individual-pricing-company-assignment?limit=25"
+                                },
+                                "last": {
+                                  "example": "/b2b-components-individual-pricing-company-assignment?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/b2b-components-individual-pricing-company-assignment?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/b2b-components-individual-pricing-company-assignment?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing Company Assignment"
+        ],
+        "summary": "Create a new B2b Components Individual Pricing Company Assignment resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "createB2bComponentsIndividualPricingCompanyAssignment",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricingCompanyAssignment",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/b2b-components-individual-pricing-company-assignment": {
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing Company Assignment"
+        ],
+        "summary": "Search for the B2b Components Individual Pricing Company Assignment resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "searchB2bComponentsIndividualPricingCompanyAssignment",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsIndividualPricingCompanyAssignment",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-individual-pricing-company-assignment/{id}": {
+      "get": {
+        "tags": [
+          "B2b Components Individual Pricing Company Assignment"
+        ],
+        "summary": "Detailed information about a B2b Components Individual Pricing Company Assignment resource.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "getB2bComponentsIndividualPricingCompanyAssignment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing_company_assignment",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricingCompanyAssignment",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "B2b Components Individual Pricing Company Assignment"
+        ],
+        "summary": "Delete a B2b Components Individual Pricing Company Assignment resource.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "deleteB2bComponentsIndividualPricingCompanyAssignment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing_company_assignment",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "B2b Components Individual Pricing Company Assignment"
+        ],
+        "summary": "Partially update information about a B2b Components Individual Pricing Company Assignment resource.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "updateB2bComponentsIndividualPricingCompanyAssignment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing_company_assignment",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a B2b Components Individual Pricing Company Assignment resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricingCompanyAssignment",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/b2b-components-individual-pricing-company-assignment": {
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing Company Assignment"
+        ],
+        "summary": "Aggregate for the B2b Components Individual Pricing Company Assignment resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "aggregateB2bComponentsIndividualPricingCompanyAssignment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsIndividualPricingCompanyAssignment",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-individual-pricing-computed-cache": {
+      "get": {
+        "tags": [
+          "B2b Components Individual Pricing Computed Cache"
+        ],
+        "summary": "List with basic information of B2b Components Individual Pricing Computed Cache resources.",
+        "description": "",
+        "operationId": "getB2bComponentsIndividualPricingComputedCacheList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of B2b Components Individual Pricing Computed Cache resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/b2b-components-individual-pricing-computed-cache?limit=25"
+                                },
+                                "last": {
+                                  "example": "/b2b-components-individual-pricing-computed-cache?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/b2b-components-individual-pricing-computed-cache?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/b2b-components-individual-pricing-computed-cache?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing Computed Cache"
+        ],
+        "summary": "Create a new B2b Components Individual Pricing Computed Cache resources.",
+        "description": "",
+        "operationId": "createB2bComponentsIndividualPricingComputedCache",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricingComputedCache",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/b2b-components-individual-pricing-computed-cache": {
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing Computed Cache"
+        ],
+        "summary": "Search for the B2b Components Individual Pricing Computed Cache resources.",
+        "description": "",
+        "operationId": "searchB2bComponentsIndividualPricingComputedCache",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsIndividualPricingComputedCache",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-individual-pricing-computed-cache/{id}": {
+      "get": {
+        "tags": [
+          "B2b Components Individual Pricing Computed Cache"
+        ],
+        "summary": "Detailed information about a B2b Components Individual Pricing Computed Cache resource.",
+        "description": "",
+        "operationId": "getB2bComponentsIndividualPricingComputedCache",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing_computed_cache",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricingComputedCache",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "B2b Components Individual Pricing Computed Cache"
+        ],
+        "summary": "Delete a B2b Components Individual Pricing Computed Cache resource.",
+        "description": "",
+        "operationId": "deleteB2bComponentsIndividualPricingComputedCache",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing_computed_cache",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "B2b Components Individual Pricing Computed Cache"
+        ],
+        "summary": "Partially update information about a B2b Components Individual Pricing Computed Cache resource.",
+        "description": "",
+        "operationId": "updateB2bComponentsIndividualPricingComputedCache",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing_computed_cache",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a B2b Components Individual Pricing Computed Cache resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricingComputedCache",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/b2b-components-individual-pricing-computed-cache": {
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing Computed Cache"
+        ],
+        "summary": "Aggregate for the B2b Components Individual Pricing Computed Cache resources.",
+        "description": "Available since: 6.6.10.0",
+        "operationId": "aggregateB2bComponentsIndividualPricingComputedCache",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsIndividualPricingComputedCache",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricingComputedCache"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-individual-pricing-tier": {
+      "get": {
+        "tags": [
+          "B2b Components Individual Pricing Tier"
+        ],
+        "summary": "List with basic information of B2b Components Individual Pricing Tier resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "getB2bComponentsIndividualPricingTierList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of B2b Components Individual Pricing Tier resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/b2b-components-individual-pricing-tier?limit=25"
+                                },
+                                "last": {
+                                  "example": "/b2b-components-individual-pricing-tier?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/b2b-components-individual-pricing-tier?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/b2b-components-individual-pricing-tier?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing Tier"
+        ],
+        "summary": "Create a new B2b Components Individual Pricing Tier resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "createB2bComponentsIndividualPricingTier",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricingTier",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/b2b-components-individual-pricing-tier": {
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing Tier"
+        ],
+        "summary": "Search for the B2b Components Individual Pricing Tier resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "searchB2bComponentsIndividualPricingTier",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsIndividualPricingTier",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-individual-pricing-tier/{id}": {
+      "get": {
+        "tags": [
+          "B2b Components Individual Pricing Tier"
+        ],
+        "summary": "Detailed information about a B2b Components Individual Pricing Tier resource.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "getB2bComponentsIndividualPricingTier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing_tier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricingTier",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "B2b Components Individual Pricing Tier"
+        ],
+        "summary": "Delete a B2b Components Individual Pricing Tier resource.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "deleteB2bComponentsIndividualPricingTier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing_tier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "B2b Components Individual Pricing Tier"
+        ],
+        "summary": "Partially update information about a B2b Components Individual Pricing Tier resource.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "updateB2bComponentsIndividualPricingTier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_individual_pricing_tier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a B2b Components Individual Pricing Tier resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsIndividualPricingTier",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/b2b-components-individual-pricing-tier": {
+      "post": {
+        "tags": [
+          "B2b Components Individual Pricing Tier"
+        ],
+        "summary": "Aggregate for the B2b Components Individual Pricing Tier resources.",
+        "description": "Available since: 6.7.8.0",
+        "operationId": "aggregateB2bComponentsIndividualPricingTier",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsIndividualPricingTier",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/b2b-components-organization": {
       "get": {
         "tags": [
@@ -33627,153 +35791,6 @@
         }
       }
     },
-    "/consents": {
-      "get": {
-        "tags": [
-          "Consent Management",
-          "Experimental"
-        ],
-        "summary": "List all consents for current user",
-        "description": "Returns a list of all available consents with their current status for the authenticated admin user. Each consent includes its name, identifier, and current state (requested, accepted, or revoked). Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "fetchConsents",
-        "responses": {
-          "200": {
-            "description": "List of consents with their status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ConsentState"
-                  },
-                  "example": {
-                    "product_analytics": {
-                      "name": "product_analytics",
-                      "scopeName": "admin_user",
-                      "identifier": "userId-12345",
-                      "status": "accepted",
-                      "actor": "userId-12345",
-                      "updatedAt": "2024-01-15T10:20:30Z"
-                    },
-                    "backend_data": {
-                      "name": "backend_data",
-                      "scopeName": "system",
-                      "identifier": "system",
-                      "status": "requested",
-                      "actor": null,
-                      "updatedAt": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - User not logged in or invalid session"
-          }
-        }
-      }
-    },
-    "/consents/accept": {
-      "post": {
-        "tags": [
-          "Consent Management",
-          "Experimental"
-        ],
-        "summary": "Accept a consent",
-        "description": "Marks the specified consent as accepted for the authenticated admin user. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "acceptConsent",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "consent": {
-                    "type": "string",
-                    "description": "The name of the consent to accept"
-                  }
-                },
-                "required": [
-                  "consent"
-                ],
-                "example": {
-                  "consent": "product_analytics"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Consent status changed successfully. Returns the updated consent status.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ConsentState"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Bad request - Consent not found or consent property was empty"
-          },
-          "401": {
-            "description": "Unauthorized - User not logged in or invalid session"
-          }
-        }
-      }
-    },
-    "/consents/revoke": {
-      "post": {
-        "tags": [
-          "Consent Management",
-          "Experimental"
-        ],
-        "summary": "Revoke a consent",
-        "description": "Marks the specified consent as revoked for the authenticated admin user. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "revokeConsent",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "consent": {
-                    "type": "string",
-                    "description": "The name of the consent to accept"
-                  }
-                },
-                "required": [
-                  "consent"
-                ],
-                "example": {
-                  "consent": "product_analytics"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Consent status changed successfully. Returns the updated consent status.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ConsentState"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Bad request - Consent not found or consent property was empty"
-          },
-          "401": {
-            "description": "Unauthorized - User not logged in or invalid session"
-          }
-        }
-      }
-    },
     "/_action/custom-price": {
       "post": {
         "tags": [
@@ -40727,6 +42744,980 @@
           },
           "product": {
             "$ref": "#/components/schemas/Product"
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsIndividualPricingJsonApi": {
+        "description": "Added since version: 6.7.8.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "active",
+              "showStrikeThrough",
+              "name",
+              "target",
+              "priority",
+              "applyToAllProducts",
+              "useValidityRange",
+              "actionType",
+              "tiers"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "active": {
+                "type": "boolean"
+              },
+              "showStrikeThrough": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string"
+              },
+              "target": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "applyToAllProducts": {
+                "type": "boolean"
+              },
+              "productStreamId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "useValidityRange": {
+                "type": "boolean"
+              },
+              "validFrom": {
+                "type": "string"
+              },
+              "validUntil": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "actionType": {
+                "type": "string"
+              },
+              "actionAmount": {
+                "type": "number",
+                "format": "float"
+              },
+              "createdById": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "updatedById": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "tagIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "readOnly": true
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "createdBy": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing/4398cd1810a050caffbc7dc121434fb5/createdBy"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "user"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "34998857f537140306898d54d4b970dc"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "updatedBy": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing/4398cd1810a050caffbc7dc121434fb5/updatedBy"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "user"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "7ced3d0067ad61702af7db8ae260aa76"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "productStream": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing/4398cd1810a050caffbc7dc121434fb5/productStream"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "product_stream"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "49561f6faa0badfce831a183d2ec7c2f"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "tiers": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing/4398cd1810a050caffbc7dc121434fb5/tiers"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_individual_pricing_tier"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "49f466e28285d1d4989b49139c4b265e"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "companyAssignments": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing/4398cd1810a050caffbc7dc121434fb5/companyAssignments"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_individual_pricing_company_assignment"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "e02294f7c7e9c5f3829bfcc5fc9aadd6"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "tags": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing/4398cd1810a050caffbc7dc121434fb5/tags"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "tag"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "d57ac45256849d9b13e2422d91580fb9"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "products": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing/4398cd1810a050caffbc7dc121434fb5/products"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "86024cad1e83101d97359d7351051156"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "B2bComponentsIndividualPricing": {
+        "description": "Added since version: 6.7.8.0",
+        "required": [
+          "id",
+          "active",
+          "showStrikeThrough",
+          "name",
+          "target",
+          "priority",
+          "applyToAllProducts",
+          "useValidityRange",
+          "actionType",
+          "tiers"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "showStrikeThrough": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "applyToAllProducts": {
+            "type": "boolean"
+          },
+          "productStreamId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "useValidityRange": {
+            "type": "boolean"
+          },
+          "validFrom": {
+            "type": "string"
+          },
+          "validUntil": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "actionType": {
+            "type": "string"
+          },
+          "actionAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "createdById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "updatedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "tagIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            "readOnly": true
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/User"
+          },
+          "productStream": {
+            "$ref": "#/components/schemas/ProductStream"
+          },
+          "tiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/B2bComponentsIndividualPricingTier"
+            }
+          },
+          "companyAssignments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsIndividualPricingCompanyAssignmentJsonApi": {
+        "description": "Added since version: 6.7.8.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "individualPricingId",
+              "customerId",
+              "scope"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "individualPricingId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "customerId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "organizationUnitIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "readOnly": true
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "individualPricing": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing-company-assignment/b73c0318c6308826d7501ab4df0db333/individualPricing"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_individual_pricing"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "5fe7ef4389efb412d4e35056093e10ab"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "customer": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing-company-assignment/b73c0318c6308826d7501ab4df0db333/customer"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "customer"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "91ec1f9324753048c0096d036a694f86"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "units": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing-company-assignment/b73c0318c6308826d7501ab4df0db333/units"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_organization"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "b98b3dfbd27e710e6c3ceeae58770b52"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "B2bComponentsIndividualPricingCompanyAssignment": {
+        "description": "Added since version: 6.7.8.0",
+        "required": [
+          "id",
+          "individualPricingId",
+          "customerId",
+          "scope"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "individualPricingId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "customerId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "organizationUnitIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            "readOnly": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "individualPricing": {
+            "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "units": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/B2bComponentsOrganization"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsIndividualPricingCompanyAssignmentUnit": {
+        "description": "Added since version: 6.7.8.0",
+        "required": [
+          "assignmentId",
+          "orgUnitId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "assignmentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "orgUnitId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "assignment": {
+            "$ref": "#/components/schemas/B2bComponentsIndividualPricingCompanyAssignment"
+          },
+          "orgUnit": {
+            "$ref": "#/components/schemas/B2bComponentsOrganization"
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsIndividualPricingComputedCacheJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "individualPricingId",
+              "actionType",
+              "priority",
+              "activatedAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "productId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "productVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "individualPricingId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "actionType": {
+                "type": "string"
+              },
+              "actionAmount": {
+                "type": "number",
+                "format": "float"
+              },
+              "priority": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "validFrom": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "validUntil": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "showStrikeThrough": {
+                "type": "boolean"
+              },
+              "price": {
+                "type": "object"
+              },
+              "activatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "B2bComponentsIndividualPricingComputedCache": {
+        "required": [
+          "id",
+          "individualPricingId",
+          "actionType",
+          "priority",
+          "activatedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "productId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "productVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "individualPricingId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "actionType": {
+            "type": "string"
+          },
+          "actionAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "showStrikeThrough": {
+            "type": "boolean"
+          },
+          "price": {
+            "type": "object"
+          },
+          "activatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsIndividualPricingTag": {
+        "description": "Added since version: 6.7.8.0",
+        "required": [
+          "individualPricingId",
+          "tagId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "individualPricingId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "tagId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "individualPricing": {
+            "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
+          },
+          "tag": {
+            "$ref": "#/components/schemas/Tag"
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsIndividualPricingTierJsonApi": {
+        "description": "Added since version: 6.7.8.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "individualPricingId",
+              "id",
+              "qtyFrom",
+              "price"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "individualPricingId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "qtyFrom": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "qtyTo": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "price": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Price"
+                }
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "individualPricing": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-individual-pricing-tier/8430b2435525569963232095b1a5a6dd/individualPricing"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_individual_pricing"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "5fe7ef4389efb412d4e35056093e10ab"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "B2bComponentsIndividualPricingTier": {
+        "description": "Added since version: 6.7.8.0",
+        "required": [
+          "individualPricingId",
+          "id",
+          "qtyFrom",
+          "price"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "individualPricingId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "qtyFrom": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "qtyTo": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "price": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Price"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "individualPricing": {
+            "$ref": "#/components/schemas/B2bComponentsIndividualPricing"
           }
         },
         "type": "object"
@@ -64584,10 +67575,6 @@
                 "description": "Title name given to customer like DR. , Prof., etc.",
                 "type": "string"
               },
-              "vatId": {
-                "description": "Unique identity of VAT.",
-                "type": "string"
-              },
               "phoneNumber": {
                 "description": "Phone number of the customer.",
                 "type": "string"
@@ -64606,6 +67593,11 @@
               },
               "customFields": {
                 "type": "object"
+              },
+              "vatId": {
+                "description": "Unique identity of VAT.",
+                "type": "string",
+                "deprecated": true
               },
               "createdAt": {
                 "type": "string",
@@ -64850,10 +67842,6 @@
             "description": "Title name given to customer like DR. , Prof., etc.",
             "type": "string"
           },
-          "vatId": {
-            "description": "Unique identity of VAT.",
-            "type": "string"
-          },
           "phoneNumber": {
             "description": "Phone number of the customer.",
             "type": "string"
@@ -64872,6 +67860,11 @@
           },
           "customFields": {
             "type": "object"
+          },
+          "vatId": {
+            "description": "Unique identity of VAT.",
+            "type": "string",
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -76612,6 +79605,40 @@
               "translated": {
                 "type": "object"
               },
+              "extensions": {
+                "properties": {
+                  "individualPricingRule": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product-stream/8f4cdc10a7afbd7f3948c6f8cd5c4801/individualPricingRule"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_individual_pricing"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "7b20f572b5ee1c3d5e1b41c2de255a04"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
               "relationships": {
                 "properties": {
                   "filters": {
@@ -76790,6 +79817,40 @@
             "readOnly": true
           },
           "translated": {
+            "type": "object"
+          },
+          "extensions": {
+            "properties": {
+              "individualPricingRule": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/product-stream/8f4cdc10a7afbd7f3948c6f8cd5c4801/individualPricingRule"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "example": "b2b_components_individual_pricing"
+                      },
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{32}$",
+                        "example": "7b20f572b5ee1c3d5e1b41c2de255a04"
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            },
             "type": "object"
           },
           "filters": {
@@ -91938,6 +94999,9 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "internalComment": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -92160,6 +95224,9 @@
           "integrationId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "internalComment": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -101034,7 +104101,8 @@
               },
               "enableQueueStatsWorker": {
                 "type": "boolean",
-                "description": "Whether the queue statistics worker is enabled."
+                "description": "Whether the queue statistics worker is enabled. Deprecated: This property will be removed in v6.8.0. The increment-based message queue statistics are deprecated.",
+                "deprecated": true
               },
               "enableNotificationWorker": {
                 "type": "boolean",
@@ -102023,6 +105091,22 @@
     {
       "name": "B2b Components Employee Wishlist Product",
       "description": "The endpoint for operations on B2b Components Employee Wishlist Product"
+    },
+    {
+      "name": "B2b Components Individual Pricing",
+      "description": "The endpoint for operations on B2b Components Individual Pricing"
+    },
+    {
+      "name": "B2b Components Individual Pricing Company Assignment",
+      "description": "The endpoint for operations on B2b Components Individual Pricing Company Assignment"
+    },
+    {
+      "name": "B2b Components Individual Pricing Computed Cache",
+      "description": "The endpoint for operations on B2b Components Individual Pricing Computed Cache"
+    },
+    {
+      "name": "B2b Components Individual Pricing Tier",
+      "description": "The endpoint for operations on B2b Components Individual Pricing Tier"
     },
     {
       "name": "B2b Components Organization",
