@@ -5424,153 +5424,6 @@
           }
         }
       }
-    },
-    "/consents": {
-      "get": {
-        "tags": [
-          "Consent Management",
-          "Experimental"
-        ],
-        "summary": "List all consents for current user",
-        "description": "Returns a list of all available consents with their current status for the authenticated admin user. Each consent includes its name, identifier, and current state (requested, accepted, or revoked). Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "fetchConsents",
-        "responses": {
-          "200": {
-            "description": "List of consents with their status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ConsentState"
-                  },
-                  "example": {
-                    "product_analytics": {
-                      "name": "product_analytics",
-                      "scopeName": "admin_user",
-                      "identifier": "userId-12345",
-                      "status": "accepted",
-                      "actor": "userId-12345",
-                      "updatedAt": "2024-01-15T10:20:30Z"
-                    },
-                    "backend_data": {
-                      "name": "backend_data",
-                      "scopeName": "system",
-                      "identifier": "system",
-                      "status": "requested",
-                      "actor": null,
-                      "updatedAt": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - User not logged in or invalid session"
-          }
-        }
-      }
-    },
-    "/consents/accept": {
-      "post": {
-        "tags": [
-          "Consent Management",
-          "Experimental"
-        ],
-        "summary": "Accept a consent",
-        "description": "Marks the specified consent as accepted for the authenticated admin user. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "acceptConsent",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "consent": {
-                    "type": "string",
-                    "description": "The name of the consent to accept"
-                  }
-                },
-                "required": [
-                  "consent"
-                ],
-                "example": {
-                  "consent": "product_analytics"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Consent status changed successfully. Returns the updated consent status.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ConsentState"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Bad request - Consent not found or consent property was empty"
-          },
-          "401": {
-            "description": "Unauthorized - User not logged in or invalid session"
-          }
-        }
-      }
-    },
-    "/consents/revoke": {
-      "post": {
-        "tags": [
-          "Consent Management",
-          "Experimental"
-        ],
-        "summary": "Revoke a consent",
-        "description": "Marks the specified consent as revoked for the authenticated admin user. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "revokeConsent",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "consent": {
-                    "type": "string",
-                    "description": "The name of the consent to accept"
-                  }
-                },
-                "required": [
-                  "consent"
-                ],
-                "example": {
-                  "consent": "product_analytics"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Consent status changed successfully. Returns the updated consent status.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ConsentState"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Bad request - Consent not found or consent property was empty"
-          },
-          "401": {
-            "description": "Unauthorized - User not logged in or invalid session"
-          }
-        }
-      }
     }
   },
   "components": {
@@ -24641,10 +24494,6 @@
                 "description": "Title name given to customer like DR. , Prof., etc.",
                 "type": "string"
               },
-              "vatId": {
-                "description": "Unique identity of VAT.",
-                "type": "string"
-              },
               "phoneNumber": {
                 "description": "Phone number of the customer.",
                 "type": "string"
@@ -24663,6 +24512,11 @@
               },
               "customFields": {
                 "type": "object"
+              },
+              "vatId": {
+                "description": "Unique identity of VAT.",
+                "type": "string",
+                "deprecated": true
               },
               "createdAt": {
                 "type": "string",
@@ -24907,10 +24761,6 @@
             "description": "Title name given to customer like DR. , Prof., etc.",
             "type": "string"
           },
-          "vatId": {
-            "description": "Unique identity of VAT.",
-            "type": "string"
-          },
           "phoneNumber": {
             "description": "Phone number of the customer.",
             "type": "string"
@@ -24929,6 +24779,11 @@
           },
           "customFields": {
             "type": "object"
+          },
+          "vatId": {
+            "description": "Unique identity of VAT.",
+            "type": "string",
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -42839,6 +42694,9 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "internalComment": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -43061,6 +42919,9 @@
           "integrationId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "internalComment": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -50399,7 +50260,8 @@
               },
               "enableQueueStatsWorker": {
                 "type": "boolean",
-                "description": "Whether the queue statistics worker is enabled."
+                "description": "Whether the queue statistics worker is enabled. Deprecated: This property will be removed in v6.8.0. The increment-based message queue statistics are deprecated.",
+                "deprecated": true
               },
               "enableNotificationWorker": {
                 "type": "boolean",
