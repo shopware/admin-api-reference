@@ -49170,88 +49170,213 @@
         },
         "type": "object"
       },
-      "ConsentState": {
+      "infoConfigResponse": {
         "type": "object",
-        "required": [
-          "name",
-          "scopeName",
-          "identifier",
-          "status",
-          "actor",
-          "updatedAt"
-        ],
         "properties": {
-          "name": {
+          "version": {
             "type": "string",
-            "description": "The name of the consent"
+            "description": "Shopware version."
           },
-          "scopeName": {
+          "shopId": {
             "type": "string",
-            "description": "The scope of the consent that defines how the identifier is resolved"
+            "description": "Unique shop identifier."
           },
-          "identifier": {
+          "versionRevision": {
             "type": "string",
-            "description": "The resolved identifier of the consent"
+            "description": "Shopware version revision (build hash/revision)."
           },
-          "status": {
-            "type": "string",
-            "enum": [
-              "unset",
-              "accepted",
-              "revoked"
-            ],
-            "description": "The current status of the consent (requested, accepted, revoked)"
-          },
-          "actor": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The user name of the user who made the consent decision. null if never updated"
-          },
-          "updatedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp of when the consent status was last updated. null if never updated"
-          }
-        }
-      },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
+          "adminWorker": {
+            "type": "object",
+            "description": "Admin worker feature flags and transport configuration.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "Whether the admin background worker is enabled."
+              },
+              "enableQueueStatsWorker": {
+                "type": "boolean",
+                "description": "Whether the queue statistics worker is enabled. Deprecated: This property will be removed in v6.8.0. The increment-based message queue statistics are deprecated.",
+                "deprecated": true
+              },
+              "enableNotificationWorker": {
+                "type": "boolean",
+                "description": "Whether the notification worker is enabled."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured Symfony Messenger transports used by the admin workers.",
+                "items": {
+                  "type": "string"
+                }
+              }
             },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
+            "additionalProperties": false
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Active extension assets (plugins & apps) keyed by technical name.",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "description": "Plugin bundle asset descriptor.",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "plugin"
+                      ]
+                    },
+                    "css": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "URL to a CSS asset."
+                      }
+                    },
+                    "js": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "URL to a JS asset."
+                      }
+                    },
+                    "baseUrl": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "Base URL to a (micro frontend) admin entry point, if provided."
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "description": "App bundle descriptor.",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "app"
+                      ]
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "active": {
+                      "type": "boolean"
+                    },
+                    "integrationId": {
+                      "type": "string",
+                      "description": "Lowercase hex integration id."
+                    },
+                    "baseUrl": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "description": "Grouped privileges: key = privilege scope, value = list of entities.",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "css": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Optional CSS assets if provided."
+                    },
+                    "js": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Optional JS assets if provided."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "name",
+                    "active",
+                    "integrationId",
+                    "baseUrl",
+                    "version",
+                    "permissions"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "settings": {
+            "type": "object",
+            "description": "Selected environment and feature settings consumed by the administration.",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the URL upload feature."
+              },
+              "appUrlReachable": {
+                "type": "boolean",
+                "description": "Whether configured APP_URL is externally reachable."
+              },
+              "appsRequireAppUrl": {
+                "type": "boolean",
+                "description": "True if at least one installed app requires a reachable APP_URL."
+              },
+              "private_allowed_extensions": {
+                "type": "array",
+                "description": "Whitelisted file extensions for private filesystem uploads.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "enableHtmlSanitizer": {
+                "type": "boolean",
+                "description": "Whether HTML sanitizer is enabled."
+              },
+              "enableStagingMode": {
+                "type": "boolean",
+                "description": "Whether staging mode banner is enabled."
+              },
+              "disableExtensionManagement": {
+                "type": "boolean",
+                "description": "True if runtime extension management is disabled."
+              }
             },
-            "data": {
+            "additionalProperties": false
+          },
+          "inAppPurchases": {
+            "type": "array",
+            "description": "In-app purchase meta data (structure may vary).",
+            "items": {
               "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
+              "description": "Purchase entry.",
+              "additionalProperties": true
             }
           }
-        }
+        },
+        "required": [
+          "version",
+          "shopId",
+          "versionRevision",
+          "adminWorker",
+          "bundles",
+          "settings",
+          "inAppPurchases"
+        ],
+        "additionalProperties": false
       },
       "Price": {
         "type": "object",
@@ -49334,32 +49459,6 @@
           "net",
           "linked"
         ]
-      },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
       },
       "OAuthScopes": {
         "description": "OAuth scopes that should be requested.",
@@ -49485,46 +49584,28 @@
           }
         ]
       },
-      "MeasurementUnits": {
-        "type": "object",
-        "description": "Configuration of the measurement system",
-        "properties": {
-          "system": {
-            "type": "string",
-            "enum": [
-              "metric",
-              "imperial"
-            ],
-            "default": "metric",
-            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
-          },
-          "units": {
-            "type": "object",
-            "description": "Units used in the measurement system.",
-            "properties": {
-              "length": {
-                "type": "string",
-                "enum": [
-                  "mm",
-                  "cm",
-                  "m",
-                  "in",
-                  "ft"
-                ],
-                "default": "mm",
-                "description": "Unit of length."
-              },
-              "weight": {
-                "type": "string",
-                "enum": [
-                  "g",
-                  "kg",
-                  "oz",
-                  "lb"
-                ],
-                "default": "kg",
-                "description": "Unit of weight."
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
               }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
             }
           }
         }
@@ -50235,213 +50316,132 @@
           "field"
         ]
       },
-      "infoConfigResponse": {
+      "MeasurementUnits": {
         "type": "object",
+        "description": "Configuration of the measurement system",
         "properties": {
-          "version": {
+          "system": {
             "type": "string",
-            "description": "Shopware version."
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
           },
-          "shopId": {
-            "type": "string",
-            "description": "Unique shop identifier."
-          },
-          "versionRevision": {
-            "type": "string",
-            "description": "Shopware version revision (build hash/revision)."
-          },
-          "adminWorker": {
+          "units": {
             "type": "object",
-            "description": "Admin worker feature flags and transport configuration.",
+            "description": "Units used in the measurement system.",
             "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "Whether the admin background worker is enabled."
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
               },
-              "enableQueueStatsWorker": {
-                "type": "boolean",
-                "description": "Whether the queue statistics worker is enabled. Deprecated: This property will be removed in v6.8.0. The increment-based message queue statistics are deprecated.",
-                "deprecated": true
-              },
-              "enableNotificationWorker": {
-                "type": "boolean",
-                "description": "Whether the notification worker is enabled."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured Symfony Messenger transports used by the admin workers.",
-                "items": {
-                  "type": "string"
-                }
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
               }
-            },
-            "additionalProperties": false
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Active extension assets (plugins & apps) keyed by technical name.",
-            "additionalProperties": {
-              "oneOf": [
-                {
-                  "type": "object",
-                  "description": "Plugin bundle asset descriptor.",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "plugin"
-                      ]
-                    },
-                    "css": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "description": "URL to a CSS asset."
-                      }
-                    },
-                    "js": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "description": "URL to a JS asset."
-                      }
-                    },
-                    "baseUrl": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
-                      "description": "Base URL to a (micro frontend) admin entry point, if provided."
-                    }
-                  },
-                  "required": [
-                    "type"
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "description": "App bundle descriptor.",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "app"
-                      ]
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "active": {
-                      "type": "boolean"
-                    },
-                    "integrationId": {
-                      "type": "string",
-                      "description": "Lowercase hex integration id."
-                    },
-                    "baseUrl": {
-                      "type": "string"
-                    },
-                    "version": {
-                      "type": "string"
-                    },
-                    "permissions": {
-                      "type": "object",
-                      "description": "Grouped privileges: key = privilege scope, value = list of entities.",
-                      "additionalProperties": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "css": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Optional CSS assets if provided."
-                    },
-                    "js": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Optional JS assets if provided."
-                    }
-                  },
-                  "required": [
-                    "type",
-                    "name",
-                    "active",
-                    "integrationId",
-                    "baseUrl",
-                    "version",
-                    "permissions"
-                  ],
-                  "additionalProperties": false
-                }
-              ]
-            }
-          },
-          "settings": {
-            "type": "object",
-            "description": "Selected environment and feature settings consumed by the administration.",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the URL upload feature."
-              },
-              "appUrlReachable": {
-                "type": "boolean",
-                "description": "Whether configured APP_URL is externally reachable."
-              },
-              "appsRequireAppUrl": {
-                "type": "boolean",
-                "description": "True if at least one installed app requires a reachable APP_URL."
-              },
-              "private_allowed_extensions": {
-                "type": "array",
-                "description": "Whitelisted file extensions for private filesystem uploads.",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "enableHtmlSanitizer": {
-                "type": "boolean",
-                "description": "Whether HTML sanitizer is enabled."
-              },
-              "enableStagingMode": {
-                "type": "boolean",
-                "description": "Whether staging mode banner is enabled."
-              },
-              "disableExtensionManagement": {
-                "type": "boolean",
-                "description": "True if runtime extension management is disabled."
-              }
-            },
-            "additionalProperties": false
-          },
-          "inAppPurchases": {
-            "type": "array",
-            "description": "In-app purchase meta data (structure may vary).",
-            "items": {
-              "type": "object",
-              "description": "Purchase entry.",
-              "additionalProperties": true
             }
           }
-        },
+        }
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ConsentState": {
+        "type": "object",
         "required": [
-          "version",
-          "shopId",
-          "versionRevision",
-          "adminWorker",
-          "bundles",
-          "settings",
-          "inAppPurchases"
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt"
         ],
-        "additionalProperties": false
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the consent"
+          },
+          "scopeName": {
+            "type": "string",
+            "description": "The scope of the consent that defines how the identifier is resolved"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unset",
+              "accepted",
+              "revoked"
+            ],
+            "description": "The current status of the consent (requested, accepted, revoked)"
+          },
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          }
+        }
       }
     },
     "responses": {
