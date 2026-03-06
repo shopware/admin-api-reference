@@ -8963,7 +8963,12 @@
               },
               "type": {
                 "description": "Type of categories like `page`, `folder`, `link`.",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "page",
+                  "link",
+                  "folder"
+                ]
               },
               "productAssignmentType": {
                 "description": "Type of product assignment: Dynamic product group as or `product_stream` or Manual assignment as `product`.",
@@ -8996,7 +9001,13 @@
                 "type": "object"
               },
               "linkType": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "category",
+                  "product",
+                  "external",
+                  "landing_page"
+                ]
               },
               "internalLink": {
                 "type": "string",
@@ -9534,7 +9545,12 @@
           },
           "type": {
             "description": "Type of categories like `page`, `folder`, `link`.",
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "page",
+              "link",
+              "folder"
+            ]
           },
           "productAssignmentType": {
             "description": "Type of product assignment: Dynamic product group as or `product_stream` or Manual assignment as `product`.",
@@ -9567,7 +9583,13 @@
             "type": "object"
           },
           "linkType": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "category",
+              "product",
+              "external",
+              "landing_page"
+            ]
           },
           "internalLink": {
             "type": "string",
@@ -10525,8 +10547,12 @@
                 "format": "int64"
               },
               "type": {
-                "description": "Types of sections can be `sidebar` or `fullwidth`.",
-                "type": "string"
+                "description": "Types of sections can be `default` or `sidebar`.",
+                "type": "string",
+                "enum": [
+                  "default",
+                  "sidebar"
+                ]
               },
               "locked": {
                 "type": "boolean"
@@ -10752,8 +10778,12 @@
             "format": "int64"
           },
           "type": {
-            "description": "Types of sections can be `sidebar` or `fullwidth`.",
-            "type": "string"
+            "description": "Types of sections can be `default` or `sidebar`.",
+            "type": "string",
+            "enum": [
+              "default",
+              "sidebar"
+            ]
           },
           "locked": {
             "type": "boolean"
@@ -24930,7 +24960,13 @@
               },
               "status": {
                 "description": "When status is set, the NewsletterRecipient is made visible.",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "notSet",
+                  "optIn",
+                  "optOut",
+                  "direct"
+                ]
               },
               "hash": {
                 "description": "Password hash for account recovery.",
@@ -25142,7 +25178,13 @@
           },
           "status": {
             "description": "When status is set, the NewsletterRecipient is made visible.",
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "notSet",
+              "optIn",
+              "optOut",
+              "direct"
+            ]
           },
           "hash": {
             "description": "Password hash for account recovery.",
@@ -28991,7 +29033,16 @@
               },
               "type": {
                 "description": "Type refers to the entity type of an item whether it is product or promotion for instance.",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "product",
+                  "credit",
+                  "custom",
+                  "promotion",
+                  "container",
+                  "discount",
+                  "quantity"
+                ]
               },
               "customFields": {
                 "type": "object"
@@ -29466,7 +29517,16 @@
           },
           "type": {
             "description": "Type refers to the entity type of an item whether it is product or promotion for instance.",
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "product",
+              "credit",
+              "custom",
+              "promotion",
+              "container",
+              "discount",
+              "quantity"
+            ]
           },
           "customFields": {
             "type": "object"
@@ -32200,7 +32260,11 @@
               },
               "type": {
                 "description": "The type of the product, e.g., physical or digital.",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "physical",
+                  "digital"
+                ]
               },
               "states": {
                 "type": "array",
@@ -33558,7 +33622,11 @@
           },
           "type": {
             "description": "The type of the product, e.g., physical or digital.",
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "physical",
+              "digital"
+            ]
           },
           "states": {
             "type": "array",
@@ -43987,7 +44055,12 @@
               },
               "routeName": {
                 "description": "A destination routeName that has been registered somewhere in the app's router. For example: \\\\\"frontend.detail.page\\\\\"",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "frontend.detail.page",
+                  "frontend.navigation.page",
+                  "frontend.landing.page"
+                ]
               },
               "pathInfo": {
                 "description": "Path to product URL. For example: \\\\\"/detail/bbf36734504741c79a3bbe3795b91564\\\\\"",
@@ -44130,7 +44203,12 @@
           },
           "routeName": {
             "description": "A destination routeName that has been registered somewhere in the app's router. For example: \\\\\"frontend.detail.page\\\\\"",
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "frontend.detail.page",
+              "frontend.navigation.page",
+              "frontend.landing.page"
+            ]
           },
           "pathInfo": {
             "description": "Path to product URL. For example: \\\\\"/detail/bbf36734504741c79a3bbe3795b91564\\\\\"",
