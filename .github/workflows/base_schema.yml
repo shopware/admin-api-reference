@@ -41,7 +41,7 @@ jobs:
   open-pr:
     name: "Open a pull request"
     runs-on: ubuntu-latest
-    needs: [generate-schema]
+    needs: [generate-schema, save-file]
     env:
       FILE_DIFFERENCE: 0
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
