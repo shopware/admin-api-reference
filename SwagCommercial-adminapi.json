@@ -35791,88 +35791,62 @@
         }
       }
     },
-    "/_action/validation/email": {
+    "/_action/user/logout": {
       "post": {
         "tags": [
-          "Email support validation"
+          "Authorization & Authentication"
         ],
-        "summary": "Email support.",
-        "description": "Checks a given email string.",
-        "operationId": "supportsEmail",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "email"
-                ],
-                "properties": {
-                  "email": {
-                    "description": "The email to be verified.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
+        "summary": "Logout the current user",
+        "description": "Revokes all server-side refresh tokens for the currently authenticated administration user and returns a no content response.",
+        "operationId": "userLogout",
         "responses": {
           "204": {
-            "description": "Email is supported"
+            "description": "Tokens have been revoked successfully."
+          },
+          "401": {
+            "description": "Unauthorized - the access token is missing or invalid."
+          },
+          "403": {
+            "description": "The authenticated source does not have a user ID associated."
+          }
+        }
+      }
+    },
+    "/app-system/shop/verify": {
+      "get": {
+        "tags": [
+          "App System",
+          "Public"
+        ],
+        "summary": "Verify a shop's APP_URL",
+        "description": "Used to verify that a shop's APP_URL points to its self. The passed run ID and token are used to query the cache. It returns 204 no content if the given token can be verified using the run id.",
+        "operationId": "verifyAppUrl",
+        "parameters": [
+          {
+            "name": "runId",
+            "in": "query",
+            "description": "A unique identifier used to look up the token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "description": "A unique identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "An empty response signalling successful verification."
           },
           "400": {
-            "description": "Invalid request payload. The argument 'email' may be missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "errors": {
-                      "description": "Contains the error message.",
-                      "type": "array"
-                    }
-                  },
-                  "type": "object"
-                },
-                "example": {
-                  "errors": [
-                    {
-                      "code": "0",
-                      "status": "400",
-                      "title": "Unprocessable Content",
-                      "detail": "This value should not be blank."
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Email address is not supported.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "errors": {
-                      "description": "Contains the validation error.",
-                      "type": "array"
-                    }
-                  },
-                  "type": "object"
-                },
-                "example": {
-                  "errors": [
-                    {
-                      "code": "0",
-                      "status": "422",
-                      "title": "Unprocessable Content",
-                      "detail": "This value is not a supported email address."
-                    }
-                  ]
-                }
-              }
-            }
+            "description": "Malformed request or unsuccessful verification."
           }
         }
       }
@@ -37942,6 +37916,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "searchActions": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/advanced-search-config/63246bc46dc5b3716c6f5f92044238e4/searchActions"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "advanced_search_action"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "f7e07cbefd6755762faa802c35e48929"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -38042,6 +38047,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AdvancedSearchBoosting"
+            }
+          },
+          "searchActions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdvancedSearchAction"
             }
           }
         },
@@ -38413,6 +38424,9 @@
                 "type": "integer",
                 "format": "int64"
               },
+              "customFields": {
+                "type": "object"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -38559,6 +38573,9 @@
           "position": {
             "type": "integer",
             "format": "int64"
+          },
+          "customFields": {
+            "type": "object"
           },
           "createdAt": {
             "type": "string",
@@ -41224,7 +41241,15 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "updatedById": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "customerId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "customerGroupId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -41235,6 +41260,9 @@
               "salesChannelId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
+              },
+              "customFields": {
+                "type": "object"
               },
               "createdAt": {
                 "type": "string",
@@ -41541,7 +41569,15 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "updatedById": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "customerId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "customerGroupId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -41552,6 +41588,9 @@
           "salesChannelId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "customFields": {
+            "type": "object"
           },
           "createdAt": {
             "type": "string",
@@ -41902,8 +41941,7 @@
               "id",
               "identifier",
               "active",
-              "appId",
-              "name"
+              "appId"
             ],
             "properties": {
               "id": {
@@ -41990,8 +42028,7 @@
           "id",
           "identifier",
           "active",
-          "appId",
-          "name"
+          "appId"
         ],
         "properties": {
           "id": {
@@ -42175,6 +42212,35 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "34998857f537140306898d54d4b970dc"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "customer": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-budget/1e4002da52224f484ff690aa9b0bfb2a/customer"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "customer"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "91ec1f9324753048c0096d036a694f86"
                           }
                         }
                       }
@@ -42417,6 +42483,9 @@
           },
           "createdBy": {
             "$ref": "#/components/schemas/User"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer"
           },
           "organizations": {
             "type": "array",
@@ -43894,6 +43963,99 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "budgets": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-organization/59ca973b4d3a8dc22a45847c980f1152/budgets"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_budget"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "b7d9e68ed31698bcfe971f824ab5fd23"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "individualPricingCompanyAssignmentUnits": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-organization/59ca973b4d3a8dc22a45847c980f1152/individualPricingCompanyAssignmentUnits"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_individual_pricing_company_assignment_unit"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "2de375eb5502ab387a10c69ea5789649"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "individualPricingCompanyAssignments": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-organization/59ca973b4d3a8dc22a45847c980f1152/individualPricingCompanyAssignments"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_individual_pricing_company_assignment"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "78fc5e012f88233a08401f2351a299a9"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -44252,6 +44414,99 @@
                         "id": {
                           "type": "string",
                           "example": "fbec40add5492465d78b550a9a4ae26e"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "budgets": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-components-organization/59ca973b4d3a8dc22a45847c980f1152/budgets"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_budget"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "b7d9e68ed31698bcfe971f824ab5fd23"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "individualPricingCompanyAssignmentUnits": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-components-organization/59ca973b4d3a8dc22a45847c980f1152/individualPricingCompanyAssignmentUnits"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_individual_pricing_company_assignment_unit"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "2de375eb5502ab387a10c69ea5789649"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "individualPricingCompanyAssignments": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-components-organization/59ca973b4d3a8dc22a45847c980f1152/individualPricingCompanyAssignments"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_individual_pricing_company_assignment"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "78fc5e012f88233a08401f2351a299a9"
                         }
                       }
                     }
@@ -45926,6 +46181,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "reviewerBudgets": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-role/a2f4fa227c09d6222701f670a01bb0b0/reviewerBudgets"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_budget"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "cc0b9649925b8bf844adbf00bc3b3346"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -46127,6 +46413,37 @@
                         "id": {
                           "type": "string",
                           "example": "844042c07d902b98a574a2e21845c1e6"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "reviewerBudgets": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-components-role/a2f4fa227c09d6222701f670a01bb0b0/reviewerBudgets"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_budget"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "cc0b9649925b8bf844adbf00bc3b3346"
                         }
                       }
                     }
@@ -46957,6 +47274,37 @@
                     },
                     "type": "object"
                   },
+                  "quoteComments": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/quoteComments"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_comment"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "98dec49a83119c512f84645e81ea52d8"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "organization": {
                     "properties": {
                       "links": {
@@ -47010,6 +47358,37 @@
                             "id": {
                               "type": "string",
                               "example": "6d4a2ca331b1f28767d02f210af4ac7b"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "subscriptionEmployees": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/subscriptionEmployees"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_subscription_employee"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "b4ee45a6e3ed163cb60859b89a0c7ce6"
                             }
                           }
                         }
@@ -47103,6 +47482,37 @@
                             "id": {
                               "type": "string",
                               "example": "efa2c2d016771a1e072e6b05091fb584"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "budgetNotifications": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/budgetNotifications"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_budget"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "a6b1894d8fb4962df1b416d3a3241bbb"
                             }
                           }
                         }
@@ -47302,6 +47712,37 @@
                 },
                 "type": "object"
               },
+              "quoteComments": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/quoteComments"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_comment"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "98dec49a83119c512f84645e81ea52d8"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
               "organization": {
                 "properties": {
                   "links": {
@@ -47355,6 +47796,37 @@
                         "id": {
                           "type": "string",
                           "example": "6d4a2ca331b1f28767d02f210af4ac7b"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "subscriptionEmployees": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/subscriptionEmployees"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_subscription_employee"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "b4ee45a6e3ed163cb60859b89a0c7ce6"
                         }
                       }
                     }
@@ -47448,6 +47920,37 @@
                         "id": {
                           "type": "string",
                           "example": "efa2c2d016771a1e072e6b05091fb584"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "budgetNotifications": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/budgetNotifications"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_budget"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "a6b1894d8fb4962df1b416d3a3241bbb"
                         }
                       }
                     }
@@ -47815,10 +48318,6 @@
                 "description": "When boolean value is `true`, the category is listed for selection.",
                 "type": "boolean"
               },
-              "cmsPageIdSwitched": {
-                "description": "Runtime field, cannot be used as part of the criteria.",
-                "type": "boolean"
-              },
               "visibleChildCount": {
                 "description": "Runtime field, cannot be used as part of the criteria.",
                 "type": "integer",
@@ -47881,6 +48380,11 @@
               "customEntityTypeId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
+              },
+              "cmsPageIdSwitched": {
+                "description": "Runtime field, cannot be used as part of the criteria.",
+                "type": "boolean",
+                "deprecated": true
               },
               "createdAt": {
                 "type": "string",
@@ -48467,10 +48971,6 @@
             "description": "When boolean value is `true`, the category is listed for selection.",
             "type": "boolean"
           },
-          "cmsPageIdSwitched": {
-            "description": "Runtime field, cannot be used as part of the criteria.",
-            "type": "boolean"
-          },
           "visibleChildCount": {
             "description": "Runtime field, cannot be used as part of the criteria.",
             "type": "integer",
@@ -48533,6 +49033,11 @@
           "customEntityTypeId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "cmsPageIdSwitched": {
+            "description": "Runtime field, cannot be used as part of the criteria.",
+            "type": "boolean",
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -51227,6 +51732,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "budgets": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/currency/386c339d37e737a436499d423a77df0c/budgets"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_budget"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "b7d9e68ed31698bcfe971f824ab5fd23"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -51654,6 +52190,37 @@
                         "id": {
                           "type": "string",
                           "example": "f8d3c42a34c29f39fe96a52e71b1a4c9"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "budgets": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/currency/386c339d37e737a436499d423a77df0c/budgets"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_budget"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "b7d9e68ed31698bcfe971f824ab5fd23"
                         }
                       }
                     }
@@ -52137,6 +52704,42 @@
                 "format": "date-time",
                 "readOnly": true
               },
+              "extensions": {
+                "properties": {
+                  "advancedSearchConfigFields": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/custom-field/8c9d2c73a2f564420ef091ee69b564b9/advancedSearchConfigFields"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "advanced_search_config_field"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "bdf4d1c41d2b0aa72620e925951c2b0d"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
               "relationships": {
                 "properties": {
                   "customFieldSet": {
@@ -52262,6 +52865,42 @@
             "type": "string",
             "format": "date-time",
             "readOnly": true
+          },
+          "extensions": {
+            "properties": {
+              "advancedSearchConfigFields": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/custom-field/8c9d2c73a2f564420ef091ee69b564b9/advancedSearchConfigFields"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "advanced_search_config_field"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "bdf4d1c41d2b0aa72620e925951c2b0d"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
           },
           "customFieldSet": {
             "$ref": "#/components/schemas/CustomFieldSet"
@@ -52945,7 +53584,7 @@
                 "format": "date-time"
               },
               "hash": {
-                "description": "Password hash for customer recovery.",
+                "description": "Customer registration double opt-in hash for confirming the customer account.",
                 "type": "string"
               },
               "guest": {
@@ -53458,6 +54097,99 @@
                             "id": {
                               "type": "string",
                               "example": "efa2c2d016771a1e072e6b05091fb584"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "b2bAdvancedProductCatalogs": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/b2bAdvancedProductCatalogs"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_advanced_product_catalogs"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "912596af64fb66beeb84defb9535e16d"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "budgets": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/budgets"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_budget"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "b7d9e68ed31698bcfe971f824ab5fd23"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "individualPricingCompanyAssignments": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/individualPricingCompanyAssignments"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_individual_pricing_company_assignment"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "78fc5e012f88233a08401f2351a299a9"
                             }
                           }
                         }
@@ -54186,7 +54918,7 @@
             "format": "date-time"
           },
           "hash": {
-            "description": "Password hash for customer recovery.",
+            "description": "Customer registration double opt-in hash for confirming the customer account.",
             "type": "string"
           },
           "guest": {
@@ -54699,6 +55431,99 @@
                         "id": {
                           "type": "string",
                           "example": "efa2c2d016771a1e072e6b05091fb584"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "b2bAdvancedProductCatalogs": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/customer/ce26601dac0dea138b7295f02b7620a7/b2bAdvancedProductCatalogs"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_advanced_product_catalogs"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "912596af64fb66beeb84defb9535e16d"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "budgets": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/customer/ce26601dac0dea138b7295f02b7620a7/budgets"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_budget"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "b7d9e68ed31698bcfe971f824ab5fd23"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "individualPricingCompanyAssignments": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/customer/ce26601dac0dea138b7295f02b7620a7/individualPricingCompanyAssignments"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_individual_pricing_company_assignment"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "78fc5e012f88233a08401f2351a299a9"
                         }
                       }
                     }
@@ -55423,6 +56248,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "advancedProductCatalog": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/customer-group/2c5176146d938e15c9f0e3d5203c19bf/advancedProductCatalog"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_advanced_product_catalogs"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "ff9540fcefd24264341c5a70314b71be"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -55607,6 +56461,35 @@
                           "type": "string",
                           "example": "35ed8bfa9c73171a7b417f13ab07d57a"
                         }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "advancedProductCatalog": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/customer-group/2c5176146d938e15c9f0e3d5203c19bf/advancedProductCatalog"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "example": "b2b_components_advanced_product_catalogs"
+                      },
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{32}$",
+                        "example": "ff9540fcefd24264341c5a70314b71be"
                       }
                     }
                   }
@@ -59756,6 +60639,37 @@
                     },
                     "type": "object"
                   },
+                  "advancedSearchSynonyms": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/language/4994a8ffeba4ac3140beb89e8d41f174/advancedSearchSynonyms"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "advanced_search_synonym"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "a139d0125b356216337e8386fca65e22"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "b2bPendingOrders": {
                     "properties": {
                       "links": {
@@ -60426,6 +61340,37 @@
                         "id": {
                           "type": "string",
                           "example": "2193894cca6bb5864b8607f09be77ace"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "advancedSearchSynonyms": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/language/4994a8ffeba4ac3140beb89e8d41f174/advancedSearchSynonyms"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "advanced_search_synonym"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "a139d0125b356216337e8386fca65e22"
                         }
                       }
                     }
@@ -70289,7 +71234,7 @@
                     },
                     "type": "object"
                   },
-                  "warehouses": {
+                  "warehouse": {
                     "properties": {
                       "links": {
                         "type": "object",
@@ -70297,23 +71242,21 @@
                           "related": {
                             "type": "string",
                             "format": "uri-reference",
-                            "example": "/order-product-warehouse/ef794dc5239b6857296e8e4ee4605a36/warehouses"
+                            "example": "/order-product-warehouse/ef794dc5239b6857296e8e4ee4605a36/warehouse"
                           }
                         }
                       },
                       "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "warehouse"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "544959798565126142ca2820b4f56271"
-                            }
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "warehouse"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "372d30dd2849813ef674855253900679"
                           }
                         }
                       }
@@ -70384,11 +71327,8 @@
           "product": {
             "$ref": "#/components/schemas/Product"
           },
-          "warehouses": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Warehouse"
-            }
+          "warehouse": {
+            "$ref": "#/components/schemas/Warehouse"
           }
         },
         "type": "object"
@@ -71304,8 +72244,7 @@
           {
             "required": [
               "id",
-              "reasonKey",
-              "content"
+              "reasonKey"
             ],
             "properties": {
               "id": {
@@ -71375,8 +72314,7 @@
       "OrderReturnLineItemReason": {
         "required": [
           "id",
-          "reasonKey",
-          "content"
+          "reasonKey"
         ],
         "properties": {
           "id": {
@@ -74611,6 +75549,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "individualPricings": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/individualPricings"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_individual_pricing"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "5246e417af07e49dc4961c49d4ad6c75"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -76184,6 +77153,37 @@
                         "id": {
                           "type": "string",
                           "example": "e91afc4e24376c8b995cece3ce354b4e"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "individualPricings": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/product/deb10517653c255364175796ace3553f/individualPricings"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_individual_pricing"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "5246e417af07e49dc4961c49d4ad6c75"
                         }
                       }
                     }
@@ -79789,6 +80789,68 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "advancedSearchBoostings": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product-stream/8f4cdc10a7afbd7f3948c6f8cd5c4801/advancedSearchBoostings"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "advanced_search_boosting"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "8efe572a8c2f5ac25f8d2b1160493acb"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "individualPricings": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product-stream/8f4cdc10a7afbd7f3948c6f8cd5c4801/individualPricings"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_individual_pricing"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "5246e417af07e49dc4961c49d4ad6c75"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -79918,6 +80980,38 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "products": {
+                    "description": "Products this product stream includes",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product-stream/8f4cdc10a7afbd7f3948c6f8cd5c4801/products"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "86024cad1e83101d97359d7351051156"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -80003,6 +81097,68 @@
                   }
                 },
                 "type": "object"
+              },
+              "advancedSearchBoostings": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/product-stream/8f4cdc10a7afbd7f3948c6f8cd5c4801/advancedSearchBoostings"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "advanced_search_boosting"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "8efe572a8c2f5ac25f8d2b1160493acb"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "individualPricings": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/product-stream/8f4cdc10a7afbd7f3948c6f8cd5c4801/individualPricings"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_individual_pricing"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "5246e417af07e49dc4961c49d4ad6c75"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
               }
             },
             "type": "object"
@@ -80029,6 +81185,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Category"
+            }
+          },
+          "products": {
+            "description": "Products this product stream includes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
             }
           }
         },
@@ -87699,6 +88862,99 @@
                     },
                     "type": "object"
                   },
+                  "productReviewSummaries": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/productReviewSummaries"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product_review_summary"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "71dea071bf87f22aaa4a5b09a93568f0"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "advancedSearchConfigs": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/advancedSearchConfigs"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "advanced_search_config"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "82323999923ad7cb77d84c92d1832e8c"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "advancedSearchActionSearchTerms": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/advancedSearchActionSearchTerms"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "advanced_search_action_search_term"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "27dd218be73cea6876e97b6a7f5c8957"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "b2bPendingOrders": {
                     "properties": {
                       "links": {
@@ -89215,6 +90471,99 @@
                         "id": {
                           "type": "string",
                           "example": "2150fd65034a9bcdb357943b3900a918"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "productReviewSummaries": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/productReviewSummaries"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "product_review_summary"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "71dea071bf87f22aaa4a5b09a93568f0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "advancedSearchConfigs": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/advancedSearchConfigs"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "advanced_search_config"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "82323999923ad7cb77d84c92d1832e8c"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "advancedSearchActionSearchTerms": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/advancedSearchActionSearchTerms"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "advanced_search_action_search_term"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "27dd218be73cea6876e97b6a7f5c8957"
                         }
                       }
                     }
@@ -93132,6 +94481,9 @@
               "name": {
                 "type": "string"
               },
+              "type": {
+                "type": "string"
+              },
               "position": {
                 "type": "object"
               },
@@ -93250,6 +94602,9 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "name": {
+            "type": "string"
+          },
+          "type": {
             "type": "string"
           },
           "position": {
@@ -97534,6 +98889,10 @@
               "additionalAddressLine2": {
                 "type": "string"
               },
+              "hash": {
+                "description": "Runtime field, cannot be used as part of the criteria.",
+                "type": "string"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -97796,6 +99155,10 @@
             "type": "string"
           },
           "additionalAddressLine2": {
+            "type": "string"
+          },
+          "hash": {
+            "description": "Runtime field, cannot be used as part of the criteria.",
             "type": "string"
           },
           "customFields": {
@@ -99114,6 +100477,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "individualPricings": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/tag/c101058e7ea21bbbf2a5ac893088e90b/individualPricings"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_individual_pricing"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "5246e417af07e49dc4961c49d4ad6c75"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -99457,6 +100851,37 @@
                         "id": {
                           "type": "string",
                           "example": "2d5d14f95af035cbd8437948de61f94c"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "individualPricings": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/tag/c101058e7ea21bbbf2a5ac893088e90b/individualPricings"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_individual_pricing"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "5246e417af07e49dc4961c49d4ad6c75"
                         }
                       }
                     }
@@ -101180,6 +102605,161 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "createdAdvancedProductCatalogs": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdAdvancedProductCatalogs"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_advanced_product_catalogs"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "e0d6784016e56c0ac2ed620abadda119"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "updatedAdvancedProductCatalogs": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/updatedAdvancedProductCatalogs"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_advanced_product_catalogs"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "a26e117c9f4ed119b46afbc3e3cae7f0"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "createdBudgets": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdBudgets"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_budget"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "62528618b0cda8a734a729c2dd9407a2"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "createdIndividualPricings": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdIndividualPricings"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_individual_pricing"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "e383c28adc8be26b4561702835291d05"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "updatedIndividualPricings": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/updatedIndividualPricings"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_individual_pricing"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "c04472254d6a0e3655d277ec6ee53c29"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -101946,6 +103526,161 @@
                   }
                 },
                 "type": "object"
+              },
+              "createdAdvancedProductCatalogs": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdAdvancedProductCatalogs"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_advanced_product_catalogs"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "e0d6784016e56c0ac2ed620abadda119"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "updatedAdvancedProductCatalogs": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/updatedAdvancedProductCatalogs"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_advanced_product_catalogs"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "a26e117c9f4ed119b46afbc3e3cae7f0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "createdBudgets": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdBudgets"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_budget"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "62528618b0cda8a734a729c2dd9407a2"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "createdIndividualPricings": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdIndividualPricings"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_individual_pricing"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "e383c28adc8be26b4561702835291d05"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "updatedIndividualPricings": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/updatedIndividualPricings"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_individual_pricing"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "c04472254d6a0e3655d277ec6ee53c29"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
               }
             },
             "type": "object"
@@ -102702,6 +104437,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "orderWarehouseGroups": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/warehouse-group/de0cc3be51d97f8063ce4c0cb7ba2515/orderWarehouseGroups"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "order_warehouse_group"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "a578b672a12a5598c96babdfd01f0de2"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -102758,6 +104524,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Product"
+            }
+          },
+          "orderWarehouseGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderWarehouseGroup"
             }
           }
         },
