@@ -5425,88 +5425,62 @@
         }
       }
     },
-    "/_action/validation/email": {
+    "/_action/user/logout": {
       "post": {
         "tags": [
-          "Email support validation"
+          "Authorization & Authentication"
         ],
-        "summary": "Email support.",
-        "description": "Checks a given email string.",
-        "operationId": "supportsEmail",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "email"
-                ],
-                "properties": {
-                  "email": {
-                    "description": "The email to be verified.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
+        "summary": "Logout the current user",
+        "description": "Revokes all server-side refresh tokens for the currently authenticated administration user and returns a no content response.",
+        "operationId": "userLogout",
         "responses": {
           "204": {
-            "description": "Email is supported"
+            "description": "Tokens have been revoked successfully."
+          },
+          "401": {
+            "description": "Unauthorized - the access token is missing or invalid."
+          },
+          "403": {
+            "description": "The authenticated source does not have a user ID associated."
+          }
+        }
+      }
+    },
+    "/app-system/shop/verify": {
+      "get": {
+        "tags": [
+          "App System",
+          "Public"
+        ],
+        "summary": "Verify a shop's APP_URL",
+        "description": "Used to verify that a shop's APP_URL points to its self. The passed run ID and token are used to query the cache. It returns 204 no content if the given token can be verified using the run id.",
+        "operationId": "verifyAppUrl",
+        "parameters": [
+          {
+            "name": "runId",
+            "in": "query",
+            "description": "A unique identifier used to look up the token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "description": "A unique identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "An empty response signalling successful verification."
           },
           "400": {
-            "description": "Invalid request payload. The argument 'email' may be missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "errors": {
-                      "description": "Contains the error message.",
-                      "type": "array"
-                    }
-                  },
-                  "type": "object"
-                },
-                "example": {
-                  "errors": [
-                    {
-                      "code": "0",
-                      "status": "400",
-                      "title": "Unprocessable Content",
-                      "detail": "This value should not be blank."
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Email address is not supported.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "errors": {
-                      "description": "Contains the validation error.",
-                      "type": "array"
-                    }
-                  },
-                  "type": "object"
-                },
-                "example": {
-                  "errors": [
-                    {
-                      "code": "0",
-                      "status": "422",
-                      "title": "Unprocessable Content",
-                      "detail": "This value is not a supported email address."
-                    }
-                  ]
-                }
-              }
-            }
+            "description": "Malformed request or unsuccessful verification."
           }
         }
       }
@@ -8552,10 +8526,6 @@
                 "description": "When boolean value is `true`, the category is listed for selection.",
                 "type": "boolean"
               },
-              "cmsPageIdSwitched": {
-                "description": "Runtime field, cannot be used as part of the criteria.",
-                "type": "boolean"
-              },
               "visibleChildCount": {
                 "description": "Runtime field, cannot be used as part of the criteria.",
                 "type": "integer",
@@ -8618,6 +8588,11 @@
               "customEntityTypeId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
+              },
+              "cmsPageIdSwitched": {
+                "description": "Runtime field, cannot be used as part of the criteria.",
+                "type": "boolean",
+                "deprecated": true
               },
               "createdAt": {
                 "type": "string",
@@ -9134,10 +9109,6 @@
             "description": "When boolean value is `true`, the category is listed for selection.",
             "type": "boolean"
           },
-          "cmsPageIdSwitched": {
-            "description": "Runtime field, cannot be used as part of the criteria.",
-            "type": "boolean"
-          },
           "visibleChildCount": {
             "description": "Runtime field, cannot be used as part of the criteria.",
             "type": "integer",
@@ -9200,6 +9171,11 @@
           "customEntityTypeId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "cmsPageIdSwitched": {
+            "description": "Runtime field, cannot be used as part of the criteria.",
+            "type": "boolean",
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -12822,7 +12798,7 @@
                 "format": "date-time"
               },
               "hash": {
-                "description": "Password hash for customer recovery.",
+                "description": "Customer registration double opt-in hash for confirming the customer account.",
                 "type": "string"
               },
               "guest": {
@@ -13628,7 +13604,7 @@
             "format": "date-time"
           },
           "hash": {
-            "description": "Password hash for customer recovery.",
+            "description": "Customer registration double opt-in hash for confirming the customer account.",
             "type": "string"
           },
           "guest": {
@@ -34334,6 +34310,38 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "products": {
+                    "description": "Products this product stream includes",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product-stream/8f4cdc10a7afbd7f3948c6f8cd5c4801/products"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "86024cad1e83101d97359d7351051156"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -34411,6 +34419,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Category"
+            }
+          },
+          "products": {
+            "description": "Products this product stream includes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
             }
           }
         },
