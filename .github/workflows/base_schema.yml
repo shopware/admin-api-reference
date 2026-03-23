@@ -66,13 +66,17 @@ jobs:
         done
 
         for k in $(yq '. | keys | .[]' enhance.yml); do
-          newData=$(yq ".\"${k}\"" enhance.yml);
+          newData=$(yq -r ".\"${k}\"" enhance.yml);
           # escape all keys by default
           j=$(echo "$k" | sed -r 's/[.]+/"."/g')
           # remove first extra quote
           j=${j#*\"}
-          # add one extra quote at the end
-          yq -I 4 -o json -i "${j}\" = \"${newData}\"" adminapi.json
+          # only apply enhancement if the target field exists in adminapi.json
+          if yq -e "${j}\"" adminapi.json >/dev/null 2>&1; then
+            yq -I 4 -o json -i "${j}\" = \"${newData}\"" adminapi.json
+          else
+            echo "Skip: ${k} (path: ${j}\") not found in adminapi.json"
+          fi
         done
                   
     - name: Download original file
