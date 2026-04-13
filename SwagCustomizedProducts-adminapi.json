@@ -15,6 +15,1102 @@
     }
   ],
   "paths": {
+    "/sales-channel-tracking-customer": {
+      "get": {
+        "tags": [
+          "Sales Channel Tracking Customer",
+          "Experimental"
+        ],
+        "summary": "List with basic information of Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "getSalesChannelTrackingCustomerList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Sales Channel Tracking Customer resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/sales-channel-tracking-customer?limit=25"
+                                },
+                                "last": {
+                                  "example": "/sales-channel-tracking-customer?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/sales-channel-tracking-customer?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/sales-channel-tracking-customer?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sales Channel Tracking Customer",
+          "Experimental"
+        ],
+        "summary": "Create a new Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "createSalesChannelTrackingCustomer",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SalesChannelTrackingCustomer",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/sales-channel-tracking-customer": {
+      "post": {
+        "tags": [
+          "Sales Channel Tracking Customer",
+          "Experimental"
+        ],
+        "summary": "Search for the Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "searchSalesChannelTrackingCustomer",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of SalesChannelTrackingCustomer",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/sales-channel-tracking-customer/{id}": {
+      "get": {
+        "tags": [
+          "Sales Channel Tracking Customer",
+          "Experimental"
+        ],
+        "summary": "Detailed information about a Sales Channel Tracking Customer resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "getSalesChannelTrackingCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the sales_channel_tracking_customer",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of SalesChannelTrackingCustomer",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Sales Channel Tracking Customer",
+          "Experimental"
+        ],
+        "summary": "Delete a Sales Channel Tracking Customer resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "deleteSalesChannelTrackingCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the sales_channel_tracking_customer",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Sales Channel Tracking Customer",
+          "Experimental"
+        ],
+        "summary": "Partially update information about a Sales Channel Tracking Customer resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "updateSalesChannelTrackingCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the sales_channel_tracking_customer",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Sales Channel Tracking Customer resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SalesChannelTrackingCustomer",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/sales-channel-tracking-customer": {
+      "post": {
+        "tags": [
+          "Sales Channel Tracking Customer",
+          "Experimental"
+        ],
+        "summary": "Aggregate for the Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "aggregateSalesChannelTrackingCustomer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of SalesChannelTrackingCustomer",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/sales-channel-tracking-order": {
+      "get": {
+        "tags": [
+          "Sales Channel Tracking Order",
+          "Experimental"
+        ],
+        "summary": "List with basic information of Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "getSalesChannelTrackingOrderList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Sales Channel Tracking Order resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/sales-channel-tracking-order?limit=25"
+                                },
+                                "last": {
+                                  "example": "/sales-channel-tracking-order?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/sales-channel-tracking-order?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/sales-channel-tracking-order?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sales Channel Tracking Order",
+          "Experimental"
+        ],
+        "summary": "Create a new Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "createSalesChannelTrackingOrder",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SalesChannelTrackingOrder",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/sales-channel-tracking-order": {
+      "post": {
+        "tags": [
+          "Sales Channel Tracking Order",
+          "Experimental"
+        ],
+        "summary": "Search for the Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "searchSalesChannelTrackingOrder",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of SalesChannelTrackingOrder",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/sales-channel-tracking-order/{id}": {
+      "get": {
+        "tags": [
+          "Sales Channel Tracking Order",
+          "Experimental"
+        ],
+        "summary": "Detailed information about a Sales Channel Tracking Order resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "getSalesChannelTrackingOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the sales_channel_tracking_order",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of SalesChannelTrackingOrder",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Sales Channel Tracking Order",
+          "Experimental"
+        ],
+        "summary": "Delete a Sales Channel Tracking Order resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "deleteSalesChannelTrackingOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the sales_channel_tracking_order",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Sales Channel Tracking Order",
+          "Experimental"
+        ],
+        "summary": "Partially update information about a Sales Channel Tracking Order resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "updateSalesChannelTrackingOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the sales_channel_tracking_order",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Sales Channel Tracking Order resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of SalesChannelTrackingOrder",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/sales-channel-tracking-order": {
+      "post": {
+        "tags": [
+          "Sales Channel Tracking Order",
+          "Experimental"
+        ],
+        "summary": "Aggregate for the Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.9.0",
+        "operationId": "aggregateSalesChannelTrackingOrder",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of SalesChannelTrackingOrder",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/swag-customized-products-template": {
       "get": {
         "tags": [
@@ -5421,66 +6517,6 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/_action/user/logout": {
-      "post": {
-        "tags": [
-          "Authorization & Authentication"
-        ],
-        "summary": "Logout the current user",
-        "description": "Revokes all server-side refresh tokens for the currently authenticated administration user and returns a no content response.",
-        "operationId": "userLogout",
-        "responses": {
-          "204": {
-            "description": "Tokens have been revoked successfully."
-          },
-          "401": {
-            "description": "Unauthorized - the access token is missing or invalid."
-          },
-          "403": {
-            "description": "The authenticated source does not have a user ID associated."
-          }
-        }
-      }
-    },
-    "/app-system/shop/verify": {
-      "get": {
-        "tags": [
-          "App System",
-          "Public"
-        ],
-        "summary": "Verify a shop's APP_URL",
-        "description": "Used to verify that a shop's APP_URL points to its self. The passed run ID and token are used to query the cache. It returns 204 no content if the given token can be verified using the run id.",
-        "operationId": "verifyAppUrl",
-        "parameters": [
-          {
-            "name": "runId",
-            "in": "query",
-            "description": "A unique identifier used to look up the token",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "token",
-            "in": "query",
-            "description": "A unique identifier",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "An empty response signalling successful verification."
-          },
-          "400": {
-            "description": "Malformed request or unsuccessful verification."
           }
         }
       }
@@ -12886,6 +13922,40 @@
                 "format": "date-time",
                 "readOnly": true
               },
+              "extensions": {
+                "properties": {
+                  "salesChannelTracking": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/salesChannelTracking"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "sales_channel_tracking_customer"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "0be2acfa806308827a1893fe389a7c8b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
               "relationships": {
                 "properties": {
                   "group": {
@@ -13691,6 +14761,40 @@
             "type": "string",
             "format": "date-time",
             "readOnly": true
+          },
+          "extensions": {
+            "properties": {
+              "salesChannelTracking": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/customer/ce26601dac0dea138b7295f02b7620a7/salesChannelTracking"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "example": "sales_channel_tracking_customer"
+                      },
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{32}$",
+                        "example": "0be2acfa806308827a1893fe389a7c8b"
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
           },
           "group": {
             "$ref": "#/components/schemas/CustomerGroup",
@@ -15848,6 +16952,9 @@
                 "description": "Technical name of document type.",
                 "type": "string"
               },
+              "customFields": {
+                "type": "object"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -15857,9 +16964,6 @@
                 "type": "string",
                 "format": "date-time",
                 "readOnly": true
-              },
-              "customFields": {
-                "type": "object"
               },
               "translated": {
                 "type": "object"
@@ -15986,6 +17090,9 @@
             "description": "Technical name of document type.",
             "type": "string"
           },
+          "customFields": {
+            "type": "object"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -15995,9 +17102,6 @@
             "type": "string",
             "format": "date-time",
             "readOnly": true
-          },
-          "customFields": {
-            "type": "object"
           },
           "translated": {
             "type": "object"
@@ -18956,6 +20060,9 @@
               "systemDefault": {
                 "type": "boolean"
               },
+              "wasModifiedByUser": {
+                "type": "boolean"
+              },
               "senderName": {
                 "type": "string"
               },
@@ -19076,6 +20183,9 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "systemDefault": {
+            "type": "boolean"
+          },
+          "wasModifiedByUser": {
             "type": "boolean"
           },
           "senderName": {
@@ -20478,6 +21588,37 @@
                     },
                     "type": "object"
                   },
+                  "productOpenGraphImages": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media/3b563524fdb17b4a86590470d40bef74/productOpenGraphImages"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "a067685a73a5308efd6117308e659025"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "orderLineItems": {
                     "properties": {
                       "links": {
@@ -21016,6 +22157,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ProductConfiguratorSetting"
+            }
+          },
+          "productOpenGraphImages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
             }
           },
           "orderLineItems": {
@@ -23624,6 +24771,40 @@
                 "format": "date-time",
                 "readOnly": true
               },
+              "extensions": {
+                "properties": {
+                  "salesChannelTracking": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/order/a240fa27925a635b08dc28c9e4f9216d/salesChannelTracking"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "sales_channel_tracking_order"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "0be2acfa806308827a1893fe389a7c8b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
               "relationships": {
                 "properties": {
                   "stateMachineState": {
@@ -24434,6 +25615,40 @@
             "type": "string",
             "format": "date-time",
             "readOnly": true
+          },
+          "extensions": {
+            "properties": {
+              "salesChannelTracking": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/order/a240fa27925a635b08dc28c9e4f9216d/salesChannelTracking"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "example": "sales_channel_tracking_order"
+                      },
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{32}$",
+                        "example": "0be2acfa806308827a1893fe389a7c8b"
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
           },
           "stateMachineState": {
             "$ref": "#/components/schemas/StateMachineState",
@@ -29177,6 +30392,11 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "openGraphMediaId": {
+                "description": "Media used as Open Graph image for social media sharing.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "price": {
                 "type": "array",
                 "items": {
@@ -29412,6 +30632,12 @@
                   "type": "object",
                   "additionalProperties": false
                 }
+              },
+              "ogTitle": {
+                "type": "string"
+              },
+              "ogDescription": {
+                "type": "string"
               },
               "type": {
                 "description": "The type of the product, e.g., physical or digital.",
@@ -29716,6 +30942,36 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "41d0e299ca1abeb2094852da042165c7"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "openGraphMedia": {
+                    "description": "Open Graph image for social media sharing",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/openGraphMedia"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "bbda52d941a3452369a00f2880f4f358"
                           }
                         }
                       }
@@ -30503,6 +31759,11 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "openGraphMediaId": {
+            "description": "Media used as Open Graph image for social media sharing.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "price": {
             "type": "array",
             "items": {
@@ -30739,6 +32000,12 @@
               "additionalProperties": false
             }
           },
+          "ogTitle": {
+            "type": "string"
+          },
+          "ogDescription": {
+            "type": "string"
+          },
           "type": {
             "description": "The type of the product, e.g., physical or digital.",
             "type": "string",
@@ -30839,6 +32106,10 @@
           "cover": {
             "$ref": "#/components/schemas/ProductMedia",
             "description": "Main product image displayed in listings and detail pages"
+          },
+          "openGraphMedia": {
+            "$ref": "#/components/schemas/Media",
+            "description": "Open Graph image for social media sharing"
           },
           "featureSet": {
             "$ref": "#/components/schemas/ProductFeatureSet"
@@ -31974,6 +33245,10 @@
                 "description": "Type of file formats or extensions like CSV or JSON.",
                 "type": "string"
               },
+              "provider": {
+                "description": "Selected export provider identifier, for example open-ai or google.",
+                "type": "string"
+              },
               "includeVariants": {
                 "description": "Toggling the product export settings to determine whether or not to include the variants.",
                 "type": "boolean"
@@ -32237,6 +33512,10 @@
           },
           "fileFormat": {
             "description": "Type of file formats or extensions like CSV or JSON.",
+            "type": "string"
+          },
+          "provider": {
+            "description": "Selected export provider identifier, for example open-ai or google.",
             "type": "string"
           },
           "includeVariants": {
@@ -34767,7 +36046,12 @@
               "visibility": {
                 "description": "An integer value to signify the product's visibility in any sales channel. `10` indicates `Hide in listings and search`, `20` indicates `Hide in listings` and `30` indicates `Visible` everywhere.",
                 "type": "integer",
-                "format": "int64"
+                "format": "int64",
+                "enum": [
+                  10,
+                  20,
+                  30
+                ]
               },
               "createdAt": {
                 "type": "string",
@@ -34877,7 +36161,12 @@
           "visibility": {
             "description": "An integer value to signify the product's visibility in any sales channel. `10` indicates `Hide in listings and search`, `20` indicates `Hide in listings` and `30` indicates `Visible` everywhere.",
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "enum": [
+              10,
+              20,
+              30
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -38218,6 +39507,68 @@
               },
               "extensions": {
                 "properties": {
+                  "salesChannelTrackingOrders": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/salesChannelTrackingOrders"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "sales_channel_tracking_order"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "ac53756ec89dc96c6b7c724a748b1a90"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "salesChannelTrackingCustomers": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/salesChannelTrackingCustomers"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "sales_channel_tracking_customer"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "cb8f22914de8c702eb773a34957f4124"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "themes": {
                     "properties": {
                       "links": {
@@ -39586,6 +40937,68 @@
           },
           "extensions": {
             "properties": {
+              "salesChannelTrackingOrders": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/salesChannelTrackingOrders"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "sales_channel_tracking_order"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "ac53756ec89dc96c6b7c724a748b1a90"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "salesChannelTrackingCustomers": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/salesChannelTrackingCustomers"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "sales_channel_tracking_customer"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "cb8f22914de8c702eb773a34957f4124"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
               "themes": {
                 "properties": {
                   "links": {
@@ -40419,6 +41832,298 @@
           },
           "shippingMethod": {
             "$ref": "#/components/schemas/ShippingMethod"
+          }
+        },
+        "type": "object"
+      },
+      "SalesChannelTrackingCustomerJsonApi": {
+        "description": "Added since version: 6.7.9.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "customerId",
+              "salesChannelId"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "customerId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "salesChannelId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "customer": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel-tracking-customer/ea2de1d5c97c761634c2ebf3a18ad1ae/customer"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "customer"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "91ec1f9324753048c0096d036a694f86"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "salesChannel": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel-tracking-customer/ea2de1d5c97c761634c2ebf3a18ad1ae/salesChannel"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "sales_channel"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "ec3712a84143b57e0db620eaac6e55b8"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "SalesChannelTrackingCustomer": {
+        "description": "Added since version: 6.7.9.0",
+        "required": [
+          "id",
+          "customerId",
+          "salesChannelId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "customerId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "salesChannel": {
+            "$ref": "#/components/schemas/SalesChannel"
+          }
+        },
+        "type": "object"
+      },
+      "SalesChannelTrackingOrderJsonApi": {
+        "description": "Added since version: 6.7.9.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "orderId",
+              "salesChannelId"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "orderId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "orderVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "salesChannelId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "order": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel-tracking-order/a540f7ebb29a289fffaca652fef993f4/order"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "70a17ffa722a3985b86d30b034ad06d7"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "salesChannel": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel-tracking-order/a540f7ebb29a289fffaca652fef993f4/salesChannel"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "sales_channel"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "ec3712a84143b57e0db620eaac6e55b8"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "SalesChannelTrackingOrder": {
+        "description": "Added since version: 6.7.9.0",
+        "required": [
+          "id",
+          "orderId",
+          "salesChannelId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "orderId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "orderVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "order": {
+            "$ref": "#/components/schemas/Order"
+          },
+          "salesChannel": {
+            "$ref": "#/components/schemas/SalesChannel"
           }
         },
         "type": "object"
@@ -49349,6 +51054,111 @@
         },
         "type": "object"
       },
+      "ConsentState": {
+        "type": "object",
+        "required": [
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt",
+          "acceptedUntil"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the consent"
+          },
+          "scopeName": {
+            "type": "string",
+            "description": "The scope of the consent that defines how the identifier is resolved"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unset",
+              "accepted",
+              "revoked"
+            ],
+            "description": "The current status of the consent (requested, accepted, revoked)"
+          },
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          },
+          "acceptedUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp until when the consent is accepted. null if never accepted"
+          },
+          "acceptedRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
+          },
+          "latestRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
+          }
+        }
+      },
+      "MediaId": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}$",
+        "description": "Media entity ID"
+      },
+      "ExternalThumbnail": {
+        "type": "object",
+        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
+        "required": [
+          "url",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
+            "example": "https://cdn.example.com/image-200x200.jpg"
+          },
+          "width": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Width of the thumbnail in pixels",
+            "example": 200
+          },
+          "height": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Height of the thumbnail in pixels",
+            "example": 200
+          }
+        }
+      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -49567,268 +51377,37 @@
         ],
         "additionalProperties": false
       },
-      "Price": {
-        "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "",
-            "type": "number"
-          },
-          "net": {
-            "description": "",
-            "type": "number"
-          },
-          "linked": {
-            "description": "",
-            "type": "boolean"
-          },
-          "listPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          },
-          "regulationPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net",
-          "linked"
-        ]
-      },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
-        "type": "object",
-        "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
-          }
-        },
-        "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
-          }
-        }
-      },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "refresh_token"
-            ]
-          }
-        ]
-      },
-      "flowBuilderActionsResponse": {
+      "businessEventsResponse": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
             "name": {
               "type": "string",
-              "description": "Name of the flow action"
+              "description": "Name of the event"
             },
-            "requirements": {
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
               "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "description": "Flow builder will base on awareness to show actions",
               "items": {
                 "type": "string"
               }
             },
             "extensions": {
               "type": "array",
+              "description": "Extensions data of event",
               "items": {
                 "type": "string"
-              },
-              "description": "Extensions data of event"
+              }
             }
-          }
-        }
-      },
-      "MediaId": {
-        "type": "string",
-        "pattern": "^[0-9a-f]{32}$",
-        "description": "Media entity ID"
-      },
-      "ExternalThumbnail": {
-        "type": "object",
-        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
-        "required": [
-          "url",
-          "width",
-          "height"
-        ],
-        "properties": {
-          "url": {
-            "type": "string",
-            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
-            "example": "https://cdn.example.com/image-200x200.jpg"
-          },
-          "width": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Width of the thumbnail in pixels",
-            "example": 200
-          },
-          "height": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Height of the thumbnail in pixels",
-            "example": 200
           }
         }
       },
@@ -50538,6 +52117,156 @@
           "field"
         ]
       },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "refresh_token"
+            ]
+          }
+        ]
+      },
       "MeasurementUnits": {
         "type": "object",
         "description": "Configuration of the measurement system",
@@ -50582,97 +52311,87 @@
           }
         }
       },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "ConsentState": {
+      "Price": {
         "type": "object",
-        "required": [
-          "name",
-          "scopeName",
-          "identifier",
-          "status",
-          "actor",
-          "updatedAt",
-          "acceptedUntil"
-        ],
+        "description": "Price object",
         "properties": {
-          "name": {
+          "currencyId": {
             "type": "string",
-            "description": "The name of the consent"
+            "pattern": "^[0-9a-f]{32}$"
           },
-          "scopeName": {
-            "type": "string",
-            "description": "The scope of the consent that defines how the identifier is resolved"
+          "gross": {
+            "description": "",
+            "type": "number"
           },
-          "identifier": {
-            "type": "string",
-            "description": "The resolved identifier of the consent"
+          "net": {
+            "description": "",
+            "type": "number"
           },
-          "status": {
-            "type": "string",
-            "enum": [
-              "unset",
-              "accepted",
-              "revoked"
-            ],
-            "description": "The current status of the consent (requested, accepted, revoked)"
+          "linked": {
+            "description": "",
+            "type": "boolean"
           },
-          "actor": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The user name of the user who made the consent decision. null if never updated"
+          "listPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
           },
-          "updatedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp of when the consent status was last updated. null if never updated"
-          },
-          "acceptedUntil": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp until when the consent is accepted. null if never accepted"
+          "regulationPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
           }
-        }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
+        ]
       }
     },
     "responses": {
@@ -51470,6 +53189,14 @@
     {
       "name": "Sales Channel Domain",
       "description": "The endpoint for operations on Sales Channel Domain"
+    },
+    {
+      "name": "Sales Channel Tracking Customer",
+      "description": "The endpoint for operations on Sales Channel Tracking Customer"
+    },
+    {
+      "name": "Sales Channel Tracking Order",
+      "description": "The endpoint for operations on Sales Channel Tracking Order"
     },
     {
       "name": "Sales Channel Type",
