@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.7.8.2"
+    "version": "6.7.9.0"
   },
   "servers": [
     {
@@ -5424,6 +5424,442 @@
           }
         }
       }
+    },
+    "/_action/validation/email": {
+      "post": {
+        "tags": [
+          "Email support validation"
+        ],
+        "summary": "Email support.",
+        "description": "Checks a given email string.",
+        "operationId": "supportsEmail",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "The email to be verified.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Email is supported"
+          },
+          "400": {
+            "description": "Invalid request payload. The argument 'email' may be missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "errors": {
+                      "description": "Contains the error message.",
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "example": {
+                  "errors": [
+                    {
+                      "code": "0",
+                      "status": "400",
+                      "title": "Unprocessable Content",
+                      "detail": "This value should not be blank."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Email address is not supported.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "errors": {
+                      "description": "Contains the validation error.",
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "example": {
+                  "errors": [
+                    {
+                      "code": "0",
+                      "status": "422",
+                      "title": "Unprocessable Content",
+                      "detail": "This value is not a supported email address."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app-system/shop/verify": {
+      "get": {
+        "tags": [
+          "App System",
+          "Public"
+        ],
+        "summary": "Verify a shop's APP_URL",
+        "description": "Used to verify that a shop's APP_URL points to its self. The passed run ID and token are used to query the cache. It returns 204 no content if the given token can be verified using the run id.",
+        "operationId": "verifyAppUrl",
+        "parameters": [
+          {
+            "name": "runId",
+            "in": "query",
+            "description": "A unique identifier used to look up the token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "description": "A unique identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "An empty response signalling successful verification."
+          },
+          "400": {
+            "description": "Malformed request or unsuccessful verification."
+          }
+        }
+      }
+    },
+    "/_action/system-config": {
+      "get": {
+        "tags": [
+          "System Config"
+        ],
+        "summary": "Get configuration values",
+        "description": "Returns the configuration values for the given domain and optional sales channel.",
+        "operationId": "getConfigurationValues",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "The configuration domain.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "salesChannelId",
+            "in": "query",
+            "description": "The sales channel ID to scope the configuration to.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "inherit",
+            "in": "query",
+            "description": "Whether to include inherited (global) values.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the configuration values as a key-value object."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "System Config"
+        ],
+        "summary": "Save configuration values",
+        "description": "Saves the given configuration key-value pairs for the given sales channel.",
+        "operationId": "saveConfiguration",
+        "parameters": [
+          {
+            "name": "salesChannelId",
+            "in": "query",
+            "description": "The sales channel ID to scope the configuration to.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "silent",
+            "in": "query",
+            "description": "If true, the HTTP cache will not be invalidated. Use this for internal configuration values that do not affect the storefront.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Key-value pairs of configuration values to save.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Configuration saved successfully."
+          }
+        }
+      }
+    },
+    "/_action/system-config/check": {
+      "get": {
+        "tags": [
+          "System Config"
+        ],
+        "summary": "Check configuration",
+        "description": "Checks if a configuration domain exists.",
+        "operationId": "checkConfiguration",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "The configuration domain to check.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns whether the configuration domain exists."
+          }
+        }
+      }
+    },
+    "/_action/system-config/schema": {
+      "get": {
+        "tags": [
+          "System Config"
+        ],
+        "summary": "Get configuration schema",
+        "description": "Returns the configuration schema for the given domain.",
+        "operationId": "getConfiguration",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "The configuration domain.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the configuration schema."
+          }
+        }
+      }
+    },
+    "/_action/system-config/batch": {
+      "post": {
+        "tags": [
+          "System Config"
+        ],
+        "summary": "Batch save configuration values",
+        "description": "Saves configuration values for multiple sales channels at once. The request body is keyed by sales channel ID (use \"null\" for global scope).",
+        "operationId": "batchSaveConfiguration",
+        "parameters": [
+          {
+            "name": "silent",
+            "in": "query",
+            "description": "If true, the HTTP cache will not be invalidated. Use this for internal configuration values that do not affect the storefront.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Object keyed by sales channel ID, each containing key-value pairs of configuration values.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Configuration saved successfully."
+          }
+        }
+      }
+    },
+    "/_action/media/{mediaId}/external-thumbnails": {
+      "post": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Add external thumbnails to media",
+        "description": "Attaches external thumbnail URLs to an existing external media entity. The media must have an HTTP/HTTPS path (i.e. be an external media link).\n\nUsed for CDNs that pre-generated thumbnails alongside the main media file.\nNot to be confused with [remote thumbnails](https://developer.shopware.com/docs/guides/plugins/plugins/content/media/remote-thumbnail-generation.html#remote-thumbnail-generation), which are generated based on a pattern.\n\nThe thumbnail sized are matched against existing thumbnails sizes and a matching size will automatically be assigned. If there's not existing size, a **new thumbnail size will automatically be created** for each missing size.",
+        "operationId": "addExternalThumbnails",
+        "parameters": [
+          {
+            "name": "mediaId",
+            "in": "path",
+            "description": "ID of the external media entity the thumbnails will be attached to.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/MediaId"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "thumbnails": {
+                    "type": "array",
+                    "description": "List of external thumbnails to attach",
+                    "items": {
+                      "$ref": "#/components/schemas/ExternalThumbnail"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thumbnails attached successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mediaId": {
+                      "description": "ID of the media entity the thumbnails were attached to.",
+                      "$ref": "#/components/schemas/MediaId"
+                    },
+                    "thumbnailsCreated": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Media is not an external media entity or path is missing"
+          },
+          "404": {
+            "description": "Media entity not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Delete all external thumbnails from media",
+        "description": "Removes all externally stored thumbnail entries from the given media entity. Only works on external media (media with an HTTP/HTTPS path). Used to replace outdated thumbnails with new ones.",
+        "operationId": "deleteExternalThumbnails",
+        "parameters": [
+          {
+            "name": "mediaId",
+            "in": "path",
+            "description": "ID of the external media entity the thumbnails will be deleted from..",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/MediaId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thumbnails deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mediaId": {
+                      "description": "ID of the media entity the thumbnails were deleted from.",
+                      "$ref": "#/components/schemas/MediaId"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Media is not an external media entity or path is missing"
+          },
+          "404": {
+            "description": "Media entity not found"
+          }
+        }
+      }
+    },
+    "/_action/user/logout": {
+      "post": {
+        "tags": [
+          "Authorization & Authentication"
+        ],
+        "summary": "Logout the current user",
+        "description": "Revokes all server-side refresh tokens for the currently authenticated administration user and returns a no content response.",
+        "operationId": "userLogout",
+        "responses": {
+          "204": {
+            "description": "Tokens have been revoked successfully."
+          },
+          "401": {
+            "description": "Unauthorized - the access token is missing or invalid."
+          },
+          "403": {
+            "description": "The authenticated source does not have a user ID associated."
+          }
+        }
+      }
     }
   },
   "components": {
@@ -8447,7 +8883,12 @@
               },
               "type": {
                 "description": "Type of categories like `page`, `folder`, `link`.",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "page",
+                  "link",
+                  "folder"
+                ]
               },
               "productAssignmentType": {
                 "description": "Type of product assignment: Dynamic product group as or `product_stream` or Manual assignment as `product`.",
@@ -8459,10 +8900,6 @@
               },
               "active": {
                 "description": "When boolean value is `true`, the category is listed for selection.",
-                "type": "boolean"
-              },
-              "cmsPageIdSwitched": {
-                "description": "Runtime field, cannot be used as part of the criteria.",
                 "type": "boolean"
               },
               "visibleChildCount": {
@@ -8480,7 +8917,13 @@
                 "type": "object"
               },
               "linkType": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "category",
+                  "product",
+                  "external",
+                  "landing_page"
+                ]
               },
               "internalLink": {
                 "type": "string",
@@ -8521,6 +8964,11 @@
               "customEntityTypeId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
+              },
+              "cmsPageIdSwitched": {
+                "description": "Runtime field, cannot be used as part of the criteria.",
+                "type": "boolean",
+                "deprecated": true
               },
               "createdAt": {
                 "type": "string",
@@ -9018,7 +9466,12 @@
           },
           "type": {
             "description": "Type of categories like `page`, `folder`, `link`.",
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "page",
+              "link",
+              "folder"
+            ]
           },
           "productAssignmentType": {
             "description": "Type of product assignment: Dynamic product group as or `product_stream` or Manual assignment as `product`.",
@@ -9030,10 +9483,6 @@
           },
           "active": {
             "description": "When boolean value is `true`, the category is listed for selection.",
-            "type": "boolean"
-          },
-          "cmsPageIdSwitched": {
-            "description": "Runtime field, cannot be used as part of the criteria.",
             "type": "boolean"
           },
           "visibleChildCount": {
@@ -9051,7 +9500,13 @@
             "type": "object"
           },
           "linkType": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "category",
+              "product",
+              "external",
+              "landing_page"
+            ]
           },
           "internalLink": {
             "type": "string",
@@ -9092,6 +9547,11 @@
           "customEntityTypeId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "cmsPageIdSwitched": {
+            "description": "Runtime field, cannot be used as part of the criteria.",
+            "type": "boolean",
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -9941,8 +10401,12 @@
                 "format": "int64"
               },
               "type": {
-                "description": "Types of sections can be `sidebar` or `fullwidth`.",
-                "type": "string"
+                "description": "Types of sections can be `default` or `sidebar`.",
+                "type": "string",
+                "enum": [
+                  "default",
+                  "sidebar"
+                ]
               },
               "locked": {
                 "type": "boolean"
@@ -10134,8 +10598,12 @@
             "format": "int64"
           },
           "type": {
-            "description": "Types of sections can be `sidebar` or `fullwidth`.",
-            "type": "string"
+            "description": "Types of sections can be `default` or `sidebar`.",
+            "type": "string",
+            "enum": [
+              "default",
+              "sidebar"
+            ]
           },
           "locked": {
             "type": "boolean"
@@ -12706,7 +13174,7 @@
                 "format": "date-time"
               },
               "hash": {
-                "description": "Password hash for customer recovery.",
+                "description": "Customer registration double opt-in hash for confirming the customer account.",
                 "type": "string"
               },
               "guest": {
@@ -13512,7 +13980,7 @@
             "format": "date-time"
           },
           "hash": {
-            "description": "Password hash for customer recovery.",
+            "description": "Customer registration double opt-in hash for confirming the customer account.",
             "type": "string"
           },
           "guest": {
@@ -15756,6 +16224,9 @@
                 "description": "Technical name of document type.",
                 "type": "string"
               },
+              "customFields": {
+                "type": "object"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -15765,9 +16236,6 @@
                 "type": "string",
                 "format": "date-time",
                 "readOnly": true
-              },
-              "customFields": {
-                "type": "object"
               },
               "translated": {
                 "type": "object"
@@ -15894,6 +16362,9 @@
             "description": "Technical name of document type.",
             "type": "string"
           },
+          "customFields": {
+            "type": "object"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -15903,9 +16374,6 @@
             "type": "string",
             "format": "date-time",
             "readOnly": true
-          },
-          "customFields": {
-            "type": "object"
           },
           "translated": {
             "type": "object"
@@ -22023,7 +22491,13 @@
               },
               "status": {
                 "description": "When status is set, the NewsletterRecipient is made visible.",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "notSet",
+                  "optIn",
+                  "optOut",
+                  "direct"
+                ]
               },
               "hash": {
                 "description": "Password hash for account recovery.",
@@ -22235,7 +22709,13 @@
           },
           "status": {
             "description": "When status is set, the NewsletterRecipient is made visible.",
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "notSet",
+              "optIn",
+              "optOut",
+              "direct"
+            ]
           },
           "hash": {
             "description": "Password hash for account recovery.",
@@ -26084,7 +26564,16 @@
               },
               "type": {
                 "description": "Type refers to the entity type of an item whether it is product or promotion for instance.",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "product",
+                  "credit",
+                  "custom",
+                  "promotion",
+                  "container",
+                  "discount",
+                  "quantity"
+                ]
               },
               "customFields": {
                 "type": "object"
@@ -26559,7 +27048,16 @@
           },
           "type": {
             "description": "Type refers to the entity type of an item whether it is product or promotion for instance.",
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "product",
+              "credit",
+              "custom",
+              "promotion",
+              "container",
+              "discount",
+              "quantity"
+            ]
           },
           "customFields": {
             "type": "object"
@@ -29293,7 +29791,11 @@
               },
               "type": {
                 "description": "The type of the product, e.g., physical or digital.",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "physical",
+                  "digital"
+                ]
               },
               "states": {
                 "type": "array",
@@ -30615,7 +31117,11 @@
           },
           "type": {
             "description": "The type of the product, e.g., physical or digital.",
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "physical",
+              "digital"
+            ]
           },
           "states": {
             "type": "array",
@@ -34180,6 +34686,38 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "products": {
+                    "description": "Products this product stream includes",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product-stream/8f4cdc10a7afbd7f3948c6f8cd5c4801/products"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "86024cad1e83101d97359d7351051156"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -34257,6 +34795,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Category"
+            }
+          },
+          "products": {
+            "description": "Products this product stream includes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
             }
           }
         },
@@ -40998,7 +41543,12 @@
               },
               "routeName": {
                 "description": "A destination routeName that has been registered somewhere in the app's router. For example: \\\\\"frontend.detail.page\\\\\"",
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "frontend.detail.page",
+                  "frontend.navigation.page",
+                  "frontend.landing.page"
+                ]
               },
               "pathInfo": {
                 "description": "Path to product URL. For example: \\\\\"/detail/bbf36734504741c79a3bbe3795b91564\\\\\"",
@@ -41141,7 +41691,12 @@
           },
           "routeName": {
             "description": "A destination routeName that has been registered somewhere in the app's router. For example: \\\\\"frontend.detail.page\\\\\"",
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "frontend.detail.page",
+              "frontend.navigation.page",
+              "frontend.landing.page"
+            ]
           },
           "pathInfo": {
             "description": "Path to product URL. For example: \\\\\"/detail/bbf36734504741c79a3bbe3795b91564\\\\\"",
@@ -49170,6 +49725,97 @@
         },
         "type": "object"
       },
+      "ConsentState": {
+        "type": "object",
+        "required": [
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt",
+          "acceptedUntil"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the consent"
+          },
+          "scopeName": {
+            "type": "string",
+            "description": "The scope of the consent that defines how the identifier is resolved"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unset",
+              "accepted",
+              "revoked"
+            ],
+            "description": "The current status of the consent (requested, accepted, revoked)"
+          },
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          },
+          "acceptedUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp until when the consent is accepted. null if never accepted"
+          }
+        }
+      },
+      "MediaId": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}$",
+        "description": "Media entity ID"
+      },
+      "ExternalThumbnail": {
+        "type": "object",
+        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
+        "required": [
+          "url",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
+            "example": "https://cdn.example.com/image-200x200.jpg"
+          },
+          "width": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Width of the thumbnail in pixels",
+            "example": 200
+          },
+          "height": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Height of the thumbnail in pixels",
+            "example": 200
+          }
+        }
+      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -49335,6 +49981,13 @@
                 "type": "boolean",
                 "description": "True if at least one installed app requires a reachable APP_URL."
               },
+              "firstMigrationDate": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "Timestamp of the first executed migration in ISO-8601 UTC format, used for Product Analytics consent eligibility."
+              },
               "private_allowed_extensions": {
                 "type": "array",
                 "description": "Whitelisted file extensions for private filesystem uploads.",
@@ -49355,6 +50008,9 @@
                 "description": "True if runtime extension management is disabled."
               }
             },
+            "required": [
+              "firstMigrationDate"
+            ],
             "additionalProperties": false
           },
           "inAppPurchases": {
@@ -49377,200 +50033,6 @@
           "inAppPurchases"
         ],
         "additionalProperties": false
-      },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
-      "MeasurementUnits": {
-        "type": "object",
-        "description": "Configuration of the measurement system",
-        "properties": {
-          "system": {
-            "type": "string",
-            "enum": [
-              "metric",
-              "imperial"
-            ],
-            "default": "metric",
-            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
-          },
-          "units": {
-            "type": "object",
-            "description": "Units used in the measurement system.",
-            "properties": {
-              "length": {
-                "type": "string",
-                "enum": [
-                  "mm",
-                  "cm",
-                  "m",
-                  "in",
-                  "ft"
-                ],
-                "default": "mm",
-                "description": "Unit of length."
-              },
-              "weight": {
-                "type": "string",
-                "enum": [
-                  "g",
-                  "kg",
-                  "oz",
-                  "lb"
-                ],
-                "default": "kg",
-                "description": "Unit of weight."
-              }
-            }
-          }
-        }
-      },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
-        "type": "object",
-        "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
-          }
-        },
-        "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
-          }
-        }
-      },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "refresh_token"
-            ]
-          }
-        ]
       },
       "businessEventsResponse": {
         "type": "array",
@@ -50312,6 +50774,200 @@
           "field"
         ]
       },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "refresh_token"
+            ]
+          }
+        ]
+      },
+      "MeasurementUnits": {
+        "type": "object",
+        "description": "Configuration of the measurement system",
+        "properties": {
+          "system": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+          },
+          "units": {
+            "type": "object",
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
+              }
+            }
+          }
+        }
+      },
       "Price": {
         "type": "object",
         "description": "Price object",
@@ -50393,55 +51049,6 @@
           "net",
           "linked"
         ]
-      },
-      "ConsentState": {
-        "type": "object",
-        "required": [
-          "name",
-          "scopeName",
-          "identifier",
-          "status",
-          "actor",
-          "updatedAt"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the consent"
-          },
-          "scopeName": {
-            "type": "string",
-            "description": "The scope of the consent that defines how the identifier is resolved"
-          },
-          "identifier": {
-            "type": "string",
-            "description": "The resolved identifier of the consent"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "unset",
-              "accepted",
-              "revoked"
-            ],
-            "description": "The current status of the consent (requested, accepted, revoked)"
-          },
-          "actor": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The user name of the user who made the consent decision. null if never updated"
-          },
-          "updatedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp of when the consent status was last updated. null if never updated"
-          }
-        }
       }
     },
     "responses": {
