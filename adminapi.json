@@ -103975,12 +103975,6 @@
                 "description": "When the value is set to true, the product is hidden when sold out.",
                 "type": "boolean"
               },
-              "availableStock": {
-                "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
-                "type": "integer",
-                "format": "int64",
-                "readOnly": true
-              },
               "stock": {
                 "description": "Indicates the number of products available.",
                 "type": "integer",
@@ -104197,6 +104191,13 @@
                 "items": {
                   "type": "string"
                 },
+                "readOnly": true,
+                "deprecated": true
+              },
+              "availableStock": {
+                "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
+                "type": "integer",
+                "format": "int64",
                 "readOnly": true,
                 "deprecated": true
               },
@@ -105317,12 +105318,6 @@
             "description": "When the value is set to true, the product is hidden when sold out.",
             "type": "boolean"
           },
-          "availableStock": {
-            "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
-            "type": "integer",
-            "format": "int64",
-            "readOnly": true
-          },
           "stock": {
             "description": "Indicates the number of products available.",
             "type": "integer",
@@ -105563,6 +105558,13 @@
             "readOnly": true,
             "deprecated": true,
             "description": "Internal field."
+          },
+          "availableStock": {
+            "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true,
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
