@@ -34,31 +34,63 @@ on:
         default: true
 
 jobs:
+  guard:
+    name: "Check version matches branch"
+    runs-on: ubuntu-24.04
+    outputs:
+      proceed: ${{ steps.check.outputs.proceed }}
+    steps:
+      - id: check
+        env:
+          VERSION: ${{ inputs.shopware_version }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          # Map branch -> expected version pattern. Bump `latest` when it moves.
+          case "$BRANCH" in
+            latest)     expected='^v?6\.7\.' ;;
+            v6.6)       expected='^v?6\.6\.' ;;        
+            main|trunk) expected='.*' ;;
+            *)          expected='.*' ;;
+          esac
+
+          if [[ "$VERSION" =~ $expected ]]; then
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Accepting $VERSION on branch $BRANCH"
+          else
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Skipping: $VERSION does not belong on branch $BRANCH"
+          fi
+
   generate-trunk:
-    if: ${{ inputs.trigger_default_schema }}
+    needs: guard
+    if: ${{ needs.guard.outputs.proceed == 'true' && inputs.trigger_default_schema }}
     uses: ./.github/workflows/base_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
       php_version: ${{ inputs.php_version }}
     secrets: inherit
-    
+
   generate-commercial-trunk:
-    if: ${{ inputs.trigger_commercial_schema }}
+    needs: guard
+    if: ${{ needs.guard.outputs.proceed == 'true' && inputs.trigger_commercial_schema }}
     uses: ./.github/workflows/plugin_commercial_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
       php_version: ${{ inputs.php_version }}
     secrets: inherit
-    
+
   generate-digitalsalesroom-trunk:
-    if: ${{ inputs.trigger_digitalsalesroom_schema }}
+    needs: guard
+    if: ${{ needs.guard.outputs.proceed == 'true' && inputs.trigger_digitalsalesroom_schema }}
     uses: ./.github/workflows/plugin_digitalsalesroom_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
       php_version: ${{ inputs.php_version }}
     secrets: inherit
+
   generate-customproducts-trunk:
-    if: ${{ inputs.trigger_customproducts_schema }}
+    needs: guard
+    if: ${{ needs.guard.outputs.proceed == 'true' && inputs.trigger_customproducts_schema }}
     uses: ./.github/workflows/plugin_customproducts_schema.yml
     with:
       shopware_version: ${{ inputs.shopware_version }}
