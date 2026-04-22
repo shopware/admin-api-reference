@@ -4884,1102 +4884,6 @@
         }
       }
     },
-    "/sales-channel-tracking-customer": {
-      "get": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "List with basic information of Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "getSalesChannelTrackingCustomerList",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max amount of resources to be returned in a page",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page to be returned",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Encoded SwagQL in JSON",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of Sales Channel Tracking Customer resources.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/data"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                              }
-                            }
-                          ]
-                        },
-                        "links": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/pagination"
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "first": {
-                                  "example": "/sales-channel-tracking-customer?limit=25"
-                                },
-                                "last": {
-                                  "example": "/sales-channel-tracking-customer?limit=25&page=11"
-                                },
-                                "next": {
-                                  "example": "/sales-channel-tracking-customer?limit=25&page=4"
-                                },
-                                "prev": {
-                                  "example": "/sales-channel-tracking-customer?limit=25&page=2"
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Create a new Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "createSalesChannelTrackingCustomer",
-        "parameters": [
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "basic",
-                "detail"
-              ]
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingCustomer",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/search/sales-channel-tracking-customer": {
-      "post": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Search for the Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "searchSalesChannelTrackingCustomer",
-        "parameters": [
-          {
-            "name": "sw-include-search-info",
-            "in": "header",
-            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "0",
-                "1"
-              ],
-              "default": "1"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Criteria"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of SalesChannelTrackingCustomer",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/sales-channel-tracking-customer/{id}": {
-      "get": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Detailed information about a Sales Channel Tracking Customer resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "getSalesChannelTrackingCustomer",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_customer",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingCustomer",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Delete a Sales Channel Tracking Customer resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "deleteSalesChannelTrackingCustomer",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_customer",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Partially update information about a Sales Channel Tracking Customer resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "updateSalesChannelTrackingCustomer",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_customer",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Partially update information about a Sales Channel Tracking Customer resource.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingCustomer",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/aggregate/sales-channel-tracking-customer": {
-      "post": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Aggregate for the Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "aggregateSalesChannelTrackingCustomer",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "aggregations": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Aggregation"
-                    }
-                  }
-                },
-                "required": [
-                  "aggregations"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of SalesChannelTrackingCustomer",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/sales-channel-tracking-order": {
-      "get": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "List with basic information of Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "getSalesChannelTrackingOrderList",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max amount of resources to be returned in a page",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page to be returned",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Encoded SwagQL in JSON",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of Sales Channel Tracking Order resources.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/data"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                              }
-                            }
-                          ]
-                        },
-                        "links": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/pagination"
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "first": {
-                                  "example": "/sales-channel-tracking-order?limit=25"
-                                },
-                                "last": {
-                                  "example": "/sales-channel-tracking-order?limit=25&page=11"
-                                },
-                                "next": {
-                                  "example": "/sales-channel-tracking-order?limit=25&page=4"
-                                },
-                                "prev": {
-                                  "example": "/sales-channel-tracking-order?limit=25&page=2"
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Create a new Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "createSalesChannelTrackingOrder",
-        "parameters": [
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "basic",
-                "detail"
-              ]
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingOrder",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/search/sales-channel-tracking-order": {
-      "post": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Search for the Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "searchSalesChannelTrackingOrder",
-        "parameters": [
-          {
-            "name": "sw-include-search-info",
-            "in": "header",
-            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "0",
-                "1"
-              ],
-              "default": "1"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Criteria"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of SalesChannelTrackingOrder",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/sales-channel-tracking-order/{id}": {
-      "get": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Detailed information about a Sales Channel Tracking Order resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "getSalesChannelTrackingOrder",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_order",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingOrder",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Delete a Sales Channel Tracking Order resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "deleteSalesChannelTrackingOrder",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_order",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Partially update information about a Sales Channel Tracking Order resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "updateSalesChannelTrackingOrder",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_order",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Partially update information about a Sales Channel Tracking Order resource.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingOrder",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/aggregate/sales-channel-tracking-order": {
-      "post": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Aggregate for the Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "aggregateSalesChannelTrackingOrder",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "aggregations": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Aggregation"
-                    }
-                  }
-                },
-                "required": [
-                  "aggregations"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of SalesChannelTrackingOrder",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
     "/_action/dsr/appointment/{appointmentId}/join-as-guide": {
       "post": {
         "tags": [
@@ -33327,12 +32231,6 @@
                 "description": "When the value is set to true, the product is hidden when sold out.",
                 "type": "boolean"
               },
-              "availableStock": {
-                "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
-                "type": "integer",
-                "format": "int64",
-                "readOnly": true
-              },
               "stock": {
                 "description": "Indicates the number of products available.",
                 "type": "integer",
@@ -33549,6 +32447,13 @@
                 "items": {
                   "type": "string"
                 },
+                "readOnly": true,
+                "deprecated": true
+              },
+              "availableStock": {
+                "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
+                "type": "integer",
+                "format": "int64",
                 "readOnly": true,
                 "deprecated": true
               },
@@ -34730,12 +33635,6 @@
             "description": "When the value is set to true, the product is hidden when sold out.",
             "type": "boolean"
           },
-          "availableStock": {
-            "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
-            "type": "integer",
-            "format": "int64",
-            "readOnly": true
-          },
           "stock": {
             "description": "Indicates the number of products available.",
             "type": "integer",
@@ -34952,6 +33851,13 @@
             "items": {
               "type": "string"
             },
+            "readOnly": true,
+            "deprecated": true
+          },
+          "availableStock": {
+            "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
+            "type": "integer",
+            "format": "int64",
             "readOnly": true,
             "deprecated": true
           },
@@ -45299,6 +44205,11 @@
               "customFields": {
                 "type": "object"
               },
+              "position": {
+                "description": "Numerical value that indicates the order in which the defined salutations must be displayed in the frontend.",
+                "type": "integer",
+                "format": "int64"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -45502,6 +44413,11 @@
           },
           "customFields": {
             "type": "object"
+          },
+          "position": {
+            "description": "Numerical value that indicates the order in which the defined salutations must be displayed in the frontend.",
+            "type": "integer",
+            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -52069,111 +50985,6 @@
         },
         "type": "object"
       },
-      "ConsentState": {
-        "type": "object",
-        "required": [
-          "name",
-          "scopeName",
-          "identifier",
-          "status",
-          "actor",
-          "updatedAt",
-          "acceptedUntil"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the consent"
-          },
-          "scopeName": {
-            "type": "string",
-            "description": "The scope of the consent that defines how the identifier is resolved"
-          },
-          "identifier": {
-            "type": "string",
-            "description": "The resolved identifier of the consent"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "unset",
-              "accepted",
-              "revoked"
-            ],
-            "description": "The current status of the consent (requested, accepted, revoked)"
-          },
-          "actor": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The user name of the user who made the consent decision. null if never updated"
-          },
-          "updatedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp of when the consent status was last updated. null if never updated"
-          },
-          "acceptedUntil": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp until when the consent is accepted. null if never accepted"
-          },
-          "acceptedRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
-          },
-          "latestRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
-          }
-        }
-      },
-      "MediaId": {
-        "type": "string",
-        "pattern": "^[0-9a-f]{32}$",
-        "description": "Media entity ID"
-      },
-      "ExternalThumbnail": {
-        "type": "object",
-        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
-        "required": [
-          "url",
-          "width",
-          "height"
-        ],
-        "properties": {
-          "url": {
-            "type": "string",
-            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
-            "example": "https://cdn.example.com/image-200x200.jpg"
-          },
-          "width": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Width of the thumbnail in pixels",
-            "example": 200
-          },
-          "height": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Height of the thumbnail in pixels",
-            "example": 200
-          }
-        }
-      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -52392,6 +51203,191 @@
         ],
         "additionalProperties": false
       },
+      "MediaId": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}$",
+        "description": "Media entity ID"
+      },
+      "ExternalThumbnail": {
+        "type": "object",
+        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
+        "required": [
+          "url",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
+            "example": "https://cdn.example.com/image-200x200.jpg"
+          },
+          "width": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Width of the thumbnail in pixels",
+            "example": 200
+          },
+          "height": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Height of the thumbnail in pixels",
+            "example": 200
+          }
+        }
+      },
+      "MeasurementUnits": {
+        "type": "object",
+        "description": "Configuration of the measurement system",
+        "properties": {
+          "system": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+          },
+          "units": {
+            "type": "object",
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
+              }
+            }
+          }
+        }
+      },
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "",
+            "type": "number"
+          },
+          "net": {
+            "description": "",
+            "type": "number"
+          },
+          "linked": {
+            "description": "",
+            "type": "boolean"
+          },
+          "listPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          },
+          "regulationPrice": {
+            "description": "",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "",
+                "type": "number"
+              },
+              "net": {
+                "description": "",
+                "type": "number"
+              },
+              "linked": {
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
+        ]
+      },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
       "businessEventsResponse": {
         "type": "array",
         "items": {
@@ -52425,6 +51421,130 @@
             }
           }
         }
+      },
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "refresh_token"
+            ]
+          }
+        ]
       },
       "Criteria": {
         "type": "object",
@@ -53132,314 +52252,497 @@
           "field"
         ]
       },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
+      "ConsentState": {
         "type": "object",
-        "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
-          }
-        },
         "required": [
-          "grant_type"
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt",
+          "acceptedUntil"
         ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the consent"
+          },
+          "scopeName": {
+            "type": "string",
+            "description": "The scope of the consent that defines how the identifier is resolved"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unset",
+              "accepted",
+              "revoked"
+            ],
+            "description": "The current status of the consent (requested, accepted, revoked)"
+          },
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          },
+          "acceptedUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp until when the consent is accepted. null if never accepted"
+          },
+          "acceptedRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
+          },
+          "latestRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
           }
         }
       },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "refresh_token"
-            ]
-          }
-        ]
-      },
-      "MeasurementUnits": {
+      "JoinAppointmentResponse": {
         "type": "object",
-        "description": "Configuration of the measurement system",
+        "description": "Includes all data you will need to attend to a appointment.",
         "properties": {
-          "system": {
+          "mercureSubscriberTopics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "mercure topic"
+            },
+            "description": "The topics to which the attendee/guide can subscribe for"
+          },
+          "mercurePublisherTopic": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The topic to which the attendee/guide can send updates"
+          },
+          "JWTMercureSubscriberToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to publish updates"
+          },
+          "mercureHubPublicUrl": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The mercure hub url to connect for subscribing and updating"
+          },
+          "JWTMercurePublisherToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to subscribe for updates"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The appointment id"
+          },
+          "newContextToken": {
+            "type": "string",
+            "description": "The new context token will be used in the header (sw-context-token) for calling the other routes"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The created Id for the attendee"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id of the current sales channel"
+          },
+          "salesChannelName": {
+            "type": "string",
+            "description": "The name of the current sales channel"
+          },
+          "appointmentName": {
+            "type": "string",
+            "description": "The name of the appointment"
+          },
+          "presentationGuideMode": {
             "type": "string",
             "enum": [
-              "metric",
-              "imperial"
+              "self",
+              "guided"
             ],
-            "default": "metric",
-            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+            "description": "The type of the appointment"
           },
-          "units": {
-            "type": "object",
-            "description": "Units used in the measurement system.",
-            "properties": {
-              "length": {
-                "type": "string",
-                "enum": [
-                  "mm",
-                  "cm",
-                  "m",
-                  "in",
-                  "ft"
-                ],
-                "default": "mm",
-                "description": "Unit of length."
+          "isPreview": {
+            "type": "boolean",
+            "description": "To see if it's a preview appointment"
+          },
+          "attendeeName": {
+            "oneOf": [
+              {
+                "type": "string"
               },
-              "weight": {
-                "type": "string",
-                "enum": [
-                  "g",
-                  "kg",
-                  "oz",
-                  "lb"
-                ],
-                "default": "kg",
-                "description": "Unit of weight."
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The name of the attendee"
+          },
+          "videoUserId": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The video user id that attendee could use"
+          },
+          "b2bFeatures": {
+            "type": "object",
+            "description": "The b2b features that available for the appointment",
+            "properties": {
+              "quoteManagement": {
+                "type": "boolean",
+                "description": "To know if the quote management is enabled for current customer"
               }
             }
           }
+        },
+        "example": {
+          "mercureSubscriberTopics": [
+            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
+          ],
+          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
+          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
+          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
+          "JWTMercurePublisherToken": "jwt token for publishing updates",
+          "attendeeName": "attendee name",
+          "videoUserId": null,
+          "b2bFeatures": {
+            "feature1": false,
+            "feature2": true
+          },
+          "id": "2d2c358f1ca04098aacf12873c2eed82",
+          "newContextToken": "new context token to call the other routes",
+          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
+          "salesChannelName": "Storefront",
+          "appointmentName": "Test Appointment",
+          "presentationGuideMode": "guided",
+          "isPreview": false,
+          "apiAlias": "swag_digital_sales_rooms_content_appointment_struct_appointment_join_struct"
         }
       },
-      "Price": {
-        "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "",
-            "type": "number"
-          },
-          "net": {
-            "description": "",
-            "type": "number"
-          },
-          "linked": {
-            "description": "",
-            "type": "boolean"
-          },
-          "listPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          },
-          "regulationPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net",
-          "linked"
-        ]
-      },
-      "CartPriceQuantity": {
+      "Cart": {
         "type": "object",
         "properties": {
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_price_quantity"
-            ]
+          "name": {
+            "description": "Name of the cart - for example `guest-cart`",
+            "type": "string"
           },
-          "isCalculated": {
-            "type": "boolean"
-          },
-          "listPrice": {
-            "$ref": "#/components/schemas/CartListPrice"
+          "token": {
+            "description": "Context token identifying the cart and the user session",
+            "type": "string"
           },
           "price": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          },
+          "lineItems": {
+            "description": "All items within the cart",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+            "items": {
+              "$ref": "#/components/schemas/CartError"
+            }
+          },
+          "deliveries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartDelivery"
+            }
+          },
+          "transactions": {
+            "description": "A list of all payment transactions associated with the current cart.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "paymentMethodId": {
+                  "type": "string"
+                },
+                "amount": {
+                  "$ref": "#/components/schemas/CalculatedPrice"
+                }
+              }
+            }
+          },
+          "modified": {
+            "type": "boolean"
+          },
+          "customerComment": {
+            "type": "string",
+            "description": "A comment that can be added to the cart.",
+            "nullable": true
+          },
+          "affiliateCode": {
+            "type": "string",
+            "description": "An affiliate tracking code",
+            "nullable": true
+          },
+          "campaignCode": {
+            "type": "string",
+            "description": "A campaign tracking code",
+            "nullable": true
+          }
+        }
+      },
+      "GuidePresentationStateResponse": {
+        "type": "object",
+        "properties": {
+          "stateForAll": {
+            "$ref": "#/components/schemas/StateForAll"
+          },
+          "stateForClients": {
+            "$ref": "#/components/schemas/StateForGuides"
+          }
+        },
+        "example": {
+          "extensions": [],
+          "stateForAll": {
+            "currentGuideProductId": null,
+            "lastActiveGuideSection": null,
+            "currentPageId": null,
+            "currentSectionId": null,
+            "currentSlideAlias": 0,
+            "currentDynamicPage": null,
+            "started": false,
+            "running": false,
+            "ended": false,
+            "startedAt": null,
+            "endedAt": null,
+            "accessibleFrom": {
+              "date": "2023-08-04 00:00:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            },
+            "accessibleTo": {
+              "date": "2023-08-05 00:00:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            },
+            "appointmentMode": "guided",
+            "videoAudioSettings": "both",
+            "videoRoomUrl": "",
+            "attendeeRestrictionType": "open",
+            "productDetailDefaultPageId": "bea211b5099241719830df8026624f7f",
+            "quickviewPageId": "182d3f7f988044adbba449b70c8bc472",
+            "productListingDefaultPageId": "33e88c7994fa4cf79a1265e5105b93b2",
+            "broadcastMode": false,
+            "extensions": []
+          },
+          "stateForGuides": {
+            "clients": [],
+            "inactiveClients": {
+              "2b4066cd37a341088e32a81e04a56817": {
+                "attendeeId": "2b4066cd37a341088e32a81e04a56817",
+                "attendeeName": "Attendee 1",
+                "videoUserId": null,
+                "hasJoined": false
+              },
+              "302108ad602b4ac687f5247aae5d0297": {
+                "attendeeId": "302108ad602b4ac687f5247aae5d0297",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": true
+              },
+              "5a3b4e84acab47119b8a6bceb79e732e": {
+                "attendeeId": "5a3b4e84acab47119b8a6bceb79e732e",
+                "attendeeName": "Test attende name",
+                "videoUserId": null,
+                "hasJoined": true
+              },
+              "b6358241e4ad4a4e99d0f729d21d63be": {
+                "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": true
+              },
+              "f1bb9374308d4e088c29d10a2fc8cc07": {
+                "attendeeId": "f1bb9374308d4e088c29d10a2fc8cc07",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": false
+              }
+            },
+            "guides": {
+              "1850bbdc12dc44aba95bc78b16c3643c": {
+                "attendeeId": "1850bbdc12dc44aba95bc78b16c3643c",
+                "attendeeName": " admin",
+                "videoUserId": null,
+                "hasJoined": true
+              }
+            },
+            "videoGuideToken": null,
+            "quickViewState": [],
+            "extensions": []
+          }
+        }
+      },
+      "CalculatedPrice": {
+        "type": "object",
+        "description": "Represents a product along with detailed information required to display a variant selection.",
+        "properties": {
+          "unitPrice": {
             "type": "number"
           },
           "quantity": {
             "type": "number"
           },
+          "rawTotal": {
+            "type": "number"
+          },
+          "totalPrice": {
+            "type": "number"
+          },
+          "calculatedTaxes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "apiAlias": {
+                  "type": "string",
+                  "enum": [
+                    "cart_tax_calculated"
+                  ]
+                },
+                "tax": {
+                  "type": "number"
+                },
+                "taxRate": {
+                  "type": "number"
+                },
+                "price": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "apiAlias",
+                "tax",
+                "taxRate",
+                "price"
+              ]
+            }
+          },
+          "referencePrice": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CartPriceReference"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "listPrice": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CartListPrice"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "positionPrice": {
+            "type": "number"
+          },
+          "netPrice": {
+            "type": "number"
+          },
           "regulationPrice": {
+            "type": "object",
             "properties": {
               "price": {
-                "type": "number",
-                "format": "float"
+                "type": "number"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_regulation_price"
+                ]
               }
             },
-            "type": "object"
+            "nullable": true
+          },
+          "hasRange": {
+            "type": "boolean"
+          },
+          "variantId": {
+            "type": "string",
+            "format": "^[0-9a-f]{32}$",
+            "nullable": true
+          },
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "calculated_price"
+            ]
           },
           "taxRules": {
             "type": "array",
+            "description": "Currently active tax rules and/or rates",
             "items": {
               "type": "object",
               "properties": {
@@ -53452,40 +52755,49 @@
                 }
               }
             }
-          },
-          "type": {
-            "type": "string"
           }
         },
         "required": [
-          "apiAlias"
+          "apiAlias",
+          "hasRange",
+          "regulationPrice",
+          "listPrice",
+          "referencePrice",
+          "calculatedTaxes",
+          "totalPrice",
+          "quantity",
+          "unitPrice",
+          "positionPrice",
+          "netPrice",
+          "taxRules"
         ]
       },
-      "CartDeliveryPosition": {
+      "CartError": {
         "type": "object",
         "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
         "properties": {
-          "deliveryDate": {
+          "items": {
             "type": "object",
             "properties": {
-              "earliest": {
-                "type": "string",
-                "format": "date-time"
+              "key": {
+                "type": "string"
               },
-              "latest": {
-                "type": "string",
-                "format": "date-time"
+              "level": {
+                "type": "number",
+                "enum": [
+                  0,
+                  10,
+                  20
+                ],
+                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
+              },
+              "message": {
+                "type": "string"
+              },
+              "messageKey": {
+                "type": "string"
               }
             }
-          },
-          "identifier": {
-            "type": "string"
-          },
-          "lineItem": {
-            "$ref": "#/components/schemas/LineItem"
-          },
-          "price": {
-            "$ref": "#/components/schemas/CalculatedPrice"
           }
         }
       },
@@ -53789,208 +53101,19 @@
           }
         }
       },
-      "DynamicProductListingPageOpenedPayload": {
-        "required": [
-          "page"
-        ],
-        "properties": {
-          "page": {
-            "type": "integer",
-            "description": "Current page position in the pagination"
-          }
-        }
-      },
-      "CartDelivery": {
-        "type": "object",
-        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-        "properties": {
-          "deliveryDate": {
-            "type": "object",
-            "properties": {
-              "earliest": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "latest": {
-                "type": "string",
-                "format": "date-time"
-              }
-            }
-          },
-          "location": {
-            "type": "object",
-            "properties": {
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "cart_delivery_shipping_location"
-                ]
-              },
-              "country": {
-                "$ref": "#/components/schemas/Country"
-              },
-              "address": {
-                "$ref": "#/components/schemas/CustomerAddress"
-              },
-              "state": {
-                "$ref": "#/components/schemas/CountryState"
-              }
-            }
-          },
-          "positions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CartDeliveryPosition"
-            }
-          },
-          "shippingCosts": {
-            "$ref": "#/components/schemas/CalculatedPrice"
-          },
-          "shippingMethod": {
-            "$ref": "#/components/schemas/ShippingMethod"
-          }
-        }
-      },
-      "DiscountType": {
-        "type": "string",
-        "description": "Type of the discount",
-        "enum": [
-          "percentage",
-          "absolute"
-        ]
-      },
-      "AddTempDiscountRequestBody": {
+      "AbstractDynamicPageOpenedPayload": {
         "type": "object",
         "required": [
-          "discountType",
-          "discountValue",
-          "appliedItemIds"
+          "type"
         ],
         "properties": {
-          "discountType": {
-            "$ref": "#/components/schemas/DiscountType"
+          "type": {
+            "type": "string",
+            "description": "The type of the current dynamic page"
           },
-          "discountValue": {
-            "type": "number",
-            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
-            "maximum": 0
-          },
-          "appliedItemIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            },
-            "description": "Ids of the items to which the discount should be applied"
-          }
-        }
-      },
-      "AddCartDiscountRequestBody": {
-        "type": "object",
-        "required": [
-          "discountType",
-          "discountValue"
-        ],
-        "properties": {
-          "discountType": {
-            "$ref": "#/components/schemas/DiscountType"
-          },
-          "discountValue": {
-            "type": "number",
-            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
-            "maximum": 0
-          }
-        }
-      },
-      "GuidePresentationStateResponse": {
-        "type": "object",
-        "properties": {
-          "stateForAll": {
-            "$ref": "#/components/schemas/StateForAll"
-          },
-          "stateForClients": {
-            "$ref": "#/components/schemas/StateForGuides"
-          }
-        },
-        "example": {
-          "extensions": [],
-          "stateForAll": {
-            "currentGuideProductId": null,
-            "lastActiveGuideSection": null,
-            "currentPageId": null,
-            "currentSectionId": null,
-            "currentSlideAlias": 0,
-            "currentDynamicPage": null,
-            "started": false,
-            "running": false,
-            "ended": false,
-            "startedAt": null,
-            "endedAt": null,
-            "accessibleFrom": {
-              "date": "2023-08-04 00:00:00.000000",
-              "timezone_type": 3,
-              "timezone": "UTC"
-            },
-            "accessibleTo": {
-              "date": "2023-08-05 00:00:00.000000",
-              "timezone_type": 3,
-              "timezone": "UTC"
-            },
-            "appointmentMode": "guided",
-            "videoAudioSettings": "both",
-            "videoRoomUrl": "",
-            "attendeeRestrictionType": "open",
-            "productDetailDefaultPageId": "bea211b5099241719830df8026624f7f",
-            "quickviewPageId": "182d3f7f988044adbba449b70c8bc472",
-            "productListingDefaultPageId": "33e88c7994fa4cf79a1265e5105b93b2",
-            "broadcastMode": false,
-            "extensions": []
-          },
-          "stateForGuides": {
-            "clients": [],
-            "inactiveClients": {
-              "2b4066cd37a341088e32a81e04a56817": {
-                "attendeeId": "2b4066cd37a341088e32a81e04a56817",
-                "attendeeName": "Attendee 1",
-                "videoUserId": null,
-                "hasJoined": false
-              },
-              "302108ad602b4ac687f5247aae5d0297": {
-                "attendeeId": "302108ad602b4ac687f5247aae5d0297",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "5a3b4e84acab47119b8a6bceb79e732e": {
-                "attendeeId": "5a3b4e84acab47119b8a6bceb79e732e",
-                "attendeeName": "Test attende name",
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "b6358241e4ad4a4e99d0f729d21d63be": {
-                "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "f1bb9374308d4e088c29d10a2fc8cc07": {
-                "attendeeId": "f1bb9374308d4e088c29d10a2fc8cc07",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": false
-              }
-            },
-            "guides": {
-              "1850bbdc12dc44aba95bc78b16c3643c": {
-                "attendeeId": "1850bbdc12dc44aba95bc78b16c3643c",
-                "attendeeName": " admin",
-                "videoUserId": null,
-                "hasJoined": true
-              }
-            },
-            "videoGuideToken": null,
-            "quickViewState": [],
-            "extensions": []
+          "opened": {
+            "type": "boolean",
+            "default": true
           }
         }
       },
@@ -54107,613 +53230,54 @@
           }
         }
       },
-      "WidgetProductListing": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "extensions": {
-            "type": "array",
-            "description": "List of extensions",
-            "default": []
-          },
-          "products": {
-            "type": "array",
-            "description": "List of last seen products",
-            "items": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Product"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "customFields": {
-                      "type": "object",
-                      "properties": {
-                        "wishlistAttendeeIds": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "total": {
-            "type": "integer",
-            "description": "The total number of products"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The current page"
-          },
-          "limit": {
-            "type": "integer",
-            "description": "The number of products per page"
-          }
-        }
-      },
-      "GetAttendeeInsightsResponse": {
-        "type": "object",
-        "description": "Returns aggregations for the current attendees within the appointment.",
-        "properties": {
-          "attendees": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/AttendeeInsights"
-            }
-          },
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "currencySymbol": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "extensions": [],
-          "attendees": {
-            "04da9d8572494ae68391a471d4c3a470": {
-              "extensions": [],
-              "id": "04da9d8572494ae68391a471d4c3a470",
-              "cartSum": 6770.53,
-              "productCount": 3,
-              "lineItemCount": 3
-            }
-          },
-          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
-          "currencySymbol": "$"
-        }
-      },
-      "VideoChatCreateStruct": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "roomUrl": {
-            "type": "string",
-            "description": "Url of the video room in daily"
-          },
-          "roomName": {
-            "type": "string",
-            "description": "Name of the video room in daily"
-          },
-          "userToken": {
-            "type": "string",
-            "description": "Token for the end users to connect to the daily room"
-          },
-          "ownerToken": {
-            "type": "string",
-            "description": "Token for the room owner (guide) to connect to the daily room"
-          }
-        },
-        "example": {
-          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
-          "userToken": "dummy user token",
-          "ownerToken": "dummy owner token",
-          "roomName": "rSq20mrgwsj4eIXo1u95",
-          "extensions": []
-        }
-      },
-      "CartError": {
+      "CartDelivery": {
         "type": "object",
         "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
         "properties": {
-          "items": {
+          "deliveryDate": {
             "type": "object",
             "properties": {
-              "key": {
-                "type": "string"
+              "earliest": {
+                "type": "string",
+                "format": "date-time"
               },
-              "level": {
-                "type": "number",
-                "enum": [
-                  0,
-                  10,
-                  20
-                ],
-                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
-              },
-              "message": {
-                "type": "string"
-              },
-              "messageKey": {
-                "type": "string"
+              "latest": {
+                "type": "string",
+                "format": "date-time"
               }
             }
-          }
-        }
-      },
-      "CartPriceReference": {
-        "type": "object",
-        "properties": {
-          "purchaseUnit": {
-            "type": "number"
           },
-          "referenceUnit": {
-            "type": "number"
-          },
-          "unitName": {
-            "type": "string"
-          },
-          "price": {
-            "type": "number"
-          },
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_price_reference"
-            ]
-          },
-          "listPrice": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CartListPrice"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "regulationPrice": {
+          "location": {
             "type": "object",
             "properties": {
-              "price": {
-                "type": "number"
-              },
               "apiAlias": {
                 "type": "string",
                 "enum": [
-                  "cart_regulation_price"
-                ]
-              }
-            },
-            "nullable": true
-          },
-          "hasRange": {
-            "type": "boolean"
-          },
-          "variantId": {
-            "type": "string",
-            "format": "^[0-9a-f]{32}$",
-            "nullable": true
-          }
-        },
-        "required": [
-          "apiAlias",
-          "hasRange",
-          "regulationPrice",
-          "listPrice",
-          "calculatedTaxes",
-          "totalPrice",
-          "quantity",
-          "unitName"
-        ]
-      },
-      "StateForAll": {
-        "type": "object",
-        "properties": {
-          "currentGuideProductId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "lastActiveGuideSection": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentSectionId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentSlideAlias": {
-            "type": "integer",
-            "default": 0
-          },
-          "currentSlideData": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/DynamicProductListingPageOpenedPayload"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentDynamicPage": {
-            "$ref": "#/components/schemas/DynamicPageOpenedPayload"
-          },
-          "started": {
-            "type": "boolean",
-            "default": false
-          },
-          "running": {
-            "type": "boolean",
-            "default": false
-          },
-          "ended": {
-            "type": "boolean",
-            "default": false
-          },
-          "startedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "endedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "accessibleFrom": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "accessibleTo": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "appointmentMode": {
-            "type": "string",
-            "enum": [
-              "guided",
-              "self"
-            ]
-          },
-          "videoAudioSettings": {
-            "type": "string",
-            "enum": [
-              "both",
-              "none",
-              "audio-only"
-            ],
-            "default": "none"
-          },
-          "videoRoomUrl": {
-            "type": "string",
-            "default": ""
-          },
-          "attendeeRestrictionType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "open",
-                  "customer",
-                  "rules"
+                  "cart_delivery_shipping_location"
                 ]
               },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "productDetailDefaultPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+              "country": {
+                "$ref": "#/components/schemas/Country"
               },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickviewPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+              "address": {
+                "$ref": "#/components/schemas/CustomerAddress"
               },
-              {
-                "type": "null"
+              "state": {
+                "$ref": "#/components/schemas/CountryState"
               }
-            ]
-          },
-          "productListingDefaultPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "broadcastMode": {
-            "type": "boolean",
-            "default": false
-          },
-          "viewMode": {
-            "type": "string",
-            "enum": [
-              "onlyYou",
-              "presentation",
-              "videoGrid"
-            ],
-            "default": "presentation"
-          },
-          "allowScreenSharing": {
-            "type": "boolean",
-            "default": false
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "StateForGuides": {
-        "type": "object",
-        "properties": {
-          "clients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "inactiveClients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "guides": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "videoGuideToken": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickViewState": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "CalculatedPrice": {
-        "type": "object",
-        "description": "Represents a product along with detailed information required to display a variant selection.",
-        "properties": {
-          "unitPrice": {
-            "type": "number"
-          },
-          "quantity": {
-            "type": "number"
-          },
-          "rawTotal": {
-            "type": "number"
-          },
-          "totalPrice": {
-            "type": "number"
-          },
-          "calculatedTaxes": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "apiAlias": {
-                  "type": "string",
-                  "enum": [
-                    "cart_tax_calculated"
-                  ]
-                },
-                "tax": {
-                  "type": "number"
-                },
-                "taxRate": {
-                  "type": "number"
-                },
-                "price": {
-                  "type": "number"
-                }
-              },
-              "required": [
-                "apiAlias",
-                "tax",
-                "taxRate",
-                "price"
-              ]
             }
           },
-          "referencePrice": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CartPriceReference"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "listPrice": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CartListPrice"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "positionPrice": {
-            "type": "number"
-          },
-          "netPrice": {
-            "type": "number"
-          },
-          "regulationPrice": {
-            "type": "object",
-            "properties": {
-              "price": {
-                "type": "number"
-              },
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "cart_regulation_price"
-                ]
-              }
-            },
-            "nullable": true
-          },
-          "hasRange": {
-            "type": "boolean"
-          },
-          "variantId": {
-            "type": "string",
-            "format": "^[0-9a-f]{32}$",
-            "nullable": true
-          },
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "calculated_price"
-            ]
-          },
-          "taxRules": {
+          "positions": {
             "type": "array",
-            "description": "Currently active tax rules and/or rates",
             "items": {
-              "type": "object",
-              "properties": {
-                "taxRate": {
-                  "type": "number",
-                  "format": "float"
-                },
-                "name": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/components/schemas/CartDeliveryPosition"
             }
-          }
-        },
-        "required": [
-          "apiAlias",
-          "hasRange",
-          "regulationPrice",
-          "listPrice",
-          "referencePrice",
-          "calculatedTaxes",
-          "totalPrice",
-          "quantity",
-          "unitPrice",
-          "positionPrice",
-          "netPrice",
-          "taxRules"
-        ]
-      },
-      "GetListBodyRequest": {
-        "type": "object",
-        "properties": {
-          "limit": {
-            "type": "integer",
-            "description": "Max amount of resources to be returned in a page"
           },
-          "page": {
-            "type": "integer",
-            "description": "The page to be returned"
+          "shippingCosts": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          },
+          "shippingMethod": {
+            "$ref": "#/components/schemas/ShippingMethod"
           }
         }
       },
@@ -54799,116 +53363,53 @@
           "apiAlias"
         ]
       },
-      "Cart": {
+      "WidgetProductListing": {
         "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
         "properties": {
-          "name": {
-            "description": "Name of the cart - for example `guest-cart`",
-            "type": "string"
-          },
-          "token": {
-            "description": "Context token identifying the cart and the user session",
-            "type": "string"
-          },
-          "price": {
-            "$ref": "#/components/schemas/CalculatedPrice"
-          },
-          "lineItems": {
-            "description": "All items within the cart",
+          "extensions": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LineItem"
-            }
+            "description": "List of extensions",
+            "default": []
           },
-          "errors": {
+          "products": {
             "type": "array",
-            "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+            "description": "List of last seen products",
             "items": {
-              "$ref": "#/components/schemas/CartError"
-            }
-          },
-          "deliveries": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CartDelivery"
-            }
-          },
-          "transactions": {
-            "description": "A list of all payment transactions associated with the current cart.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "paymentMethodId": {
-                  "type": "string"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Product"
                 },
-                "amount": {
-                  "$ref": "#/components/schemas/CalculatedPrice"
+                {
+                  "type": "object",
+                  "properties": {
+                    "customFields": {
+                      "type": "object",
+                      "properties": {
+                        "wishlistAttendeeIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
-              }
+              ]
             }
           },
-          "modified": {
-            "type": "boolean"
+          "total": {
+            "type": "integer",
+            "description": "The total number of products"
           },
-          "customerComment": {
-            "type": "string",
-            "description": "A comment that can be added to the cart.",
-            "nullable": true
+          "page": {
+            "type": "integer",
+            "description": "The current page"
           },
-          "affiliateCode": {
-            "type": "string",
-            "description": "An affiliate tracking code",
-            "nullable": true
-          },
-          "campaignCode": {
-            "type": "string",
-            "description": "A campaign tracking code",
-            "nullable": true
-          }
-        }
-      },
-      "AbstractDynamicPageOpenedPayload": {
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of the current dynamic page"
-          },
-          "opened": {
-            "type": "boolean",
-            "default": true
-          }
-        }
-      },
-      "AttendeeInsights": {
-        "type": "object",
-        "description": "Attendee Insights",
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "Id of the attendee"
-          },
-          "cartSum": {
-            "type": "number",
-            "description": "Sum of the cart net in base currency"
-          },
-          "productCount": {
-            "type": "number",
-            "description": "Sum of all quantities in the cart which were added during the appointment"
-          }
-        },
-        "example": {
-          "04da9d8572494ae68391a471d4c3a470": {
-            "extensions": [],
-            "id": "04da9d8572494ae68391a471d4c3a470",
-            "cartSum": 6770.53,
-            "productCount": 3,
-            "lineItemCount": 3
+          "limit": {
+            "type": "integer",
+            "description": "The number of products per page"
           }
         }
       },
@@ -55412,6 +53913,317 @@
           "apiAlias": "pwa_page_result"
         }
       },
+      "StateForGuides": {
+        "type": "object",
+        "properties": {
+          "clients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "inactiveClients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "guides": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "videoGuideToken": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quickViewState": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
+      "VideoChatCreateStruct": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "roomUrl": {
+            "type": "string",
+            "description": "Url of the video room in daily"
+          },
+          "roomName": {
+            "type": "string",
+            "description": "Name of the video room in daily"
+          },
+          "userToken": {
+            "type": "string",
+            "description": "Token for the end users to connect to the daily room"
+          },
+          "ownerToken": {
+            "type": "string",
+            "description": "Token for the room owner (guide) to connect to the daily room"
+          }
+        },
+        "example": {
+          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
+          "userToken": "dummy user token",
+          "ownerToken": "dummy owner token",
+          "roomName": "rSq20mrgwsj4eIXo1u95",
+          "extensions": []
+        }
+      },
+      "GetListBodyRequest": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "Max amount of resources to be returned in a page"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The page to be returned"
+          }
+        }
+      },
+      "DynamicProductListingPageOpenedPayload": {
+        "required": [
+          "page"
+        ],
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Current page position in the pagination"
+          }
+        }
+      },
+      "StateForAll": {
+        "type": "object",
+        "properties": {
+          "currentGuideProductId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lastActiveGuideSection": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentSectionId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentSlideAlias": {
+            "type": "integer",
+            "default": 0
+          },
+          "currentSlideData": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DynamicProductListingPageOpenedPayload"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentDynamicPage": {
+            "$ref": "#/components/schemas/DynamicPageOpenedPayload"
+          },
+          "started": {
+            "type": "boolean",
+            "default": false
+          },
+          "running": {
+            "type": "boolean",
+            "default": false
+          },
+          "ended": {
+            "type": "boolean",
+            "default": false
+          },
+          "startedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "endedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accessibleFrom": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accessibleTo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "appointmentMode": {
+            "type": "string",
+            "enum": [
+              "guided",
+              "self"
+            ]
+          },
+          "videoAudioSettings": {
+            "type": "string",
+            "enum": [
+              "both",
+              "none",
+              "audio-only"
+            ],
+            "default": "none"
+          },
+          "videoRoomUrl": {
+            "type": "string",
+            "default": ""
+          },
+          "attendeeRestrictionType": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "customer",
+                  "rules"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "productDetailDefaultPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quickviewPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "productListingDefaultPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "broadcastMode": {
+            "type": "boolean",
+            "default": false
+          },
+          "viewMode": {
+            "type": "string",
+            "enum": [
+              "onlyYou",
+              "presentation",
+              "videoGrid"
+            ],
+            "default": "presentation"
+          },
+          "allowScreenSharing": {
+            "type": "boolean",
+            "default": false
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
       "PresentationCmsPage": {
         "allOf": [
           {
@@ -55440,159 +54252,131 @@
           }
         ]
       },
-      "JoinAppointmentResponse": {
+      "CartPriceReference": {
         "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
         "properties": {
-          "mercureSubscriberTopics": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "mercure topic"
-            },
-            "description": "The topics to which the attendee/guide can subscribe for"
+          "purchaseUnit": {
+            "type": "number"
           },
-          "mercurePublisherTopic": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The topic to which the attendee/guide can send updates"
+          "referenceUnit": {
+            "type": "number"
           },
-          "JWTMercureSubscriberToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to publish updates"
+          "unitName": {
+            "type": "string"
           },
-          "mercureHubPublicUrl": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The mercure hub url to connect for subscribing and updating"
+          "price": {
+            "type": "number"
           },
-          "JWTMercurePublisherToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to subscribe for updates"
-          },
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The appointment id"
-          },
-          "newContextToken": {
-            "type": "string",
-            "description": "The new context token will be used in the header (sw-context-token) for calling the other routes"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The created Id for the attendee"
-          },
-          "salesChannelId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id of the current sales channel"
-          },
-          "salesChannelName": {
-            "type": "string",
-            "description": "The name of the current sales channel"
-          },
-          "appointmentName": {
-            "type": "string",
-            "description": "The name of the appointment"
-          },
-          "presentationGuideMode": {
+          "apiAlias": {
             "type": "string",
             "enum": [
-              "self",
-              "guided"
-            ],
-            "description": "The type of the appointment"
+              "cart_price_reference"
+            ]
           },
-          "isPreview": {
-            "type": "boolean",
-            "description": "To see if it's a preview appointment"
-          },
-          "attendeeName": {
+          "listPrice": {
             "oneOf": [
               {
-                "type": "string"
+                "$ref": "#/components/schemas/CartListPrice"
               },
               {
                 "type": "null"
               }
-            ],
-            "description": "The name of the attendee"
+            ]
           },
-          "videoUserId": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The video user id that attendee could use"
-          },
-          "b2bFeatures": {
+          "regulationPrice": {
             "type": "object",
-            "description": "The b2b features that available for the appointment",
             "properties": {
-              "quoteManagement": {
-                "type": "boolean",
-                "description": "To know if the quote management is enabled for current customer"
+              "price": {
+                "type": "number"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_regulation_price"
+                ]
+              }
+            },
+            "nullable": true
+          },
+          "hasRange": {
+            "type": "boolean"
+          },
+          "variantId": {
+            "type": "string",
+            "format": "^[0-9a-f]{32}$",
+            "nullable": true
+          }
+        },
+        "required": [
+          "apiAlias",
+          "hasRange",
+          "regulationPrice",
+          "listPrice",
+          "calculatedTaxes",
+          "totalPrice",
+          "quantity",
+          "unitName"
+        ]
+      },
+      "CartDeliveryPosition": {
+        "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+        "properties": {
+          "deliveryDate": {
+            "type": "object",
+            "properties": {
+              "earliest": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "latest": {
+                "type": "string",
+                "format": "date-time"
               }
             }
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "lineItem": {
+            "$ref": "#/components/schemas/LineItem"
+          },
+          "price": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          }
+        }
+      },
+      "GetAttendeeInsightsResponse": {
+        "type": "object",
+        "description": "Returns aggregations for the current attendees within the appointment.",
+        "properties": {
+          "attendees": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AttendeeInsights"
+            }
+          },
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "currencySymbol": {
+            "type": "string"
           }
         },
         "example": {
-          "mercureSubscriberTopics": [
-            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
-          ],
-          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
-          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
-          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
-          "JWTMercurePublisherToken": "jwt token for publishing updates",
-          "attendeeName": "attendee name",
-          "videoUserId": null,
-          "b2bFeatures": {
-            "feature1": false,
-            "feature2": true
+          "extensions": [],
+          "attendees": {
+            "04da9d8572494ae68391a471d4c3a470": {
+              "extensions": [],
+              "id": "04da9d8572494ae68391a471d4c3a470",
+              "cartSum": 6770.53,
+              "productCount": 3,
+              "lineItemCount": 3
+            }
           },
-          "id": "2d2c358f1ca04098aacf12873c2eed82",
-          "newContextToken": "new context token to call the other routes",
-          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
-          "salesChannelName": "Storefront",
-          "appointmentName": "Test Appointment",
-          "presentationGuideMode": "guided",
-          "isPreview": false,
-          "apiAlias": "swag_digital_sales_rooms_content_appointment_struct_appointment_join_struct"
+          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
+          "currencySymbol": "$"
         }
       },
       "DynamicPageOpenedPayload": {
@@ -55601,6 +54385,138 @@
             "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
           }
         ]
+      },
+      "DiscountType": {
+        "type": "string",
+        "description": "Type of the discount",
+        "enum": [
+          "percentage",
+          "absolute"
+        ]
+      },
+      "AddTempDiscountRequestBody": {
+        "type": "object",
+        "required": [
+          "discountType",
+          "discountValue",
+          "appliedItemIds"
+        ],
+        "properties": {
+          "discountType": {
+            "$ref": "#/components/schemas/DiscountType"
+          },
+          "discountValue": {
+            "type": "number",
+            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
+            "maximum": 0
+          },
+          "appliedItemIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            "description": "Ids of the items to which the discount should be applied"
+          }
+        }
+      },
+      "AddCartDiscountRequestBody": {
+        "type": "object",
+        "required": [
+          "discountType",
+          "discountValue"
+        ],
+        "properties": {
+          "discountType": {
+            "$ref": "#/components/schemas/DiscountType"
+          },
+          "discountValue": {
+            "type": "number",
+            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
+            "maximum": 0
+          }
+        }
+      },
+      "CartPriceQuantity": {
+        "type": "object",
+        "properties": {
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_price_quantity"
+            ]
+          },
+          "isCalculated": {
+            "type": "boolean"
+          },
+          "listPrice": {
+            "$ref": "#/components/schemas/CartListPrice"
+          },
+          "price": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "regulationPrice": {
+            "properties": {
+              "price": {
+                "type": "number",
+                "format": "float"
+              }
+            },
+            "type": "object"
+          },
+          "taxRules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "taxRate": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "AttendeeInsights": {
+        "type": "object",
+        "description": "Attendee Insights",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Id of the attendee"
+          },
+          "cartSum": {
+            "type": "number",
+            "description": "Sum of the cart net in base currency"
+          },
+          "productCount": {
+            "type": "number",
+            "description": "Sum of all quantities in the cart which were added during the appointment"
+          }
+        },
+        "example": {
+          "04da9d8572494ae68391a471d4c3a470": {
+            "extensions": [],
+            "id": "04da9d8572494ae68391a471d4c3a470",
+            "cartSum": 6770.53,
+            "productCount": 3,
+            "lineItemCount": 3
+          }
+        }
       }
     },
     "responses": {
