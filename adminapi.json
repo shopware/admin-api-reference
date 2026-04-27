@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.7.9.0"
+    "version": "6.7.9.1"
   },
   "servers": [
     {
@@ -106476,6 +106476,9 @@
                   "$ref": "#/components/schemas/Price"
                 }
               },
+              "customFields": {
+                "type": "object"
+              },
               "quantityStart": {
                 "description": "Starting range of quantity of an item.",
                 "type": "integer",
@@ -106485,9 +106488,6 @@
                 "description": "Ending range of quantity of an item.",
                 "type": "integer",
                 "format": "int64"
-              },
-              "customFields": {
-                "type": "object"
               },
               "createdAt": {
                 "type": "string",
@@ -106609,6 +106609,10 @@
             },
             "description": "Price of the Product."
           },
+          "customFields": {
+            "type": "object",
+            "description": "Additional fields that offer a possibility to add own fields for the different program-areas."
+          },
           "quantityStart": {
             "description": "Starting range of quantity of an item.",
             "type": "integer",
@@ -106618,10 +106622,6 @@
             "description": "Ending range of quantity of an item.",
             "type": "integer",
             "format": "int64"
-          },
-          "customFields": {
-            "type": "object",
-            "description": "Additional fields that offer a possibility to add own fields for the different program-areas."
           },
           "createdAt": {
             "type": "string",
