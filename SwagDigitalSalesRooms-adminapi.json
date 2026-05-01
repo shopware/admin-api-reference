@@ -15,6 +15,547 @@
     }
   ],
   "paths": {
+    "/document-file": {
+      "get": {
+        "tags": [
+          "Document File"
+        ],
+        "summary": "List with basic information of Document File resources.",
+        "description": "Available since: 6.7.10.0",
+        "operationId": "getDocumentFileList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Document File resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/DocumentFile"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/document-file?limit=25"
+                                },
+                                "last": {
+                                  "example": "/document-file?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/document-file?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/document-file?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DocumentFile"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Document File"
+        ],
+        "summary": "Create a new Document File resources.",
+        "description": "Available since: 6.7.10.0",
+        "operationId": "createDocumentFile",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentFile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of DocumentFile",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/DocumentFile"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/DocumentFile"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/document-file": {
+      "post": {
+        "tags": [
+          "Document File"
+        ],
+        "summary": "Search for the Document File resources.",
+        "description": "Available since: 6.7.10.0",
+        "operationId": "searchDocumentFile",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of DocumentFile",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/DocumentFile"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DocumentFile"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/document-file/{id}": {
+      "get": {
+        "tags": [
+          "Document File"
+        ],
+        "summary": "Detailed information about a Document File resource.",
+        "description": "Available since: 6.7.10.0",
+        "operationId": "getDocumentFile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the document_file",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of DocumentFile",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/DocumentFile"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/DocumentFile"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Document File"
+        ],
+        "summary": "Delete a Document File resource.",
+        "description": "Available since: 6.7.10.0",
+        "operationId": "deleteDocumentFile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the document_file",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Document File"
+        ],
+        "summary": "Partially update information about a Document File resource.",
+        "description": "Available since: 6.7.10.0",
+        "operationId": "updateDocumentFile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the document_file",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Document File resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentFile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of DocumentFile",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/DocumentFile"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/DocumentFile"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/document-file": {
+      "post": {
+        "tags": [
+          "Document File"
+        ],
+        "summary": "Aggregate for the Document File resources.",
+        "description": "Available since: 6.7.10.0",
+        "operationId": "aggregateDocumentFile",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of DocumentFile",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/DocumentFile"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DocumentFile"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/dsr-appointment": {
       "get": {
         "tags": [
@@ -4884,728 +5425,94 @@
         }
       }
     },
-    "/sales-channel-tracking-customer": {
-      "get": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "List with basic information of Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "getSalesChannelTrackingCustomerList",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max amount of resources to be returned in a page",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page to be returned",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Encoded SwagQL in JSON",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of Sales Channel Tracking Customer resources.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/data"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                              }
-                            }
-                          ]
-                        },
-                        "links": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/pagination"
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "first": {
-                                  "example": "/sales-channel-tracking-customer?limit=25"
-                                },
-                                "last": {
-                                  "example": "/sales-channel-tracking-customer?limit=25&page=11"
-                                },
-                                "next": {
-                                  "example": "/sales-channel-tracking-customer?limit=25&page=4"
-                                },
-                                "prev": {
-                                  "example": "/sales-channel-tracking-customer?limit=25&page=2"
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
+    "/_action/media/presign-upload": {
       "post": {
         "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
+          "Asset Management"
         ],
-        "summary": "Create a new Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "createSalesChannelTrackingCustomer",
-        "parameters": [
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "basic",
-                "detail"
-              ]
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingCustomer",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/search/sales-channel-tracking-customer": {
-      "post": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Search for the Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "searchSalesChannelTrackingCustomer",
-        "parameters": [
-          {
-            "name": "sw-include-search-info",
-            "in": "header",
-            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "0",
-                "1"
-              ],
-              "default": "1"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Criteria"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of SalesChannelTrackingCustomer",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/sales-channel-tracking-customer/{id}": {
-      "get": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Detailed information about a Sales Channel Tracking Customer resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "getSalesChannelTrackingCustomer",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_customer",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingCustomer",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Delete a Sales Channel Tracking Customer resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "deleteSalesChannelTrackingCustomer",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_customer",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Partially update information about a Sales Channel Tracking Customer resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "updateSalesChannelTrackingCustomer",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_customer",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Partially update information about a Sales Channel Tracking Customer resource.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingCustomer",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/aggregate/sales-channel-tracking-customer": {
-      "post": {
-        "tags": [
-          "Sales Channel Tracking Customer",
-          "Experimental"
-        ],
-        "summary": "Aggregate for the Sales Channel Tracking Customer resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "aggregateSalesChannelTrackingCustomer",
+        "summary": "Prepare a presigned upload",
+        "description": "Creates or reuses a media entity and returns a presigned S3 URL for direct browser-to-storage upload. The client uploads the file directly to the returned URL, then calls the finalize endpoint.",
+        "operationId": "presignUpload",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {
-                  "aggregations": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Aggregation"
-                    }
-                  }
-                },
                 "required": [
-                  "aggregations"
-                ]
+                  "fileName",
+                  "extension",
+                  "mimeType"
+                ],
+                "properties": {
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the file without extension"
+                  },
+                  "extension": {
+                    "type": "string",
+                    "description": "File extension, e.g. `jpg`, `png`, `pdf`"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file, e.g. `image/jpeg`"
+                  },
+                  "mediaFolderId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of the media folder to place the new media in"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether the media should be private"
+                  },
+                  "mediaId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$",
+                    "description": "ID of an existing media entity to replace. If omitted, a new entity is created."
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "List of SalesChannelTrackingCustomer",
+            "description": "Presigned upload prepared successfully",
             "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingCustomer"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/sales-channel-tracking-order": {
-      "get": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "List with basic information of Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "getSalesChannelTrackingOrderList",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max amount of resources to be returned in a page",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page to be returned",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Encoded SwagQL in JSON",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of Sales Channel Tracking Order resources.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/data"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                              }
-                            }
-                          ]
-                        },
-                        "links": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/pagination"
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "first": {
-                                  "example": "/sales-channel-tracking-order?limit=25"
-                                },
-                                "last": {
-                                  "example": "/sales-channel-tracking-order?limit=25&page=11"
-                                },
-                                "next": {
-                                  "example": "/sales-channel-tracking-order?limit=25&page=4"
-                                },
-                                "prev": {
-                                  "example": "/sales-channel-tracking-order?limit=25&page=2"
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Create a new Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "createSalesChannelTrackingOrder",
-        "parameters": [
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "basic",
-                "detail"
-              ]
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingOrder",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
               "application/json": {
                 "schema": {
                   "type": "object",
                   "required": [
-                    "data"
+                    "mediaId",
+                    "url",
+                    "path",
+                    "expiresAt",
+                    "isDuplicate"
                   ],
                   "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingOrder"
+                    "mediaId": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the media entity"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "Presigned URL to upload the file to via HTTP PUT"
+                    },
+                    "path": {
+                      "type": "string",
+                      "description": "Storage path of the media file, required for the finalize call"
+                    },
+                    "expiresAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Expiration time of the presigned URL"
+                    },
+                    "isDuplicate": {
+                      "type": "boolean",
+                      "description": "Whether a file with the same name already exists"
                     }
                   }
                 }
@@ -5613,358 +5520,102 @@
             }
           },
           "400": {
+            "description": "Bad request. The file extension is not supported or the file name is invalid.",
             "$ref": "#/components/responses/400"
           },
-          "401": {
-            "$ref": "#/components/responses/401"
+          "404": {
+            "description": "The media entity with the given `mediaId` was not found.",
+            "$ref": "#/components/responses/404"
+          },
+          "422": {
+            "description": "Validation error. Required fields (`fileName`, `extension`, `mimeType`) must not be blank.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/search/sales-channel-tracking-order": {
+    "/_action/media/{mediaId}/finalize-upload": {
       "post": {
         "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
+          "Asset Management"
         ],
-        "summary": "Search for the Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "searchSalesChannelTrackingOrder",
+        "summary": "Finalize a presigned upload",
+        "description": "Confirms that the file has been uploaded to storage via the presigned URL and updates the media entity with file metadata.",
+        "operationId": "finalizeUpload",
         "parameters": [
           {
-            "name": "sw-include-search-info",
-            "in": "header",
-            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "0",
-                "1"
-              ],
-              "default": "1"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Criteria"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of SalesChannelTrackingOrder",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/sales-channel-tracking-order/{id}": {
-      "get": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Detailed information about a Sales Channel Tracking Order resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "getSalesChannelTrackingOrder",
-        "parameters": [
-          {
-            "name": "id",
+            "name": "mediaId",
             "in": "path",
-            "description": "Identifier for the sales_channel_tracking_order",
             "required": true,
+            "description": "ID of the media entity to finalize",
             "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
+              "$ref": "#/components/schemas/MediaId"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingOrder",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Delete a Sales Channel Tracking Order resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "deleteSalesChannelTrackingOrder",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_order",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Partially update information about a Sales Channel Tracking Order resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "updateSalesChannelTrackingOrder",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the sales_channel_tracking_order",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Partially update information about a Sales Channel Tracking Order resource.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of SalesChannelTrackingOrder",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/aggregate/sales-channel-tracking-order": {
-      "post": {
-        "tags": [
-          "Sales Channel Tracking Order",
-          "Experimental"
-        ],
-        "summary": "Aggregate for the Sales Channel Tracking Order resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "description": "Available since: 6.7.9.0",
-        "operationId": "aggregateSalesChannelTrackingOrder",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {
-                  "aggregations": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Aggregation"
-                    }
-                  }
-                },
                 "required": [
-                  "aggregations"
-                ]
+                  "fileName",
+                  "extension",
+                  "mimeType",
+                  "path"
+                ],
+                "properties": {
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the file without extension"
+                  },
+                  "extension": {
+                    "type": "string",
+                    "description": "File extension, e.g. `jpg`, `png`, `pdf`"
+                  },
+                  "mimeType": {
+                    "type": "string",
+                    "description": "MIME type of the file"
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "Storage path returned by the presign-upload endpoint"
+                  },
+                  "width": {
+                    "type": "integer",
+                    "description": "Image width in pixels (optional, for images only)"
+                  },
+                  "height": {
+                    "type": "integer",
+                    "description": "Image height in pixels (optional, for images only)"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "List of SalesChannelTrackingOrder",
+            "description": "Upload finalized successfully",
             "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "mediaId"
+                  ],
                   "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SalesChannelTrackingOrder"
-                      }
+                    "mediaId": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "ID of the finalized media entity"
                     }
                   }
                 }
@@ -5972,10 +5623,22 @@
             }
           },
           "400": {
+            "description": "Bad request. The file extension is not supported, the storage path does not match, the file name is already taken, or the file could not be found on the remote storage.",
             "$ref": "#/components/responses/400"
           },
-          "401": {
-            "$ref": "#/components/responses/401"
+          "404": {
+            "description": "The media entity with the given `mediaId` was not found.",
+            "$ref": "#/components/responses/404"
+          },
+          "422": {
+            "description": "Validation error. Required fields (`fileName`, `extension`, `mimeType`, `path`) must not be blank.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
           }
         }
       }
@@ -17120,6 +16783,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentFiles": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document/0945359809dad1fbf3dea1c95a0da951/documentFiles"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "document_file"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "aad3bfae9fe3322b72a0bfbdda842b11"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -17215,6 +16909,12 @@
           },
           "documentA11yMediaFile": {
             "$ref": "#/components/schemas/Media"
+          },
+          "documentFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentFile"
+            }
           }
         },
         "type": "object"
@@ -17638,6 +17338,156 @@
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
+          }
+        },
+        "type": "object"
+      },
+      "DocumentFileJsonApi": {
+        "description": "Added since version: 6.7.10.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "documentId",
+              "mediaId",
+              "documentFormat"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "documentId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "mediaId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "documentFormat": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "document": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document-file/5580291c9799ddf9960e32b951f5e86b/document"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "fdc3bdefb79cec8eb8211d2499e04704"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "media": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document-file/5580291c9799ddf9960e32b951f5e86b/media"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "62933a2951ef01f4eafd9bdf4d3cd2f0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "DocumentFile": {
+        "description": "Added since version: 6.7.10.0",
+        "required": [
+          "id",
+          "documentId",
+          "mediaId",
+          "documentFormat"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "documentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "mediaId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "documentFormat": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "document": {
+            "$ref": "#/components/schemas/Document"
+          },
+          "media": {
+            "$ref": "#/components/schemas/Media"
           }
         },
         "type": "object"
@@ -24794,6 +24644,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentFile": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media/3b563524fdb17b4a86590470d40bef74/documentFile"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document_file"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "e6fc751fcb387f6f87970b7fed0b489f"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -25109,6 +24988,9 @@
             "items": {
               "$ref": "#/components/schemas/AppShippingMethod"
             }
+          },
+          "documentFile": {
+            "$ref": "#/components/schemas/DocumentFile"
           }
         },
         "type": "object"
@@ -33327,12 +33209,6 @@
                 "description": "When the value is set to true, the product is hidden when sold out.",
                 "type": "boolean"
               },
-              "availableStock": {
-                "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
-                "type": "integer",
-                "format": "int64",
-                "readOnly": true
-              },
               "stock": {
                 "description": "Indicates the number of products available.",
                 "type": "integer",
@@ -33549,6 +33425,13 @@
                 "items": {
                   "type": "string"
                 },
+                "readOnly": true,
+                "deprecated": true
+              },
+              "availableStock": {
+                "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
+                "type": "integer",
+                "format": "int64",
                 "readOnly": true,
                 "deprecated": true
               },
@@ -34730,12 +34613,6 @@
             "description": "When the value is set to true, the product is hidden when sold out.",
             "type": "boolean"
           },
-          "availableStock": {
-            "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
-            "type": "integer",
-            "format": "int64",
-            "readOnly": true
-          },
           "stock": {
             "description": "Indicates the number of products available.",
             "type": "integer",
@@ -34952,6 +34829,13 @@
             "items": {
               "type": "string"
             },
+            "readOnly": true,
+            "deprecated": true
+          },
+          "availableStock": {
+            "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
+            "type": "integer",
+            "format": "int64",
             "readOnly": true,
             "deprecated": true
           },
@@ -37241,6 +37125,9 @@
                   "$ref": "#/components/schemas/Price"
                 }
               },
+              "customFields": {
+                "type": "object"
+              },
               "quantityStart": {
                 "description": "Starting range of quantity of an item.",
                 "type": "integer",
@@ -37250,9 +37137,6 @@
                 "description": "Ending range of quantity of an item.",
                 "type": "integer",
                 "format": "int64"
-              },
-              "customFields": {
-                "type": "object"
               },
               "createdAt": {
                 "type": "string",
@@ -37370,6 +37254,9 @@
               "$ref": "#/components/schemas/Price"
             }
           },
+          "customFields": {
+            "type": "object"
+          },
           "quantityStart": {
             "description": "Starting range of quantity of an item.",
             "type": "integer",
@@ -37379,9 +37266,6 @@
             "description": "Ending range of quantity of an item.",
             "type": "integer",
             "format": "int64"
-          },
-          "customFields": {
-            "type": "object"
           },
           "createdAt": {
             "type": "string",
@@ -45299,6 +45183,11 @@
               "customFields": {
                 "type": "object"
               },
+              "position": {
+                "description": "Numerical value that indicates the order in which the defined salutations must be displayed in the frontend.",
+                "type": "integer",
+                "format": "int64"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -45502,6 +45391,11 @@
           },
           "customFields": {
             "type": "object"
+          },
+          "position": {
+            "description": "Numerical value that indicates the order in which the defined salutations must be displayed in the frontend.",
+            "type": "integer",
+            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -52364,6 +52258,10 @@
               "disableExtensionManagement": {
                 "type": "boolean",
                 "description": "True if runtime extension management is disabled."
+              },
+              "presignedUploadSupported": {
+                "type": "boolean",
+                "description": "Whether presigned S3 upload is available. True when presigned upload is enabled and an S3 filesystem is configured."
               }
             },
             "required": [
@@ -53331,39 +53229,62 @@
         "description": "Price object",
         "properties": {
           "currencyId": {
+            "description": "Unique identity of the associated currency.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
           "gross": {
-            "description": "",
+            "description": "Gross price for the associated currency.",
             "type": "number"
           },
           "net": {
-            "description": "",
+            "description": "Net price for the associated currency.",
             "type": "number"
           },
           "linked": {
-            "description": "",
+            "description": "Whether gross and net prices are linked through the tax configuration.",
             "type": "boolean"
           },
+          "percentage": {
+            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "gross": {
+                "description": "Discount percentage relative to the gross list price.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Discount percentage relative to the net list price.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          },
           "listPrice": {
-            "description": "",
+            "description": "Reference list price for displaying discounts.",
             "type": "object",
             "properties": {
               "currencyId": {
+                "description": "Unique identity of the associated currency.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
               "gross": {
-                "description": "",
+                "description": "Gross list price for the associated currency.",
                 "type": "number"
               },
               "net": {
-                "description": "",
+                "description": "Net list price for the associated currency.",
                 "type": "number"
               },
               "linked": {
-                "description": "",
+                "description": "Whether gross and net list prices are linked through the tax configuration.",
                 "type": "boolean"
               }
             },
@@ -53374,23 +53295,24 @@
             ]
           },
           "regulationPrice": {
-            "description": "",
+            "description": "Reference price used for legal price disclosures.",
             "type": "object",
             "properties": {
               "currencyId": {
+                "description": "Unique identity of the associated currency.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
               "gross": {
-                "description": "",
+                "description": "Gross regulation price for the associated currency.",
                 "type": "number"
               },
               "net": {
-                "description": "",
+                "description": "Net regulation price for the associated currency.",
                 "type": "number"
               },
               "linked": {
-                "description": "",
+                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
                 "type": "boolean"
               }
             },
@@ -56098,6 +56020,10 @@
     {
       "name": "Document Base Config Sales Channel",
       "description": "The endpoint for operations on Document Base Config Sales Channel"
+    },
+    {
+      "name": "Document File",
+      "description": "The endpoint for operations on Document File"
     },
     {
       "name": "Document Type",
