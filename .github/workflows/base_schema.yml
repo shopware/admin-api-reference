@@ -98,7 +98,8 @@ jobs:
         ./.github/scripts/extract.sh adminapi.json adminapi.summary.json
 
     - name: Create PR
-      uses: peter-evans/create-pull-request@v6
+      if: ${{ env.FILE_DIFFERENCE == 1 }}
+      uses: peter-evans/create-pull-request@v7
       with:
         add-paths: |
           adminapi.json
