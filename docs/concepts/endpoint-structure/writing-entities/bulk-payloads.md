@@ -110,6 +110,76 @@ Writing entities is performed with `upsert` operation. This operation is used to
 }
 ```
 
+### Foreign key resolvers
+
+When importing data from an external system, you usually don't have Shopware's UUIDs at hand but you do have stable human-readable keys (SKUs, ISO codes, technical names). Foreign key resolvers let you reference an entity by such a key inside a Sync payload, and the API resolves it to the UUID before writing.
+
+Anywhere a UUID is expected, you can pass an object with `resolver` and `value`:
+
+```json
+{
+  "productId": { "resolver": "product.number", "value": "SW10001" }
+}
+```
+
+If the value cannot be resolved, the request fails with `FRAMEWORK__API_INVALID_SYNC_RESOLVERS`. To allow missing references to fall back to `null` instead, add `"nullOnMissing": true`:
+
+```json
+{ "currencyId": { "resolver": "currency.iso_code", "value": "XYZ", "nullOnMissing": true } }
+```
+
+#### Built-in resolvers
+
+| Resolver name                   | Entity            | Looked up by                                                                |
+|:--------------------------------|:------------------|:----------------------------------------------------------------------------|
+| `product.number`                | `product`         | `productNumber` (unique per live version)                                   |
+| `currency.iso_code`             | `currency`        | `isoCode` (e.g. `EUR`, `USD`)                                               |
+| `locale.code`                   | `locale`          | `code` (e.g. `en-GB`, `de-DE`)                                              |
+| `payment_method.technical_name` | `payment_method`  | `technicalName`                                                             |
+| `shipping_method.technical_name`| `shipping_method` | `technicalName`                                                             |
+| `document_type.technical_name`  | `document_type`   | `technicalName`                                                             |
+| `salutation.salutation_key`     | `salutation`      | `salutationKey` (e.g. `mr`, `mrs`)                                          |
+| `tax.tax_rate`                  | `tax`             | `taxRate` — only resolves when **exactly one** tax record has the given rate |
+
+<!-- theme: warning -->
+> The `tax.tax_rate` resolver targets a non-unique column. If multiple tax records share the same rate (e.g. two 19% taxes), the resolver intentionally leaves the reference unresolved rather than picking one arbitrarily. Combine it with `nullOnMissing: true` or fall back to a `taxId` if your data model allows ambiguous rates.
+
+#### Example
+
+```sample http
+{
+  "method": "POST",
+  "url": "http://localhost/api/_action/sync",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+  },
+  "body": {
+    "import-products": {
+      "entity": "product",
+      "action": "upsert",
+      "payload": [
+        {
+          "productNumber": "SW10001",
+          "name": "Imported product",
+          "stock": 10,
+          "price": [
+            {
+              "gross": 19.99,
+              "net": 16.80,
+              "linked": false,
+              "currencyId": { "resolver": "currency.iso_code", "value": "EUR" }
+            }
+          ],
+          "taxId": { "resolver": "tax.tax_rate", "value": 19 }
+        }
+      ]
+    }
+  }
+}
+```
+
 ### Deleting entities
 
 To delete entities, the `payload` of an operation contains the IDs. If the entity is a `MappingEntityDefinition` \(e.g. `product_category`\) the foreign keys, which are the primary keys of the corresponding entities, must be passed.
