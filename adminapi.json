@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.7.9999999-dev"
+    "version": "6.7.10.1"
   },
   "servers": [
     {
@@ -18393,547 +18393,6 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/DocumentBaseConfigSalesChannel"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/document-file": {
-      "get": {
-        "tags": [
-          "Document File"
-        ],
-        "summary": "List with basic information of Document File resources.",
-        "description": "Available since: 6.7.10.0",
-        "operationId": "getDocumentFileList",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max amount of resources to be returned in a page",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page to be returned",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Encoded SwagQL in JSON",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of Document File resources.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/data"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/DocumentFile"
-                              }
-                            }
-                          ]
-                        },
-                        "links": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/pagination"
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "first": {
-                                  "example": "/document-file?limit=25"
-                                },
-                                "last": {
-                                  "example": "/document-file?limit=25&page=11"
-                                },
-                                "next": {
-                                  "example": "/document-file?limit=25&page=4"
-                                },
-                                "prev": {
-                                  "example": "/document-file?limit=25&page=2"
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/DocumentFile"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Document File"
-        ],
-        "summary": "Create a new Document File resources.",
-        "description": "Available since: 6.7.10.0",
-        "operationId": "createDocumentFile",
-        "parameters": [
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "basic",
-                "detail"
-              ]
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DocumentFile"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of DocumentFile",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/DocumentFile"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/DocumentFile"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/search/document-file": {
-      "post": {
-        "tags": [
-          "Document File"
-        ],
-        "summary": "Search for the Document File resources.",
-        "description": "Available since: 6.7.10.0",
-        "operationId": "searchDocumentFile",
-        "parameters": [
-          {
-            "name": "sw-include-search-info",
-            "in": "header",
-            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "0",
-                "1"
-              ],
-              "default": "1"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Criteria"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of DocumentFile",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/DocumentFile"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/DocumentFile"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/document-file/{id}": {
-      "get": {
-        "tags": [
-          "Document File"
-        ],
-        "summary": "Detailed information about a Document File resource.",
-        "description": "Available since: 6.7.10.0",
-        "operationId": "getDocumentFile",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the document_file",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Detail of DocumentFile",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/DocumentFile"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/DocumentFile"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Document File"
-        ],
-        "summary": "Delete a Document File resource.",
-        "description": "Available since: 6.7.10.0",
-        "operationId": "deleteDocumentFile",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the document_file",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Document File"
-        ],
-        "summary": "Partially update information about a Document File resource.",
-        "description": "Available since: 6.7.10.0",
-        "operationId": "updateDocumentFile",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the document_file",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Partially update information about a Document File resource.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DocumentFile"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of DocumentFile",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/DocumentFile"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/DocumentFile"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/aggregate/document-file": {
-      "post": {
-        "tags": [
-          "Document File"
-        ],
-        "summary": "Aggregate for the Document File resources.",
-        "description": "Available since: 6.7.10.0",
-        "operationId": "aggregateDocumentFile",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "aggregations": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Aggregation"
-                    }
-                  }
-                },
-                "required": [
-                  "aggregations"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of DocumentFile",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/DocumentFile"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/DocumentFile"
                       }
                     }
                   }
@@ -78497,224 +77956,6 @@
         }
       }
     },
-    "/_action/media/presign-upload": {
-      "post": {
-        "tags": [
-          "Asset Management"
-        ],
-        "summary": "Prepare a presigned upload",
-        "description": "Creates or reuses a media entity and returns a presigned S3 URL for direct browser-to-storage upload. The client uploads the file directly to the returned URL, then calls the finalize endpoint.",
-        "operationId": "presignUpload",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "fileName",
-                  "extension",
-                  "mimeType"
-                ],
-                "properties": {
-                  "fileName": {
-                    "type": "string",
-                    "description": "Name of the file without extension"
-                  },
-                  "extension": {
-                    "type": "string",
-                    "description": "File extension, e.g. `jpg`, `png`, `pdf`"
-                  },
-                  "mimeType": {
-                    "type": "string",
-                    "description": "MIME type of the file, e.g. `image/jpeg`"
-                  },
-                  "mediaFolderId": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$",
-                    "description": "ID of the media folder to place the new media in"
-                  },
-                  "private": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Whether the media should be private"
-                  },
-                  "mediaId": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$",
-                    "description": "ID of an existing media entity to replace. If omitted, a new entity is created."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Presigned upload prepared successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "mediaId",
-                    "url",
-                    "path",
-                    "expiresAt",
-                    "isDuplicate"
-                  ],
-                  "properties": {
-                    "mediaId": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "ID of the media entity"
-                    },
-                    "url": {
-                      "type": "string",
-                      "description": "Presigned URL to upload the file to via HTTP PUT"
-                    },
-                    "path": {
-                      "type": "string",
-                      "description": "Storage path of the media file, required for the finalize call"
-                    },
-                    "expiresAt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Expiration time of the presigned URL"
-                    },
-                    "isDuplicate": {
-                      "type": "boolean",
-                      "description": "Whether a file with the same name already exists"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request. The file extension is not supported or the file name is invalid.",
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "description": "The media entity with the given `mediaId` was not found.",
-            "$ref": "#/components/responses/404"
-          },
-          "422": {
-            "description": "Validation error. Required fields (`fileName`, `extension`, `mimeType`) must not be blank.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/media/{mediaId}/finalize-upload": {
-      "post": {
-        "tags": [
-          "Asset Management"
-        ],
-        "summary": "Finalize a presigned upload",
-        "description": "Confirms that the file has been uploaded to storage via the presigned URL and updates the media entity with file metadata.",
-        "operationId": "finalizeUpload",
-        "parameters": [
-          {
-            "name": "mediaId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the media entity to finalize",
-            "schema": {
-              "$ref": "#/components/schemas/MediaId"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "fileName",
-                  "extension",
-                  "mimeType",
-                  "path"
-                ],
-                "properties": {
-                  "fileName": {
-                    "type": "string",
-                    "description": "Name of the file without extension"
-                  },
-                  "extension": {
-                    "type": "string",
-                    "description": "File extension, e.g. `jpg`, `png`, `pdf`"
-                  },
-                  "mimeType": {
-                    "type": "string",
-                    "description": "MIME type of the file"
-                  },
-                  "path": {
-                    "type": "string",
-                    "description": "Storage path returned by the presign-upload endpoint"
-                  },
-                  "width": {
-                    "type": "integer",
-                    "description": "Image width in pixels (optional, for images only)"
-                  },
-                  "height": {
-                    "type": "integer",
-                    "description": "Image height in pixels (optional, for images only)"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Upload finalized successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "mediaId"
-                  ],
-                  "properties": {
-                    "mediaId": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "ID of the finalized media entity"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request. The file extension is not supported, the storage path does not match, the file name is already taken, or the file could not be found on the remote storage.",
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "description": "The media entity with the given `mediaId` was not found.",
-            "$ref": "#/components/responses/404"
-          },
-          "422": {
-            "description": "Validation error. Required fields (`fileName`, `extension`, `mimeType`, `path`) must not be blank.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/_action/media/{mediaId}/external-thumbnails": {
       "post": {
         "tags": [
@@ -79041,7 +78282,7 @@
           "Mail Operations"
         ],
         "summary": "Send a mail",
-        "description": "Generates a mail and sends it to the customer. The mail content is rendered with data passed through the request.\n\nTake a look at the `salesChannel` entity for possible values. For example `{{ salesChannel.name }}` can be used.",
+        "description": "Generates a mail from a mail template and sends it to the customer.\n\nTake a look at the `salesChannel` entity for possible values. For example `{{ salesChannel.name }}` can be used.",
         "operationId": "send",
         "requestBody": {
           "required": true,
@@ -79053,22 +78294,20 @@
                   "salesChannelId",
                   "contentHtml",
                   "contentPlain",
-                  "subject"
+                  "subject",
+                  "senderName"
                 ],
                 "properties": {
                   "recipients": {
-                    "description": "A map of recipients with name and mail address.",
+                    "description": "A list of recipients with name and mail address.",
                     "type": "object",
                     "example": {
                       "test1@example.com": "Test user 1",
                       "test2@example.com": "Test user 2"
                     },
                     "additionalProperties": {
-                      "description": "Name of the recipient. Can be null to omit the display name.",
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "description": "Name of the recipient.",
+                      "type": "string"
                     }
                   },
                   "salesChannelId": {
@@ -79094,8 +78333,7 @@
                   },
                   "senderEmail": {
                     "description": "Mail address of the sender. If not set, `core.basicInformation.email` or `core.mailerSettings.senderAddress` will be used from the shop configuration.",
-                    "type": "string",
-                    "format": "email"
+                    "type": "string"
                   },
                   "mediaIds": {
                     "description": "List of media identifiers which should be attached to the mail.",
@@ -79105,23 +78343,15 @@
                       "pattern": "^[0-9a-f]{32}$"
                     }
                   },
-                  "documentIds": {
-                    "description": "List of document identifiers which should be attached to the mail.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
                   "binAttachments": {
                     "description": "A list of binary attachments which should be added to the mail.",
+                    "required": [
+                      "content",
+                      "fileName",
+                      "mimeType"
+                    ],
                     "type": "array",
                     "items": {
-                      "required": [
-                        "content",
-                        "fileName",
-                        "mimeType"
-                      ],
                       "properties": {
                         "content": {
                           "description": "Binary content of the attachment.",
@@ -79140,115 +78370,52 @@
                     }
                   },
                   "recipientsBcc": {
-                    "description": "A mail address or a map of recipients with name and mail address to be set in BCC.",
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "format": "email"
-                      },
-                      {
-                        "type": "object",
-                        "example": {
-                          "test1@example.com": "Test user 1",
-                          "test2@example.com": "Test user 2"
-                        },
-                        "additionalProperties": {
-                          "description": "Name of the recipient. Can be null to omit the display name.",
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "recipientsCc": {
-                    "description": "A mail address or a map of recipients with name and mail address to be set in CC.",
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "format": "email"
-                      },
-                      {
-                        "type": "object",
-                        "example": {
-                          "test1@example.com": "Test user 1",
-                          "test2@example.com": "Test user 2"
-                        },
-                        "additionalProperties": {
-                          "description": "Name of the recipient. Can be null to omit the display name.",
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "replyTo": {
-                    "description": "A mail address or a map of mail addresses with name to be set in reply-to.",
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "format": "email"
-                      },
-                      {
-                        "type": "object",
-                        "example": {
-                          "test1@example.com": "Test user 1",
-                          "test2@example.com": "Test user 2"
-                        },
-                        "additionalProperties": {
-                          "description": "Name of the recipient. Can be null to omit the display name.",
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "returnPath": {
-                    "description": "A mail address or a map of mail addresses with name to be set in return-path.",
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "format": "email"
-                      },
-                      {
-                        "type": "object",
-                        "example": {
-                          "test1@example.com": "Test user 1",
-                          "test2@example.com": "Test user 2"
-                        },
-                        "additionalProperties": {
-                          "description": "Name of the recipient. Can be null to omit the display name.",
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "mailTemplateId": {
-                    "description": "Identifier of the mail template that should be used for attachments and sender defaults.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "mailTemplateData": {
-                    "description": "A map of available data that is used to fill the mail template. Values in this map override generated or entity-derived template data with the same top-level keys.",
+                    "description": "A list of recipients with name and mail address to be set in BCC.",
                     "type": "object",
-                    "additionalProperties": true,
                     "example": {
-                      "salesChannel": {
-                        "name": "Storefront"
-                      }
+                      "test1@example.com": "Test user 1",
+                      "test2@example.com": "Test user 2"
+                    },
+                    "additionalProperties": {
+                      "description": "Name of the recipient.",
+                      "type": "string"
                     }
                   },
-                  "testMode": {
-                    "description": "Enables mail test mode. The mail is still sent, but template rendering runs with the renderer's test mode enabled, a fallback `order.deepLinkCode` of `home` is injected when missing, and debug headers such as `X-Shopware-Language-Id` plus available event or sales-channel headers are added to the message.",
-                    "type": "boolean"
+                  "recipientsCc": {
+                    "description": "A list of recipients with name and mail address to be set in CC.",
+                    "type": "object",
+                    "example": {
+                      "test1@example.com": "Test user 1",
+                      "test2@example.com": "Test user 2"
+                    },
+                    "additionalProperties": {
+                      "description": "Name of the recipient.",
+                      "type": "string"
+                    }
+                  },
+                  "replyTo": {
+                    "description": "A list of mail addresses with name and mail address to be set in reply to.",
+                    "type": "object",
+                    "example": {
+                      "test1@example.com": "Test user 1",
+                      "test2@example.com": "Test user 2"
+                    },
+                    "additionalProperties": {
+                      "description": "Name of the recipient.",
+                      "type": "string"
+                    }
+                  },
+                  "returnPath": {
+                    "description": "A list of mail addresses with name and mail address to be set in return path.",
+                    "type": "object",
+                    "example": {
+                      "test1@example.com": "Test user 1",
+                      "test2@example.com": "Test user 2"
+                    },
+                    "additionalProperties": {
+                      "description": "Name of the recipient.",
+                      "type": "string"
+                    }
                   }
                 },
                 "type": "object"
@@ -79262,9 +78429,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "required": [
-                    "size"
-                  ],
                   "properties": {
                     "size": {
                       "description": "Length of the email message",
@@ -79275,10 +78439,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Invalid request data",
-            "$ref": "#/components/responses/400"
           }
         }
       }
@@ -79291,7 +78451,6 @@
         "summary": "Validate a mail content",
         "description": "Validates if content for a mail can be rendered without sending an email.",
         "operationId": "validate",
-        "deprecated": true,
         "requestBody": {
           "required": true,
           "content": {
@@ -79328,10 +78487,9 @@
         "tags": [
           "Mail Operations"
         ],
-        "summary": "Build up a mail template",
-        "description": "Generates a preview of a mail template when all the required data is passed through the request.",
+        "summary": "Preview a mail template",
+        "description": "Generates a preview of a mail template.",
         "operationId": "build",
-        "deprecated": true,
         "requestBody": {
           "required": true,
           "content": {
@@ -79364,7 +78522,7 @@
                     "description": "The content of the mail as plain text.",
                     "properties": {
                       "contentHtml": {
-                        "description": "The content of the mail template in html format.",
+                        "description": "The content of mail mail template in html format.",
                         "type": "string",
                         "example": "Hello {{ order.customerName }}, this is example mail content, the current date is {{ 'now'|date('d/m/Y') }}"
                       }
@@ -79379,7 +78537,7 @@
         },
         "responses": {
           "200": {
-            "description": "The rendered simulation result of the mail template parts.",
+            "description": "The rendered preview of the mail template.",
             "content": {
               "application/json": {
                 "schema": {
@@ -79387,622 +78545,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/_action/mail-template/simulate": {
-      "post": {
-        "tags": [
-          "Mail Operations"
-        ],
-        "summary": "Simulate a mail template",
-        "description": "Generates simulated data for a given event name and renders the provided mail template content against it.",
-        "operationId": "simulateMailTemplate",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "templateParts",
-                  "eventName"
-                ],
-                "properties": {
-                  "templateParts": {
-                    "description": "A map of mail template fields and their template content to render.",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "example": {
-                      "subject": "Order {{ order.orderNumber }} confirmation",
-                      "senderName": "{{ salesChannel.name }}",
-                      "contentHtml": "<div>Hello {{ order.orderCustomer.firstName }}</div>",
-                      "contentPlain": "Hello {{ order.orderCustomer.firstName }}"
-                    }
-                  },
-                  "eventName": {
-                    "description": "The business event name used to generate simulated mail template data.",
-                    "type": "string",
-                    "example": "checkout.order.placed"
-                  },
-                  "salesChannelId": {
-                    "description": "Identifier of the sales channel that should be used for the simulate request.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$",
-                    "example": "b3c4d5e6f7a8b90a1b2c3d4e5f67890a"
-                  },
-                  "strictRendering": {
-                    "description": "Enables strict variable rendering and surfaces errors for unknown variables. Defaults to `true`.",
-                    "type": "boolean",
-                    "default": true
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The rendered preview of the mail template.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "description": "A map of render results keyed by the same field names that were provided in the request's `templateParts` object.",
-                  "additionalProperties": {
-                    "type": "object",
-                    "required": [
-                      "type",
-                      "content"
-                    ],
-                    "properties": {
-                      "type": {
-                        "description": "The type of the render result (either `success` or `error`)",
-                        "type": "string",
-                        "enum": [
-                          "success",
-                          "error"
-                        ],
-                        "example": "success"
-                      },
-                      "content": {
-                        "description": "The rendered content of the mail template field. Also contains the error when rendering this field wasn't possible.",
-                        "type": "string",
-                        "example": "Example mail"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request data or invalid eventName",
-            "$ref": "#/components/responses/400"
-          }
-        }
-      }
-    },
-    "/_action/mail-template/preview": {
-      "post": {
-        "tags": [
-          "Mail Operations"
-        ],
-        "summary": "Preview a mail template",
-        "description": "Fetches the required data needed for the mail template and generates a preview.",
-        "operationId": "mailTemplatePreview",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "mailTemplateId"
-                ],
-                "properties": {
-                  "mailTemplateId": {
-                    "description": "Identifier of the mail template which should be rendered.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$",
-                    "example": "b3c4d5e6f7a8b90a1b2c3d4e5f678906"
-                  },
-                  "salesChannelId": {
-                    "description": "Identifier of the sales channel that should be used for the preview request.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$",
-                    "example": "b3c4d5e6f7a8b90a1b2c3d4e5f67890a"
-                  },
-                  "includeHeaderFooter": {
-                    "description": "Includes the sales channel mail header and footer in `contentHtml` and `contentPlain`. Defaults to `false`.",
-                    "type": "boolean",
-                    "default": false
-                  },
-                  "strictRendering": {
-                    "description": "Enables strict variable rendering and enables errors on e.g. unknown variables. Defaults to `false`.",
-                    "type": "boolean",
-                    "default": false
-                  },
-                  "entities": {
-                    "description": "A map of entity names and corresponding identifiers that define entities which should be used additionally during rendering.",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "example": {
-                      "order": "b3c4d5e6f7a8b90a1b2c3d4e5f67890a",
-                      "customer": "a1b2c3d4e5f67890b3c4d5e6f7a8b90a"
-                    }
-                  },
-                  "templateData": {
-                    "description": "A map of template data that should be used additionally during rendering. Values in this map override generated or entity-derived template data with the same top-level keys.",
-                    "type": "object",
-                    "additionalProperties": true,
-                    "example": {
-                      "salesChannel": {
-                        "name": "Storefront"
-                      },
-                      "order": {
-                        "orderNumber": "SW10042"
-                      }
-                    }
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The rendered preview of the mail template.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "subject",
-                    "senderName",
-                    "contentHtml",
-                    "contentPlain"
-                  ],
-                  "properties": {
-                    "subject": {
-                      "type": "object",
-                      "required": [
-                        "type",
-                        "content"
-                      ],
-                      "properties": {
-                        "type": {
-                          "description": "The type of the render result (either `success` or `error`)",
-                          "type": "string",
-                          "enum": [
-                            "success",
-                            "error"
-                          ],
-                          "example": "success"
-                        },
-                        "content": {
-                          "description": "The rendered content of the mail template's subject. Also contains the error when rendering this field wasn't possible.",
-                          "type": "string",
-                          "example": "Example mail"
-                        }
-                      }
-                    },
-                    "senderName": {
-                      "type": "object",
-                      "required": [
-                        "type",
-                        "content"
-                      ],
-                      "properties": {
-                        "type": {
-                          "description": "The type of the render result (either `success` or `error`)",
-                          "type": "string",
-                          "enum": [
-                            "success",
-                            "error"
-                          ],
-                          "example": "success"
-                        },
-                        "content": {
-                          "description": "The rendered content of the mail template's sender name. Also contains the error when rendering this field wasn't possible.",
-                          "type": "string",
-                          "example": "Storefront"
-                        }
-                      }
-                    },
-                    "contentHtml": {
-                      "type": "object",
-                      "required": [
-                        "type",
-                        "content"
-                      ],
-                      "properties": {
-                        "type": {
-                          "description": "The type of the render result (either `success` or `error`)",
-                          "type": "string",
-                          "enum": [
-                            "success",
-                            "error"
-                          ],
-                          "example": "success"
-                        },
-                        "content": {
-                          "description": "The rendered content of the mail template in html format. Also contains the error when rendering this field wasn't possible.",
-                          "type": "string",
-                          "example": "<div>Hello Mr. Mustermann,<br/>this is example mail content, the current date is 16.03.2026.</div>"
-                        }
-                      }
-                    },
-                    "contentPlain": {
-                      "type": "object",
-                      "required": [
-                        "type",
-                        "content"
-                      ],
-                      "properties": {
-                        "type": {
-                          "description": "The type of the render result (either `success` or `error`)",
-                          "type": "string",
-                          "enum": [
-                            "success",
-                            "error"
-                          ],
-                          "example": "success"
-                        },
-                        "content": {
-                          "description": "The rendered content of the mail template in plain text format. Also contains the error when rendering this field wasn't possible.",
-                          "type": "string",
-                          "example": "Hello Mr. Mustermann, this is example mail content, the current date is 16.03.2026."
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request data or invalid mailTemplateId",
-            "$ref": "#/components/responses/400"
-          }
-        }
-      }
-    },
-    "/_action/mail-template/get-data-and-send": {
-      "post": {
-        "tags": [
-          "Mail Operations"
-        ],
-        "summary": "Fetch the template data and send a mail",
-        "description": "Generates the required data needed for the mail template, renders the mail content and sends it to the customer.",
-        "operationId": "generateAndSendMail",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "mailTemplateId",
-                  "recipients",
-                  "salesChannelId"
-                ],
-                "properties": {
-                  "mailTemplateId": {
-                    "description": "Identifier of the mail template which should be rendered.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$",
-                    "example": "b3c4d5e6f7a8b90a1b2c3d4e5f67890a"
-                  },
-                  "recipients": {
-                    "description": "A map of recipients with name and mail address.",
-                    "type": "object",
-                    "example": {
-                      "test1@example.com": "Test user 1",
-                      "test2@example.com": "Test user 2"
-                    },
-                    "additionalProperties": {
-                      "description": "Name of the recipient. Can be null to omit the display name.",
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    }
-                  },
-                  "salesChannelId": {
-                    "description": "Identifier of the sales channel from which the mail should be send.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "contentHtml": {
-                    "description": "The content of the mail in HTML format. If passed, this content will be used instead of the content from the mail template.",
-                    "type": "string"
-                  },
-                  "contentPlain": {
-                    "description": "The content of the mail as plain text. If passed, this content will be used instead of the content from the mail template.",
-                    "type": "string"
-                  },
-                  "subject": {
-                    "description": "Subject of the mail. If passed, this subject will be used instead of the subject from the mail template.",
-                    "type": "string"
-                  },
-                  "senderName": {
-                    "description": "Name of the sender. If passed, this sender name will be used instead of the sender name from the mail template.",
-                    "type": "string"
-                  },
-                  "senderEmail": {
-                    "description": "Mail address of the sender. If not set, `core.basicInformation.email` or `core.mailerSettings.senderAddress` will be used from the shop configuration.",
-                    "type": "string",
-                    "format": "email"
-                  },
-                  "mediaIds": {
-                    "description": "List of media identifiers which should be attached to the mail.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "documentIds": {
-                    "description": "List of document identifiers which should be attached to the mail.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "binAttachments": {
-                    "description": "A list of binary attachments which should be added to the mail.",
-                    "type": "array",
-                    "items": {
-                      "required": [
-                        "content",
-                        "fileName",
-                        "mimeType"
-                      ],
-                      "properties": {
-                        "content": {
-                          "description": "Binary content of the attachment.",
-                          "type": "string"
-                        },
-                        "fileName": {
-                          "description": "File name of the attachment.",
-                          "type": "string"
-                        },
-                        "mimeType": {
-                          "description": "Mime type of the attachment.",
-                          "type": "string"
-                        }
-                      },
-                      "type": "object"
-                    }
-                  },
-                  "recipientsBcc": {
-                    "description": "A mail address or a map of recipients with name and mail address to be set in BCC.",
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "format": "email"
-                      },
-                      {
-                        "type": "object",
-                        "example": {
-                          "test1@example.com": "Test user 1",
-                          "test2@example.com": "Test user 2"
-                        },
-                        "additionalProperties": {
-                          "description": "Name of the recipient. Can be null to omit the display name.",
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "recipientsCc": {
-                    "description": "A mail address or a map of recipients with name and mail address to be set in CC.",
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "format": "email"
-                      },
-                      {
-                        "type": "object",
-                        "example": {
-                          "test1@example.com": "Test user 1",
-                          "test2@example.com": "Test user 2"
-                        },
-                        "additionalProperties": {
-                          "description": "Name of the recipient. Can be null to omit the display name.",
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "replyTo": {
-                    "description": "A mail address or a map of mail addresses with name to be set in reply-to.",
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "format": "email"
-                      },
-                      {
-                        "type": "object",
-                        "example": {
-                          "test1@example.com": "Test user 1",
-                          "test2@example.com": "Test user 2"
-                        },
-                        "additionalProperties": {
-                          "description": "Name of the recipient. Can be null to omit the display name.",
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "returnPath": {
-                    "description": "A mail address or a map of mail addresses with name to be set in return-path.",
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "format": "email"
-                      },
-                      {
-                        "type": "object",
-                        "example": {
-                          "test1@example.com": "Test user 1",
-                          "test2@example.com": "Test user 2"
-                        },
-                        "additionalProperties": {
-                          "description": "Name of the recipient. Can be null to omit the display name.",
-                          "type": [
-                            "string",
-                            "null"
-                          ]
-                        }
-                      }
-                    ]
-                  },
-                  "entities": {
-                    "description": "A map of entity names and corresponding identifiers that define entities which should be used additionally during rendering.",
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "example": {
-                      "order": "b3c4d5e6f7a8b90a1b2c3d4e5f67890a",
-                      "customer": "a1b2c3d4e5f67890b3c4d5e6f7a8b90a"
-                    }
-                  },
-                  "templateData": {
-                    "description": "A map of template data that should be used additionally during rendering. Values in this map override generated or entity-derived template data with the same top-level keys.",
-                    "type": "object",
-                    "additionalProperties": true,
-                    "example": {
-                      "salesChannel": {
-                        "name": "Storefront"
-                      },
-                      "order": {
-                        "orderNumber": "SW10042"
-                      }
-                    }
-                  },
-                  "testMode": {
-                    "description": "Enables mail test mode. The mail is still sent, but template rendering runs with the renderer's test mode enabled, a fallback `order.deepLinkCode` of `home` is injected when missing, and debug headers such as `X-Shopware-Language-Id` plus available event or sales-channel headers are added to the message.",
-                    "type": "boolean"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The mail was sent successful",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "required": [
-                    "size"
-                  ],
-                  "properties": {
-                    "size": {
-                      "description": "Length of the email message",
-                      "type": "integer"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request data or invalid mailTemplateId",
-            "$ref": "#/components/responses/400"
-          }
-        }
-      }
-    },
-    "/_action/mail-template/available-variables": {
-      "post": {
-        "tags": [
-          "Mail Operations"
-        ],
-        "summary": "Fetch the available variables for a business event and an optional parent variable path.",
-        "description": "Fetches the available variables that a business event provides for a certain parent variable path to determine which variables can be used in a mail template.",
-        "operationId": "mailTemplateAvailableVariables",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "eventName"
-                ],
-                "properties": {
-                  "eventName": {
-                    "description": "The business event name that provides the available variables.",
-                    "type": "string",
-                    "example": "checkout.order.placed"
-                  },
-                  "parentVariablePath": {
-                    "description": "The path to the parent field of which the available variables should be returned. If omitted or empty, the top-level variables of the business event are returned.",
-                    "type": "string",
-                    "example": "order.transactions"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The available variables got fetched successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "fieldName",
-                      "hasChildren"
-                    ],
-                    "properties": {
-                      "fieldName": {
-                        "description": "The name of the variable.",
-                        "type": "string",
-                        "example": "salesChannel"
-                      },
-                      "hasChildren": {
-                        "description": "Shows if behind the variable are more nested variables which can be accessed by another request to this endpoint with the updated parent variable path: `<parentVariablePath>.<fieldName>`",
-                        "type": "boolean",
-                        "example": true
-                      }
-                    }
-                  },
-                  "type": "array",
-                  "description": "A collection of the available variables which also show if behind the variables are more nested variables."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request data or invalid eventName",
-            "$ref": "#/components/responses/400"
           }
         }
       }
@@ -91024,37 +89566,6 @@
                       }
                     },
                     "type": "object"
-                  },
-                  "documentFiles": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/document/0945359809dad1fbf3dea1c95a0da951/documentFiles"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "document_file"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "aad3bfae9fe3322b72a0bfbdda842b11"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -91162,12 +89673,6 @@
           "documentA11yMediaFile": {
             "$ref": "#/components/schemas/Media"
           },
-          "documentFiles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DocumentFile"
-            }
-          },
           "fileType": {
             "description": "Type of file like PDF."
           }
@@ -91221,44 +89726,7 @@
                 "description": "Unique number associated with every document.",
                 "type": "string"
               },
-              "pageSize": {
-                "description": "The page size of the document.",
-                "type": "string"
-              },
-              "pageOrientation": {
-                "description": "The page orientation of the document.",
-                "type": "string"
-              },
-              "itemsPerPage": {
-                "description": "The number of items per page.",
-                "type": "integer",
-                "format": "int64"
-              },
-              "displayHeader": {
-                "description": "Whether to display the header.",
-                "type": "boolean"
-              },
-              "displayFooter": {
-                "description": "Whether to display the footer.",
-                "type": "boolean"
-              },
-              "displayPageCount": {
-                "description": "Whether to display the page count.",
-                "type": "boolean"
-              },
-              "displayCompanyAddress": {
-                "description": "Whether to display the company address.",
-                "type": "boolean"
-              },
-              "displayReturnAddress": {
-                "description": "Whether to display the return address.",
-                "type": "boolean"
-              },
-              "displayCustomerVatId": {
-                "description": "Whether to display the customer VAT ID.",
-                "type": "boolean"
-              },
-              "customFields": {
+              "config": {
                 "type": "object"
               },
               "createdAt": {
@@ -91266,9 +89734,8 @@
                 "format": "date-time",
                 "readOnly": true
               },
-              "config": {
-                "type": "object",
-                "deprecated": true
+              "customFields": {
+                "type": "object"
               },
               "updatedAt": {
                 "type": "string",
@@ -91418,56 +89885,18 @@
             "description": "Unique number associated with every document.",
             "type": "string"
           },
-          "pageSize": {
-            "description": "The page size of the document.",
-            "type": "string"
-          },
-          "pageOrientation": {
-            "description": "The page orientation of the document.",
-            "type": "string"
-          },
-          "itemsPerPage": {
-            "description": "The number of items per page.",
-            "type": "integer",
-            "format": "int64"
-          },
-          "displayHeader": {
-            "description": "Whether to display the header.",
-            "type": "boolean"
-          },
-          "displayFooter": {
-            "description": "Whether to display the footer.",
-            "type": "boolean"
-          },
-          "displayPageCount": {
-            "description": "Whether to display the page count.",
-            "type": "boolean"
-          },
-          "displayCompanyAddress": {
-            "description": "Whether to display the company address.",
-            "type": "boolean"
-          },
-          "displayReturnAddress": {
-            "description": "Whether to display the return address.",
-            "type": "boolean"
-          },
-          "displayCustomerVatId": {
-            "description": "Whether to display the customer VAT ID.",
-            "type": "boolean"
-          },
-          "customFields": {
+          "config": {
             "type": "object",
-            "description": "Additional fields that offer a possibility to add own fields for the different program-areas."
+            "description": "Specifies detailed information about the component."
           },
           "createdAt": {
             "type": "string",
             "format": "date-time",
             "readOnly": true
           },
-          "config": {
+          "customFields": {
             "type": "object",
-            "deprecated": true,
-            "description": "Specifies detailed information about the component."
+            "description": "Additional fields that offer a possibility to add own fields for the different program-areas."
           },
           "updatedAt": {
             "type": "string",
@@ -91673,156 +90102,6 @@
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
-          }
-        },
-        "type": "object"
-      },
-      "DocumentFileJsonApi": {
-        "description": "Added since version: 6.7.10.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "documentId",
-              "mediaId",
-              "documentFormat"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "documentId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "mediaId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "documentFormat": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "relationships": {
-                "properties": {
-                  "document": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/document-file/5580291c9799ddf9960e32b951f5e86b/document"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "document"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "fdc3bdefb79cec8eb8211d2499e04704"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "media": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/document-file/5580291c9799ddf9960e32b951f5e86b/media"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "media"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "62933a2951ef01f4eafd9bdf4d3cd2f0"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "DocumentFile": {
-        "description": "Added since version: 6.7.10.0",
-        "required": [
-          "id",
-          "documentId",
-          "mediaId",
-          "documentFormat"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "documentId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "mediaId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "documentFormat": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "document": {
-            "$ref": "#/components/schemas/Document"
-          },
-          "media": {
-            "$ref": "#/components/schemas/Media"
           }
         },
         "type": "object"
@@ -93307,7 +91586,8 @@
               },
               "admin": {
                 "description": "When boolean value is `true`, it indicates this is a administrative integration that requires elevated permissions.",
-                "type": "boolean"
+                "type": "boolean",
+                "readOnly": true
               },
               "customFields": {
                 "type": "object"
@@ -93497,7 +91777,8 @@
           },
           "admin": {
             "description": "When boolean value is `true`, it indicates this is a administrative integration that requires elevated permissions.",
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           },
           "customFields": {
             "type": "object",
@@ -96847,35 +95128,6 @@
                       }
                     },
                     "type": "object"
-                  },
-                  "documentFile": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/media/3b563524fdb17b4a86590470d40bef74/documentFile"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "document_file"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "e6fc751fcb387f6f87970b7fed0b489f"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -97199,9 +95451,6 @@
             "items": {
               "$ref": "#/components/schemas/AppShippingMethod"
             }
-          },
-          "documentFile": {
-            "$ref": "#/components/schemas/DocumentFile"
           }
         },
         "type": "object"
@@ -105728,12 +103977,6 @@
                 "description": "When the value is set to true, the product is hidden when sold out.",
                 "type": "boolean"
               },
-              "availableStock": {
-                "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
-                "type": "integer",
-                "format": "int64",
-                "readOnly": true
-              },
               "stock": {
                 "description": "Indicates the number of products available.",
                 "type": "integer",
@@ -105950,6 +104193,13 @@
                 "items": {
                   "type": "string"
                 },
+                "readOnly": true,
+                "deprecated": true
+              },
+              "availableStock": {
+                "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
+                "type": "integer",
+                "format": "int64",
                 "readOnly": true,
                 "deprecated": true
               },
@@ -107070,12 +105320,6 @@
             "description": "When the value is set to true, the product is hidden when sold out.",
             "type": "boolean"
           },
-          "availableStock": {
-            "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
-            "type": "integer",
-            "format": "int64",
-            "readOnly": true
-          },
           "stock": {
             "description": "Indicates the number of products available.",
             "type": "integer",
@@ -107316,6 +105560,13 @@
             "readOnly": true,
             "deprecated": true,
             "description": "Internal field."
+          },
+          "availableStock": {
+            "description": "Indicates the number of products still available. This value results from the stock minus the open orders.",
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true,
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -123727,17 +121978,12 @@
           {
             "required": [
               "id",
-              "hash",
               "userId"
             ],
             "properties": {
               "id": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
-              },
-              "hash": {
-                "description": "Password hash for user recovery.",
-                "type": "string"
               },
               "userId": {
                 "description": "Unique identity of user.",
@@ -123797,7 +122043,6 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "hash",
           "userId"
         ],
         "properties": {
@@ -123805,10 +122050,6 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of user recovery."
-          },
-          "hash": {
-            "description": "Password hash for user recovery.",
-            "type": "string"
           },
           "userId": {
             "description": "Unique identity of user.",
@@ -123827,6 +122068,9 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          },
+          "hash": {
+            "description": "Password hash for user recovery."
           }
         },
         "type": "object"
@@ -124419,10 +122663,6 @@
               "disableExtensionManagement": {
                 "type": "boolean",
                 "description": "True if runtime extension management is disabled."
-              },
-              "presignedUploadSupported": {
-                "type": "boolean",
-                "description": "Whether presigned S3 upload is available. True when presigned upload is enabled and an S3 filesystem is configured."
               }
             },
             "required": [
@@ -127518,10 +125758,6 @@
     {
       "name": "Document Base Config Sales Channel",
       "description": "The endpoint for operations on Document Base Config Sales Channel"
-    },
-    {
-      "name": "Document File",
-      "description": "The endpoint for operations on Document File"
     },
     {
       "name": "Document Type",
