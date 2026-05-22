@@ -39726,7 +39726,12 @@
                 "type": "boolean"
               },
               "andLogic": {
-                "type": "boolean"
+                "type": "boolean",
+                "deprecated": true
+              },
+              "strictness": {
+                "type": "number",
+                "format": "float"
               },
               "minSearchLength": {
                 "type": "integer",
@@ -39936,7 +39941,12 @@
             "type": "boolean"
           },
           "andLogic": {
-            "type": "boolean"
+            "type": "boolean",
+            "deprecated": true
+          },
+          "strictness": {
+            "type": "number",
+            "format": "float"
           },
           "minSearchLength": {
             "type": "integer",
@@ -63112,6 +63122,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentFiles": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document/0945359809dad1fbf3dea1c95a0da951/documentFiles"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "document_file"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "aad3bfae9fe3322b72a0bfbdda842b11"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -63207,6 +63248,12 @@
           },
           "documentA11yMediaFile": {
             "$ref": "#/components/schemas/Media"
+          },
+          "documentFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentFile"
+            }
           }
         },
         "type": "object"
@@ -63258,7 +63305,44 @@
                 "description": "Unique number associated with every document.",
                 "type": "string"
               },
-              "config": {
+              "pageSize": {
+                "description": "The page size of the document.",
+                "type": "string"
+              },
+              "pageOrientation": {
+                "description": "The page orientation of the document.",
+                "type": "string"
+              },
+              "itemsPerPage": {
+                "description": "The number of items per page.",
+                "type": "integer",
+                "format": "int64"
+              },
+              "displayHeader": {
+                "description": "Whether to display the header.",
+                "type": "boolean"
+              },
+              "displayFooter": {
+                "description": "Whether to display the footer.",
+                "type": "boolean"
+              },
+              "displayPageCount": {
+                "description": "Whether to display the page count.",
+                "type": "boolean"
+              },
+              "displayCompanyAddress": {
+                "description": "Whether to display the company address.",
+                "type": "boolean"
+              },
+              "displayReturnAddress": {
+                "description": "Whether to display the return address.",
+                "type": "boolean"
+              },
+              "displayCustomerVatId": {
+                "description": "Whether to display the customer VAT ID.",
+                "type": "boolean"
+              },
+              "customFields": {
                 "type": "object"
               },
               "createdAt": {
@@ -63266,8 +63350,9 @@
                 "format": "date-time",
                 "readOnly": true
               },
-              "customFields": {
-                "type": "object"
+              "config": {
+                "type": "object",
+                "deprecated": true
               },
               "updatedAt": {
                 "type": "string",
@@ -63416,7 +63501,44 @@
             "description": "Unique number associated with every document.",
             "type": "string"
           },
-          "config": {
+          "pageSize": {
+            "description": "The page size of the document.",
+            "type": "string"
+          },
+          "pageOrientation": {
+            "description": "The page orientation of the document.",
+            "type": "string"
+          },
+          "itemsPerPage": {
+            "description": "The number of items per page.",
+            "type": "integer",
+            "format": "int64"
+          },
+          "displayHeader": {
+            "description": "Whether to display the header.",
+            "type": "boolean"
+          },
+          "displayFooter": {
+            "description": "Whether to display the footer.",
+            "type": "boolean"
+          },
+          "displayPageCount": {
+            "description": "Whether to display the page count.",
+            "type": "boolean"
+          },
+          "displayCompanyAddress": {
+            "description": "Whether to display the company address.",
+            "type": "boolean"
+          },
+          "displayReturnAddress": {
+            "description": "Whether to display the return address.",
+            "type": "boolean"
+          },
+          "displayCustomerVatId": {
+            "description": "Whether to display the customer VAT ID.",
+            "type": "boolean"
+          },
+          "customFields": {
             "type": "object"
           },
           "createdAt": {
@@ -63424,8 +63546,9 @@
             "format": "date-time",
             "readOnly": true
           },
-          "customFields": {
-            "type": "object"
+          "config": {
+            "type": "object",
+            "deprecated": true
           },
           "updatedAt": {
             "type": "string",
@@ -63630,6 +63753,156 @@
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
+          }
+        },
+        "type": "object"
+      },
+      "DocumentFileJsonApi": {
+        "description": "Added since version: 6.7.10.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "documentId",
+              "mediaId",
+              "documentFormat"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "documentId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "mediaId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "documentFormat": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "document": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document-file/5580291c9799ddf9960e32b951f5e86b/document"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "fdc3bdefb79cec8eb8211d2499e04704"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "media": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document-file/5580291c9799ddf9960e32b951f5e86b/media"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "62933a2951ef01f4eafd9bdf4d3cd2f0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "DocumentFile": {
+        "description": "Added since version: 6.7.10.0",
+        "required": [
+          "id",
+          "documentId",
+          "mediaId",
+          "documentFormat"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "documentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "mediaId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "documentFormat": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "document": {
+            "$ref": "#/components/schemas/Document"
+          },
+          "media": {
+            "$ref": "#/components/schemas/Media"
           }
         },
         "type": "object"
@@ -69379,6 +69652,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentFile": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media/3b563524fdb17b4a86590470d40bef74/documentFile"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document_file"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "e6fc751fcb387f6f87970b7fed0b489f"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -69841,6 +70143,9 @@
             "items": {
               "$ref": "#/components/schemas/AppShippingMethod"
             }
+          },
+          "documentFile": {
+            "$ref": "#/components/schemas/DocumentFile"
           }
         },
         "type": "object"
@@ -82478,6 +82783,9 @@
                   "$ref": "#/components/schemas/Price"
                 }
               },
+              "customFields": {
+                "type": "object"
+              },
               "quantityStart": {
                 "description": "Starting range of quantity of an item.",
                 "type": "integer",
@@ -82487,9 +82795,6 @@
                 "description": "Ending range of quantity of an item.",
                 "type": "integer",
                 "format": "int64"
-              },
-              "customFields": {
-                "type": "object"
               },
               "createdAt": {
                 "type": "string",
@@ -82607,6 +82912,9 @@
               "$ref": "#/components/schemas/Price"
             }
           },
+          "customFields": {
+            "type": "object"
+          },
           "quantityStart": {
             "description": "Starting range of quantity of an item.",
             "type": "integer",
@@ -82616,9 +82924,6 @@
             "description": "Ending range of quantity of an item.",
             "type": "integer",
             "format": "int64"
-          },
-          "customFields": {
-            "type": "object"
           },
           "createdAt": {
             "type": "string",
@@ -94801,6 +95106,11 @@
               "customFields": {
                 "type": "object"
               },
+              "position": {
+                "description": "Numerical value that indicates the order in which the defined salutations must be displayed in the frontend.",
+                "type": "integer",
+                "format": "int64"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -95102,6 +95412,11 @@
           },
           "customFields": {
             "type": "object"
+          },
+          "position": {
+            "description": "Numerical value that indicates the order in which the defined salutations must be displayed in the frontend.",
+            "type": "integer",
+            "format": "int64"
           },
           "createdAt": {
             "type": "string",
@@ -108152,39 +108467,6 @@
           }
         }
       },
-      "MediaId": {
-        "type": "string",
-        "pattern": "^[0-9a-f]{32}$",
-        "description": "Media entity ID"
-      },
-      "ExternalThumbnail": {
-        "type": "object",
-        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
-        "required": [
-          "url",
-          "width",
-          "height"
-        ],
-        "properties": {
-          "url": {
-            "type": "string",
-            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
-            "example": "https://cdn.example.com/image-200x200.jpg"
-          },
-          "width": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Width of the thumbnail in pixels",
-            "example": 200
-          },
-          "height": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Height of the thumbnail in pixels",
-            "example": 200
-          }
-        }
-      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -108375,6 +108657,10 @@
               "disableExtensionManagement": {
                 "type": "boolean",
                 "description": "True if runtime extension management is disabled."
+              },
+              "presignedUploadSupported": {
+                "type": "boolean",
+                "description": "Whether presigned S3 upload is available. True when presigned upload is enabled and an S3 filesystem is configured."
               }
             },
             "required": [
@@ -108403,37 +108689,36 @@
         ],
         "additionalProperties": false
       },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
+      "MediaId": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}$",
+        "description": "Media entity ID"
+      },
+      "ExternalThumbnail": {
+        "type": "object",
+        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
+        "required": [
+          "url",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
+            "example": "https://cdn.example.com/image-200x200.jpg"
+          },
+          "width": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Width of the thumbnail in pixels",
+            "example": 200
+          },
+          "height": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Height of the thumbnail in pixels",
+            "example": 200
           }
         }
       },
@@ -109143,28 +109428,186 @@
           "field"
         ]
       },
-      "flowBuilderActionsResponse": {
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "description": "Unique identity of the associated currency.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "Gross price for the associated currency.",
+            "type": "number"
+          },
+          "net": {
+            "description": "Net price for the associated currency.",
+            "type": "number"
+          },
+          "linked": {
+            "description": "Whether gross and net prices are linked through the tax configuration.",
+            "type": "boolean"
+          },
+          "percentage": {
+            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "gross": {
+                "description": "Discount percentage relative to the gross list price.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Discount percentage relative to the net list price.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          },
+          "listPrice": {
+            "description": "Reference list price for displaying discounts.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross list price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net list price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net list prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          },
+          "regulationPrice": {
+            "description": "Reference price used for legal price disclosures.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross regulation price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net regulation price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
+        ]
+      },
+      "businessEventsResponse": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
             "name": {
               "type": "string",
-              "description": "Name of the flow action"
+              "description": "Name of the event"
             },
-            "requirements": {
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
               "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "description": "Flow builder will base on awareness to show actions",
               "items": {
                 "type": "string"
               }
             },
             "extensions": {
               "type": "array",
+              "description": "Extensions data of event",
               "items": {
                 "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "MeasurementUnits": {
+        "type": "object",
+        "description": "Configuration of the measurement system",
+        "properties": {
+          "system": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+          },
+          "units": {
+            "type": "object",
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
               },
-              "description": "Extensions data of event"
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
+              }
             }
           }
         }
@@ -109293,131 +109736,31 @@
           }
         ]
       },
-      "MeasurementUnits": {
-        "type": "object",
-        "description": "Configuration of the measurement system",
-        "properties": {
-          "system": {
-            "type": "string",
-            "enum": [
-              "metric",
-              "imperial"
-            ],
-            "default": "metric",
-            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
-          },
-          "units": {
-            "type": "object",
-            "description": "Units used in the measurement system.",
-            "properties": {
-              "length": {
-                "type": "string",
-                "enum": [
-                  "mm",
-                  "cm",
-                  "m",
-                  "in",
-                  "ft"
-                ],
-                "default": "mm",
-                "description": "Unit of length."
-              },
-              "weight": {
-                "type": "string",
-                "enum": [
-                  "g",
-                  "kg",
-                  "oz",
-                  "lb"
-                ],
-                "default": "kg",
-                "description": "Unit of weight."
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
               }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
             }
           }
         }
-      },
-      "Price": {
-        "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "",
-            "type": "number"
-          },
-          "net": {
-            "description": "",
-            "type": "number"
-          },
-          "linked": {
-            "description": "",
-            "type": "boolean"
-          },
-          "listPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          },
-          "regulationPrice": {
-            "description": "",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "",
-                "type": "number"
-              },
-              "net": {
-                "description": "",
-                "type": "number"
-              },
-              "linked": {
-                "description": "",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net",
-          "linked"
-        ]
       },
       "CustomPricingResponse": {
         "type": "object",
@@ -110563,6 +110906,10 @@
     {
       "name": "Document Base Config Sales Channel",
       "description": "The endpoint for operations on Document Base Config Sales Channel"
+    },
+    {
+      "name": "Document File",
+      "description": "The endpoint for operations on Document File"
     },
     {
       "name": "Document Type",
