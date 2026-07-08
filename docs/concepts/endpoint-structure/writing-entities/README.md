@@ -25,7 +25,7 @@ See the [Entity Reference](../../../resources/entity-reference.md) section of th
 
 ### Primary Keys
 
-Shopware 6 uses 128-bit client-generated identifiers as primary keys instead of auto increments. In API payloads, these appear as **32 lowercase hexadecimal characters without hyphens** (for example, `01bd7e70a50443ec96a01fd34890dcc5`). See the [Request body](../request-response-structure.md#request-body) section for examples.
+Shopware 6 uses 128-bit client-generated identifiers as primary keys instead of auto-increments. In API payloads, these appear as **32 lowercase hexadecimal characters without hyphens** (for example, `01bd7e70a50443ec96a01fd34890dcc5`). See the [Request body](../request-response-structure.md#request-body) section for examples.
 
 This is not the hyphenated string format defined by [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122). Passing UUIDs with hyphens returns a `FRAMEWORK__INVALID_UUID` error. See [shopware/shopware#274](https://github.com/shopware/shopware/issues/274#issuecomment-549374502) for background.
 
