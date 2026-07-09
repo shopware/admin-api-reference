@@ -81,6 +81,12 @@ Refer to the docs for more information on other [response headers](https://devel
 }
 ```
 
+#### Entity IDs
+
+Primary and foreign keys such as `id` and `taxId` are **32-character lowercase hexadecimal strings without hyphens**. This is Shopware's API representation of a 128-bit identifier. It is not the hyphenated RFC 4122 string format that most UUID libraries generate by default.
+
+To derive stable IDs from external keys during imports (for example, using `md5()` or UUID v3/v5), see [Primary Keys](writing-entities/README.md#primary-keys) in the Writing entities guide.
+
 ## Response format
 
 ### Response headers

@@ -6,11 +6,11 @@ A list of all entities available for these operations can be found in the [Entit
 
 **Example:** The entity `customer_group` is available under the endpoint `api/customer-group`. For an entity, the system automatically generates the following routes where the entity can be written
 
-| Name | Method | Route | Usage |
-| :--- | :--- | :--- | :--- |
-| api.customer\_group.update | PATCH | /api/customer-group/{id} | Update the entity with the provided ID |
-| api.customer\_group.delete | DELETE | /api/customer-group/{id} | Delete the entity |
-| api.customer\_group.create | POST | /api/customer-group | Create a new entity |
+| Name                       | Method | Route                    | Usage                                  |
+|:---------------------------|:-------|:-------------------------|:---------------------------------------|
+| api.customer\_group.update | PATCH  | /api/customer-group/{id} | Update the entity with the provided ID |
+| api.customer\_group.delete | DELETE | /api/customer-group/{id} | Delete the entity                      |
+| api.customer\_group.create | POST   | /api/customer-group      | Create a new entity                    |
 
 <!-- theme: warning -->
 > **PATCH** method only adds properties and does not delete old references. To perform both operations, use [Sync API](bulk-payloads.md) endpoints.
@@ -25,19 +25,61 @@ See the [Entity Reference](../../../resources/entity-reference.md) section of th
 
 ### Primary Keys
 
-Shopware 6 works with UUIDv4 as primary keys instead of auto increments. We have opted for this standard for the following reasons:
+Shopware 6 uses 128-bit client-generated identifiers as primary keys instead of auto-increments. In API payloads, these appear as **32 lowercase hexadecimal characters without hyphens** (for example, `01bd7e70a50443ec96a01fd34890dcc5`). See the [Request body](../request-response-structure.md#request-body) section for examples.
 
-* IDs can be provided \(client-generated\) when creating an entity
+This is not the hyphenated string format defined by [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122). Passing UUIDs with hyphens returns a `FRAMEWORK__INVALID_UUID` error. See [shopware/shopware#274](https://github.com/shopware/shopware/issues/274#issuecomment-549374502) for a background.
+
+We have opted for this approach for the following reasons:
+
+* IDs can be provided (client-generated) when creating an entity
 * Minuscule likelihood of generating ID collisions
-* Data integrations become easier, because existing primary keys can be hashed to generate UUIDs
+* Data integrations become easier because existing primary keys can be hashed to generate UUIDs
 
-> Shopware doesn't check UUIDs for validity, so if you're creating an import, you can hash a primary key of your record and use it as its Shopware id.
-> ```php
-> $payload[] = [
->   'id' => md5($product->getUniqueIdentifier());
-> ]
-> ```
-> This way, you can later on use that identifier to push instant updates to the changed records. Of course, you can use a similar pattern for related entities.
+Shopware typically generates time-ordered or random UUIDs internally, but the API accepts any valid 32-character hex value — it does not enforce RFC version bits.
+
+#### Deterministic IDs for imports
+
+When importing data from an external system, you often want a stable Shopware ID derived from a key you already have (such as a SKU or legacy primary key). Shopware validates the **format** (32 hex characters) but not RFC version semantics, so deterministic hashes are valid for imports.
+
+**Pragmatic approach: `md5()`**
+
+`md5()` is a simple choice because it produces exactly 32 hexadecimal characters, matching the API format with no conversion:
+
+```php
+$payload[] = [
+    'id' => md5($product->getUniqueIdentifier()),
+];
+```
+
+**Standard-based alternative: UUID v3/v5**
+
+[RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122#section-4.3) defines name-based UUIDs for exactly this use case:
+
+| Approach                  | Hash                        | RFC UUID version                                         | Fits API format directly?            |
+|:--------------------------|:----------------------------|:---------------------------------------------------------|:-------------------------------------|
+| `md5($name)`              | MD5 (full 128 bits as hex)  | Similar spirit to v3, but without namespace/version bits | Yes                                  |
+| `Uuid::uuid3($ns, $name)` | MD5 with namespace          | UUID v3                                                  | No — strip hyphens                   |
+| `Uuid::uuid5($ns, $name)` | SHA-1 truncated to 128 bits | UUID v5                                                  | No — strip hyphens                   |
+| `sha1($name)`             | SHA-1 (160 bits)            | N/A                                                      | **No** — 40 hex characters, too long |
+
+Using a UUID library makes the intent explicit and lets you scope IDs with a namespace:
+
+```php
+use Ramsey\Uuid\Uuid;
+
+$payload[] = [
+    'id' => str_replace('-', '', Uuid::uuid5(
+        Uuid::NAMESPACE_DNS,
+        (string) $product->getUniqueIdentifier()
+    )->toString()),
+];
+```
+
+Most UUID libraries (including `ramsey/uuid`) output the canonical 36-character hyphenated form. Shopware requires the 32-character dashless form, so `str_replace('-', '', ...)` is needed. The same applies to `Uuid::uuid3()`. Plain `sha1()` does not work because it produces 40 hexadecimal characters, which exceeds Shopware's 16-byte (128-bit) ID length.
+
+For imports, pick a stable namespace per entity type (for example, `Uuid::NAMESPACE_DNS` or a project-specific namespace UUID generated once) and use the external system's stable key as the name.
+
+Whichever approach you choose, you can later reuse the same derived ID to push updates to the same record. The same pattern applies to related entities.
 
 ### **Bulk Payloads**
 
