@@ -6,11 +6,11 @@ A list of all entities available for these operations can be found in the [Entit
 
 **Example:** The entity `customer_group` is available under the endpoint `api/customer-group`. For an entity, the system automatically generates the following routes where the entity can be written
 
-| Name | Method | Route | Usage |
-| :--- | :--- | :--- | :--- |
-| api.customer\_group.update | PATCH | /api/customer-group/{id} | Update the entity with the provided ID |
-| api.customer\_group.delete | DELETE | /api/customer-group/{id} | Delete the entity |
-| api.customer\_group.create | POST | /api/customer-group | Create a new entity |
+| Name                       | Method | Route                    | Usage                                  |
+|:---------------------------|:-------|:-------------------------|:---------------------------------------|
+| api.customer\_group.update | PATCH  | /api/customer-group/{id} | Update the entity with the provided ID |
+| api.customer\_group.delete | DELETE | /api/customer-group/{id} | Delete the entity                      |
+| api.customer\_group.create | POST   | /api/customer-group      | Create a new entity                    |
 
 <!-- theme: warning -->
 > **PATCH** method only adds properties and does not delete old references. To perform both operations, use [Sync API](bulk-payloads.md) endpoints.
@@ -27,13 +27,13 @@ See the [Entity Reference](../../../resources/entity-reference.md) section of th
 
 Shopware 6 uses 128-bit client-generated identifiers as primary keys instead of auto-increments. In API payloads, these appear as **32 lowercase hexadecimal characters without hyphens** (for example, `01bd7e70a50443ec96a01fd34890dcc5`). See the [Request body](../request-response-structure.md#request-body) section for examples.
 
-This is not the hyphenated string format defined by [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122). Passing UUIDs with hyphens returns a `FRAMEWORK__INVALID_UUID` error. See [shopware/shopware#274](https://github.com/shopware/shopware/issues/274#issuecomment-549374502) for background.
+This is not the hyphenated string format defined by [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122). Passing UUIDs with hyphens returns a `FRAMEWORK__INVALID_UUID` error. See [shopware/shopware#274](https://github.com/shopware/shopware/issues/274#issuecomment-549374502) for a background.
 
 We have opted for this approach for the following reasons:
 
 * IDs can be provided (client-generated) when creating an entity
 * Minuscule likelihood of generating ID collisions
-* Data integrations become easier, because existing primary keys can be hashed to generate UUIDs
+* Data integrations become easier because existing primary keys can be hashed to generate UUIDs
 
 Shopware typically generates time-ordered or random UUIDs internally, but the API accepts any valid 32-character hex value — it does not enforce RFC version bits.
 
@@ -55,12 +55,12 @@ $payload[] = [
 
 [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122#section-4.3) defines name-based UUIDs for exactly this use case:
 
-| Approach | Hash | RFC UUID version | Fits API format directly? |
-| :--- | :--- | :--- | :--- |
-| `md5($name)` | MD5 (full 128 bits as hex) | Similar spirit to v3, but without namespace/version bits | Yes |
-| `Uuid::uuid3($ns, $name)` | MD5 with namespace | UUID v3 | No — strip hyphens |
-| `Uuid::uuid5($ns, $name)` | SHA-1 truncated to 128 bits | UUID v5 | No — strip hyphens |
-| `sha1($name)` | SHA-1 (160 bits) | N/A | **No** — 40 hex characters, too long |
+| Approach                  | Hash                        | RFC UUID version                                         | Fits API format directly?            |
+|:--------------------------|:----------------------------|:---------------------------------------------------------|:-------------------------------------|
+| `md5($name)`              | MD5 (full 128 bits as hex)  | Similar spirit to v3, but without namespace/version bits | Yes                                  |
+| `Uuid::uuid3($ns, $name)` | MD5 with namespace          | UUID v3                                                  | No — strip hyphens                   |
+| `Uuid::uuid5($ns, $name)` | SHA-1 truncated to 128 bits | UUID v5                                                  | No — strip hyphens                   |
+| `sha1($name)`             | SHA-1 (160 bits)            | N/A                                                      | **No** — 40 hex characters, too long |
 
 Using a UUID library makes the intent explicit and lets you scope IDs with a namespace:
 
