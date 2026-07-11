@@ -97112,11 +97112,11 @@
             "required": [
               "id",
               "technicalName",
-              "label",
               "sourceEntity",
               "fileType",
               "delimiter",
-              "enclosure"
+              "enclosure",
+              "label"
             ],
             "properties": {
               "id": {
@@ -97124,9 +97124,6 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "technicalName": {
-                "type": "string"
-              },
-              "label": {
                 "type": "string"
               },
               "type": {
@@ -97160,6 +97157,9 @@
               },
               "config": {
                 "type": "object"
+              },
+              "label": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -97220,11 +97220,11 @@
         "required": [
           "id",
           "technicalName",
-          "label",
           "sourceEntity",
           "fileType",
           "delimiter",
-          "enclosure"
+          "enclosure",
+          "label"
         ],
         "properties": {
           "id": {
@@ -97234,10 +97234,6 @@
           },
           "technicalName": {
             "type": "string"
-          },
-          "label": {
-            "type": "string",
-            "description": "Label given to ImportExportProfile."
           },
           "type": {
             "description": "Import-export type can be orders, customers, categories.",
@@ -97272,6 +97268,10 @@
           "config": {
             "type": "object",
             "description": "Specifies detailed information about the component."
+          },
+          "label": {
+            "type": "string",
+            "description": "Label given to ImportExportProfile."
           },
           "createdAt": {
             "type": "string",
