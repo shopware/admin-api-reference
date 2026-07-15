@@ -51069,6 +51069,190 @@
         },
         "type": "object"
       },
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "refresh_token"
+            ]
+          }
+        ]
+      },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
       "MediaId": {
         "type": "string",
         "pattern": "^[0-9a-f]{32}$",
@@ -51101,112 +51285,6 @@
             "example": 200
           }
         }
-      },
-      "Price": {
-        "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "description": "Unique identity of the associated currency.",
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "Gross price for the associated currency.",
-            "type": "number"
-          },
-          "net": {
-            "description": "Net price for the associated currency.",
-            "type": "number"
-          },
-          "linked": {
-            "description": "Whether gross and net prices are linked through the tax configuration.",
-            "type": "boolean"
-          },
-          "percentage": {
-            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
-            "type": [
-              "object",
-              "null"
-            ],
-            "properties": {
-              "gross": {
-                "description": "Discount percentage relative to the gross list price.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Discount percentage relative to the net list price.",
-                "type": "number"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          },
-          "listPrice": {
-            "description": "Reference list price for displaying discounts.",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "description": "Unique identity of the associated currency.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "Gross list price for the associated currency.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Net list price for the associated currency.",
-                "type": "number"
-              },
-              "linked": {
-                "description": "Whether gross and net list prices are linked through the tax configuration.",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          },
-          "regulationPrice": {
-            "description": "Reference price used for legal price disclosures.",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "description": "Unique identity of the associated currency.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "Gross regulation price for the associated currency.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Net regulation price for the associated currency.",
-                "type": "number"
-              },
-              "linked": {
-                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net",
-          "linked"
-        ]
       },
       "infoConfigResponse": {
         "type": "object",
@@ -51439,6 +51517,50 @@
           "inAppPurchases"
         ],
         "additionalProperties": false
+      },
+      "MeasurementUnits": {
+        "type": "object",
+        "description": "Configuration of the measurement system",
+        "properties": {
+          "system": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+          },
+          "units": {
+            "type": "object",
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
+              }
+            }
+          }
+        }
       },
       "Criteria": {
         "type": "object",
@@ -52146,231 +52268,181 @@
           "field"
         ]
       },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
+      "Price": {
         "type": "object",
+        "description": "Price object",
         "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
+          "currencyId": {
+            "description": "Unique identity of the associated currency.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "Gross price for the associated currency.",
+            "type": "number"
+          },
+          "net": {
+            "description": "Net price for the associated currency.",
+            "type": "number"
+          },
+          "linked": {
+            "description": "Whether gross and net prices are linked through the tax configuration.",
+            "type": "boolean"
+          },
+          "percentage": {
+            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "gross": {
+                "description": "Discount percentage relative to the gross list price.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Discount percentage relative to the net list price.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          },
+          "listPrice": {
+            "description": "Reference list price for displaying discounts.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross list price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net list price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net list prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          },
+          "regulationPrice": {
+            "description": "Reference price used for legal price disclosures.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross regulation price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net regulation price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
           }
         },
         "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
-          }
-        }
-      },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
         ]
       },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "refresh_token"
-            ]
-          }
-        ]
-      },
-      "MeasurementUnits": {
+      "ConsentState": {
         "type": "object",
-        "description": "Configuration of the measurement system",
+        "required": [
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt",
+          "acceptedUntil"
+        ],
         "properties": {
-          "system": {
+          "name": {
+            "type": "string",
+            "description": "The name of the consent"
+          },
+          "scopeName": {
+            "type": "string",
+            "description": "The scope of the consent that defines how the identifier is resolved"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
             "type": "string",
             "enum": [
-              "metric",
-              "imperial"
+              "unset",
+              "accepted",
+              "revoked"
             ],
-            "default": "metric",
-            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+            "description": "The current status of the consent (requested, accepted, revoked)"
           },
-          "units": {
-            "type": "object",
-            "description": "Units used in the measurement system.",
-            "properties": {
-              "length": {
-                "type": "string",
-                "enum": [
-                  "mm",
-                  "cm",
-                  "m",
-                  "in",
-                  "ft"
-                ],
-                "default": "mm",
-                "description": "Unit of length."
-              },
-              "weight": {
-                "type": "string",
-                "enum": [
-                  "g",
-                  "kg",
-                  "oz",
-                  "lb"
-                ],
-                "default": "kg",
-                "description": "Unit of weight."
-              }
-            }
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          },
+          "acceptedUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp until when the consent is accepted. null if never accepted"
+          },
+          "acceptedRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
+          },
+          "latestRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
           }
         }
       },
@@ -52606,78 +52678,6 @@
               "base",
               "extension"
             ]
-          }
-        }
-      },
-      "ConsentState": {
-        "type": "object",
-        "required": [
-          "name",
-          "scopeName",
-          "identifier",
-          "status",
-          "actor",
-          "updatedAt",
-          "acceptedUntil"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the consent"
-          },
-          "scopeName": {
-            "type": "string",
-            "description": "The scope of the consent that defines how the identifier is resolved"
-          },
-          "identifier": {
-            "type": "string",
-            "description": "The resolved identifier of the consent"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "unset",
-              "accepted",
-              "revoked"
-            ],
-            "description": "The current status of the consent (requested, accepted, revoked)"
-          },
-          "actor": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The user name of the user who made the consent decision. null if never updated"
-          },
-          "updatedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp of when the consent status was last updated. null if never updated"
-          },
-          "acceptedUntil": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp until when the consent is accepted. null if never accepted"
-          },
-          "acceptedRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
-          },
-          "latestRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
           }
         }
       }
