@@ -27079,6 +27079,547 @@
         }
       }
     },
+    "/quote-history": {
+      "get": {
+        "tags": [
+          "Quote History"
+        ],
+        "summary": "List with basic information of Quote History resources.",
+        "description": "",
+        "operationId": "getQuoteHistoryList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Quote History resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/QuoteHistory"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/quote-history?limit=25"
+                                },
+                                "last": {
+                                  "example": "/quote-history?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/quote-history?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/quote-history?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuoteHistory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Quote History"
+        ],
+        "summary": "Create a new Quote History resources.",
+        "description": "",
+        "operationId": "createQuoteHistory",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteHistory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteHistory",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteHistory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/QuoteHistory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/quote-history": {
+      "post": {
+        "tags": [
+          "Quote History"
+        ],
+        "summary": "Search for the Quote History resources.",
+        "description": "",
+        "operationId": "searchQuoteHistory",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of QuoteHistory",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/QuoteHistory"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuoteHistory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-history/{id}": {
+      "get": {
+        "tags": [
+          "Quote History"
+        ],
+        "summary": "Detailed information about a Quote History resource.",
+        "description": "",
+        "operationId": "getQuoteHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_history",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteHistory",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteHistory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/QuoteHistory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Quote History"
+        ],
+        "summary": "Delete a Quote History resource.",
+        "description": "",
+        "operationId": "deleteQuoteHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_history",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Quote History"
+        ],
+        "summary": "Partially update information about a Quote History resource.",
+        "description": "",
+        "operationId": "updateQuoteHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_history",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Quote History resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteHistory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteHistory",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteHistory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/QuoteHistory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/quote-history": {
+      "post": {
+        "tags": [
+          "Quote History"
+        ],
+        "summary": "Aggregate for the Quote History resources.",
+        "description": "Available since: 6.6.10.0",
+        "operationId": "aggregateQuoteHistory",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of QuoteHistory",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/QuoteHistory"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuoteHistory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/quote-line-item": {
       "get": {
         "tags": [
@@ -27604,6 +28145,547 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/QuoteLineItem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-line-item-history": {
+      "get": {
+        "tags": [
+          "Quote Line Item History"
+        ],
+        "summary": "List with basic information of Quote Line Item History resources.",
+        "description": "",
+        "operationId": "getQuoteLineItemHistoryList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Quote Line Item History resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/QuoteLineItemHistory"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/quote-line-item-history?limit=25"
+                                },
+                                "last": {
+                                  "example": "/quote-line-item-history?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/quote-line-item-history?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/quote-line-item-history?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuoteLineItemHistory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Quote Line Item History"
+        ],
+        "summary": "Create a new Quote Line Item History resources.",
+        "description": "",
+        "operationId": "createQuoteLineItemHistory",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteLineItemHistory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteLineItemHistory",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteLineItemHistory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/QuoteLineItemHistory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/quote-line-item-history": {
+      "post": {
+        "tags": [
+          "Quote Line Item History"
+        ],
+        "summary": "Search for the Quote Line Item History resources.",
+        "description": "",
+        "operationId": "searchQuoteLineItemHistory",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of QuoteLineItemHistory",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/QuoteLineItemHistory"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuoteLineItemHistory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/quote-line-item-history/{id}": {
+      "get": {
+        "tags": [
+          "Quote Line Item History"
+        ],
+        "summary": "Detailed information about a Quote Line Item History resource.",
+        "description": "",
+        "operationId": "getQuoteLineItemHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_line_item_history",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteLineItemHistory",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteLineItemHistory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/QuoteLineItemHistory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Quote Line Item History"
+        ],
+        "summary": "Delete a Quote Line Item History resource.",
+        "description": "",
+        "operationId": "deleteQuoteLineItemHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_line_item_history",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Quote Line Item History"
+        ],
+        "summary": "Partially update information about a Quote Line Item History resource.",
+        "description": "",
+        "operationId": "updateQuoteLineItemHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the quote_line_item_history",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Quote Line Item History resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteLineItemHistory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of QuoteLineItemHistory",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/QuoteLineItemHistory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/QuoteLineItemHistory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/quote-line-item-history": {
+      "post": {
+        "tags": [
+          "Quote Line Item History"
+        ],
+        "summary": "Aggregate for the Quote Line Item History resources.",
+        "description": "Available since: 6.6.10.0",
+        "operationId": "aggregateQuoteLineItemHistory",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of QuoteLineItemHistory",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/QuoteLineItemHistory"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuoteLineItemHistory"
                       }
                     }
                   }
@@ -38405,6 +39487,68 @@
         }
       }
     },
+    "/_action/quote/{quoteId}/products": {
+      "post": {
+        "tags": [
+          "B2B Quote Management"
+        ],
+        "summary": "Add products to quote",
+        "description": "This route is used to add multiple products to a quote from admin",
+        "operationId": "addProductsToQuote",
+        "parameters": [
+          {
+            "name": "quoteId",
+            "in": "path",
+            "description": "Identifier of the quote to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "products": {
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "productId": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{32}$"
+                        },
+                        "quantity": {
+                          "type": "integer",
+                          "pattern": "int32",
+                          "default": 1
+                        }
+                      },
+                      "required": [
+                        "productId"
+                      ],
+                      "type": "object"
+                    }
+                  }
+                },
+                "required": [
+                  "products"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No content response"
+          }
+        }
+      }
+    },
     "/_action/quote/{quoteId}/lineItem": {
       "post": {
         "tags": [
@@ -38497,6 +39641,33 @@
             "name": "quoteId",
             "in": "path",
             "description": "Identifier of the quote to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content response"
+          }
+        }
+      }
+    },
+    "/_action/quote/{quoteId}/withdraw": {
+      "post": {
+        "tags": [
+          "B2B Quote Management"
+        ],
+        "summary": "Withdraw a quote",
+        "description": "This route reverts pending customer changes and withdraws the quote from admin",
+        "operationId": "withdrawQuote",
+        "parameters": [
+          {
+            "name": "quoteId",
+            "in": "path",
+            "description": "Identifier of the quote to withdraw",
             "required": true,
             "schema": {
               "type": "string",
@@ -50851,6 +52022,99 @@
                     },
                     "type": "object"
                   },
+                  "quoteHistories": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/quoteHistories"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "272ad411fd5605812db467246255715d"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "quoteLineItemHistories": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/quoteLineItemHistories"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_line_item_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "a3c6bbedb59f82b32159985c446ea645"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "quoteNotificationRecipients": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/quoteNotificationRecipients"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "4c299d80b276c992cb135ed5a8aead32"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "organization": {
                     "properties": {
                       "links": {
@@ -51282,6 +52546,99 @@
                         "id": {
                           "type": "string",
                           "example": "98dec49a83119c512f84645e81ea52d8"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quoteHistories": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/quoteHistories"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_history"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "272ad411fd5605812db467246255715d"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quoteLineItemHistories": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/quoteLineItemHistories"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_line_item_history"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "a3c6bbedb59f82b32159985c446ea645"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quoteNotificationRecipients": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/quoteNotificationRecipients"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "4c299d80b276c992cb135ed5a8aead32"
                         }
                       }
                     }
@@ -61168,6 +62525,68 @@
                     },
                     "type": "object"
                   },
+                  "quoteHistories": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/quoteHistories"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "272ad411fd5605812db467246255715d"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "quoteLineItemHistories": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/quoteLineItemHistories"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_line_item_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "a3c6bbedb59f82b32159985c446ea645"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "organizationUnits": {
                     "properties": {
                       "links": {
@@ -62524,6 +63943,68 @@
                         "id": {
                           "type": "string",
                           "example": "98dec49a83119c512f84645e81ea52d8"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quoteHistories": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/customer/ce26601dac0dea138b7295f02b7620a7/quoteHistories"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_history"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "272ad411fd5605812db467246255715d"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quoteLineItemHistories": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/customer/ce26601dac0dea138b7295f02b7620a7/quoteLineItemHistories"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_line_item_history"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "a3c6bbedb59f82b32159985c446ea645"
                         }
                       }
                     }
@@ -89355,6 +90836,17 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "displayState": {
+                "properties": {
+                  "storefrontState": {
+                    "type": "string"
+                  },
+                  "adminState": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
               "userId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -89399,6 +90891,14 @@
                 "format": "date-time"
               },
               "sentAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "quoteCreatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "requestedAt": {
                 "type": "string",
                 "format": "date-time"
               },
@@ -89530,6 +91030,10 @@
                 "type": "number",
                 "format": "float"
               },
+              "totalLineItemDiscount": {
+                "type": "number",
+                "format": "float"
+              },
               "itemRounding": {
                 "required": [
                   "decimals",
@@ -89577,6 +91081,9 @@
               },
               "cartPayload": {
                 "type": "string"
+              },
+              "sendNotification": {
+                "type": "boolean"
               },
               "createdAt": {
                 "type": "string",
@@ -89885,6 +91392,68 @@
                     },
                     "type": "object"
                   },
+                  "notificationRecipients": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/notificationRecipients"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "user"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "bd4a2b3045182246fac51c0abc10c4d7"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "notificationEmployees": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/notificationEmployees"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_employee"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "7dd22b6dd4eb80f03ef9e485e6981b63"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "lineItems": {
                     "properties": {
                       "links": {
@@ -90070,6 +91639,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "histories": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote/c48e929b2b1eabba2ba036884433345e/histories"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "d7e502230e221c8b2f25a93cb2b9dad0"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -90108,6 +91708,17 @@
           "stateId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "displayState": {
+            "properties": {
+              "storefrontState": {
+                "type": "string"
+              },
+              "adminState": {
+                "type": "string"
+              }
+            },
+            "type": "object"
           },
           "userId": {
             "type": "string",
@@ -90153,6 +91764,14 @@
             "format": "date-time"
           },
           "sentAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "quoteCreatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requestedAt": {
             "type": "string",
             "format": "date-time"
           },
@@ -90284,6 +91903,10 @@
             "type": "number",
             "format": "float"
           },
+          "totalLineItemDiscount": {
+            "type": "number",
+            "format": "float"
+          },
           "itemRounding": {
             "required": [
               "decimals",
@@ -90331,6 +91954,9 @@
           },
           "cartPayload": {
             "type": "string"
+          },
+          "sendNotification": {
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
@@ -90403,6 +92029,18 @@
           "order": {
             "$ref": "#/components/schemas/Order"
           },
+          "notificationRecipients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "notificationEmployees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/B2bEmployee"
+            }
+          },
           "lineItems": {
             "type": "array",
             "items": {
@@ -90437,6 +92075,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/QuoteDocument"
+            }
+          },
+          "histories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteHistory"
             }
           }
         },
@@ -90477,10 +92121,6 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
-              "stateId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
               "customerId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -90489,9 +92129,22 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "quoteLineItemId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteLineItemVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "createdById": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
+              },
+              "stateId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "createdAt": {
                 "type": "string",
@@ -90528,35 +92181,6 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "7a674c327bfa07f7c1204fb38ca6ef3b"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "stateMachineState": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/quote-comment/b3ef9135f573201be0dd21b395c6ec07/stateMachineState"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "state_machine_state"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "1ab22d393154f21e3be76aca3ec3ee31"
                           }
                         }
                       }
@@ -90621,6 +92245,93 @@
                     },
                     "type": "object"
                   },
+                  "quoteHistory": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-comment/b3ef9135f573201be0dd21b395c6ec07/quoteHistory"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote_history"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "888ceb7deb89e2f34f30bc299ebe4c16"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "commentQuoteLineItemHistory": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-comment/b3ef9135f573201be0dd21b395c6ec07/commentQuoteLineItemHistory"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote_line_item_history"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "b609f2b3023e763cffde66f3b69e2d65"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "lineItem": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-comment/b3ef9135f573201be0dd21b395c6ec07/lineItem"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote_line_item"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "867cf1ff92974922abc5d5b045b4a2d8"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "createdBy": {
                     "properties": {
                       "links": {
@@ -90644,6 +92355,35 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "34998857f537140306898d54d4b970dc"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "stateMachineState": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-comment/b3ef9135f573201be0dd21b395c6ec07/stateMachineState"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "state_machine_state"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "1ab22d393154f21e3be76aca3ec3ee31"
                           }
                         }
                       }
@@ -90688,10 +92428,6 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "stateId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
           "customerId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
@@ -90700,9 +92436,22 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "quoteLineItemId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteLineItemVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "createdById": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "stateId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -90717,17 +92466,26 @@
           "quote": {
             "$ref": "#/components/schemas/Quote"
           },
-          "stateMachineState": {
-            "$ref": "#/components/schemas/StateMachineState"
-          },
           "customer": {
             "$ref": "#/components/schemas/Customer"
           },
           "employee": {
             "$ref": "#/components/schemas/B2bEmployee"
           },
+          "quoteHistory": {
+            "$ref": "#/components/schemas/QuoteHistory"
+          },
+          "commentQuoteLineItemHistory": {
+            "$ref": "#/components/schemas/QuoteLineItemHistory"
+          },
+          "lineItem": {
+            "$ref": "#/components/schemas/QuoteLineItem"
+          },
           "createdBy": {
             "$ref": "#/components/schemas/User"
+          },
+          "stateMachineState": {
+            "$ref": "#/components/schemas/StateMachineState"
           }
         },
         "type": "object"
@@ -91839,6 +93597,389 @@
         },
         "type": "object"
       },
+      "QuoteEmployeeNotificationRecipient": {
+        "required": [
+          "quoteId",
+          "employeeId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "employeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quote": {
+            "$ref": "#/components/schemas/Quote"
+          },
+          "employee": {
+            "$ref": "#/components/schemas/B2bEmployee"
+          }
+        },
+        "type": "object"
+      },
+      "QuoteHistoryJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "quoteId",
+              "action"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "versionId": {
+                "description": "Version identifier of the quote history entity.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteId": {
+                "description": "Unique identity of the related quote.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteVersionId": {
+                "description": "Version identifier of the related quote.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "commentId": {
+                "description": "Unique identity of the related quote comment.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "commentVersionId": {
+                "description": "Version identifier of the related quote comment.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "changes": {
+                "type": "object"
+              },
+              "action": {
+                "description": "Action represented by this quote history entry.",
+                "type": "string"
+              },
+              "isResolved": {
+                "description": "Marks whether this quote history entry has been resolved.",
+                "type": "boolean"
+              },
+              "seenAt": {
+                "description": "Timestamp when this quote history entry was seen.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "sentAt": {
+                "description": "Timestamp when this quote history entry was sent.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdById": {
+                "description": "Unique identity of the user who created the history entry.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "customerId": {
+                "description": "Unique identity of the customer who created the history entry.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "employeeId": {
+                "description": "Unique identity of the employee who created the history entry.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "quote": {
+                    "description": "Quote associated with this history entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-history/0326ddf7253433f759ae9ae9f844588d/quote"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "7a674c327bfa07f7c1204fb38ca6ef3b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "comment": {
+                    "description": "Comment linked to this quote history entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-history/0326ddf7253433f759ae9ae9f844588d/comment"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote_comment"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "06d4cd63bde972fc66a0aed41d2f5c51"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "createdBy": {
+                    "description": "User who created this quote history entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-history/0326ddf7253433f759ae9ae9f844588d/createdBy"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "user"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "34998857f537140306898d54d4b970dc"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "customer": {
+                    "description": "Customer who created this quote history entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-history/0326ddf7253433f759ae9ae9f844588d/customer"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "customer"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "91ec1f9324753048c0096d036a694f86"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "employee": {
+                    "description": "Employee who created this quote history entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-history/0326ddf7253433f759ae9ae9f844588d/employee"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_employee"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "fa5473530e4d1a5a1e1eb53d2fedb10c"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "QuoteHistory": {
+        "required": [
+          "id",
+          "quoteId",
+          "action"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "description": "Version identifier of the quote history entity.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteId": {
+            "description": "Unique identity of the related quote.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteVersionId": {
+            "description": "Version identifier of the related quote.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "commentId": {
+            "description": "Unique identity of the related quote comment.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "commentVersionId": {
+            "description": "Version identifier of the related quote comment.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "changes": {
+            "type": "object"
+          },
+          "action": {
+            "description": "Action represented by this quote history entry.",
+            "type": "string"
+          },
+          "isResolved": {
+            "description": "Marks whether this quote history entry has been resolved.",
+            "type": "boolean"
+          },
+          "seenAt": {
+            "description": "Timestamp when this quote history entry was seen.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "sentAt": {
+            "description": "Timestamp when this quote history entry was sent.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdById": {
+            "description": "Unique identity of the user who created the history entry.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "customerId": {
+            "description": "Unique identity of the customer who created the history entry.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "employeeId": {
+            "description": "Unique identity of the employee who created the history entry.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "quote": {
+            "$ref": "#/components/schemas/Quote",
+            "description": "Quote associated with this history entry."
+          },
+          "comment": {
+            "$ref": "#/components/schemas/QuoteComment",
+            "description": "Comment linked to this quote history entry."
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/User",
+            "description": "User who created this quote history entry."
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer",
+            "description": "Customer who created this quote history entry."
+          },
+          "employee": {
+            "$ref": "#/components/schemas/B2bEmployee",
+            "description": "Employee who created this quote history entry."
+          }
+        },
+        "type": "object"
+      },
       "QuoteLineItemJsonApi": {
         "description": "Added since version: 6.5.3.0",
         "allOf": [
@@ -91931,6 +94072,10 @@
               },
               "priceDefinition": {
                 "type": "object"
+              },
+              "requestedPrice": {
+                "type": "number",
+                "format": "float"
               },
               "price": {
                 "required": [
@@ -92035,6 +94180,10 @@
               },
               "customFields": {
                 "type": "object"
+              },
+              "deletedAt": {
+                "type": "string",
+                "format": "date-time"
               },
               "createdAt": {
                 "type": "string",
@@ -92254,6 +94403,68 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "comments": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item/c7917be23ddd01ec45871fc8c1e5e540/comments"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_comment"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "a5d491060952aa8ad5fdee071be752de"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "histories": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item/c7917be23ddd01ec45871fc8c1e5e540/histories"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_line_item_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "d7e502230e221c8b2f25a93cb2b9dad0"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -92350,6 +94561,10 @@
           },
           "priceDefinition": {
             "type": "object"
+          },
+          "requestedPrice": {
+            "type": "number",
+            "format": "float"
           },
           "price": {
             "required": [
@@ -92455,6 +94670,10 @@
           "customFields": {
             "type": "object"
           },
+          "deletedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -92491,6 +94710,502 @@
             "items": {
               "$ref": "#/components/schemas/QuoteDeliveryPosition"
             }
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteComment"
+            }
+          },
+          "histories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteLineItemHistory"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "QuoteLineItemHistoryJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "quoteLineItemId",
+              "action"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "versionId": {
+                "description": "Version identifier of the quote line item history entity.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteLineItemId": {
+                "description": "Unique identity of the related quote line item.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "quoteLineItemVersionId": {
+                "description": "Version identifier of the related quote line item.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "parentId": {
+                "description": "Unique identity of the parent quote line item history entry.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "parentVersionId": {
+                "description": "Version identifier of the parent quote line item history entry.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "commentId": {
+                "description": "Unique identity of the related quote comment.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "commentVersionId": {
+                "description": "Version identifier of the related quote comment.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "changes": {
+                "type": "object"
+              },
+              "isCurrent": {
+                "description": "Marks whether this is the current history state for the quote line item.",
+                "type": "boolean"
+              },
+              "action": {
+                "description": "Action represented by this quote line item history entry.",
+                "type": "string"
+              },
+              "isResolved": {
+                "description": "Marks whether this quote line item history entry has been resolved.",
+                "type": "boolean"
+              },
+              "seenAt": {
+                "description": "Timestamp when this quote line item history entry was seen.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "sentAt": {
+                "description": "Timestamp when this quote line item history entry was sent.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdById": {
+                "description": "Unique identity of the user who created the history entry.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "customerId": {
+                "description": "Unique identity of the customer who created the history entry.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "employeeId": {
+                "description": "Unique identity of the employee who created the history entry.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "quoteLineItem": {
+                    "description": "Quote line item associated with this history entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item-history/5730856d54817026852a59d423be07ba/quoteLineItem"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote_line_item"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "dbe619b4a557266e76679178cc13085b"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "parent": {
+                    "description": "Parent quote line item history entry this reply belongs to.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item-history/5730856d54817026852a59d423be07ba/parent"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote_line_item_history"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "d0e45878043844ffc41aac437e86b602"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "children": {
+                    "description": "Child quote line item history entries replying to this entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item-history/5730856d54817026852a59d423be07ba/children"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_line_item_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "268184c12df027f536154d099d497b31"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "comment": {
+                    "description": "Comment linked to this quote line item history entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item-history/5730856d54817026852a59d423be07ba/comment"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "quote_comment"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "06d4cd63bde972fc66a0aed41d2f5c51"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "createdBy": {
+                    "description": "User who created this quote line item history entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item-history/5730856d54817026852a59d423be07ba/createdBy"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "user"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "34998857f537140306898d54d4b970dc"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "customer": {
+                    "description": "Customer who created this quote line item history entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item-history/5730856d54817026852a59d423be07ba/customer"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "customer"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "91ec1f9324753048c0096d036a694f86"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "employee": {
+                    "description": "Employee who created this quote line item history entry.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-line-item-history/5730856d54817026852a59d423be07ba/employee"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_employee"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "fa5473530e4d1a5a1e1eb53d2fedb10c"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "QuoteLineItemHistory": {
+        "required": [
+          "id",
+          "quoteLineItemId",
+          "action"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "description": "Version identifier of the quote line item history entity.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteLineItemId": {
+            "description": "Unique identity of the related quote line item.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteLineItemVersionId": {
+            "description": "Version identifier of the related quote line item.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "parentId": {
+            "description": "Unique identity of the parent quote line item history entry.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "parentVersionId": {
+            "description": "Version identifier of the parent quote line item history entry.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "commentId": {
+            "description": "Unique identity of the related quote comment.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "commentVersionId": {
+            "description": "Version identifier of the related quote comment.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "changes": {
+            "type": "object"
+          },
+          "isCurrent": {
+            "description": "Marks whether this is the current history state for the quote line item.",
+            "type": "boolean"
+          },
+          "action": {
+            "description": "Action represented by this quote line item history entry.",
+            "type": "string"
+          },
+          "isResolved": {
+            "description": "Marks whether this quote line item history entry has been resolved.",
+            "type": "boolean"
+          },
+          "seenAt": {
+            "description": "Timestamp when this quote line item history entry was seen.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "sentAt": {
+            "description": "Timestamp when this quote line item history entry was sent.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdById": {
+            "description": "Unique identity of the user who created the history entry.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "customerId": {
+            "description": "Unique identity of the customer who created the history entry.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "employeeId": {
+            "description": "Unique identity of the employee who created the history entry.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "quoteLineItem": {
+            "$ref": "#/components/schemas/QuoteLineItem",
+            "description": "Quote line item associated with this history entry."
+          },
+          "parent": {
+            "$ref": "#/components/schemas/QuoteLineItemHistory",
+            "description": "Parent quote line item history entry this reply belongs to."
+          },
+          "children": {
+            "description": "Child quote line item history entries replying to this entry.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteLineItemHistory"
+            }
+          },
+          "comment": {
+            "$ref": "#/components/schemas/QuoteComment",
+            "description": "Comment linked to this quote line item history entry."
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/User",
+            "description": "User who created this quote line item history entry."
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer",
+            "description": "Customer who created this quote line item history entry."
+          },
+          "employee": {
+            "$ref": "#/components/schemas/B2bEmployee",
+            "description": "Employee who created this quote line item history entry."
+          }
+        },
+        "type": "object"
+      },
+      "QuoteNotificationRecipient": {
+        "required": [
+          "quoteId",
+          "userId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quoteVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "userId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "quote": {
+            "$ref": "#/components/schemas/Quote"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
           }
         },
         "type": "object"
@@ -103036,7 +105751,8 @@
                         }
                       }
                     },
-                    "type": "object"
+                    "type": "object",
+                    "deprecated": true
                   },
                   "b2bPendingOrders": {
                     "properties": {
@@ -103617,7 +106333,8 @@
                     }
                   }
                 },
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "b2bPendingOrders": {
                 "properties": {
@@ -108597,6 +111314,99 @@
                     },
                     "type": "object"
                   },
+                  "createdQuoteHistories": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdQuoteHistories"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "c91dde94a23210b076afbab46482f8e0"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "createdQuoteLineItemHistories": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdQuoteLineItemHistories"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_line_item_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "86e810d25ad2d05e807281468ee9fe4b"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "quoteNotificationRecipients": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/quoteNotificationRecipients"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "4c299d80b276c992cb135ed5a8aead32"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "createdNotifications": {
                     "properties": {
                       "links": {
@@ -109514,6 +112324,99 @@
                         "id": {
                           "type": "string",
                           "example": "860bc13329c5b039ddeccbd9cced778d"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "createdQuoteHistories": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdQuoteHistories"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_history"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "c91dde94a23210b076afbab46482f8e0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "createdQuoteLineItemHistories": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdQuoteLineItemHistories"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_line_item_history"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "86e810d25ad2d05e807281468ee9fe4b"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "quoteNotificationRecipients": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/quoteNotificationRecipients"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "4c299d80b276c992cb135ed5a8aead32"
                         }
                       }
                     }
@@ -114191,8 +117094,16 @@
       "description": "The endpoint for operations on Quote Employee"
     },
     {
+      "name": "Quote History",
+      "description": "The endpoint for operations on Quote History"
+    },
+    {
       "name": "Quote Line Item",
       "description": "The endpoint for operations on Quote Line Item"
+    },
+    {
+      "name": "Quote Line Item History",
+      "description": "The endpoint for operations on Quote Line Item History"
     },
     {
       "name": "Quote Transaction",
