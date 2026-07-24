@@ -1,5 +1,5 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.2.0",
   "info": {
     "title": "Shopware Admin API",
     "description": "This endpoint reference contains an overview of all endpoints comprising the Shopware Admin API.\n\nFor a better overview, all CRUD-endpoints are hidden by default. If you want to show also CRUD-endpoints\nadd the query parameter `type=jsonapi`.",
@@ -4880,6 +4880,656 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/_action/order/document-v2/available-types": {
+      "get": {
+        "tags": [
+          "Document Management",
+          "Experimental"
+        ],
+        "summary": "List supported document V2 types and formats",
+        "description": "Returns document types and output formats currently implemented by the Document V2 pipeline. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "documentV2AvailableTypes",
+        "responses": {
+          "200": {
+            "description": "Supported document types and their available formats.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "documentTypes"
+                  ],
+                  "properties": {
+                    "documentTypes": {
+                      "description": "Map of supported document type technical names to the formats implemented for that document type. Use these values for the `documentType`, `formats`, and `format` fields of the create, preview, and upload endpoints.",
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": [
+                          "formats"
+                        ],
+                        "properties": {
+                          "formats": {
+                            "description": "Supported file format technical names for this document type.",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "documentTypes": {
+                      "invoice": {
+                        "formats": [
+                          "html",
+                          "pdf",
+                          "zugferd_xml"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/order/document-v2/create": {
+      "post": {
+        "tags": [
+          "Document Management",
+          "Experimental"
+        ],
+        "summary": "Create a document through the Document V2 pipeline",
+        "description": "Creates one document with one or more requested output formats using the Document V2 services. Get supported `documentType` and `formats` values from `/_action/order/document-v2/available-types`. Use the returned `documentId` and one of the returned `formats` to download the created file through `/_action/order/document-v2/{documentId}/download/{format}`. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "createDocumentV2",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "orderId",
+                  "orderVersionId",
+                  "documentType",
+                  "formats"
+                ],
+                "properties": {
+                  "orderId": {
+                    "description": "Identifier of the order for which the document should be created.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "orderVersionId": {
+                    "description": "Version identifier of the order for which the document should be created.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "documentType": {
+                    "description": "Document type technical name. Must be one of the keys returned by `/_action/order/document-v2/available-types`.",
+                    "type": "string",
+                    "example": "invoice"
+                  },
+                  "formats": {
+                    "description": "File format technical names to generate. Must be selected from `documentTypes[documentType].formats` returned by `/_action/order/document-v2/available-types`.",
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "pdf",
+                      "zugferd_xml"
+                    ]
+                  },
+                  "documentNumber": {
+                    "description": "Optional document number. When omitted, the Document V2 service generates the next number.",
+                    "type": "string"
+                  },
+                  "documentComment": {
+                    "description": "Optional document comment.",
+                    "type": "string"
+                  },
+                  "documentDate": {
+                    "description": "Optional document date as an ISO 8601 date-time string.",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2026-07-13T00:00:00.000+00:00"
+                  }
+                },
+                "example": {
+                  "orderId": "018f5972f9ea72a0be49f7c39f72a2a0",
+                  "orderVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                  "documentType": "invoice",
+                  "formats": [
+                    "pdf",
+                    "zugferd_xml"
+                  ],
+                  "documentNumber": "1002",
+                  "documentDate": "2026-07-13T00:00:00.000+00:00",
+                  "documentComment": "Customer requested a copy."
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Document created successfully. Use `documentId` and one of the returned `formats` to download the created file through `/_action/order/document-v2/{documentId}/download/{format}`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "deepLinkCode",
+                    "documentId",
+                    "formats"
+                  ],
+                  "properties": {
+                    "deepLinkCode": {
+                      "description": "A unique hash code which is required to download the generated document.",
+                      "type": "string"
+                    },
+                    "documentId": {
+                      "description": "Identifier of the document.",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "formats": {
+                      "description": "The generated formats. Use one of these values as the `format` path parameter when downloading the document.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": {
+                    "deepLinkCode": "COp6DlWc2JgUn3XOb7QzKXWcWIVrH8XN",
+                    "documentId": "018f5972f9ea72a0be49f7c39f72a2a0",
+                    "formats": [
+                      "pdf",
+                      "zugferd_xml"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/order/document-v2/upload": {
+      "post": {
+        "tags": [
+          "Document Management",
+          "Experimental"
+        ],
+        "summary": "Upload a document through the Document V2 pipeline",
+        "description": "Creates one static Document V2 document from either an existing media file or a raw binary file upload. Use `application/json` when the file already exists as media and pass `mediaId` in the body. Use a binary request body when uploading file bytes directly; in that case pass the document metadata as query parameters. Example binary upload: `POST /_action/order/document-v2/upload?orderId=018f5972f9ea72a0be49f7c39f72a2a0&orderVersionId=0fa91ce3e96a4bc2be4bd9ce752c3425&documentType=invoice&format=pdf&extension=pdf&fileName=invoice-1002` with header `Content-Type: application/pdf` and the PDF bytes as the request body. Get supported `documentType` and `format` values from `/_action/order/document-v2/available-types`. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "uploadDocumentV2",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "description": "Required for binary uploads. Identifier of the order for which the uploaded document should be created. For JSON uploads, send this field in the request body instead.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "orderVersionId",
+            "in": "query",
+            "description": "Required for binary uploads. Version identifier of the order for which the uploaded document should be created. For JSON uploads, send this field in the request body instead.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "documentType",
+            "in": "query",
+            "description": "Required for binary uploads. Document type technical name. Must be one of the keys returned by `/_action/order/document-v2/available-types`. For JSON uploads, send this field in the request body instead.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "invoice"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "Required for binary uploads. Document file format to store. Must be selected from `documentTypes[documentType].formats` returned by `/_action/order/document-v2/available-types`. For JSON uploads, send this field in the request body instead.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "pdf"
+            }
+          },
+          {
+            "name": "extension",
+            "in": "query",
+            "description": "Required for binary uploads. File extension of the uploaded binary body, without a leading dot. Usually this is the same value as `format`.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "pdf"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Optional for binary uploads. Preferred stored media filename without the extension. If omitted, the document number or a generated identifier is used.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "invoice-1002"
+            }
+          },
+          {
+            "name": "referencedDocumentId",
+            "in": "query",
+            "description": "Optional for binary uploads. Identifier of the referenced document. For JSON uploads, send this field in the request body instead.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "documentNumber",
+            "in": "query",
+            "description": "Optional for binary uploads. Document number stored in the document configuration. For JSON uploads, send this field in the request body instead.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "1002"
+            }
+          },
+          {
+            "name": "documentComment",
+            "in": "query",
+            "description": "Optional for binary uploads. Document comment stored in the document configuration. For JSON uploads, send this field in the request body instead.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "documentDate",
+            "in": "query",
+            "description": "Optional for binary uploads. Document date stored in the document configuration as an ISO 8601 date-time string. For JSON uploads, send this field in the request body instead.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2026-07-13T00:00:00.000+00:00"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Use `application/json` to attach an existing media file by `mediaId`. Use a binary media type, for example `application/pdf`, to upload file bytes directly and provide the document metadata through query parameters. For binary uploads, the body is the raw file content, not JSON.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "orderId",
+                  "orderVersionId",
+                  "documentType",
+                  "format",
+                  "mediaId"
+                ],
+                "properties": {
+                  "orderId": {
+                    "description": "Identifier of the order for which the uploaded document should be created.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "orderVersionId": {
+                    "description": "Version identifier of the order for which the uploaded document should be created.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "documentType": {
+                    "description": "Document type technical name. Must be one of the keys returned by `/_action/order/document-v2/available-types`.",
+                    "type": "string",
+                    "example": "invoice"
+                  },
+                  "format": {
+                    "description": "File format technical name. Must be selected from `documentTypes[documentType].formats` returned by `/_action/order/document-v2/available-types`.",
+                    "type": "string",
+                    "example": "pdf"
+                  },
+                  "mediaId": {
+                    "description": "Identifier of an existing media file to attach to the document. Required for JSON uploads.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "referencedDocumentId": {
+                    "description": "Optional identifier of the referenced document.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "documentNumber": {
+                    "description": "Optional document number.",
+                    "type": "string"
+                  },
+                  "documentComment": {
+                    "description": "Optional document comment.",
+                    "type": "string"
+                  },
+                  "documentDate": {
+                    "description": "Optional document date as an ISO 8601 date-time string.",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2026-07-13T00:00:00.000+00:00"
+                  }
+                },
+                "example": {
+                  "orderId": "018f5972f9ea72a0be49f7c39f72a2a0",
+                  "orderVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                  "documentType": "invoice",
+                  "format": "pdf",
+                  "mediaId": "018f5972fa0773c793fb88af536e34f6",
+                  "documentNumber": "1002",
+                  "documentDate": "2026-07-13T00:00:00.000+00:00"
+                }
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "description": "Raw file bytes. For binary uploads, send the required document metadata as query parameters.",
+                "type": "string",
+                "format": "binary"
+              },
+              "example": "%PDF-1.7 ..."
+            },
+            "application/octet-stream": {
+              "schema": {
+                "description": "Raw file bytes. For binary uploads, send the required document metadata as query parameters.",
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Document uploaded successfully. Use `documentId` and one of the returned `formats` to download the uploaded file through `/_action/order/document-v2/{documentId}/download/{format}`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "deepLinkCode",
+                    "documentId",
+                    "formats"
+                  ],
+                  "properties": {
+                    "deepLinkCode": {
+                      "description": "A unique hash code which is required to download the uploaded document.",
+                      "type": "string"
+                    },
+                    "documentId": {
+                      "description": "Identifier of the document.",
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "formats": {
+                      "description": "The uploaded format. Use one of these values as the `format` path parameter when downloading the document.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": {
+                    "deepLinkCode": "COp6DlWc2JgUn3XOb7QzKXWcWIVrH8XN",
+                    "documentId": "018f5972f9ea72a0be49f7c39f72a2a0",
+                    "formats": [
+                      "pdf"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/order/document-v2/{documentId}/download/{format}": {
+      "get": {
+        "tags": [
+          "Document Management",
+          "Experimental"
+        ],
+        "summary": "Download a Document V2 file",
+        "description": "Downloads one persisted format for a Document V2 document. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "downloadDocumentV2",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "Identifier of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "format",
+            "in": "path",
+            "description": "Persisted document format to download.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "pdf"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested document file.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Contains the attachment filename.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/order/document-v2/{documentId}/download-archive": {
+      "get": {
+        "tags": [
+          "Document Management",
+          "Experimental"
+        ],
+        "summary": "Download all Document V2 files as ZIP",
+        "description": "Downloads all persisted formats for a Document V2 document as one ZIP archive. The archive contains one file per persisted format. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "downloadDocumentV2Archive",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "Identifier of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A ZIP archive containing all persisted files for the document.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Contains the attachment filename.",
+                "schema": {
+                  "type": "string",
+                  "example": "attachment; filename=1000.zip"
+                }
+              }
+            },
+            "content": {
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/order/document-v2/preview": {
+      "post": {
+        "tags": [
+          "Document Management",
+          "Experimental"
+        ],
+        "summary": "Preview a document through the Document V2 pipeline",
+        "description": "Renders one requested output format through the Document V2 services without persisting the document. Get supported `documentType` and `format` values from `/_action/order/document-v2/available-types`. The response `Content-Type` depends on the requested format. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "previewDocumentV2",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "orderId",
+                  "orderVersionId",
+                  "documentType",
+                  "format"
+                ],
+                "properties": {
+                  "orderId": {
+                    "description": "Identifier of the order for which the document should be previewed.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "orderVersionId": {
+                    "description": "Version identifier of the order for which the document should be previewed.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "documentType": {
+                    "description": "Document type technical name. Must be one of the keys returned by `/_action/order/document-v2/available-types`.",
+                    "type": "string",
+                    "example": "invoice"
+                  },
+                  "format": {
+                    "description": "File format technical name to preview. Must be selected from `documentTypes[documentType].formats` returned by `/_action/order/document-v2/available-types`.",
+                    "type": "string",
+                    "example": "html"
+                  },
+                  "documentNumber": {
+                    "description": "Optional document number to render in the preview.",
+                    "type": "string"
+                  },
+                  "documentComment": {
+                    "description": "Optional document comment to render in the preview.",
+                    "type": "string"
+                  },
+                  "documentDate": {
+                    "description": "Optional document date as an ISO 8601 date-time string.",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2026-07-13T00:00:00.000+00:00"
+                  }
+                },
+                "example": {
+                  "orderId": "018f5972f9ea72a0be49f7c39f72a2a0",
+                  "orderVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                  "documentType": "invoice",
+                  "format": "html",
+                  "documentNumber": "1002",
+                  "documentDate": "2026-07-13T00:00:00.000+00:00",
+                  "documentComment": "Preview comment."
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The previewed document.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Contains the inline document filename.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
           }
         }
       }
@@ -25930,7 +26580,7 @@
                 ]
               },
               "hash": {
-                "description": "Password hash for account recovery.",
+                "description": "Random string for the subscribe URL if opt-in is used.",
                 "type": "string"
               },
               "customFields": {
@@ -26148,7 +26798,7 @@
             ]
           },
           "hash": {
-            "description": "Password hash for account recovery.",
+            "description": "Random string for the subscribe URL if opt-in is used.",
             "type": "string"
           },
           "customFields": {
@@ -36004,6 +36654,11 @@
                 "type": "string",
                 "format": "date-time"
               },
+              "nextGenerationAt": {
+                "description": "Date and time when the next cron-driven generation becomes eligible.",
+                "type": "string",
+                "format": "date-time"
+              },
               "interval": {
                 "description": "The frequency interval when the product exports are generated like every 5 min, 1 hour, etc.",
                 "type": "integer",
@@ -36274,6 +36929,11 @@
           },
           "generatedAt": {
             "description": "Date and time when the product exports was last generated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nextGenerationAt": {
+            "description": "Date and time when the next cron-driven generation becomes eligible.",
             "type": "string",
             "format": "date-time"
           },
@@ -52084,496 +52744,310 @@
         },
         "type": "object"
       },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
+      "ConsentState": {
         "type": "object",
-        "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
-          }
-        },
         "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
-          }
-        }
-      },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "refresh_token"
-            ]
-          }
-        ]
-      },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "MediaId": {
-        "type": "string",
-        "pattern": "^[0-9a-f]{32}$",
-        "description": "Media entity ID"
-      },
-      "ExternalThumbnail": {
-        "type": "object",
-        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
-        "required": [
-          "url",
-          "width",
-          "height"
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt",
+          "acceptedUntil"
         ],
         "properties": {
-          "url": {
+          "name": {
             "type": "string",
-            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
-            "example": "https://cdn.example.com/image-200x200.jpg"
+            "description": "The name of the consent"
           },
-          "width": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Width of the thumbnail in pixels",
-            "example": 200
-          },
-          "height": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Height of the thumbnail in pixels",
-            "example": 200
-          }
-        }
-      },
-      "infoConfigResponse": {
-        "type": "object",
-        "properties": {
-          "version": {
+          "scopeName": {
             "type": "string",
-            "description": "Shopware version."
+            "description": "The scope of the consent that defines how the identifier is resolved"
           },
-          "shopId": {
+          "identifier": {
             "type": "string",
-            "description": "Unique shop identifier."
+            "description": "The resolved identifier of the consent"
           },
-          "versionRevision": {
-            "type": "string",
-            "description": "Shopware version revision (build hash/revision)."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Admin worker feature flags and transport configuration.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "Whether the admin background worker is enabled."
-              },
-              "enableQueueStatsWorker": {
-                "type": "boolean",
-                "description": "Whether the queue statistics worker is enabled. Deprecated: This property will be removed in v6.8.0. The increment-based message queue statistics are deprecated.",
-                "deprecated": true
-              },
-              "enableNotificationWorker": {
-                "type": "boolean",
-                "description": "Whether the notification worker is enabled."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured Symfony Messenger transports used by the admin workers.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            },
-            "additionalProperties": false
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Active extension assets (plugins & apps) keyed by technical name.",
-            "additionalProperties": {
-              "oneOf": [
-                {
-                  "type": "object",
-                  "description": "Plugin bundle asset descriptor.",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "plugin"
-                      ]
-                    },
-                    "css": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "description": "URL to a CSS asset."
-                      }
-                    },
-                    "js": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "description": "URL to a JS asset."
-                      }
-                    },
-                    "baseUrl": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
-                      "description": "Base URL to a (micro frontend) admin entry point, if provided."
-                    }
-                  },
-                  "required": [
-                    "type"
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "description": "App bundle descriptor.",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "app"
-                      ]
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "active": {
-                      "type": "boolean"
-                    },
-                    "integrationId": {
-                      "type": "string",
-                      "description": "Lowercase hex integration id."
-                    },
-                    "baseUrl": {
-                      "type": "string"
-                    },
-                    "version": {
-                      "type": "string"
-                    },
-                    "permissions": {
-                      "type": "object",
-                      "description": "Grouped privileges: key = privilege scope, value = list of entities.",
-                      "additionalProperties": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "css": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Optional CSS assets if provided."
-                    },
-                    "js": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Optional JS assets if provided."
-                    }
-                  },
-                  "required": [
-                    "type",
-                    "name",
-                    "active",
-                    "integrationId",
-                    "baseUrl",
-                    "version",
-                    "permissions"
-                  ],
-                  "additionalProperties": false
-                }
-              ]
-            }
-          },
-          "settings": {
-            "type": "object",
-            "description": "Selected environment and feature settings consumed by the administration.",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the URL upload feature."
-              },
-              "appUrlReachable": {
-                "type": "boolean",
-                "description": "Whether configured APP_URL is externally reachable."
-              },
-              "appsRequireAppUrl": {
-                "type": "boolean",
-                "description": "True if at least one installed app requires a reachable APP_URL."
-              },
-              "firstMigrationDate": {
-                "type": [
-                  "string",
-                  "null"
-                ],
-                "description": "Timestamp of the first executed migration in ISO-8601 UTC format, used for Product Analytics consent eligibility."
-              },
-              "private_allowed_extensions": {
-                "type": "array",
-                "description": "Allowed file extensions for private filesystem uploads.",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "private_allowed_mime_types_by_extension": {
-                "type": "object",
-                "description": "Known MIME types for each allowed private filesystem upload extension.",
-                "additionalProperties": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              },
-              "enableHtmlSanitizer": {
-                "type": "boolean",
-                "description": "Whether HTML sanitizer is enabled."
-              },
-              "enableStagingMode": {
-                "type": "boolean",
-                "description": "Whether staging mode banner is enabled."
-              },
-              "disableExtensionManagement": {
-                "type": "boolean",
-                "description": "True if runtime extension management is disabled."
-              },
-              "presignedUploadSupported": {
-                "type": "boolean",
-                "description": "Whether presigned S3 upload is available. True when presigned upload is enabled and an S3 filesystem is configured."
-              }
-            },
-            "required": [
-              "firstMigrationDate"
-            ],
-            "additionalProperties": false
-          },
-          "inAppPurchases": {
-            "type": "array",
-            "description": "In-app purchase meta data (structure may vary).",
-            "items": {
-              "type": "object",
-              "description": "Purchase entry.",
-              "additionalProperties": true
-            }
-          }
-        },
-        "required": [
-          "version",
-          "shopId",
-          "versionRevision",
-          "adminWorker",
-          "bundles",
-          "settings",
-          "inAppPurchases"
-        ],
-        "additionalProperties": false
-      },
-      "MeasurementUnits": {
-        "type": "object",
-        "description": "Configuration of the measurement system",
-        "properties": {
-          "system": {
+          "status": {
             "type": "string",
             "enum": [
-              "metric",
-              "imperial"
+              "unset",
+              "accepted",
+              "revoked"
             ],
-            "default": "metric",
-            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+            "description": "The current status of the consent (requested, accepted, revoked)"
           },
-          "units": {
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          },
+          "acceptedUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp until when the consent is accepted. null if never accepted"
+          },
+          "acceptedRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
+          },
+          "latestRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
+          }
+        }
+      },
+      "SalesChannelFileConfiguration": {
+        "type": "object",
+        "required": [
+          "id",
+          "enabled",
+          "templateOverrides"
+        ],
+        "properties": {
+          "id": {
+            "description": "Identifier of the sales_channel_file row.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "enabled": {
+            "description": "Whether this file is served publicly for the sales channel.",
+            "type": "boolean"
+          },
+          "templateOverrides": {
+            "description": "Merchant-provided Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
             "type": "object",
-            "description": "Units used in the measurement system.",
-            "properties": {
-              "length": {
-                "type": "string",
-                "enum": [
-                  "mm",
-                  "cm",
-                  "m",
-                  "in",
-                  "ft"
-                ],
-                "default": "mm",
-                "description": "Unit of length."
-              },
-              "weight": {
-                "type": "string",
-                "enum": [
-                  "g",
-                  "kg",
-                  "oz",
-                  "lb"
-                ],
-                "default": "kg",
-                "description": "Unit of weight."
-              }
+            "additionalProperties": {
+              "type": "string"
             }
+          }
+        }
+      },
+      "SalesChannelFileDescriptor": {
+        "type": "object",
+        "required": [
+          "fileFamily",
+          "fileName",
+          "contentType",
+          "configuration"
+        ],
+        "properties": {
+          "fileFamily": {
+            "description": "File family below `Resources/views/files`.",
+            "type": "string",
+            "maxLength": 64
+          },
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "contentType": {
+            "description": "Detected response content type for the public file.",
+            "type": "string",
+            "examples": [
+              "text/plain; charset=utf-8"
+            ]
+          },
+          "configuration": {
+            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SalesChannelFileDetail": {
+        "type": "object",
+        "required": [
+          "fileFamily",
+          "fileName",
+          "templatePath",
+          "contentType",
+          "templates",
+          "supportsUserProvidedContent",
+          "configuration"
+        ],
+        "properties": {
+          "fileFamily": {
+            "description": "File family below `Resources/views/files`.",
+            "type": "string",
+            "maxLength": 64
+          },
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "templatePath": {
+            "description": "Relative Twig template path used for rendering.",
+            "type": "string",
+            "examples": [
+              "files/agentic/llms.txt.twig"
+            ]
+          },
+          "contentType": {
+            "description": "Detected response content type for the public file.",
+            "type": "string",
+            "examples": [
+              "text/plain; charset=utf-8"
+            ]
+          },
+          "templates": {
+            "description": "Contributing Twig templates in resolved inheritance order.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesChannelFileTemplate"
+            }
+          },
+          "supportsUserProvidedContent": {
+            "description": "Whether the template chain exposes the `user_provided_content` block for simple appended merchant notes.",
+            "type": "boolean"
+          },
+          "configuration": {
+            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SalesChannelFileDetailResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/SalesChannelFileDetail"
+          }
+        }
+      },
+      "SalesChannelFileListResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesChannelFileDescriptor"
+            }
+          }
+        }
+      },
+      "SalesChannelFilePreviewRequest": {
+        "type": "object",
+        "required": [
+          "fileName"
+        ],
+        "properties": {
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "templateOverrides": {
+            "description": "Unsaved Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SalesChannelFilePreviewResponse": {
+        "type": "object",
+        "required": [
+          "fileName",
+          "contentType",
+          "content"
+        ],
+        "properties": {
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string"
+          },
+          "contentType": {
+            "description": "Detected content type of the rendered file.",
+            "type": "string"
+          },
+          "content": {
+            "description": "Rendered file content.",
+            "type": "string"
+          }
+        }
+      },
+      "SalesChannelFileTemplate": {
+        "type": "object",
+        "required": [
+          "twigNamespace",
+          "templateName",
+          "templateContent",
+          "role"
+        ],
+        "properties": {
+          "twigNamespace": {
+            "description": "Twig namespace that contributed the template, for example `Framework` or a plugin name.",
+            "type": "string"
+          },
+          "templateName": {
+            "description": "Resolved Twig template name.",
+            "type": "string",
+            "examples": [
+              "@Framework/files/agentic/llms.txt.twig"
+            ]
+          },
+          "templateContent": {
+            "description": "Original source template content. Administration clients can use this as the default text when editing a template override.",
+            "type": "string"
+          },
+          "role": {
+            "description": "Whether this source provides the base template or extends another source in the resolved template chain.",
+            "type": "string",
+            "enum": [
+              "base",
+              "extension"
+            ]
           }
         }
       },
@@ -53283,6 +53757,238 @@
           "field"
         ]
       },
+      "infoConfigResponse": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "Shopware version."
+          },
+          "shopId": {
+            "type": "string",
+            "description": "Unique shop identifier."
+          },
+          "versionRevision": {
+            "type": "string",
+            "description": "Shopware version revision (build hash/revision)."
+          },
+          "adminWorker": {
+            "type": "object",
+            "description": "Admin worker feature flags and transport configuration.",
+            "properties": {
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "Whether the admin background worker is enabled."
+              },
+              "enableQueueStatsWorker": {
+                "type": "boolean",
+                "description": "Whether the queue statistics worker is enabled. Deprecated: This property will be removed in v6.8.0. The increment-based message queue statistics are deprecated.",
+                "deprecated": true
+              },
+              "enableNotificationWorker": {
+                "type": "boolean",
+                "description": "Whether the notification worker is enabled."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured Symfony Messenger transports used by the admin workers.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          },
+          "bundles": {
+            "type": "object",
+            "description": "Active extension assets (plugins & apps) keyed by technical name.",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "description": "Plugin bundle asset descriptor.",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "plugin"
+                      ]
+                    },
+                    "css": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "URL to a CSS asset."
+                      }
+                    },
+                    "js": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "URL to a JS asset."
+                      }
+                    },
+                    "baseUrl": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "Base URL to a (micro frontend) admin entry point, if provided."
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "description": "App bundle descriptor.",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "app"
+                      ]
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "active": {
+                      "type": "boolean"
+                    },
+                    "integrationId": {
+                      "type": "string",
+                      "description": "Lowercase hex integration id."
+                    },
+                    "baseUrl": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "description": "Grouped privileges: key = privilege scope, value = list of entities.",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "css": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Optional CSS assets if provided."
+                    },
+                    "js": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Optional JS assets if provided."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "name",
+                    "active",
+                    "integrationId",
+                    "baseUrl",
+                    "version",
+                    "permissions"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "settings": {
+            "type": "object",
+            "description": "Selected environment and feature settings consumed by the administration.",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the URL upload feature."
+              },
+              "appUrlReachable": {
+                "type": "boolean",
+                "description": "Whether configured APP_URL is externally reachable."
+              },
+              "appsRequireAppUrl": {
+                "type": "boolean",
+                "description": "True if at least one installed app requires a reachable APP_URL."
+              },
+              "firstMigrationDate": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "Timestamp of the first executed migration in ISO-8601 UTC format, used for Product Analytics consent eligibility."
+              },
+              "private_allowed_extensions": {
+                "type": "array",
+                "description": "Allowed file extensions for private filesystem uploads.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "private_allowed_mime_types_by_extension": {
+                "type": "object",
+                "description": "Known MIME types for each allowed private filesystem upload extension.",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "enableHtmlSanitizer": {
+                "type": "boolean",
+                "description": "Whether HTML sanitizer is enabled."
+              },
+              "enableStagingMode": {
+                "type": "boolean",
+                "description": "Whether staging mode banner is enabled."
+              },
+              "disableExtensionManagement": {
+                "type": "boolean",
+                "description": "True if runtime extension management is disabled."
+              },
+              "presignedUploadSupported": {
+                "type": "boolean",
+                "description": "Whether presigned S3 upload is available. True when presigned upload is enabled and an S3 filesystem is configured."
+              }
+            },
+            "required": [
+              "firstMigrationDate"
+            ],
+            "additionalProperties": false
+          },
+          "inAppPurchases": {
+            "type": "array",
+            "description": "In-app purchase meta data (structure may vary).",
+            "items": {
+              "type": "object",
+              "description": "Purchase entry.",
+              "additionalProperties": true
+            }
+          }
+        },
+        "required": [
+          "version",
+          "shopId",
+          "versionRevision",
+          "adminWorker",
+          "bundles",
+          "settings",
+          "inAppPurchases"
+        ],
+        "additionalProperties": false
+      },
       "Price": {
         "type": "object",
         "description": "Price object",
@@ -53389,317 +54095,264 @@
           "linked"
         ]
       },
-      "ConsentState": {
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "MeasurementUnits": {
         "type": "object",
-        "required": [
-          "name",
-          "scopeName",
-          "identifier",
-          "status",
-          "actor",
-          "updatedAt",
-          "acceptedUntil"
-        ],
+        "description": "Configuration of the measurement system",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the consent"
-          },
-          "scopeName": {
-            "type": "string",
-            "description": "The scope of the consent that defines how the identifier is resolved"
-          },
-          "identifier": {
-            "type": "string",
-            "description": "The resolved identifier of the consent"
-          },
-          "status": {
+          "system": {
             "type": "string",
             "enum": [
-              "unset",
-              "accepted",
-              "revoked"
+              "metric",
+              "imperial"
             ],
-            "description": "The current status of the consent (requested, accepted, revoked)"
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
           },
-          "actor": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The user name of the user who made the consent decision. null if never updated"
-          },
-          "updatedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp of when the consent status was last updated. null if never updated"
-          },
-          "acceptedUntil": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp until when the consent is accepted. null if never accepted"
-          },
-          "acceptedRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
-          },
-          "latestRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
-          }
-        }
-      },
-      "SalesChannelFileConfiguration": {
-        "type": "object",
-        "required": [
-          "id",
-          "enabled",
-          "templateOverrides"
-        ],
-        "properties": {
-          "id": {
-            "description": "Identifier of the sales_channel_file row.",
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "enabled": {
-            "description": "Whether this file is served publicly for the sales channel.",
-            "type": "boolean"
-          },
-          "templateOverrides": {
-            "description": "Merchant-provided Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
+          "units": {
             "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "SalesChannelFileDescriptor": {
-        "type": "object",
-        "required": [
-          "fileFamily",
-          "fileName",
-          "contentType",
-          "configuration"
-        ],
-        "properties": {
-          "fileFamily": {
-            "description": "File family below `Resources/views/files`.",
-            "type": "string",
-            "maxLength": 64
-          },
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
-          },
-          "contentType": {
-            "description": "Detected response content type for the public file.",
-            "type": "string",
-            "examples": [
-              "text/plain; charset=utf-8"
-            ]
-          },
-          "configuration": {
-            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
               },
-              {
-                "type": "null"
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
               }
-            ]
+            }
           }
         }
       },
-      "SalesChannelFileDetail": {
+      "MediaId": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}$",
+        "description": "Media entity ID"
+      },
+      "ExternalThumbnail": {
         "type": "object",
+        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
         "required": [
-          "fileFamily",
-          "fileName",
-          "templatePath",
-          "contentType",
-          "templates",
-          "supportsUserProvidedContent",
-          "configuration"
+          "url",
+          "width",
+          "height"
         ],
         "properties": {
-          "fileFamily": {
-            "description": "File family below `Resources/views/files`.",
+          "url": {
             "type": "string",
-            "maxLength": 64
+            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
+            "example": "https://cdn.example.com/image-200x200.jpg"
           },
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
+          "width": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Width of the thumbnail in pixels",
+            "example": 200
           },
-          "templatePath": {
-            "description": "Relative Twig template path used for rendering.",
-            "type": "string",
-            "examples": [
-              "files/agentic/llms.txt.twig"
-            ]
-          },
-          "contentType": {
-            "description": "Detected response content type for the public file.",
-            "type": "string",
-            "examples": [
-              "text/plain; charset=utf-8"
-            ]
-          },
-          "templates": {
-            "description": "Contributing Twig templates in resolved inheritance order.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SalesChannelFileTemplate"
-            }
-          },
-          "supportsUserProvidedContent": {
-            "description": "Whether the template chain exposes the `user_provided_content` block for simple appended merchant notes.",
-            "type": "boolean"
-          },
-          "configuration": {
-            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+          "height": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Height of the thumbnail in pixels",
+            "example": 200
+          }
+        }
+      },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
               },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "SalesChannelFileDetailResponse": {
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/SalesChannelFileDetail"
-          }
-        }
-      },
-      "SalesChannelFileListResponse": {
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SalesChannelFileDescriptor"
+              "description": "Extensions data of event"
             }
           }
         }
       },
-      "SalesChannelFilePreviewRequest": {
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
         "type": "object",
-        "required": [
-          "fileName"
-        ],
         "properties": {
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
-          },
-          "templateOverrides": {
-            "description": "Unsaved Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
           }
         }
       },
-      "SalesChannelFilePreviewResponse": {
-        "type": "object",
-        "required": [
-          "fileName",
-          "contentType",
-          "content"
-        ],
-        "properties": {
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string"
-          },
-          "contentType": {
-            "description": "Detected content type of the rendered file.",
-            "type": "string"
-          },
-          "content": {
-            "description": "Rendered file content.",
-            "type": "string"
-          }
-        }
-      },
-      "SalesChannelFileTemplate": {
-        "type": "object",
-        "required": [
-          "twigNamespace",
-          "templateName",
-          "templateContent",
-          "role"
-        ],
-        "properties": {
-          "twigNamespace": {
-            "description": "Twig namespace that contributed the template, for example `Framework` or a plugin name.",
-            "type": "string"
-          },
-          "templateName": {
-            "description": "Resolved Twig template name.",
-            "type": "string",
-            "examples": [
-              "@Framework/files/agentic/llms.txt.twig"
-            ]
-          },
-          "templateContent": {
-            "description": "Original source template content. Administration clients can use this as the default text when editing a template override.",
-            "type": "string"
-          },
-          "role": {
-            "description": "Whether this source provides the base template or extends another source in the resolved template chain.",
-            "type": "string",
-            "enum": [
-              "base",
-              "extension"
-            ]
-          }
-        }
-      },
-      "DynamicPageOpenedPayload": {
+      "OAuthClientCredentialsGrant": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "refresh_token"
+            ]
           }
         ]
       },
@@ -53769,168 +54422,49 @@
           "unitName"
         ]
       },
-      "CartListPrice": {
+      "GetListBodyRequest": {
         "type": "object",
-        "description": "",
         "properties": {
-          "discount": {
-            "type": "number"
+          "limit": {
+            "type": "integer",
+            "description": "Max amount of resources to be returned in a page"
           },
-          "percentage": {
-            "type": "number"
-          },
-          "price": {
-            "type": "number"
-          },
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_list_price"
-            ]
+          "page": {
+            "type": "integer",
+            "description": "The page to be returned"
           }
-        },
-        "required": [
-          "apiAlias"
-        ]
+        }
       },
-      "CartDeliveryInformation": {
+      "CartError": {
         "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
         "properties": {
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_delivery_information"
-            ]
-          },
-          "freeDelivery": {
-            "type": "boolean"
-          },
-          "deliveryTime": {
+          "items": {
             "type": "object",
             "properties": {
-              "name": {
+              "key": {
                 "type": "string"
               },
-              "min": {
-                "type": "integer"
-              },
-              "max": {
-                "type": "integer"
-              },
-              "unit": {
-                "type": "string"
-              },
-              "apiAlias": {
-                "type": "string",
+              "level": {
+                "type": "number",
                 "enum": [
-                  "cart_delivery_time"
-                ]
-              }
-            }
-          },
-          "height": {
-            "type": "integer"
-          },
-          "length": {
-            "type": "integer"
-          },
-          "restockTime": {
-            "type": "integer"
-          },
-          "stock": {
-            "type": "integer"
-          },
-          "weight": {
-            "type": "integer"
-          },
-          "width": {
-            "type": "integer"
-          }
-        },
-        "required": [
-          "apiAlias"
-        ]
-      },
-      "PresentationCmsPage": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/DsrPresentationCmsPage"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "pickedProductIds": {
-                "anyOf": [
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "Product id"
-                    }
-                  },
-                  {
-                    "type": "null"
-                  }
+                  0,
+                  10,
+                  20
                 ],
-                "description": "The product id is assigned to presentation if it's product listing or instant listing"
+                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
+              },
+              "message": {
+                "type": "string"
+              },
+              "messageKey": {
+                "type": "string"
               }
             }
           }
-        ]
-      },
-      "DiscountType": {
-        "type": "string",
-        "description": "Type of the discount",
-        "enum": [
-          "percentage",
-          "absolute"
-        ]
-      },
-      "AddTempDiscountRequestBody": {
-        "type": "object",
-        "required": [
-          "discountType",
-          "discountValue",
-          "appliedItemIds"
-        ],
-        "properties": {
-          "discountType": {
-            "$ref": "#/components/schemas/DiscountType"
-          },
-          "discountValue": {
-            "type": "number",
-            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
-            "maximum": 0
-          },
-          "appliedItemIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            },
-            "description": "Ids of the items to which the discount should be applied"
-          }
         }
       },
-      "AddCartDiscountRequestBody": {
-        "type": "object",
-        "required": [
-          "discountType",
-          "discountValue"
-        ],
-        "properties": {
-          "discountType": {
-            "$ref": "#/components/schemas/DiscountType"
-          },
-          "discountValue": {
-            "type": "number",
-            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
-            "maximum": 0
-          }
-        }
-      },
-      "CartDeliveryPosition": {
+      "CartDelivery": {
         "type": "object",
         "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
         "properties": {
@@ -53947,27 +54481,84 @@
               }
             }
           },
-          "identifier": {
-            "type": "string"
+          "location": {
+            "type": "object",
+            "properties": {
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_delivery_shipping_location"
+                ]
+              },
+              "country": {
+                "$ref": "#/components/schemas/Country"
+              },
+              "address": {
+                "$ref": "#/components/schemas/CustomerAddress"
+              },
+              "state": {
+                "$ref": "#/components/schemas/CountryState"
+              }
+            }
           },
-          "lineItem": {
-            "$ref": "#/components/schemas/LineItem"
+          "positions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartDeliveryPosition"
+            }
           },
-          "price": {
+          "shippingCosts": {
             "$ref": "#/components/schemas/CalculatedPrice"
+          },
+          "shippingMethod": {
+            "$ref": "#/components/schemas/ShippingMethod"
           }
         }
       },
-      "GetListBodyRequest": {
+      "StateForGuides": {
         "type": "object",
         "properties": {
-          "limit": {
-            "type": "integer",
-            "description": "Max amount of resources to be returned in a page"
+          "clients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
           },
-          "page": {
-            "type": "integer",
-            "description": "The page to be returned"
+          "inactiveClients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "guides": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "videoGuideToken": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quickViewState": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
           }
         }
       },
@@ -54040,54 +54631,265 @@
           }
         }
       },
-      "CartDelivery": {
+      "StateForAll": {
         "type": "object",
-        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
         "properties": {
-          "deliveryDate": {
-            "type": "object",
-            "properties": {
-              "earliest": {
+          "currentGuideProductId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lastActiveGuideSection": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentSectionId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentSlideAlias": {
+            "type": "integer",
+            "default": 0
+          },
+          "currentSlideData": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DynamicProductListingPageOpenedPayload"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentDynamicPage": {
+            "$ref": "#/components/schemas/DynamicPageOpenedPayload"
+          },
+          "started": {
+            "type": "boolean",
+            "default": false
+          },
+          "running": {
+            "type": "boolean",
+            "default": false
+          },
+          "ended": {
+            "type": "boolean",
+            "default": false
+          },
+          "startedAt": {
+            "anyOf": [
+              {
                 "type": "string",
                 "format": "date-time"
               },
-              "latest": {
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "endedAt": {
+            "anyOf": [
+              {
                 "type": "string",
                 "format": "date-time"
+              },
+              {
+                "type": "null"
               }
-            }
+            ]
           },
-          "location": {
-            "type": "object",
-            "properties": {
-              "apiAlias": {
+          "accessibleFrom": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accessibleTo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "appointmentMode": {
+            "type": "string",
+            "enum": [
+              "guided",
+              "self"
+            ]
+          },
+          "videoAudioSettings": {
+            "type": "string",
+            "enum": [
+              "both",
+              "none",
+              "audio-only"
+            ],
+            "default": "none"
+          },
+          "videoRoomUrl": {
+            "type": "string",
+            "default": ""
+          },
+          "attendeeRestrictionType": {
+            "anyOf": [
+              {
                 "type": "string",
                 "enum": [
-                  "cart_delivery_shipping_location"
+                  "open",
+                  "customer",
+                  "rules"
                 ]
               },
-              "country": {
-                "$ref": "#/components/schemas/Country"
-              },
-              "address": {
-                "$ref": "#/components/schemas/CustomerAddress"
-              },
-              "state": {
-                "$ref": "#/components/schemas/CountryState"
+              {
+                "type": "null"
               }
-            }
+            ]
           },
-          "positions": {
+          "productDetailDefaultPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quickviewPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "productListingDefaultPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "broadcastMode": {
+            "type": "boolean",
+            "default": false
+          },
+          "viewMode": {
+            "type": "string",
+            "enum": [
+              "onlyYou",
+              "presentation",
+              "videoGrid"
+            ],
+            "default": "presentation"
+          },
+          "allowScreenSharing": {
+            "type": "boolean",
+            "default": false
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
+      "DiscountType": {
+        "type": "string",
+        "description": "Type of the discount",
+        "enum": [
+          "percentage",
+          "absolute"
+        ]
+      },
+      "AddTempDiscountRequestBody": {
+        "type": "object",
+        "required": [
+          "discountType",
+          "discountValue",
+          "appliedItemIds"
+        ],
+        "properties": {
+          "discountType": {
+            "$ref": "#/components/schemas/DiscountType"
+          },
+          "discountValue": {
+            "type": "number",
+            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
+            "maximum": 0
+          },
+          "appliedItemIds": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CartDeliveryPosition"
-            }
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            "description": "Ids of the items to which the discount should be applied"
+          }
+        }
+      },
+      "AddCartDiscountRequestBody": {
+        "type": "object",
+        "required": [
+          "discountType",
+          "discountValue"
+        ],
+        "properties": {
+          "discountType": {
+            "$ref": "#/components/schemas/DiscountType"
           },
-          "shippingCosts": {
-            "$ref": "#/components/schemas/CalculatedPrice"
-          },
-          "shippingMethod": {
-            "$ref": "#/components/schemas/ShippingMethod"
+          "discountValue": {
+            "type": "number",
+            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
+            "maximum": 0
           }
         }
       },
@@ -54204,140 +55006,125 @@
           }
         }
       },
-      "CartItems": {
+      "CartPriceQuantity": {
         "type": "object",
         "properties": {
-          "items": {
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_price_quantity"
+            ]
+          },
+          "isCalculated": {
+            "type": "boolean"
+          },
+          "listPrice": {
+            "$ref": "#/components/schemas/CartListPrice"
+          },
+          "price": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "regulationPrice": {
+            "properties": {
+              "price": {
+                "type": "number",
+                "format": "float"
+              }
+            },
+            "type": "object"
+          },
+          "taxRules": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/LineItem"
-            }
-          }
-        }
-      },
-      "GuidePresentationStateResponse": {
-        "type": "object",
-        "properties": {
-          "stateForAll": {
-            "$ref": "#/components/schemas/StateForAll"
-          },
-          "stateForClients": {
-            "$ref": "#/components/schemas/StateForGuides"
-          }
-        },
-        "example": {
-          "extensions": [],
-          "stateForAll": {
-            "currentGuideProductId": null,
-            "lastActiveGuideSection": null,
-            "currentPageId": null,
-            "currentSectionId": null,
-            "currentSlideAlias": 0,
-            "currentDynamicPage": null,
-            "started": false,
-            "running": false,
-            "ended": false,
-            "startedAt": null,
-            "endedAt": null,
-            "accessibleFrom": {
-              "date": "2023-08-04 00:00:00.000000",
-              "timezone_type": 3,
-              "timezone": "UTC"
-            },
-            "accessibleTo": {
-              "date": "2023-08-05 00:00:00.000000",
-              "timezone_type": 3,
-              "timezone": "UTC"
-            },
-            "appointmentMode": "guided",
-            "videoAudioSettings": "both",
-            "videoRoomUrl": "",
-            "attendeeRestrictionType": "open",
-            "productDetailDefaultPageId": "bea211b5099241719830df8026624f7f",
-            "quickviewPageId": "182d3f7f988044adbba449b70c8bc472",
-            "productListingDefaultPageId": "33e88c7994fa4cf79a1265e5105b93b2",
-            "broadcastMode": false,
-            "extensions": []
-          },
-          "stateForGuides": {
-            "clients": [],
-            "inactiveClients": {
-              "2b4066cd37a341088e32a81e04a56817": {
-                "attendeeId": "2b4066cd37a341088e32a81e04a56817",
-                "attendeeName": "Attendee 1",
-                "videoUserId": null,
-                "hasJoined": false
-              },
-              "302108ad602b4ac687f5247aae5d0297": {
-                "attendeeId": "302108ad602b4ac687f5247aae5d0297",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "5a3b4e84acab47119b8a6bceb79e732e": {
-                "attendeeId": "5a3b4e84acab47119b8a6bceb79e732e",
-                "attendeeName": "Test attende name",
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "b6358241e4ad4a4e99d0f729d21d63be": {
-                "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "f1bb9374308d4e088c29d10a2fc8cc07": {
-                "attendeeId": "f1bb9374308d4e088c29d10a2fc8cc07",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": false
+              "type": "object",
+              "properties": {
+                "taxRate": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "name": {
+                  "type": "string"
+                }
               }
-            },
-            "guides": {
-              "1850bbdc12dc44aba95bc78b16c3643c": {
-                "attendeeId": "1850bbdc12dc44aba95bc78b16c3643c",
-                "attendeeName": " admin",
-                "videoUserId": null,
-                "hasJoined": true
-              }
-            },
-            "videoGuideToken": null,
-            "quickViewState": [],
-            "extensions": []
-          }
-        }
-      },
-      "GetAttendeeInsightsResponse": {
-        "type": "object",
-        "description": "Returns aggregations for the current attendees within the appointment.",
-        "properties": {
-          "attendees": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/AttendeeInsights"
             }
           },
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "currencySymbol": {
+          "type": {
             "type": "string"
           }
         },
-        "example": {
-          "extensions": [],
-          "attendees": {
-            "04da9d8572494ae68391a471d4c3a470": {
-              "extensions": [],
-              "id": "04da9d8572494ae68391a471d4c3a470",
-              "cartSum": 6770.53,
-              "productCount": 3,
-              "lineItemCount": 3
-            }
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "AttendeeInsights": {
+        "type": "object",
+        "description": "Attendee Insights",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Id of the attendee"
           },
-          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
-          "currencySymbol": "$"
+          "cartSum": {
+            "type": "number",
+            "description": "Sum of the cart net in base currency"
+          },
+          "productCount": {
+            "type": "number",
+            "description": "Sum of all quantities in the cart which were added during the appointment"
+          }
+        },
+        "example": {
+          "04da9d8572494ae68391a471d4c3a470": {
+            "extensions": [],
+            "id": "04da9d8572494ae68391a471d4c3a470",
+            "cartSum": 6770.53,
+            "productCount": 3,
+            "lineItemCount": 3
+          }
+        }
+      },
+      "VideoChatCreateStruct": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "roomUrl": {
+            "type": "string",
+            "description": "Url of the video room in daily"
+          },
+          "roomName": {
+            "type": "string",
+            "description": "Name of the video room in daily"
+          },
+          "userToken": {
+            "type": "string",
+            "description": "Token for the end users to connect to the daily room"
+          },
+          "ownerToken": {
+            "type": "string",
+            "description": "Token for the room owner (guide) to connect to the daily room"
+          }
+        },
+        "example": {
+          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
+          "userToken": "dummy user token",
+          "ownerToken": "dummy owner token",
+          "roomName": "rSq20mrgwsj4eIXo1u95",
+          "extensions": []
+        }
+      },
+      "DynamicProductListingPageOpenedPayload": {
+        "required": [
+          "page"
+        ],
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Current page position in the pagination"
+          }
         }
       },
       "CalculatedPrice": {
@@ -54472,33 +55259,74 @@
           "taxRules"
         ]
       },
-      "VideoChatCreateStruct": {
+      "CartListPrice": {
         "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
+        "description": "",
         "properties": {
-          "roomUrl": {
-            "type": "string",
-            "description": "Url of the video room in daily"
+          "discount": {
+            "type": "number"
           },
-          "roomName": {
-            "type": "string",
-            "description": "Name of the video room in daily"
+          "percentage": {
+            "type": "number"
           },
-          "userToken": {
-            "type": "string",
-            "description": "Token for the end users to connect to the daily room"
+          "price": {
+            "type": "number"
           },
-          "ownerToken": {
+          "apiAlias": {
             "type": "string",
-            "description": "Token for the room owner (guide) to connect to the daily room"
+            "enum": [
+              "cart_list_price"
+            ]
           }
         },
-        "example": {
-          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
-          "userToken": "dummy user token",
-          "ownerToken": "dummy owner token",
-          "roomName": "rSq20mrgwsj4eIXo1u95",
-          "extensions": []
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "PresentationCmsPage": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DsrPresentationCmsPage"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "pickedProductIds": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "Product id"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The product id is assigned to presentation if it's product listing or instant listing"
+              }
+            }
+          }
+        ]
+      },
+      "DynamicPageOpenedPayload": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
+          }
+        ]
+      },
+      "CartItems": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          }
         }
       },
       "AbstractDynamicPageOpenedPayload": {
@@ -54517,86 +55345,63 @@
           }
         }
       },
-      "CartPriceQuantity": {
+      "CartDeliveryInformation": {
         "type": "object",
         "properties": {
           "apiAlias": {
             "type": "string",
             "enum": [
-              "cart_price_quantity"
+              "cart_delivery_information"
             ]
           },
-          "isCalculated": {
+          "freeDelivery": {
             "type": "boolean"
           },
-          "listPrice": {
-            "$ref": "#/components/schemas/CartListPrice"
-          },
-          "price": {
-            "type": "number"
-          },
-          "quantity": {
-            "type": "number"
-          },
-          "regulationPrice": {
+          "deliveryTime": {
+            "type": "object",
             "properties": {
-              "price": {
-                "type": "number",
-                "format": "float"
-              }
-            },
-            "type": "object"
-          },
-          "taxRules": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "taxRate": {
-                  "type": "number",
-                  "format": "float"
-                },
-                "name": {
-                  "type": "string"
-                }
+              "name": {
+                "type": "string"
+              },
+              "min": {
+                "type": "integer"
+              },
+              "max": {
+                "type": "integer"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_delivery_time"
+                ]
               }
             }
           },
-          "type": {
-            "type": "string"
+          "height": {
+            "type": "integer"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "restockTime": {
+            "type": "integer"
+          },
+          "stock": {
+            "type": "integer"
+          },
+          "weight": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
           }
         },
         "required": [
           "apiAlias"
         ]
-      },
-      "AttendeeInsights": {
-        "type": "object",
-        "description": "Attendee Insights",
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "Id of the attendee"
-          },
-          "cartSum": {
-            "type": "number",
-            "description": "Sum of the cart net in base currency"
-          },
-          "productCount": {
-            "type": "number",
-            "description": "Sum of all quantities in the cart which were added during the appointment"
-          }
-        },
-        "example": {
-          "04da9d8572494ae68391a471d4c3a470": {
-            "extensions": [],
-            "id": "04da9d8572494ae68391a471d4c3a470",
-            "cartSum": 6770.53,
-            "productCount": 3,
-            "lineItemCount": 3
-          }
-        }
       },
       "BasePresentationSlideData": {
         "properties": {
@@ -55098,6 +55903,336 @@
           "apiAlias": "pwa_page_result"
         }
       },
+      "GetAttendeeInsightsResponse": {
+        "type": "object",
+        "description": "Returns aggregations for the current attendees within the appointment.",
+        "properties": {
+          "attendees": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AttendeeInsights"
+            }
+          },
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "currencySymbol": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "extensions": [],
+          "attendees": {
+            "04da9d8572494ae68391a471d4c3a470": {
+              "extensions": [],
+              "id": "04da9d8572494ae68391a471d4c3a470",
+              "cartSum": 6770.53,
+              "productCount": 3,
+              "lineItemCount": 3
+            }
+          },
+          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
+          "currencySymbol": "$"
+        }
+      },
+      "GuidePresentationStateResponse": {
+        "type": "object",
+        "properties": {
+          "stateForAll": {
+            "$ref": "#/components/schemas/StateForAll"
+          },
+          "stateForClients": {
+            "$ref": "#/components/schemas/StateForGuides"
+          }
+        },
+        "example": {
+          "extensions": [],
+          "stateForAll": {
+            "currentGuideProductId": null,
+            "lastActiveGuideSection": null,
+            "currentPageId": null,
+            "currentSectionId": null,
+            "currentSlideAlias": 0,
+            "currentDynamicPage": null,
+            "started": false,
+            "running": false,
+            "ended": false,
+            "startedAt": null,
+            "endedAt": null,
+            "accessibleFrom": {
+              "date": "2023-08-04 00:00:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            },
+            "accessibleTo": {
+              "date": "2023-08-05 00:00:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            },
+            "appointmentMode": "guided",
+            "videoAudioSettings": "both",
+            "videoRoomUrl": "",
+            "attendeeRestrictionType": "open",
+            "productDetailDefaultPageId": "bea211b5099241719830df8026624f7f",
+            "quickviewPageId": "182d3f7f988044adbba449b70c8bc472",
+            "productListingDefaultPageId": "33e88c7994fa4cf79a1265e5105b93b2",
+            "broadcastMode": false,
+            "extensions": []
+          },
+          "stateForGuides": {
+            "clients": [],
+            "inactiveClients": {
+              "2b4066cd37a341088e32a81e04a56817": {
+                "attendeeId": "2b4066cd37a341088e32a81e04a56817",
+                "attendeeName": "Attendee 1",
+                "videoUserId": null,
+                "hasJoined": false
+              },
+              "302108ad602b4ac687f5247aae5d0297": {
+                "attendeeId": "302108ad602b4ac687f5247aae5d0297",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": true
+              },
+              "5a3b4e84acab47119b8a6bceb79e732e": {
+                "attendeeId": "5a3b4e84acab47119b8a6bceb79e732e",
+                "attendeeName": "Test attende name",
+                "videoUserId": null,
+                "hasJoined": true
+              },
+              "b6358241e4ad4a4e99d0f729d21d63be": {
+                "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": true
+              },
+              "f1bb9374308d4e088c29d10a2fc8cc07": {
+                "attendeeId": "f1bb9374308d4e088c29d10a2fc8cc07",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": false
+              }
+            },
+            "guides": {
+              "1850bbdc12dc44aba95bc78b16c3643c": {
+                "attendeeId": "1850bbdc12dc44aba95bc78b16c3643c",
+                "attendeeName": " admin",
+                "videoUserId": null,
+                "hasJoined": true
+              }
+            },
+            "videoGuideToken": null,
+            "quickViewState": [],
+            "extensions": []
+          }
+        }
+      },
+      "JoinAppointmentResponse": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "mercureSubscriberTopics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "mercure topic"
+            },
+            "description": "The topics to which the attendee/guide can subscribe for"
+          },
+          "mercurePublisherTopic": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The topic to which the attendee/guide can send updates"
+          },
+          "JWTMercureSubscriberToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to publish updates"
+          },
+          "mercureHubPublicUrl": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The mercure hub url to connect for subscribing and updating"
+          },
+          "JWTMercurePublisherToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to subscribe for updates"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The appointment id"
+          },
+          "newContextToken": {
+            "type": "string",
+            "description": "The new context token will be used in the header (sw-context-token) for calling the other routes"
+          },
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The created Id for the attendee"
+          },
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id of the current sales channel"
+          },
+          "salesChannelName": {
+            "type": "string",
+            "description": "The name of the current sales channel"
+          },
+          "appointmentName": {
+            "type": "string",
+            "description": "The name of the appointment"
+          },
+          "presentationGuideMode": {
+            "type": "string",
+            "enum": [
+              "self",
+              "guided"
+            ],
+            "description": "The type of the appointment"
+          },
+          "isPreview": {
+            "type": "boolean",
+            "description": "To see if it's a preview appointment"
+          },
+          "attendeeName": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The name of the attendee"
+          },
+          "videoUserId": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The video user id that attendee could use"
+          },
+          "b2bFeatures": {
+            "type": "object",
+            "description": "The b2b features that available for the appointment",
+            "properties": {
+              "quoteManagement": {
+                "type": "boolean",
+                "description": "To know if the quote management is enabled for current customer"
+              }
+            }
+          }
+        },
+        "example": {
+          "mercureSubscriberTopics": [
+            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
+          ],
+          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
+          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
+          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
+          "JWTMercurePublisherToken": "jwt token for publishing updates",
+          "attendeeName": "attendee name",
+          "videoUserId": null,
+          "b2bFeatures": {
+            "feature1": false,
+            "feature2": true
+          },
+          "id": "2d2c358f1ca04098aacf12873c2eed82",
+          "newContextToken": "new context token to call the other routes",
+          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
+          "salesChannelName": "Storefront",
+          "appointmentName": "Test Appointment",
+          "presentationGuideMode": "guided",
+          "isPreview": false,
+          "apiAlias": "swag_digital_sales_rooms_content_appointment_struct_appointment_join_struct"
+        }
+      },
+      "WidgetProductListing": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "extensions": {
+            "type": "array",
+            "description": "List of extensions",
+            "default": []
+          },
+          "products": {
+            "type": "array",
+            "description": "List of last seen products",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Product"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "customFields": {
+                      "type": "object",
+                      "properties": {
+                        "wishlistAttendeeIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of products"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The current page"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The number of products per page"
+          }
+        }
+      },
       "LineItemType": {
         "type": "string",
         "enum": [
@@ -55387,507 +56522,32 @@
           "type"
         ]
       },
-      "CartError": {
+      "CartDeliveryPosition": {
         "type": "object",
         "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
         "properties": {
-          "items": {
+          "deliveryDate": {
             "type": "object",
             "properties": {
-              "key": {
-                "type": "string"
+              "earliest": {
+                "type": "string",
+                "format": "date-time"
               },
-              "level": {
-                "type": "number",
-                "enum": [
-                  0,
-                  10,
-                  20
-                ],
-                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
-              },
-              "message": {
-                "type": "string"
-              },
-              "messageKey": {
-                "type": "string"
+              "latest": {
+                "type": "string",
+                "format": "date-time"
               }
             }
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "lineItem": {
+            "$ref": "#/components/schemas/LineItem"
+          },
+          "price": {
+            "$ref": "#/components/schemas/CalculatedPrice"
           }
-        }
-      },
-      "StateForGuides": {
-        "type": "object",
-        "properties": {
-          "clients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "inactiveClients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "guides": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "videoGuideToken": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickViewState": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "WidgetProductListing": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "extensions": {
-            "type": "array",
-            "description": "List of extensions",
-            "default": []
-          },
-          "products": {
-            "type": "array",
-            "description": "List of last seen products",
-            "items": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Product"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "customFields": {
-                      "type": "object",
-                      "properties": {
-                        "wishlistAttendeeIds": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "total": {
-            "type": "integer",
-            "description": "The total number of products"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The current page"
-          },
-          "limit": {
-            "type": "integer",
-            "description": "The number of products per page"
-          }
-        }
-      },
-      "StateForAll": {
-        "type": "object",
-        "properties": {
-          "currentGuideProductId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "lastActiveGuideSection": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentSectionId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentSlideAlias": {
-            "type": "integer",
-            "default": 0
-          },
-          "currentSlideData": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/DynamicProductListingPageOpenedPayload"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentDynamicPage": {
-            "$ref": "#/components/schemas/DynamicPageOpenedPayload"
-          },
-          "started": {
-            "type": "boolean",
-            "default": false
-          },
-          "running": {
-            "type": "boolean",
-            "default": false
-          },
-          "ended": {
-            "type": "boolean",
-            "default": false
-          },
-          "startedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "endedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "accessibleFrom": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "accessibleTo": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "appointmentMode": {
-            "type": "string",
-            "enum": [
-              "guided",
-              "self"
-            ]
-          },
-          "videoAudioSettings": {
-            "type": "string",
-            "enum": [
-              "both",
-              "none",
-              "audio-only"
-            ],
-            "default": "none"
-          },
-          "videoRoomUrl": {
-            "type": "string",
-            "default": ""
-          },
-          "attendeeRestrictionType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "open",
-                  "customer",
-                  "rules"
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "productDetailDefaultPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickviewPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "productListingDefaultPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "broadcastMode": {
-            "type": "boolean",
-            "default": false
-          },
-          "viewMode": {
-            "type": "string",
-            "enum": [
-              "onlyYou",
-              "presentation",
-              "videoGrid"
-            ],
-            "default": "presentation"
-          },
-          "allowScreenSharing": {
-            "type": "boolean",
-            "default": false
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "DynamicProductListingPageOpenedPayload": {
-        "required": [
-          "page"
-        ],
-        "properties": {
-          "page": {
-            "type": "integer",
-            "description": "Current page position in the pagination"
-          }
-        }
-      },
-      "JoinAppointmentResponse": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "mercureSubscriberTopics": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "mercure topic"
-            },
-            "description": "The topics to which the attendee/guide can subscribe for"
-          },
-          "mercurePublisherTopic": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The topic to which the attendee/guide can send updates"
-          },
-          "JWTMercureSubscriberToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to publish updates"
-          },
-          "mercureHubPublicUrl": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The mercure hub url to connect for subscribing and updating"
-          },
-          "JWTMercurePublisherToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to subscribe for updates"
-          },
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The appointment id"
-          },
-          "newContextToken": {
-            "type": "string",
-            "description": "The new context token will be used in the header (sw-context-token) for calling the other routes"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The created Id for the attendee"
-          },
-          "salesChannelId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id of the current sales channel"
-          },
-          "salesChannelName": {
-            "type": "string",
-            "description": "The name of the current sales channel"
-          },
-          "appointmentName": {
-            "type": "string",
-            "description": "The name of the appointment"
-          },
-          "presentationGuideMode": {
-            "type": "string",
-            "enum": [
-              "self",
-              "guided"
-            ],
-            "description": "The type of the appointment"
-          },
-          "isPreview": {
-            "type": "boolean",
-            "description": "To see if it's a preview appointment"
-          },
-          "attendeeName": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The name of the attendee"
-          },
-          "videoUserId": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The video user id that attendee could use"
-          },
-          "b2bFeatures": {
-            "type": "object",
-            "description": "The b2b features that available for the appointment",
-            "properties": {
-              "quoteManagement": {
-                "type": "boolean",
-                "description": "To know if the quote management is enabled for current customer"
-              }
-            }
-          }
-        },
-        "example": {
-          "mercureSubscriberTopics": [
-            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
-          ],
-          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
-          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
-          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
-          "JWTMercurePublisherToken": "jwt token for publishing updates",
-          "attendeeName": "attendee name",
-          "videoUserId": null,
-          "b2bFeatures": {
-            "feature1": false,
-            "feature2": true
-          },
-          "id": "2d2c358f1ca04098aacf12873c2eed82",
-          "newContextToken": "new context token to call the other routes",
-          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
-          "salesChannelName": "Storefront",
-          "appointmentName": "Test Appointment",
-          "presentationGuideMode": "guided",
-          "isPreview": false,
-          "apiAlias": "swag_digital_sales_rooms_content_appointment_struct_appointment_join_struct"
         }
       }
     },
@@ -56069,6 +56729,10 @@
                 "openapi": {
                   "type": "string"
                 },
+                "$self": {
+                  "type": "string",
+                  "format": "uri-reference"
+                },
                 "info": {
                   "type": "object",
                   "properties": {
@@ -56200,7 +56864,16 @@
                       "name": {
                         "type": "string"
                       },
+                      "summary": {
+                        "type": "string"
+                      },
                       "description": {
+                        "type": "string"
+                      },
+                      "parent": {
+                        "type": "string"
+                      },
+                      "kind": {
                         "type": "string"
                       },
                       "externalDocs": {
@@ -56283,6 +56956,8 @@
     {
       "name": "Experimental",
       "description": "Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+      "summary": "Experimental APIs",
+      "kind": "audience",
       "externalDocs": {
         "description": "Find out more",
         "url": "https://github.com/shopware/shopware/blob/trunk/adr/2023-05-10-experimental-features.md"
