@@ -81984,18 +81984,12 @@
                 "type": "object",
                 "required": [
                   "orderId",
-                  "orderVersionId",
                   "documentType",
                   "formats"
                 ],
                 "properties": {
                   "orderId": {
                     "description": "Identifier of the order for which the document should be created.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "orderVersionId": {
-                    "description": "Version identifier of the order for which the document should be created.",
                     "type": "string",
                     "pattern": "^[0-9a-f]{32}$"
                   },
@@ -82029,11 +82023,21 @@
                     "type": "string",
                     "format": "date-time",
                     "example": "2026-07-13T00:00:00.000+00:00"
+                  },
+                  "deliveryDate": {
+                    "description": "Optional delivery date as an ISO 8601 date-time string. Required by the `delivery_note` document type.",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2026-07-15T00:00:00.000+00:00"
+                  },
+                  "referencedDocumentId": {
+                    "description": "Optional identifier of the referenced document. When omitted, the order's latest invoice is used.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
                   }
                 },
                 "example": {
                   "orderId": "018f5972f9ea72a0be49f7c39f72a2a0",
-                  "orderVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
                   "documentType": "invoice",
                   "formats": [
                     "pdf",
@@ -82467,18 +82471,12 @@
                 "type": "object",
                 "required": [
                   "orderId",
-                  "orderVersionId",
                   "documentType",
                   "format"
                 ],
                 "properties": {
                   "orderId": {
                     "description": "Identifier of the order for which the document should be previewed.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "orderVersionId": {
-                    "description": "Version identifier of the order for which the document should be previewed.",
                     "type": "string",
                     "pattern": "^[0-9a-f]{32}$"
                   },
@@ -82505,11 +82503,21 @@
                     "type": "string",
                     "format": "date-time",
                     "example": "2026-07-13T00:00:00.000+00:00"
+                  },
+                  "deliveryDate": {
+                    "description": "Optional delivery date as an ISO 8601 date-time string. Required by the `delivery_note` document type.",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2026-07-15T00:00:00.000+00:00"
+                  },
+                  "referencedDocumentId": {
+                    "description": "Optional identifier of the referenced document. When omitted, the order's latest invoice is used.",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
                   }
                 },
                 "example": {
                   "orderId": "018f5972f9ea72a0be49f7c39f72a2a0",
-                  "orderVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
                   "documentType": "invoice",
                   "format": "html",
                   "documentNumber": "1002",
@@ -110137,11 +110145,13 @@
               },
               "managedByComposer": {
                 "description": "A property to check whether it is installed via composer or not.",
-                "type": "boolean"
+                "type": "boolean",
+                "readOnly": true
               },
               "path": {
                 "description": "A relative URL to the plugin.",
-                "type": "string"
+                "type": "string",
+                "readOnly": true
               },
               "author": {
                 "description": "Creator of the plugin.",
@@ -110285,11 +110295,13 @@
           },
           "managedByComposer": {
             "description": "A property to check whether it is installed via composer or not.",
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           },
           "path": {
             "description": "A relative URL to the plugin.",
-            "type": "string"
+            "type": "string",
+            "readOnly": true
           },
           "author": {
             "description": "Creator of the plugin.",
