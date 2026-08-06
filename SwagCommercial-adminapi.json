@@ -41998,42 +41998,33 @@
       "relationships": {
         "description": "Members of the relationships object (\"relationships\") represent references from the resource object in which it's defined to other resource objects.",
         "type": "object",
-        "anyOf": [
-          {
-            "required": [
-              "data"
-            ]
+        "additionalProperties": {
+          "$ref": "#/components/schemas/relationship"
+        }
+      },
+      "relationship": {
+        "description": "A relationship object describes links, resource linkage, or meta-information for a related resource.",
+        "minProperties": 1,
+        "properties": {
+          "links": {
+            "$ref": "#/components/schemas/relationshipLinks"
           },
-          {
-            "required": [
-              "meta"
-            ]
-          },
-          {
-            "required": [
-              "links"
-            ]
-          },
-          {
-            "type": "object",
-            "properties": {
-              "links": {
-                "$ref": "#/components/schemas/relationshipLinks"
+          "data": {
+            "description": "Member, whose value represents \"resource linkage\".",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/relationshipToOne"
               },
-              "data": {
-                "description": "Member, whose value represents \"resource linkage\".",
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/relationshipToOne"
-                  },
-                  {
-                    "$ref": "#/components/schemas/relationshipToMany"
-                  }
-                ]
+              {
+                "$ref": "#/components/schemas/relationshipToMany"
               }
-            }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/meta"
           }
-        ],
+        },
+        "type": "object",
         "additionalProperties": false
       },
       "relationshipToOne": {
@@ -49000,8 +48991,7 @@
               "priority",
               "applyToAllProducts",
               "useValidityRange",
-              "actionType",
-              "tiers"
+              "actionType"
             ],
             "properties": {
               "id": {
@@ -55306,6 +55296,15 @@
                 "description": "Unique number that describes the manufacturer.",
                 "type": "string"
               },
+              "guaranteeMonths": {
+                "description": "Commercial durability guarantee duration in months.",
+                "type": "integer",
+                "format": "int64"
+              },
+              "guaranteeConfirmed": {
+                "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
+                "type": "boolean"
+              },
               "ean": {
                 "description": "Indicates EAN of the product.",
                 "type": "string"
@@ -57190,6 +57189,15 @@
           "manufacturerNumber": {
             "description": "Unique number that describes the manufacturer.",
             "type": "string"
+          },
+          "guaranteeMonths": {
+            "description": "Commercial durability guarantee duration in months.",
+            "type": "integer",
+            "format": "int64"
+          },
+          "guaranteeConfirmed": {
+            "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
+            "type": "boolean"
           },
           "ean": {
             "description": "Indicates EAN of the product.",
@@ -81548,7 +81556,6 @@
               "quantity",
               "label",
               "price",
-              "children",
               "states"
             ],
             "properties": {
@@ -96264,7 +96271,6 @@
               "id",
               "quoteId",
               "identifier",
-              "children",
               "states",
               "label",
               "quantity",
