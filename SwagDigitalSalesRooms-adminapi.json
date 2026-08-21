@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8000/api"
+      "url": "/api"
     }
   ],
   "paths": {
@@ -5939,6 +5939,50 @@
             "ApiKey": []
           }
         ]
+      }
+    },
+    "/_action/translation/meta": {
+      "get": {
+        "tags": [
+          "Translation Management"
+        ],
+        "summary": "Get translation meta information",
+        "description": "Returns translation meta information that is independent of the configured locales: the built-in locales, the community translation and documentation URLs and the completeness threshold.",
+        "operationId": "translationMeta",
+        "responses": {
+          "200": {
+            "description": "The translation meta information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "builtInLocales": {
+                      "description": "Locale codes shipped with the platform and excluded from the community translation download.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "communityTranslationsUrl": {
+                      "description": "URL of the community translation platform, or null if not configured.",
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "documentationUrlSnippetKey": {
+                      "description": "Admin snippet key that resolves to the localized translation documentation URL, or null if not configured.",
+                      "type": "string"
+                    },
+                    "completenessThreshold": {
+                      "description": "Minimum translation completeness in percent considered sufficient.",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -16351,6 +16395,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "typeName": {
+                "description": "Technical name of the document type.",
+                "type": "string"
+              },
               "referencedDocumentId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -16634,6 +16682,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "typeName": {
+            "description": "Technical name of the document type.",
+            "type": "string"
+          },
           "referencedDocumentId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
@@ -16734,6 +16786,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "typeName": {
+                "description": "Technical name of the document type.",
+                "type": "string"
+              },
               "logoId": {
                 "description": "Unique identity of the company logo.",
                 "type": "string",
@@ -16750,6 +16806,9 @@
               "filenameSuffix": {
                 "description": "A suffix name added to the file name separated by an underscore.",
                 "type": "string"
+              },
+              "filenameInfixes": {
+                "type": "object"
               },
               "global": {
                 "description": "When set to `true`, the document can be used across all sales channels.",
@@ -16930,6 +16989,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "typeName": {
+            "description": "Technical name of the document type.",
+            "type": "string"
+          },
           "logoId": {
             "description": "Unique identity of the company logo.",
             "type": "string",
@@ -16946,6 +17009,9 @@
           "filenameSuffix": {
             "description": "A suffix name added to the file name separated by an underscore.",
             "type": "string"
+          },
+          "filenameInfixes": {
+            "type": "object"
           },
           "global": {
             "description": "When set to `true`, the document can be used across all sales channels.",
@@ -17055,6 +17121,10 @@
                 "description": "Unique identity of document type.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
+              },
+              "typeName": {
+                "description": "Technical name of the document type.",
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -17189,6 +17259,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "typeName": {
+            "description": "Technical name of the document type.",
+            "type": "string"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -17230,14 +17304,17 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "documentId": {
+                "description": "Unique identity of the document.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
               "mediaId": {
+                "description": "Unique identity of the media.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
               "documentFormat": {
+                "description": "Document format of the document file.",
                 "type": "string"
               },
               "createdAt": {
@@ -17332,14 +17409,17 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "documentId": {
+            "description": "Unique identity of the document.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
           "mediaId": {
+            "description": "Unique identity of the media.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
           "documentFormat": {
+            "description": "Document format of the document file.",
             "type": "string"
           },
           "createdAt": {
@@ -21666,6 +21746,10 @@
               "active": {
                 "type": "boolean"
               },
+              "translationAutoUpdate": {
+                "description": "Whether the scheduled task keeps the community translations of this language up to date. Enabled by default and only applied to linked languages.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -22186,6 +22270,10 @@
             "type": "string"
           },
           "active": {
+            "type": "boolean"
+          },
+          "translationAutoUpdate": {
+            "description": "Whether the scheduled task keeps the community translations of this language up to date. Enabled by default and only applied to linked languages.",
             "type": "boolean"
           },
           "customFields": {
@@ -44268,6 +44356,10 @@
                 "description": "This is used to toggle the language configurations, say between DE and DE-DE for instance.",
                 "type": "boolean"
               },
+              "isExternalStorefront": {
+                "description": "Whether the domain points to an external (headless) storefront.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -44547,6 +44639,10 @@
           },
           "hreflangUseOnlyLocale": {
             "description": "This is used to toggle the language configurations, say between DE and DE-DE for instance.",
+            "type": "boolean"
+          },
+          "isExternalStorefront": {
+            "description": "Whether the domain points to an external (headless) storefront.",
             "type": "boolean"
           },
           "customFields": {
@@ -46133,6 +46229,10 @@
                 "description": "Created SEO URL template can be made usable by setting `isValid` to true.",
                 "type": "boolean"
               },
+              "isHeadless": {
+                "description": "Whether the template applies to headless (API type) sales channels. Derived from the route family.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -46216,6 +46316,10 @@
           },
           "isValid": {
             "description": "Created SEO URL template can be made usable by setting `isValid` to true.",
+            "type": "boolean"
+          },
+          "isHeadless": {
+            "description": "Whether the template applies to headless (API type) sales channels. Derived from the route family.",
             "type": "boolean"
           },
           "customFields": {
@@ -52114,310 +52218,2197 @@
         },
         "type": "object"
       },
-      "ConsentState": {
+      "AbstractDynamicPageOpenedPayload": {
         "type": "object",
         "required": [
-          "name",
-          "scopeName",
-          "identifier",
-          "status",
-          "actor",
-          "updatedAt",
-          "acceptedUntil"
+          "type"
         ],
         "properties": {
-          "name": {
+          "type": {
             "type": "string",
-            "description": "The name of the consent"
+            "description": "The type of the current dynamic page"
           },
-          "scopeName": {
-            "type": "string",
-            "description": "The scope of the consent that defines how the identifier is resolved"
-          },
-          "identifier": {
-            "type": "string",
-            "description": "The resolved identifier of the consent"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "unset",
-              "accepted",
-              "revoked"
-            ],
-            "description": "The current status of the consent (requested, accepted, revoked)"
-          },
-          "actor": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The user name of the user who made the consent decision. null if never updated"
-          },
-          "updatedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp of when the consent status was last updated. null if never updated"
-          },
-          "acceptedUntil": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp until when the consent is accepted. null if never accepted"
-          },
-          "acceptedRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
-          },
-          "latestRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
+          "opened": {
+            "type": "boolean",
+            "default": true
           }
         }
       },
-      "SalesChannelFileConfiguration": {
+      "AttendeeInsights": {
         "type": "object",
-        "required": [
-          "id",
-          "enabled",
-          "templateOverrides"
-        ],
+        "description": "Attendee Insights",
         "properties": {
           "id": {
-            "description": "Identifier of the sales_channel_file row.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Id of the attendee"
+          },
+          "cartSum": {
+            "type": "number",
+            "description": "Sum of the cart net in base currency"
+          },
+          "productCount": {
+            "type": "number",
+            "description": "Sum of all quantities in the cart which were added during the appointment"
+          }
+        },
+        "example": {
+          "04da9d8572494ae68391a471d4c3a470": {
+            "extensions": [],
+            "id": "04da9d8572494ae68391a471d4c3a470",
+            "cartSum": 6770.53,
+            "productCount": 3,
+            "lineItemCount": 3
+          }
+        }
+      },
+      "CalculatedPrice": {
+        "type": "object",
+        "description": "Represents a product along with detailed information required to display a variant selection.",
+        "properties": {
+          "unitPrice": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "rawTotal": {
+            "type": "number"
+          },
+          "totalPrice": {
+            "type": "number"
+          },
+          "calculatedTaxes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "apiAlias": {
+                  "type": "string",
+                  "enum": [
+                    "cart_tax_calculated"
+                  ]
+                },
+                "tax": {
+                  "type": "number"
+                },
+                "taxRate": {
+                  "type": "number"
+                },
+                "price": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "apiAlias",
+                "tax",
+                "taxRate",
+                "price"
+              ]
+            }
+          },
+          "referencePrice": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CartPriceReference"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "listPrice": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CartListPrice"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "positionPrice": {
+            "type": "number"
+          },
+          "netPrice": {
+            "type": "number"
+          },
+          "regulationPrice": {
+            "type": "object",
+            "properties": {
+              "price": {
+                "type": "number"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_regulation_price"
+                ]
+              }
+            },
+            "nullable": true
+          },
+          "hasRange": {
+            "type": "boolean"
+          },
+          "variantId": {
+            "type": "string",
+            "format": "^[0-9a-f]{32}$",
+            "nullable": true
+          },
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "calculated_price"
+            ]
+          },
+          "taxRules": {
+            "type": "array",
+            "description": "Currently active tax rules and/or rates",
+            "items": {
+              "type": "object",
+              "properties": {
+                "taxRate": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "apiAlias",
+          "hasRange",
+          "regulationPrice",
+          "listPrice",
+          "referencePrice",
+          "calculatedTaxes",
+          "totalPrice",
+          "quantity",
+          "unitPrice",
+          "positionPrice",
+          "netPrice",
+          "taxRules"
+        ]
+      },
+      "Cart": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of the cart - for example `guest-cart`",
+            "type": "string"
+          },
+          "token": {
+            "description": "Context token identifying the cart and the user session",
+            "type": "string"
+          },
+          "price": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          },
+          "lineItems": {
+            "description": "All items within the cart",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+            "items": {
+              "$ref": "#/components/schemas/CartError"
+            }
+          },
+          "deliveries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartDelivery"
+            }
+          },
+          "transactions": {
+            "description": "A list of all payment transactions associated with the current cart.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "paymentMethodId": {
+                  "type": "string"
+                },
+                "amount": {
+                  "$ref": "#/components/schemas/CalculatedPrice"
+                }
+              }
+            }
+          },
+          "modified": {
+            "type": "boolean"
+          },
+          "customerComment": {
+            "type": "string",
+            "description": "A comment that can be added to the cart.",
+            "nullable": true
+          },
+          "affiliateCode": {
+            "type": "string",
+            "description": "An affiliate tracking code",
+            "nullable": true
+          },
+          "campaignCode": {
+            "type": "string",
+            "description": "A campaign tracking code",
+            "nullable": true
+          }
+        }
+      },
+      "CartDelivery": {
+        "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+        "properties": {
+          "deliveryDate": {
+            "type": "object",
+            "properties": {
+              "earliest": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "latest": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_delivery_shipping_location"
+                ]
+              },
+              "country": {
+                "$ref": "#/components/schemas/Country"
+              },
+              "address": {
+                "$ref": "#/components/schemas/CustomerAddress"
+              },
+              "state": {
+                "$ref": "#/components/schemas/CountryState"
+              }
+            }
+          },
+          "positions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartDeliveryPosition"
+            }
+          },
+          "shippingCosts": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          },
+          "shippingMethod": {
+            "$ref": "#/components/schemas/ShippingMethod"
+          }
+        }
+      },
+      "CartDeliveryInformation": {
+        "type": "object",
+        "properties": {
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_delivery_information"
+            ]
+          },
+          "freeDelivery": {
+            "type": "boolean"
+          },
+          "deliveryTime": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "min": {
+                "type": "integer"
+              },
+              "max": {
+                "type": "integer"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_delivery_time"
+                ]
+              }
+            }
+          },
+          "height": {
+            "type": "integer"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "restockTime": {
+            "type": "integer"
+          },
+          "stock": {
+            "type": "integer"
+          },
+          "weight": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "CartDeliveryPosition": {
+        "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+        "properties": {
+          "deliveryDate": {
+            "type": "object",
+            "properties": {
+              "earliest": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "latest": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "lineItem": {
+            "$ref": "#/components/schemas/LineItem"
+          },
+          "price": {
+            "$ref": "#/components/schemas/CalculatedPrice"
+          }
+        }
+      },
+      "CartError": {
+        "type": "object",
+        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+        "properties": {
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "level": {
+                "type": "number",
+                "enum": [
+                  0,
+                  10,
+                  20
+                ],
+                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
+              },
+              "message": {
+                "type": "string"
+              },
+              "messageKey": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "CartItems": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          }
+        }
+      },
+      "CartListPrice": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "discount": {
+            "type": "number"
+          },
+          "percentage": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_list_price"
+            ]
+          }
+        },
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "CartPriceQuantity": {
+        "type": "object",
+        "properties": {
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_price_quantity"
+            ]
+          },
+          "isCalculated": {
+            "type": "boolean"
+          },
+          "listPrice": {
+            "$ref": "#/components/schemas/CartListPrice"
+          },
+          "price": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "regulationPrice": {
+            "properties": {
+              "price": {
+                "type": "number",
+                "format": "float"
+              }
+            },
+            "type": "object"
+          },
+          "taxRules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "taxRate": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "apiAlias"
+        ]
+      },
+      "CartPriceReference": {
+        "type": "object",
+        "properties": {
+          "purchaseUnit": {
+            "type": "number"
+          },
+          "referenceUnit": {
+            "type": "number"
+          },
+          "unitName": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "apiAlias": {
+            "type": "string",
+            "enum": [
+              "cart_price_reference"
+            ]
+          },
+          "listPrice": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CartListPrice"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "regulationPrice": {
+            "type": "object",
+            "properties": {
+              "price": {
+                "type": "number"
+              },
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "cart_regulation_price"
+                ]
+              }
+            },
+            "nullable": true
+          },
+          "hasRange": {
+            "type": "boolean"
+          },
+          "variantId": {
+            "type": "string",
+            "format": "^[0-9a-f]{32}$",
+            "nullable": true
+          }
+        },
+        "required": [
+          "apiAlias",
+          "hasRange",
+          "regulationPrice",
+          "listPrice",
+          "calculatedTaxes",
+          "totalPrice",
+          "quantity",
+          "unitName"
+        ]
+      },
+      "DiscountType": {
+        "type": "string",
+        "description": "Type of the discount",
+        "enum": [
+          "percentage",
+          "absolute"
+        ]
+      },
+      "AddTempDiscountRequestBody": {
+        "type": "object",
+        "required": [
+          "discountType",
+          "discountValue",
+          "appliedItemIds"
+        ],
+        "properties": {
+          "discountType": {
+            "$ref": "#/components/schemas/DiscountType"
+          },
+          "discountValue": {
+            "type": "number",
+            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
+            "maximum": 0
+          },
+          "appliedItemIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            "description": "Ids of the items to which the discount should be applied"
+          }
+        }
+      },
+      "AddCartDiscountRequestBody": {
+        "type": "object",
+        "required": [
+          "discountType",
+          "discountValue"
+        ],
+        "properties": {
+          "discountType": {
+            "$ref": "#/components/schemas/DiscountType"
+          },
+          "discountValue": {
+            "type": "number",
+            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
+            "maximum": 0
+          }
+        }
+      },
+      "DynamicPageOpenedPayload": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
+          }
+        ]
+      },
+      "DynamicProductListingPageOpenedPayload": {
+        "required": [
+          "page"
+        ],
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "Current page position in the pagination"
+          }
+        }
+      },
+      "GetAttendeeInsightsResponse": {
+        "type": "object",
+        "description": "Returns aggregations for the current attendees within the appointment.",
+        "properties": {
+          "attendees": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AttendeeInsights"
+            }
+          },
+          "currencyId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "enabled": {
-            "description": "Whether this file is served publicly for the sales channel.",
-            "type": "boolean"
-          },
-          "templateOverrides": {
-            "description": "Merchant-provided Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
+          "currencySymbol": {
+            "type": "string"
           }
+        },
+        "example": {
+          "extensions": [],
+          "attendees": {
+            "04da9d8572494ae68391a471d4c3a470": {
+              "extensions": [],
+              "id": "04da9d8572494ae68391a471d4c3a470",
+              "cartSum": 6770.53,
+              "productCount": 3,
+              "lineItemCount": 3
+            }
+          },
+          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
+          "currencySymbol": "$"
         }
       },
-      "SalesChannelFileDescriptor": {
+      "GetCartInsightsResponse": {
         "type": "object",
-        "required": [
-          "fileFamily",
-          "fileName",
-          "contentType",
-          "configuration"
-        ],
+        "description": "Returns aggregations for the current carts within the appointment.",
         "properties": {
-          "fileFamily": {
-            "description": "File family below `Resources/views/files`.",
-            "type": "string",
-            "maxLength": 64
+          "cartSum": {
+            "type": "number",
+            "description": "Sum of all products from all attenddees which were added to the cart during the appointment"
           },
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
+          "productCount": {
+            "type": "number",
+            "description": "Sum of all product quantities from all attendees which were added to the cart during the appointment"
           },
-          "contentType": {
-            "description": "Detected response content type for the public file.",
+          "currencyId": {
             "type": "string",
-            "examples": [
-              "text/plain; charset=utf-8"
-            ]
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id from the shown currency"
           },
-          "configuration": {
-            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
-            "oneOf": [
+          "currencySymbol": {
+            "type": "string",
+            "description": "The currency symbol from the shown currency"
+          },
+          "topProducts": {
+            "type": "object",
+            "required": [
+              "byQuantity",
+              "byRevenue"
+            ],
+            "properties": {
+              "byQuantity": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "productId": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "The id from the product"
+                    },
+                    "value": {
+                      "type": "number",
+                      "description": "The quantity in carts of this product"
+                    }
+                  },
+                  "required": [
+                    "productId",
+                    "value"
+                  ]
+                }
+              },
+              "byRevenue": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "productId": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "The id from the product"
+                    },
+                    "value": {
+                      "type": "number",
+                      "description": "The net revenue in the shown currency in carts of this product"
+                    }
+                  },
+                  "required": [
+                    "productId",
+                    "value"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "extensions": [],
+          "cartSum": 6770.53,
+          "productCount": 3,
+          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
+          "currencySymbol": "$",
+          "topProducts": {
+            "byQuantity": [
               {
-                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+                "productId": "01ae0dee60ea48fdafaf881b96361d59",
+                "value": 1
               },
               {
-                "type": "null"
+                "productId": "fee3ca762be94bb49b692e359d529563",
+                "value": 1
+              },
+              {
+                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
+                "value": 1
+              }
+            ],
+            "byRevenue": [
+              {
+                "productId": "fee3ca762be94bb49b692e359d529563",
+                "value": 5333.03
+              },
+              {
+                "productId": "01ae0dee60ea48fdafaf881b96361d59",
+                "value": 1152.62
+              },
+              {
+                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
+                "value": 284.88
               }
             ]
           }
         }
       },
-      "SalesChannelFileDetail": {
+      "GetListBodyRequest": {
         "type": "object",
-        "required": [
-          "fileFamily",
-          "fileName",
-          "templatePath",
-          "contentType",
-          "templates",
-          "supportsUserProvidedContent",
-          "configuration"
-        ],
         "properties": {
-          "fileFamily": {
-            "description": "File family below `Resources/views/files`.",
-            "type": "string",
-            "maxLength": 64
+          "limit": {
+            "type": "integer",
+            "description": "Max amount of resources to be returned in a page"
           },
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
+          "page": {
+            "type": "integer",
+            "description": "The page to be returned"
+          }
+        }
+      },
+      "GuidePresentationStateResponse": {
+        "type": "object",
+        "properties": {
+          "stateForAll": {
+            "$ref": "#/components/schemas/StateForAll"
           },
-          "templatePath": {
-            "description": "Relative Twig template path used for rendering.",
-            "type": "string",
-            "examples": [
-              "files/agentic/llms.txt.twig"
-            ]
+          "stateForClients": {
+            "$ref": "#/components/schemas/StateForGuides"
+          }
+        },
+        "example": {
+          "extensions": [],
+          "stateForAll": {
+            "currentGuideProductId": null,
+            "lastActiveGuideSection": null,
+            "currentPageId": null,
+            "currentSectionId": null,
+            "currentSlideAlias": 0,
+            "currentDynamicPage": null,
+            "started": false,
+            "running": false,
+            "ended": false,
+            "startedAt": null,
+            "endedAt": null,
+            "accessibleFrom": {
+              "date": "2023-08-04 00:00:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            },
+            "accessibleTo": {
+              "date": "2023-08-05 00:00:00.000000",
+              "timezone_type": 3,
+              "timezone": "UTC"
+            },
+            "appointmentMode": "guided",
+            "videoAudioSettings": "both",
+            "videoRoomUrl": "",
+            "attendeeRestrictionType": "open",
+            "productDetailDefaultPageId": "bea211b5099241719830df8026624f7f",
+            "quickviewPageId": "182d3f7f988044adbba449b70c8bc472",
+            "productListingDefaultPageId": "33e88c7994fa4cf79a1265e5105b93b2",
+            "broadcastMode": false,
+            "extensions": []
           },
-          "contentType": {
-            "description": "Detected response content type for the public file.",
-            "type": "string",
-            "examples": [
-              "text/plain; charset=utf-8"
-            ]
-          },
-          "templates": {
-            "description": "Contributing Twig templates in resolved inheritance order.",
+          "stateForGuides": {
+            "clients": [],
+            "inactiveClients": {
+              "2b4066cd37a341088e32a81e04a56817": {
+                "attendeeId": "2b4066cd37a341088e32a81e04a56817",
+                "attendeeName": "Attendee 1",
+                "videoUserId": null,
+                "hasJoined": false
+              },
+              "302108ad602b4ac687f5247aae5d0297": {
+                "attendeeId": "302108ad602b4ac687f5247aae5d0297",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": true
+              },
+              "5a3b4e84acab47119b8a6bceb79e732e": {
+                "attendeeId": "5a3b4e84acab47119b8a6bceb79e732e",
+                "attendeeName": "Test attende name",
+                "videoUserId": null,
+                "hasJoined": true
+              },
+              "b6358241e4ad4a4e99d0f729d21d63be": {
+                "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": true
+              },
+              "f1bb9374308d4e088c29d10a2fc8cc07": {
+                "attendeeId": "f1bb9374308d4e088c29d10a2fc8cc07",
+                "attendeeName": null,
+                "videoUserId": null,
+                "hasJoined": false
+              }
+            },
+            "guides": {
+              "1850bbdc12dc44aba95bc78b16c3643c": {
+                "attendeeId": "1850bbdc12dc44aba95bc78b16c3643c",
+                "attendeeName": " admin",
+                "videoUserId": null,
+                "hasJoined": true
+              }
+            },
+            "videoGuideToken": null,
+            "quickViewState": [],
+            "extensions": []
+          }
+        }
+      },
+      "JoinAppointmentResponse": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "mercureSubscriberTopics": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SalesChannelFileTemplate"
-            }
+              "type": "string",
+              "description": "mercure topic"
+            },
+            "description": "The topics to which the attendee/guide can subscribe for"
           },
-          "supportsUserProvidedContent": {
-            "description": "Whether the template chain exposes the `user_provided_content` block for simple appended merchant notes.",
-            "type": "boolean"
-          },
-          "configuration": {
-            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+          "mercurePublisherTopic": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+                "type": "string"
               },
               {
                 "type": "null"
               }
-            ]
-          }
-        }
-      },
-      "SalesChannelFileDetailResponse": {
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/SalesChannelFileDetail"
-          }
-        }
-      },
-      "SalesChannelFileListResponse": {
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SalesChannelFileDescriptor"
-            }
-          }
-        }
-      },
-      "SalesChannelFilePreviewRequest": {
-        "type": "object",
-        "required": [
-          "fileName"
-        ],
-        "properties": {
-          "fileName": {
-            "description": "Public file path without a leading slash.",
+            ],
+            "description": "The topic to which the attendee/guide can send updates"
+          },
+          "JWTMercureSubscriberToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to publish updates"
+          },
+          "mercureHubPublicUrl": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The mercure hub url to connect for subscribing and updating"
+          },
+          "JWTMercurePublisherToken": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The JWT mercure token to subscribe for updates"
+          },
+          "id": {
             "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The appointment id"
           },
-          "templateOverrides": {
-            "description": "Unsaved Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "SalesChannelFilePreviewResponse": {
-        "type": "object",
-        "required": [
-          "fileName",
-          "contentType",
-          "content"
-        ],
-        "properties": {
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string"
-          },
-          "contentType": {
-            "description": "Detected content type of the rendered file.",
-            "type": "string"
-          },
-          "content": {
-            "description": "Rendered file content.",
-            "type": "string"
-          }
-        }
-      },
-      "SalesChannelFileTemplate": {
-        "type": "object",
-        "required": [
-          "twigNamespace",
-          "templateName",
-          "templateContent",
-          "role"
-        ],
-        "properties": {
-          "twigNamespace": {
-            "description": "Twig namespace that contributed the template, for example `Framework` or a plugin name.",
-            "type": "string"
-          },
-          "templateName": {
-            "description": "Resolved Twig template name.",
+          "newContextToken": {
             "type": "string",
-            "examples": [
-              "@Framework/files/agentic/llms.txt.twig"
-            ]
+            "description": "The new context token will be used in the header (sw-context-token) for calling the other routes"
           },
-          "templateContent": {
-            "description": "Original source template content. Administration clients can use this as the default text when editing a template override.",
-            "type": "string"
+          "attendeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The created Id for the attendee"
           },
-          "role": {
-            "description": "Whether this source provides the base template or extends another source in the resolved template chain.",
+          "salesChannelId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "The id of the current sales channel"
+          },
+          "salesChannelName": {
+            "type": "string",
+            "description": "The name of the current sales channel"
+          },
+          "appointmentName": {
+            "type": "string",
+            "description": "The name of the appointment"
+          },
+          "presentationGuideMode": {
             "type": "string",
             "enum": [
-              "base",
-              "extension"
+              "self",
+              "guided"
+            ],
+            "description": "The type of the appointment"
+          },
+          "isPreview": {
+            "type": "boolean",
+            "description": "To see if it's a preview appointment"
+          },
+          "attendeeName": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The name of the attendee"
+          },
+          "videoUserId": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The video user id that attendee could use"
+          },
+          "b2bFeatures": {
+            "type": "object",
+            "description": "The b2b features that available for the appointment",
+            "properties": {
+              "quoteManagement": {
+                "type": "boolean",
+                "description": "To know if the quote management is enabled for current customer"
+              }
+            }
+          }
+        },
+        "example": {
+          "mercureSubscriberTopics": [
+            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
+            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
+          ],
+          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
+          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
+          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
+          "JWTMercurePublisherToken": "jwt token for publishing updates",
+          "attendeeName": "attendee name",
+          "videoUserId": null,
+          "b2bFeatures": {
+            "feature1": false,
+            "feature2": true
+          },
+          "id": "2d2c358f1ca04098aacf12873c2eed82",
+          "newContextToken": "new context token to call the other routes",
+          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
+          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
+          "salesChannelName": "Storefront",
+          "appointmentName": "Test Appointment",
+          "presentationGuideMode": "guided",
+          "isPreview": false,
+          "apiAlias": "swag_digital_sales_rooms_content_appointment_struct_appointment_join_struct"
+        }
+      },
+      "LineItemType": {
+        "type": "string",
+        "enum": [
+          "product",
+          "credit",
+          "custom",
+          "promotion",
+          "discount",
+          "container",
+          "quantity",
+          "dsr-line-item-discount",
+          "dsr-cart-discount"
+        ]
+      },
+      "DiscountLineItemPayload": {
+        "type": "object",
+        "properties": {
+          "discountType": {
+            "type": "string",
+            "enum": [
+              "percentage",
+              "absolute"
             ]
+          },
+          "discountValue": {
+            "type": "number",
+            "format": "float",
+            "maximum": 0
+          },
+          "discountPrice": {
+            "type": "number",
+            "format": "float",
+            "maximum": 0
+          }
+        }
+      },
+      "LineItem": {
+        "type": "object",
+        "properties": {
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineItem"
+            }
+          },
+          "cover": {
+            "$ref": "#/components/schemas/ProductMedia"
+          },
+          "dataContextHash": {
+            "type": "string"
+          },
+          "dataTimestamp": {
+            "type": "string"
+          },
+          "deliveryInformation": {
+            "$ref": "#/components/schemas/CartDeliveryInformation"
+          },
+          "description": {
+            "type": "string"
+          },
+          "good": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "modified": {
+            "type": "boolean"
+          },
+          "modifiedByApp": {
+            "type": "boolean"
+          },
+          "payload": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ProductJsonApi"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "discountType": {
+                    "type": "string",
+                    "enum": [
+                      "percentage",
+                      "absolute"
+                    ]
+                  },
+                  "discountValue": {
+                    "type": "number",
+                    "format": "float",
+                    "maximum": 0
+                  },
+                  "discountPrice": {
+                    "type": "number",
+                    "format": "float",
+                    "maximum": 0
+                  }
+                }
+              }
+            ]
+          },
+          "extensions": {
+            "type": "object",
+            "properties": {
+              "meta": {
+                "type": "object",
+                "properties": {
+                  "attendees": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "price": {
+            "type": "object",
+            "properties": {
+              "apiAlias": {
+                "type": "string",
+                "enum": [
+                  "calculated_price"
+                ]
+              },
+              "calculatedTaxes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "apiAlias": {
+                      "type": "string",
+                      "enum": [
+                        "cart_tax_calculated"
+                      ]
+                    },
+                    "tax": {
+                      "type": "number"
+                    },
+                    "taxRate": {
+                      "type": "number"
+                    },
+                    "price": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "apiAlias",
+                    "tax",
+                    "taxRate",
+                    "price"
+                  ]
+                }
+              },
+              "listPrice": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CartListPrice"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "quantity": {
+                "type": "number"
+              },
+              "referencePrice": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CartPriceReference"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "regulationPrice": {
+                "type": "object",
+                "properties": {
+                  "price": {
+                    "type": "number"
+                  },
+                  "apiAlias": {
+                    "type": "string",
+                    "enum": [
+                      "cart_regulation_price"
+                    ]
+                  }
+                },
+                "nullable": true
+              },
+              "totalPrice": {
+                "type": "number"
+              },
+              "unitPrice": {
+                "type": "number"
+              },
+              "taxRules": {
+                "type": "array",
+                "description": "Currently active tax rules and/or rates",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "taxRate": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "apiAlias",
+              "totalPrice",
+              "quantity",
+              "unitPrice"
+            ]
+          },
+          "priceDefinition": {
+            "$ref": "#/components/schemas/CartPriceQuantity"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "quantityInformation": {
+            "type": "object",
+            "properties": {
+              "maxPurchase": {
+                "type": "number"
+              },
+              "minPurchase": {
+                "type": "number"
+              },
+              "purchaseSteps": {
+                "type": "number"
+              }
+            }
+          },
+          "referencedId": {
+            "type": "string"
+          },
+          "removable": {
+            "type": "boolean"
+          },
+          "stackable": {
+            "type": "boolean"
+          },
+          "states": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "is-physical",
+                "is-download"
+              ]
+            }
+          },
+          "type": {
+            "$ref": "#/components/schemas/LineItemType"
+          },
+          "uniqueIdentifier": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type"
+        ]
+      },
+      "PresentationCmsPage": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DsrPresentationCmsPage"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "pickedProductIds": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$",
+                      "description": "Product id"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The product id is assigned to presentation if it's product listing or instant listing"
+              }
+            }
+          }
+        ]
+      },
+      "BasePresentationSlideData": {
+        "properties": {
+          "cmsPage": {
+            "$ref": "#/components/schemas/CmsPage"
+          },
+          "extensions": {
+            "type": "object",
+            "properties": {
+              "cmsPageRelation": {
+                "$ref": "#/components/schemas/PresentationCmsPage"
+              }
+            }
+          }
+        }
+      },
+      "PresentationSlideData": {
+        "type": "object",
+        "properties": {
+          "cmsPage": {
+            "$ref": "#/components/schemas/CmsPage"
+          },
+          "extensions": {
+            "type": "object",
+            "properties": {
+              "cmsPageRelation": {
+                "$ref": "#/components/schemas/PresentationCmsPage"
+              }
+            }
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          },
+          "configurator": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyGroup"
+            }
+          }
+        },
+        "example": {
+          "extensions": {
+            "cmsPageRelation": {
+              "translated": {
+                "title": null
+              },
+              "createdAt": "2023-08-09T11:00:13.160+00:00",
+              "updatedAt": null,
+              "presentationId": "506cce706e914c1e8b083f05670d85c4",
+              "cmsPageId": "33e88c7994fa4cf79a1265e5105b93b2",
+              "title": null,
+              "productId": null,
+              "productStreamId": null,
+              "position": 2,
+              "isInstantListing": false,
+              "cmsPage": {
+                "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                "translated": {
+                  "name": "Default Digital Sales Rooms product listing page",
+                  "customFields": []
+                },
+                "createdAt": "2023-08-03T17:24:09.000+00:00",
+                "updatedAt": null,
+                "name": "Default Digital Sales Rooms product listing page",
+                "type": "presentation_product_list",
+                "entity": null,
+                "sections": [
+                  {
+                    "translated": [],
+                    "createdAt": "2023-08-03T17:24:09.000+00:00",
+                    "updatedAt": null,
+                    "type": "default",
+                    "blocks": [
+                      {
+                        "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                        "translated": [],
+                        "createdAt": "2023-08-03T17:24:09.000+00:00",
+                        "updatedAt": null,
+                        "type": "product-listing",
+                        "slots": [
+                          {
+                            "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                            "translated": {
+                              "config": {
+                                "filters": {
+                                  "value": "manufacturer-filter,rating-filter,price-filter,shipping-free-filter,property-filter",
+                                  "source": "static"
+                                },
+                                "boxLayout": {
+                                  "value": "standard",
+                                  "source": "static"
+                                },
+                                "showSorting": {
+                                  "value": true,
+                                  "source": "static"
+                                },
+                                "defaultSorting": {
+                                  "value": "",
+                                  "source": "static"
+                                },
+                                "useCustomSorting": {
+                                  "value": false,
+                                  "source": "static"
+                                },
+                                "availableSortings": {
+                                  "value": [],
+                                  "source": "static"
+                                },
+                                "propertyWhitelist": {
+                                  "value": [],
+                                  "source": "static"
+                                }
+                              },
+                              "customFields": []
+                            },
+                            "createdAt": "2023-08-03T17:24:09.000+00:00",
+                            "updatedAt": null,
+                            "type": "product-listing",
+                            "slot": "content",
+                            "block": null,
+                            "blockId": "96ea8b9676a5461c9149d205d792ecf2",
+                            "config": {
+                              "filters": {
+                                "value": "manufacturer-filter,rating-filter,price-filter,shipping-free-filter,property-filter",
+                                "source": "static"
+                              },
+                              "boxLayout": {
+                                "value": "standard",
+                                "source": "static"
+                              },
+                              "showSorting": {
+                                "value": true,
+                                "source": "static"
+                              },
+                              "defaultSorting": {
+                                "value": "",
+                                "source": "static"
+                              },
+                              "useCustomSorting": {
+                                "value": false,
+                                "source": "static"
+                              },
+                              "availableSortings": {
+                                "value": [],
+                                "source": "static"
+                              },
+                              "propertyWhitelist": {
+                                "value": [],
+                                "source": "static"
+                              }
+                            },
+                            "fieldConfig": null,
+                            "translations": null,
+                            "data": null,
+                            "locked": false,
+                            "cmsBlockVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                            "customFields": null,
+                            "apiAlias": "cms_slot"
+                          }
+                        ],
+                        "sectionId": "2229e1f1208a4b8086baf7aec84f5e2c",
+                        "position": 0,
+                        "name": null,
+                        "sectionPosition": "main",
+                        "marginTop": "20px",
+                        "marginBottom": "20px",
+                        "marginLeft": "20px",
+                        "marginRight": "20px",
+                        "backgroundColor": null,
+                        "backgroundMediaId": null,
+                        "backgroundMedia": null,
+                        "backgroundMediaMode": "cover",
+                        "cssClass": null,
+                        "cmsSectionVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                        "visibility": null,
+                        "customFields": null,
+                        "apiAlias": "cms_block"
+                      }
+                    ],
+                    "pageId": "33e88c7994fa4cf79a1265e5105b93b2",
+                    "page": null,
+                    "position": 0,
+                    "sizingMode": "boxed",
+                    "mobileBehavior": "wrap",
+                    "backgroundColor": null,
+                    "backgroundMediaId": null,
+                    "backgroundMedia": null,
+                    "backgroundMediaMode": "cover",
+                    "cssClass": null,
+                    "cmsPageVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                    "visibility": null,
+                    "customFields": null,
+                    "apiAlias": "cms_section"
+                  }
+                ],
+                "translations": null,
+                "cssClass": null,
+                "config": null,
+                "previewMediaId": null,
+                "previewMedia": null,
+                "landingPages": null,
+                "id": "33e88c7994fa4cf79a1265e5105b93b2",
+                "customFields": null,
+                "apiAlias": "cms_page"
+              },
+              "pickedProductIds": null,
+              "dsrPresentationVersionId": "213769ba28dd4ee788bdb49dc9ce53d2",
+              "id": "4ee08e142ed046eb99681594f67599f1",
+              "customFields": null,
+              "cmsPageVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+              "apiAlias": "dsr_presentation_cms_page"
+            }
+          },
+          "cmsPage": {
+            "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+            "translated": {
+              "name": "Default Digital Sales Rooms product listing page",
+              "customFields": []
+            },
+            "createdAt": "2023-08-03T17:24:09.000+00:00",
+            "updatedAt": null,
+            "name": "Default Digital Sales Rooms product listing page",
+            "type": "presentation_product_list",
+            "entity": null,
+            "sections": [
+              {
+                "translated": [],
+                "createdAt": "2023-08-03T17:24:09.000+00:00",
+                "updatedAt": null,
+                "type": "default",
+                "blocks": [
+                  {
+                    "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                    "translated": [],
+                    "createdAt": "2023-08-03T17:24:09.000+00:00",
+                    "updatedAt": null,
+                    "type": "product-listing",
+                    "slots": [
+                      {
+                        "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                        "translated": {
+                          "config": {
+                            "filters": {
+                              "value": "manufacturer-filter,rating-filter,price-filter,shipping-free-filter,property-filter",
+                              "source": "static"
+                            },
+                            "boxLayout": {
+                              "value": "standard",
+                              "source": "static"
+                            },
+                            "showSorting": {
+                              "value": true,
+                              "source": "static"
+                            },
+                            "defaultSorting": {
+                              "value": "",
+                              "source": "static"
+                            },
+                            "useCustomSorting": {
+                              "value": false,
+                              "source": "static"
+                            },
+                            "availableSortings": {
+                              "value": [],
+                              "source": "static"
+                            },
+                            "propertyWhitelist": {
+                              "value": [],
+                              "source": "static"
+                            }
+                          },
+                          "customFields": []
+                        },
+                        "createdAt": "2023-08-03T17:24:09.000+00:00",
+                        "updatedAt": null,
+                        "type": "product-listing",
+                        "slot": "content",
+                        "block": null,
+                        "blockId": "96ea8b9676a5461c9149d205d792ecf2",
+                        "config": {
+                          "filters": {
+                            "value": "manufacturer-filter,rating-filter,price-filter,shipping-free-filter,property-filter",
+                            "source": "static"
+                          },
+                          "boxLayout": {
+                            "value": "standard",
+                            "source": "static"
+                          },
+                          "showSorting": {
+                            "value": true,
+                            "source": "static"
+                          },
+                          "defaultSorting": {
+                            "value": "",
+                            "source": "static"
+                          },
+                          "useCustomSorting": {
+                            "value": false,
+                            "source": "static"
+                          },
+                          "availableSortings": {
+                            "value": [],
+                            "source": "static"
+                          },
+                          "propertyWhitelist": {
+                            "value": [],
+                            "source": "static"
+                          }
+                        },
+                        "fieldConfig": null,
+                        "translations": null,
+                        "data": {
+                          "listing": {
+                            "elements": [
+                              {
+                                "versionId": null,
+                                "translated": [],
+                                "createdAt": null,
+                                "updatedAt": null,
+                                "parentId": null,
+                                "childCount": null,
+                                "taxId": null,
+                                "manufacturerId": null,
+                                "unitId": null,
+                                "active": null,
+                                "displayGroup": null,
+                                "manufacturerNumber": null,
+                                "ean": null,
+                                "sales": null,
+                                "productNumber": null,
+                                "stock": null,
+                                "availableStock": null,
+                                "available": null,
+                                "deliveryTimeId": null,
+                                "deliveryTime": null,
+                                "restockTime": null,
+                                "isCloseout": null,
+                                "purchaseSteps": null,
+                                "maxPurchase": null,
+                                "minPurchase": null,
+                                "purchaseUnit": null,
+                                "referenceUnit": null,
+                                "shippingFree": null,
+                                "markAsTopseller": null,
+                                "weight": null,
+                                "width": null,
+                                "height": null,
+                                "length": null,
+                                "releaseDate": null,
+                                "categoryTree": null,
+                                "streamIds": null,
+                                "optionIds": null,
+                                "propertyIds": null,
+                                "name": null,
+                                "keywords": null,
+                                "description": null,
+                                "metaDescription": null,
+                                "metaTitle": null,
+                                "packUnit": null,
+                                "packUnitPlural": null,
+                                "tax": null,
+                                "manufacturer": null,
+                                "unit": null,
+                                "cover": null,
+                                "parent": null,
+                                "children": null,
+                                "media": null,
+                                "cmsPageId": null,
+                                "cmsPage": null,
+                                "translations": null,
+                                "categories": null,
+                                "properties": null,
+                                "options": null,
+                                "configuratorSettings": null,
+                                "categoriesRo": null,
+                                "coverId": null,
+                                "categoryIds": null,
+                                "productReviews": null,
+                                "ratingAverage": null,
+                                "mainCategories": null,
+                                "seoUrls": null,
+                                "crossSellings": null,
+                                "canonicalProductId": null,
+                                "canonicalProduct": null,
+                                "streams": null,
+                                "downloads": null,
+                                "states": [],
+                                "id": "a32702bb0b1443e3881c3b9a38c09169",
+                                "customFields": null,
+                                "apiAlias": "product"
+                              }
+                            ],
+                            "aggregations": [],
+                            "page": 1,
+                            "limit": null,
+                            "entity": "product",
+                            "total": 0,
+                            "states": [],
+                            "apiAlias": "dal_entity_search_result"
+                          },
+                          "apiAlias": "cms_product_listing"
+                        },
+                        "locked": false,
+                        "cmsBlockVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                        "customFields": null,
+                        "apiAlias": "cms_slot"
+                      }
+                    ],
+                    "sectionId": "2229e1f1208a4b8086baf7aec84f5e2c",
+                    "position": 0,
+                    "name": null,
+                    "sectionPosition": "main",
+                    "marginTop": "20px",
+                    "marginBottom": "20px",
+                    "marginLeft": "20px",
+                    "marginRight": "20px",
+                    "backgroundColor": null,
+                    "backgroundMediaId": null,
+                    "backgroundMedia": null,
+                    "backgroundMediaMode": "cover",
+                    "cssClass": null,
+                    "cmsSectionVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                    "visibility": null,
+                    "customFields": null,
+                    "apiAlias": "cms_block"
+                  }
+                ],
+                "pageId": "33e88c7994fa4cf79a1265e5105b93b2",
+                "page": null,
+                "position": 0,
+                "sizingMode": "boxed",
+                "mobileBehavior": "wrap",
+                "backgroundColor": null,
+                "backgroundMediaId": null,
+                "backgroundMedia": null,
+                "backgroundMediaMode": "cover",
+                "cssClass": null,
+                "cmsPageVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
+                "visibility": null,
+                "customFields": null,
+                "apiAlias": "cms_section"
+              }
+            ],
+            "translations": null,
+            "cssClass": null,
+            "config": null,
+            "previewMediaId": null,
+            "previewMedia": null,
+            "landingPages": null,
+            "id": "33e88c7994fa4cf79a1265e5105b93b2",
+            "customFields": null,
+            "apiAlias": "cms_page"
+          },
+          "category": {
+            "versionId": null,
+            "translated": {
+              "breadcrumb": []
+            },
+            "createdAt": null,
+            "updatedAt": null,
+            "afterCategoryId": null,
+            "parentId": null,
+            "mediaId": null,
+            "name": null,
+            "breadcrumb": [],
+            "path": null,
+            "level": null,
+            "active": null,
+            "childCount": null,
+            "visibleChildCount": 0,
+            "displayNestedProducts": null,
+            "parent": null,
+            "children": null,
+            "translations": null,
+            "media": null,
+            "cmsPageId": null,
+            "cmsPageIdSwitched": false,
+            "cmsPage": null,
+            "linkType": null,
+            "linkNewTab": null,
+            "internalLink": null,
+            "externalLink": null,
+            "visible": null,
+            "type": null,
+            "productAssignmentType": null,
+            "description": null,
+            "metaTitle": null,
+            "metaDescription": null,
+            "keywords": null,
+            "seoUrls": null,
+            "customEntityTypeId": null,
+            "id": "34f21c5eb6d54a939f10973204aa5f08",
+            "customFields": null,
+            "apiAlias": "category"
+          },
+          "apiAlias": "pwa_page_result"
+        }
+      },
+      "StateForAll": {
+        "type": "object",
+        "properties": {
+          "currentGuideProductId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lastActiveGuideSection": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentSectionId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentSlideAlias": {
+            "type": "integer",
+            "default": 0
+          },
+          "currentSlideData": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DynamicProductListingPageOpenedPayload"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentDynamicPage": {
+            "$ref": "#/components/schemas/DynamicPageOpenedPayload"
+          },
+          "started": {
+            "type": "boolean",
+            "default": false
+          },
+          "running": {
+            "type": "boolean",
+            "default": false
+          },
+          "ended": {
+            "type": "boolean",
+            "default": false
+          },
+          "startedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "endedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accessibleFrom": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accessibleTo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "appointmentMode": {
+            "type": "string",
+            "enum": [
+              "guided",
+              "self"
+            ]
+          },
+          "videoAudioSettings": {
+            "type": "string",
+            "enum": [
+              "both",
+              "none",
+              "audio-only"
+            ],
+            "default": "none"
+          },
+          "videoRoomUrl": {
+            "type": "string",
+            "default": ""
+          },
+          "attendeeRestrictionType": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "customer",
+                  "rules"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "productDetailDefaultPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quickviewPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "productListingDefaultPageId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "broadcastMode": {
+            "type": "boolean",
+            "default": false
+          },
+          "viewMode": {
+            "type": "string",
+            "enum": [
+              "onlyYou",
+              "presentation",
+              "videoGrid"
+            ],
+            "default": "presentation"
+          },
+          "allowScreenSharing": {
+            "type": "boolean",
+            "default": false
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
+      "StateForGuides": {
+        "type": "object",
+        "properties": {
+          "clients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "inactiveClients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "guides": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "videoGuideToken": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quickViewState": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "extensions": {
+            "type": "array",
+            "default": []
+          }
+        }
+      },
+      "VideoChatCreateStruct": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "roomUrl": {
+            "type": "string",
+            "description": "Url of the video room in daily"
+          },
+          "roomName": {
+            "type": "string",
+            "description": "Name of the video room in daily"
+          },
+          "userToken": {
+            "type": "string",
+            "description": "Token for the end users to connect to the daily room"
+          },
+          "ownerToken": {
+            "type": "string",
+            "description": "Token for the room owner (guide) to connect to the daily room"
+          }
+        },
+        "example": {
+          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
+          "userToken": "dummy user token",
+          "ownerToken": "dummy owner token",
+          "roomName": "rSq20mrgwsj4eIXo1u95",
+          "extensions": []
+        }
+      },
+      "WidgetProductListing": {
+        "type": "object",
+        "description": "Includes all data you will need to attend to a appointment.",
+        "properties": {
+          "extensions": {
+            "type": "array",
+            "description": "List of extensions",
+            "default": []
+          },
+          "products": {
+            "type": "array",
+            "description": "List of last seen products",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Product"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "customFields": {
+                      "type": "object",
+                      "properties": {
+                        "wishlistAttendeeIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of products"
+          },
+          "page": {
+            "type": "integer",
+            "description": "The current page"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The number of products per page"
           }
         }
       },
@@ -53127,6 +55118,373 @@
           "field"
         ]
       },
+      "MeasurementUnits": {
+        "type": "object",
+        "description": "Configuration of the measurement system",
+        "properties": {
+          "system": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+          },
+          "units": {
+            "type": "object",
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
+              }
+            }
+          }
+        }
+      },
+      "MediaId": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}$",
+        "description": "Media entity ID"
+      },
+      "ExternalThumbnail": {
+        "type": "object",
+        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
+        "required": [
+          "url",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
+            "example": "https://cdn.example.com/image-200x200.jpg"
+          },
+          "width": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Width of the thumbnail in pixels",
+            "example": 200
+          },
+          "height": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Height of the thumbnail in pixels",
+            "example": 200
+          }
+        }
+      },
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "refresh_token"
+            ]
+          }
+        ]
+      },
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "description": "Unique identity of the associated currency.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "Gross price for the associated currency.",
+            "type": "number"
+          },
+          "net": {
+            "description": "Net price for the associated currency.",
+            "type": "number"
+          },
+          "linked": {
+            "description": "Whether gross and net prices are linked through the tax configuration.",
+            "type": "boolean"
+          },
+          "percentage": {
+            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "gross": {
+                "description": "Discount percentage relative to the gross list price.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Discount percentage relative to the net list price.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          },
+          "listPrice": {
+            "description": "Reference list price for displaying discounts.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross list price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net list price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net list prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          },
+          "regulationPrice": {
+            "description": "Reference price used for legal price disclosures.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross regulation price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net regulation price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
+        ]
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -53359,2564 +55717,310 @@
         ],
         "additionalProperties": false
       },
-      "Price": {
+      "ConsentState": {
         "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "description": "Unique identity of the associated currency.",
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "Gross price for the associated currency.",
-            "type": "number"
-          },
-          "net": {
-            "description": "Net price for the associated currency.",
-            "type": "number"
-          },
-          "linked": {
-            "description": "Whether gross and net prices are linked through the tax configuration.",
-            "type": "boolean"
-          },
-          "percentage": {
-            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
-            "type": [
-              "object",
-              "null"
-            ],
-            "properties": {
-              "gross": {
-                "description": "Discount percentage relative to the gross list price.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Discount percentage relative to the net list price.",
-                "type": "number"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          },
-          "listPrice": {
-            "description": "Reference list price for displaying discounts.",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "description": "Unique identity of the associated currency.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "Gross list price for the associated currency.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Net list price for the associated currency.",
-                "type": "number"
-              },
-              "linked": {
-                "description": "Whether gross and net list prices are linked through the tax configuration.",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          },
-          "regulationPrice": {
-            "description": "Reference price used for legal price disclosures.",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "description": "Unique identity of the associated currency.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "Gross regulation price for the associated currency.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Net regulation price for the associated currency.",
-                "type": "number"
-              },
-              "linked": {
-                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          }
-        },
         "required": [
-          "currencyId",
-          "gross",
-          "net",
-          "linked"
-        ]
-      },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "MeasurementUnits": {
-        "type": "object",
-        "description": "Configuration of the measurement system",
-        "properties": {
-          "system": {
-            "type": "string",
-            "enum": [
-              "metric",
-              "imperial"
-            ],
-            "default": "metric",
-            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
-          },
-          "units": {
-            "type": "object",
-            "description": "Units used in the measurement system.",
-            "properties": {
-              "length": {
-                "type": "string",
-                "enum": [
-                  "mm",
-                  "cm",
-                  "m",
-                  "in",
-                  "ft"
-                ],
-                "default": "mm",
-                "description": "Unit of length."
-              },
-              "weight": {
-                "type": "string",
-                "enum": [
-                  "g",
-                  "kg",
-                  "oz",
-                  "lb"
-                ],
-                "default": "kg",
-                "description": "Unit of weight."
-              }
-            }
-          }
-        }
-      },
-      "MediaId": {
-        "type": "string",
-        "pattern": "^[0-9a-f]{32}$",
-        "description": "Media entity ID"
-      },
-      "ExternalThumbnail": {
-        "type": "object",
-        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
-        "required": [
-          "url",
-          "width",
-          "height"
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt",
+          "acceptedUntil"
         ],
-        "properties": {
-          "url": {
-            "type": "string",
-            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
-            "example": "https://cdn.example.com/image-200x200.jpg"
-          },
-          "width": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Width of the thumbnail in pixels",
-            "example": 200
-          },
-          "height": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Height of the thumbnail in pixels",
-            "example": 200
-          }
-        }
-      },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
-        "type": "object",
-        "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
-          }
-        },
-        "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
-          }
-        }
-      },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "refresh_token"
-            ]
-          }
-        ]
-      },
-      "CartPriceReference": {
-        "type": "object",
-        "properties": {
-          "purchaseUnit": {
-            "type": "number"
-          },
-          "referenceUnit": {
-            "type": "number"
-          },
-          "unitName": {
-            "type": "string"
-          },
-          "price": {
-            "type": "number"
-          },
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_price_reference"
-            ]
-          },
-          "listPrice": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CartListPrice"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "regulationPrice": {
-            "type": "object",
-            "properties": {
-              "price": {
-                "type": "number"
-              },
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "cart_regulation_price"
-                ]
-              }
-            },
-            "nullable": true
-          },
-          "hasRange": {
-            "type": "boolean"
-          },
-          "variantId": {
-            "type": "string",
-            "format": "^[0-9a-f]{32}$",
-            "nullable": true
-          }
-        },
-        "required": [
-          "apiAlias",
-          "hasRange",
-          "regulationPrice",
-          "listPrice",
-          "calculatedTaxes",
-          "totalPrice",
-          "quantity",
-          "unitName"
-        ]
-      },
-      "GetListBodyRequest": {
-        "type": "object",
-        "properties": {
-          "limit": {
-            "type": "integer",
-            "description": "Max amount of resources to be returned in a page"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The page to be returned"
-          }
-        }
-      },
-      "CartError": {
-        "type": "object",
-        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-        "properties": {
-          "items": {
-            "type": "object",
-            "properties": {
-              "key": {
-                "type": "string"
-              },
-              "level": {
-                "type": "number",
-                "enum": [
-                  0,
-                  10,
-                  20
-                ],
-                "description": "* `0` - notice,\n* `10` - warning,\n* `20` - error"
-              },
-              "message": {
-                "type": "string"
-              },
-              "messageKey": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "CartDelivery": {
-        "type": "object",
-        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-        "properties": {
-          "deliveryDate": {
-            "type": "object",
-            "properties": {
-              "earliest": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "latest": {
-                "type": "string",
-                "format": "date-time"
-              }
-            }
-          },
-          "location": {
-            "type": "object",
-            "properties": {
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "cart_delivery_shipping_location"
-                ]
-              },
-              "country": {
-                "$ref": "#/components/schemas/Country"
-              },
-              "address": {
-                "$ref": "#/components/schemas/CustomerAddress"
-              },
-              "state": {
-                "$ref": "#/components/schemas/CountryState"
-              }
-            }
-          },
-          "positions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CartDeliveryPosition"
-            }
-          },
-          "shippingCosts": {
-            "$ref": "#/components/schemas/CalculatedPrice"
-          },
-          "shippingMethod": {
-            "$ref": "#/components/schemas/ShippingMethod"
-          }
-        }
-      },
-      "StateForGuides": {
-        "type": "object",
-        "properties": {
-          "clients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "inactiveClients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "guides": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "videoGuideToken": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickViewState": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": []
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "Cart": {
-        "type": "object",
         "properties": {
           "name": {
-            "description": "Name of the cart - for example `guest-cart`",
-            "type": "string"
-          },
-          "token": {
-            "description": "Context token identifying the cart and the user session",
-            "type": "string"
-          },
-          "price": {
-            "$ref": "#/components/schemas/CalculatedPrice"
-          },
-          "lineItems": {
-            "description": "All items within the cart",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LineItem"
-            }
-          },
-          "errors": {
-            "type": "array",
-            "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
-            "items": {
-              "$ref": "#/components/schemas/CartError"
-            }
-          },
-          "deliveries": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CartDelivery"
-            }
-          },
-          "transactions": {
-            "description": "A list of all payment transactions associated with the current cart.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "paymentMethodId": {
-                  "type": "string"
-                },
-                "amount": {
-                  "$ref": "#/components/schemas/CalculatedPrice"
-                }
-              }
-            }
-          },
-          "modified": {
-            "type": "boolean"
-          },
-          "customerComment": {
             "type": "string",
-            "description": "A comment that can be added to the cart.",
-            "nullable": true
+            "description": "The name of the consent"
           },
-          "affiliateCode": {
+          "scopeName": {
             "type": "string",
-            "description": "An affiliate tracking code",
-            "nullable": true
+            "description": "The scope of the consent that defines how the identifier is resolved"
           },
-          "campaignCode": {
+          "identifier": {
             "type": "string",
-            "description": "A campaign tracking code",
-            "nullable": true
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unset",
+              "accepted",
+              "revoked"
+            ],
+            "description": "The current status of the consent (requested, accepted, revoked)"
+          },
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          },
+          "acceptedUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp until when the consent is accepted. null if never accepted"
+          },
+          "acceptedRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
+          },
+          "latestRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
           }
         }
       },
-      "StateForAll": {
-        "type": "object",
-        "properties": {
-          "currentGuideProductId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "lastActiveGuideSection": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentSectionId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentSlideAlias": {
-            "type": "integer",
-            "default": 0
-          },
-          "currentSlideData": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/DynamicProductListingPageOpenedPayload"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "currentDynamicPage": {
-            "$ref": "#/components/schemas/DynamicPageOpenedPayload"
-          },
-          "started": {
-            "type": "boolean",
-            "default": false
-          },
-          "running": {
-            "type": "boolean",
-            "default": false
-          },
-          "ended": {
-            "type": "boolean",
-            "default": false
-          },
-          "startedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "endedAt": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "accessibleFrom": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "accessibleTo": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "appointmentMode": {
-            "type": "string",
-            "enum": [
-              "guided",
-              "self"
-            ]
-          },
-          "videoAudioSettings": {
-            "type": "string",
-            "enum": [
-              "both",
-              "none",
-              "audio-only"
-            ],
-            "default": "none"
-          },
-          "videoRoomUrl": {
-            "type": "string",
-            "default": ""
-          },
-          "attendeeRestrictionType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "open",
-                  "customer",
-                  "rules"
-                ]
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "productDetailDefaultPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "quickviewPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "productListingDefaultPageId": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "broadcastMode": {
-            "type": "boolean",
-            "default": false
-          },
-          "viewMode": {
-            "type": "string",
-            "enum": [
-              "onlyYou",
-              "presentation",
-              "videoGrid"
-            ],
-            "default": "presentation"
-          },
-          "allowScreenSharing": {
-            "type": "boolean",
-            "default": false
-          },
-          "extensions": {
-            "type": "array",
-            "default": []
-          }
-        }
-      },
-      "DiscountType": {
-        "type": "string",
-        "description": "Type of the discount",
-        "enum": [
-          "percentage",
-          "absolute"
-        ]
-      },
-      "AddTempDiscountRequestBody": {
+      "SalesChannelFileConfiguration": {
         "type": "object",
         "required": [
-          "discountType",
-          "discountValue",
-          "appliedItemIds"
+          "id",
+          "enabled",
+          "templateOverrides"
         ],
-        "properties": {
-          "discountType": {
-            "$ref": "#/components/schemas/DiscountType"
-          },
-          "discountValue": {
-            "type": "number",
-            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
-            "maximum": 0
-          },
-          "appliedItemIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            },
-            "description": "Ids of the items to which the discount should be applied"
-          }
-        }
-      },
-      "AddCartDiscountRequestBody": {
-        "type": "object",
-        "required": [
-          "discountType",
-          "discountValue"
-        ],
-        "properties": {
-          "discountType": {
-            "$ref": "#/components/schemas/DiscountType"
-          },
-          "discountValue": {
-            "type": "number",
-            "description": "Value of the discount (leave it 0 if you want to remove the discount)",
-            "maximum": 0
-          }
-        }
-      },
-      "GetCartInsightsResponse": {
-        "type": "object",
-        "description": "Returns aggregations for the current carts within the appointment.",
-        "properties": {
-          "cartSum": {
-            "type": "number",
-            "description": "Sum of all products from all attenddees which were added to the cart during the appointment"
-          },
-          "productCount": {
-            "type": "number",
-            "description": "Sum of all product quantities from all attendees which were added to the cart during the appointment"
-          },
-          "currencyId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id from the shown currency"
-          },
-          "currencySymbol": {
-            "type": "string",
-            "description": "The currency symbol from the shown currency"
-          },
-          "topProducts": {
-            "type": "object",
-            "required": [
-              "byQuantity",
-              "byRevenue"
-            ],
-            "properties": {
-              "byQuantity": {
-                "type": "array",
-                "uniqueItems": true,
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "productId": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "The id from the product"
-                    },
-                    "value": {
-                      "type": "number",
-                      "description": "The quantity in carts of this product"
-                    }
-                  },
-                  "required": [
-                    "productId",
-                    "value"
-                  ]
-                }
-              },
-              "byRevenue": {
-                "type": "array",
-                "uniqueItems": true,
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "productId": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "The id from the product"
-                    },
-                    "value": {
-                      "type": "number",
-                      "description": "The net revenue in the shown currency in carts of this product"
-                    }
-                  },
-                  "required": [
-                    "productId",
-                    "value"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "example": {
-          "extensions": [],
-          "cartSum": 6770.53,
-          "productCount": 3,
-          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
-          "currencySymbol": "$",
-          "topProducts": {
-            "byQuantity": [
-              {
-                "productId": "01ae0dee60ea48fdafaf881b96361d59",
-                "value": 1
-              },
-              {
-                "productId": "fee3ca762be94bb49b692e359d529563",
-                "value": 1
-              },
-              {
-                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
-                "value": 1
-              }
-            ],
-            "byRevenue": [
-              {
-                "productId": "fee3ca762be94bb49b692e359d529563",
-                "value": 5333.03
-              },
-              {
-                "productId": "01ae0dee60ea48fdafaf881b96361d59",
-                "value": 1152.62
-              },
-              {
-                "productId": "a31b4e64efe047b6844cb4dd5a1ce0da",
-                "value": 284.88
-              }
-            ]
-          }
-        }
-      },
-      "CartPriceQuantity": {
-        "type": "object",
-        "properties": {
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_price_quantity"
-            ]
-          },
-          "isCalculated": {
-            "type": "boolean"
-          },
-          "listPrice": {
-            "$ref": "#/components/schemas/CartListPrice"
-          },
-          "price": {
-            "type": "number"
-          },
-          "quantity": {
-            "type": "number"
-          },
-          "regulationPrice": {
-            "properties": {
-              "price": {
-                "type": "number",
-                "format": "float"
-              }
-            },
-            "type": "object"
-          },
-          "taxRules": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "taxRate": {
-                  "type": "number",
-                  "format": "float"
-                },
-                "name": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "apiAlias"
-        ]
-      },
-      "AttendeeInsights": {
-        "type": "object",
-        "description": "Attendee Insights",
         "properties": {
           "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "Id of the attendee"
-          },
-          "cartSum": {
-            "type": "number",
-            "description": "Sum of the cart net in base currency"
-          },
-          "productCount": {
-            "type": "number",
-            "description": "Sum of all quantities in the cart which were added during the appointment"
-          }
-        },
-        "example": {
-          "04da9d8572494ae68391a471d4c3a470": {
-            "extensions": [],
-            "id": "04da9d8572494ae68391a471d4c3a470",
-            "cartSum": 6770.53,
-            "productCount": 3,
-            "lineItemCount": 3
-          }
-        }
-      },
-      "VideoChatCreateStruct": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "roomUrl": {
-            "type": "string",
-            "description": "Url of the video room in daily"
-          },
-          "roomName": {
-            "type": "string",
-            "description": "Name of the video room in daily"
-          },
-          "userToken": {
-            "type": "string",
-            "description": "Token for the end users to connect to the daily room"
-          },
-          "ownerToken": {
-            "type": "string",
-            "description": "Token for the room owner (guide) to connect to the daily room"
-          }
-        },
-        "example": {
-          "roomUrl": "http://daily.co/rSq20mrgwsj4eIXo1u95",
-          "userToken": "dummy user token",
-          "ownerToken": "dummy owner token",
-          "roomName": "rSq20mrgwsj4eIXo1u95",
-          "extensions": []
-        }
-      },
-      "DynamicProductListingPageOpenedPayload": {
-        "required": [
-          "page"
-        ],
-        "properties": {
-          "page": {
-            "type": "integer",
-            "description": "Current page position in the pagination"
-          }
-        }
-      },
-      "CalculatedPrice": {
-        "type": "object",
-        "description": "Represents a product along with detailed information required to display a variant selection.",
-        "properties": {
-          "unitPrice": {
-            "type": "number"
-          },
-          "quantity": {
-            "type": "number"
-          },
-          "rawTotal": {
-            "type": "number"
-          },
-          "totalPrice": {
-            "type": "number"
-          },
-          "calculatedTaxes": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "apiAlias": {
-                  "type": "string",
-                  "enum": [
-                    "cart_tax_calculated"
-                  ]
-                },
-                "tax": {
-                  "type": "number"
-                },
-                "taxRate": {
-                  "type": "number"
-                },
-                "price": {
-                  "type": "number"
-                }
-              },
-              "required": [
-                "apiAlias",
-                "tax",
-                "taxRate",
-                "price"
-              ]
-            }
-          },
-          "referencePrice": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CartPriceReference"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "listPrice": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CartListPrice"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "positionPrice": {
-            "type": "number"
-          },
-          "netPrice": {
-            "type": "number"
-          },
-          "regulationPrice": {
-            "type": "object",
-            "properties": {
-              "price": {
-                "type": "number"
-              },
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "cart_regulation_price"
-                ]
-              }
-            },
-            "nullable": true
-          },
-          "hasRange": {
-            "type": "boolean"
-          },
-          "variantId": {
-            "type": "string",
-            "format": "^[0-9a-f]{32}$",
-            "nullable": true
-          },
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "calculated_price"
-            ]
-          },
-          "taxRules": {
-            "type": "array",
-            "description": "Currently active tax rules and/or rates",
-            "items": {
-              "type": "object",
-              "properties": {
-                "taxRate": {
-                  "type": "number",
-                  "format": "float"
-                },
-                "name": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "required": [
-          "apiAlias",
-          "hasRange",
-          "regulationPrice",
-          "listPrice",
-          "referencePrice",
-          "calculatedTaxes",
-          "totalPrice",
-          "quantity",
-          "unitPrice",
-          "positionPrice",
-          "netPrice",
-          "taxRules"
-        ]
-      },
-      "CartListPrice": {
-        "type": "object",
-        "description": "",
-        "properties": {
-          "discount": {
-            "type": "number"
-          },
-          "percentage": {
-            "type": "number"
-          },
-          "price": {
-            "type": "number"
-          },
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_list_price"
-            ]
-          }
-        },
-        "required": [
-          "apiAlias"
-        ]
-      },
-      "PresentationCmsPage": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/DsrPresentationCmsPage"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "pickedProductIds": {
-                "anyOf": [
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$",
-                      "description": "Product id"
-                    }
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "description": "The product id is assigned to presentation if it's product listing or instant listing"
-              }
-            }
-          }
-        ]
-      },
-      "DynamicPageOpenedPayload": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AbstractDynamicPageOpenedPayload"
-          }
-        ]
-      },
-      "CartItems": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LineItem"
-            }
-          }
-        }
-      },
-      "AbstractDynamicPageOpenedPayload": {
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of the current dynamic page"
-          },
-          "opened": {
-            "type": "boolean",
-            "default": true
-          }
-        }
-      },
-      "CartDeliveryInformation": {
-        "type": "object",
-        "properties": {
-          "apiAlias": {
-            "type": "string",
-            "enum": [
-              "cart_delivery_information"
-            ]
-          },
-          "freeDelivery": {
-            "type": "boolean"
-          },
-          "deliveryTime": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "min": {
-                "type": "integer"
-              },
-              "max": {
-                "type": "integer"
-              },
-              "unit": {
-                "type": "string"
-              },
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "cart_delivery_time"
-                ]
-              }
-            }
-          },
-          "height": {
-            "type": "integer"
-          },
-          "length": {
-            "type": "integer"
-          },
-          "restockTime": {
-            "type": "integer"
-          },
-          "stock": {
-            "type": "integer"
-          },
-          "weight": {
-            "type": "integer"
-          },
-          "width": {
-            "type": "integer"
-          }
-        },
-        "required": [
-          "apiAlias"
-        ]
-      },
-      "BasePresentationSlideData": {
-        "properties": {
-          "cmsPage": {
-            "$ref": "#/components/schemas/CmsPage"
-          },
-          "extensions": {
-            "type": "object",
-            "properties": {
-              "cmsPageRelation": {
-                "$ref": "#/components/schemas/PresentationCmsPage"
-              }
-            }
-          }
-        }
-      },
-      "PresentationSlideData": {
-        "type": "object",
-        "properties": {
-          "cmsPage": {
-            "$ref": "#/components/schemas/CmsPage"
-          },
-          "extensions": {
-            "type": "object",
-            "properties": {
-              "cmsPageRelation": {
-                "$ref": "#/components/schemas/PresentationCmsPage"
-              }
-            }
-          },
-          "product": {
-            "$ref": "#/components/schemas/Product"
-          },
-          "category": {
-            "$ref": "#/components/schemas/Category"
-          },
-          "configurator": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PropertyGroup"
-            }
-          }
-        },
-        "example": {
-          "extensions": {
-            "cmsPageRelation": {
-              "translated": {
-                "title": null
-              },
-              "createdAt": "2023-08-09T11:00:13.160+00:00",
-              "updatedAt": null,
-              "presentationId": "506cce706e914c1e8b083f05670d85c4",
-              "cmsPageId": "33e88c7994fa4cf79a1265e5105b93b2",
-              "title": null,
-              "productId": null,
-              "productStreamId": null,
-              "position": 2,
-              "isInstantListing": false,
-              "cmsPage": {
-                "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                "translated": {
-                  "name": "Default Digital Sales Rooms product listing page",
-                  "customFields": []
-                },
-                "createdAt": "2023-08-03T17:24:09.000+00:00",
-                "updatedAt": null,
-                "name": "Default Digital Sales Rooms product listing page",
-                "type": "presentation_product_list",
-                "entity": null,
-                "sections": [
-                  {
-                    "translated": [],
-                    "createdAt": "2023-08-03T17:24:09.000+00:00",
-                    "updatedAt": null,
-                    "type": "default",
-                    "blocks": [
-                      {
-                        "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                        "translated": [],
-                        "createdAt": "2023-08-03T17:24:09.000+00:00",
-                        "updatedAt": null,
-                        "type": "product-listing",
-                        "slots": [
-                          {
-                            "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                            "translated": {
-                              "config": {
-                                "filters": {
-                                  "value": "manufacturer-filter,rating-filter,price-filter,shipping-free-filter,property-filter",
-                                  "source": "static"
-                                },
-                                "boxLayout": {
-                                  "value": "standard",
-                                  "source": "static"
-                                },
-                                "showSorting": {
-                                  "value": true,
-                                  "source": "static"
-                                },
-                                "defaultSorting": {
-                                  "value": "",
-                                  "source": "static"
-                                },
-                                "useCustomSorting": {
-                                  "value": false,
-                                  "source": "static"
-                                },
-                                "availableSortings": {
-                                  "value": [],
-                                  "source": "static"
-                                },
-                                "propertyWhitelist": {
-                                  "value": [],
-                                  "source": "static"
-                                }
-                              },
-                              "customFields": []
-                            },
-                            "createdAt": "2023-08-03T17:24:09.000+00:00",
-                            "updatedAt": null,
-                            "type": "product-listing",
-                            "slot": "content",
-                            "block": null,
-                            "blockId": "96ea8b9676a5461c9149d205d792ecf2",
-                            "config": {
-                              "filters": {
-                                "value": "manufacturer-filter,rating-filter,price-filter,shipping-free-filter,property-filter",
-                                "source": "static"
-                              },
-                              "boxLayout": {
-                                "value": "standard",
-                                "source": "static"
-                              },
-                              "showSorting": {
-                                "value": true,
-                                "source": "static"
-                              },
-                              "defaultSorting": {
-                                "value": "",
-                                "source": "static"
-                              },
-                              "useCustomSorting": {
-                                "value": false,
-                                "source": "static"
-                              },
-                              "availableSortings": {
-                                "value": [],
-                                "source": "static"
-                              },
-                              "propertyWhitelist": {
-                                "value": [],
-                                "source": "static"
-                              }
-                            },
-                            "fieldConfig": null,
-                            "translations": null,
-                            "data": null,
-                            "locked": false,
-                            "cmsBlockVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                            "customFields": null,
-                            "apiAlias": "cms_slot"
-                          }
-                        ],
-                        "sectionId": "2229e1f1208a4b8086baf7aec84f5e2c",
-                        "position": 0,
-                        "name": null,
-                        "sectionPosition": "main",
-                        "marginTop": "20px",
-                        "marginBottom": "20px",
-                        "marginLeft": "20px",
-                        "marginRight": "20px",
-                        "backgroundColor": null,
-                        "backgroundMediaId": null,
-                        "backgroundMedia": null,
-                        "backgroundMediaMode": "cover",
-                        "cssClass": null,
-                        "cmsSectionVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                        "visibility": null,
-                        "customFields": null,
-                        "apiAlias": "cms_block"
-                      }
-                    ],
-                    "pageId": "33e88c7994fa4cf79a1265e5105b93b2",
-                    "page": null,
-                    "position": 0,
-                    "sizingMode": "boxed",
-                    "mobileBehavior": "wrap",
-                    "backgroundColor": null,
-                    "backgroundMediaId": null,
-                    "backgroundMedia": null,
-                    "backgroundMediaMode": "cover",
-                    "cssClass": null,
-                    "cmsPageVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                    "visibility": null,
-                    "customFields": null,
-                    "apiAlias": "cms_section"
-                  }
-                ],
-                "translations": null,
-                "cssClass": null,
-                "config": null,
-                "previewMediaId": null,
-                "previewMedia": null,
-                "landingPages": null,
-                "id": "33e88c7994fa4cf79a1265e5105b93b2",
-                "customFields": null,
-                "apiAlias": "cms_page"
-              },
-              "pickedProductIds": null,
-              "dsrPresentationVersionId": "213769ba28dd4ee788bdb49dc9ce53d2",
-              "id": "4ee08e142ed046eb99681594f67599f1",
-              "customFields": null,
-              "cmsPageVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-              "apiAlias": "dsr_presentation_cms_page"
-            }
-          },
-          "cmsPage": {
-            "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-            "translated": {
-              "name": "Default Digital Sales Rooms product listing page",
-              "customFields": []
-            },
-            "createdAt": "2023-08-03T17:24:09.000+00:00",
-            "updatedAt": null,
-            "name": "Default Digital Sales Rooms product listing page",
-            "type": "presentation_product_list",
-            "entity": null,
-            "sections": [
-              {
-                "translated": [],
-                "createdAt": "2023-08-03T17:24:09.000+00:00",
-                "updatedAt": null,
-                "type": "default",
-                "blocks": [
-                  {
-                    "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                    "translated": [],
-                    "createdAt": "2023-08-03T17:24:09.000+00:00",
-                    "updatedAt": null,
-                    "type": "product-listing",
-                    "slots": [
-                      {
-                        "versionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                        "translated": {
-                          "config": {
-                            "filters": {
-                              "value": "manufacturer-filter,rating-filter,price-filter,shipping-free-filter,property-filter",
-                              "source": "static"
-                            },
-                            "boxLayout": {
-                              "value": "standard",
-                              "source": "static"
-                            },
-                            "showSorting": {
-                              "value": true,
-                              "source": "static"
-                            },
-                            "defaultSorting": {
-                              "value": "",
-                              "source": "static"
-                            },
-                            "useCustomSorting": {
-                              "value": false,
-                              "source": "static"
-                            },
-                            "availableSortings": {
-                              "value": [],
-                              "source": "static"
-                            },
-                            "propertyWhitelist": {
-                              "value": [],
-                              "source": "static"
-                            }
-                          },
-                          "customFields": []
-                        },
-                        "createdAt": "2023-08-03T17:24:09.000+00:00",
-                        "updatedAt": null,
-                        "type": "product-listing",
-                        "slot": "content",
-                        "block": null,
-                        "blockId": "96ea8b9676a5461c9149d205d792ecf2",
-                        "config": {
-                          "filters": {
-                            "value": "manufacturer-filter,rating-filter,price-filter,shipping-free-filter,property-filter",
-                            "source": "static"
-                          },
-                          "boxLayout": {
-                            "value": "standard",
-                            "source": "static"
-                          },
-                          "showSorting": {
-                            "value": true,
-                            "source": "static"
-                          },
-                          "defaultSorting": {
-                            "value": "",
-                            "source": "static"
-                          },
-                          "useCustomSorting": {
-                            "value": false,
-                            "source": "static"
-                          },
-                          "availableSortings": {
-                            "value": [],
-                            "source": "static"
-                          },
-                          "propertyWhitelist": {
-                            "value": [],
-                            "source": "static"
-                          }
-                        },
-                        "fieldConfig": null,
-                        "translations": null,
-                        "data": {
-                          "listing": {
-                            "elements": [
-                              {
-                                "versionId": null,
-                                "translated": [],
-                                "createdAt": null,
-                                "updatedAt": null,
-                                "parentId": null,
-                                "childCount": null,
-                                "taxId": null,
-                                "manufacturerId": null,
-                                "unitId": null,
-                                "active": null,
-                                "displayGroup": null,
-                                "manufacturerNumber": null,
-                                "ean": null,
-                                "sales": null,
-                                "productNumber": null,
-                                "stock": null,
-                                "availableStock": null,
-                                "available": null,
-                                "deliveryTimeId": null,
-                                "deliveryTime": null,
-                                "restockTime": null,
-                                "isCloseout": null,
-                                "purchaseSteps": null,
-                                "maxPurchase": null,
-                                "minPurchase": null,
-                                "purchaseUnit": null,
-                                "referenceUnit": null,
-                                "shippingFree": null,
-                                "markAsTopseller": null,
-                                "weight": null,
-                                "width": null,
-                                "height": null,
-                                "length": null,
-                                "releaseDate": null,
-                                "categoryTree": null,
-                                "streamIds": null,
-                                "optionIds": null,
-                                "propertyIds": null,
-                                "name": null,
-                                "keywords": null,
-                                "description": null,
-                                "metaDescription": null,
-                                "metaTitle": null,
-                                "packUnit": null,
-                                "packUnitPlural": null,
-                                "tax": null,
-                                "manufacturer": null,
-                                "unit": null,
-                                "cover": null,
-                                "parent": null,
-                                "children": null,
-                                "media": null,
-                                "cmsPageId": null,
-                                "cmsPage": null,
-                                "translations": null,
-                                "categories": null,
-                                "properties": null,
-                                "options": null,
-                                "configuratorSettings": null,
-                                "categoriesRo": null,
-                                "coverId": null,
-                                "categoryIds": null,
-                                "productReviews": null,
-                                "ratingAverage": null,
-                                "mainCategories": null,
-                                "seoUrls": null,
-                                "crossSellings": null,
-                                "canonicalProductId": null,
-                                "canonicalProduct": null,
-                                "streams": null,
-                                "downloads": null,
-                                "states": [],
-                                "id": "a32702bb0b1443e3881c3b9a38c09169",
-                                "customFields": null,
-                                "apiAlias": "product"
-                              }
-                            ],
-                            "aggregations": [],
-                            "page": 1,
-                            "limit": null,
-                            "entity": "product",
-                            "total": 0,
-                            "states": [],
-                            "apiAlias": "dal_entity_search_result"
-                          },
-                          "apiAlias": "cms_product_listing"
-                        },
-                        "locked": false,
-                        "cmsBlockVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                        "customFields": null,
-                        "apiAlias": "cms_slot"
-                      }
-                    ],
-                    "sectionId": "2229e1f1208a4b8086baf7aec84f5e2c",
-                    "position": 0,
-                    "name": null,
-                    "sectionPosition": "main",
-                    "marginTop": "20px",
-                    "marginBottom": "20px",
-                    "marginLeft": "20px",
-                    "marginRight": "20px",
-                    "backgroundColor": null,
-                    "backgroundMediaId": null,
-                    "backgroundMedia": null,
-                    "backgroundMediaMode": "cover",
-                    "cssClass": null,
-                    "cmsSectionVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                    "visibility": null,
-                    "customFields": null,
-                    "apiAlias": "cms_block"
-                  }
-                ],
-                "pageId": "33e88c7994fa4cf79a1265e5105b93b2",
-                "page": null,
-                "position": 0,
-                "sizingMode": "boxed",
-                "mobileBehavior": "wrap",
-                "backgroundColor": null,
-                "backgroundMediaId": null,
-                "backgroundMedia": null,
-                "backgroundMediaMode": "cover",
-                "cssClass": null,
-                "cmsPageVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                "visibility": null,
-                "customFields": null,
-                "apiAlias": "cms_section"
-              }
-            ],
-            "translations": null,
-            "cssClass": null,
-            "config": null,
-            "previewMediaId": null,
-            "previewMedia": null,
-            "landingPages": null,
-            "id": "33e88c7994fa4cf79a1265e5105b93b2",
-            "customFields": null,
-            "apiAlias": "cms_page"
-          },
-          "category": {
-            "versionId": null,
-            "translated": {
-              "breadcrumb": []
-            },
-            "createdAt": null,
-            "updatedAt": null,
-            "afterCategoryId": null,
-            "parentId": null,
-            "mediaId": null,
-            "name": null,
-            "breadcrumb": [],
-            "path": null,
-            "level": null,
-            "active": null,
-            "childCount": null,
-            "visibleChildCount": 0,
-            "displayNestedProducts": null,
-            "parent": null,
-            "children": null,
-            "translations": null,
-            "media": null,
-            "cmsPageId": null,
-            "cmsPageIdSwitched": false,
-            "cmsPage": null,
-            "linkType": null,
-            "linkNewTab": null,
-            "internalLink": null,
-            "externalLink": null,
-            "visible": null,
-            "type": null,
-            "productAssignmentType": null,
-            "description": null,
-            "metaTitle": null,
-            "metaDescription": null,
-            "keywords": null,
-            "seoUrls": null,
-            "customEntityTypeId": null,
-            "id": "34f21c5eb6d54a939f10973204aa5f08",
-            "customFields": null,
-            "apiAlias": "category"
-          },
-          "apiAlias": "pwa_page_result"
-        }
-      },
-      "GetAttendeeInsightsResponse": {
-        "type": "object",
-        "description": "Returns aggregations for the current attendees within the appointment.",
-        "properties": {
-          "attendees": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/AttendeeInsights"
-            }
-          },
-          "currencyId": {
+            "description": "Identifier of the sales_channel_file row.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "currencySymbol": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "extensions": [],
-          "attendees": {
-            "04da9d8572494ae68391a471d4c3a470": {
-              "extensions": [],
-              "id": "04da9d8572494ae68391a471d4c3a470",
-              "cartSum": 6770.53,
-              "productCount": 3,
-              "lineItemCount": 3
-            }
+          "enabled": {
+            "description": "Whether this file is served publicly for the sales channel.",
+            "type": "boolean"
           },
-          "currencyId": "b7d2554b0ce847cd82f3ac9bd1c0dfca",
-          "currencySymbol": "$"
-        }
-      },
-      "GuidePresentationStateResponse": {
-        "type": "object",
-        "properties": {
-          "stateForAll": {
-            "$ref": "#/components/schemas/StateForAll"
-          },
-          "stateForClients": {
-            "$ref": "#/components/schemas/StateForGuides"
-          }
-        },
-        "example": {
-          "extensions": [],
-          "stateForAll": {
-            "currentGuideProductId": null,
-            "lastActiveGuideSection": null,
-            "currentPageId": null,
-            "currentSectionId": null,
-            "currentSlideAlias": 0,
-            "currentDynamicPage": null,
-            "started": false,
-            "running": false,
-            "ended": false,
-            "startedAt": null,
-            "endedAt": null,
-            "accessibleFrom": {
-              "date": "2023-08-04 00:00:00.000000",
-              "timezone_type": 3,
-              "timezone": "UTC"
-            },
-            "accessibleTo": {
-              "date": "2023-08-05 00:00:00.000000",
-              "timezone_type": 3,
-              "timezone": "UTC"
-            },
-            "appointmentMode": "guided",
-            "videoAudioSettings": "both",
-            "videoRoomUrl": "",
-            "attendeeRestrictionType": "open",
-            "productDetailDefaultPageId": "bea211b5099241719830df8026624f7f",
-            "quickviewPageId": "182d3f7f988044adbba449b70c8bc472",
-            "productListingDefaultPageId": "33e88c7994fa4cf79a1265e5105b93b2",
-            "broadcastMode": false,
-            "extensions": []
-          },
-          "stateForGuides": {
-            "clients": [],
-            "inactiveClients": {
-              "2b4066cd37a341088e32a81e04a56817": {
-                "attendeeId": "2b4066cd37a341088e32a81e04a56817",
-                "attendeeName": "Attendee 1",
-                "videoUserId": null,
-                "hasJoined": false
-              },
-              "302108ad602b4ac687f5247aae5d0297": {
-                "attendeeId": "302108ad602b4ac687f5247aae5d0297",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "5a3b4e84acab47119b8a6bceb79e732e": {
-                "attendeeId": "5a3b4e84acab47119b8a6bceb79e732e",
-                "attendeeName": "Test attende name",
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "b6358241e4ad4a4e99d0f729d21d63be": {
-                "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": true
-              },
-              "f1bb9374308d4e088c29d10a2fc8cc07": {
-                "attendeeId": "f1bb9374308d4e088c29d10a2fc8cc07",
-                "attendeeName": null,
-                "videoUserId": null,
-                "hasJoined": false
-              }
-            },
-            "guides": {
-              "1850bbdc12dc44aba95bc78b16c3643c": {
-                "attendeeId": "1850bbdc12dc44aba95bc78b16c3643c",
-                "attendeeName": " admin",
-                "videoUserId": null,
-                "hasJoined": true
-              }
-            },
-            "videoGuideToken": null,
-            "quickViewState": [],
-            "extensions": []
-          }
-        }
-      },
-      "JoinAppointmentResponse": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "mercureSubscriberTopics": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "mercure topic"
-            },
-            "description": "The topics to which the attendee/guide can subscribe for"
-          },
-          "mercurePublisherTopic": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The topic to which the attendee/guide can send updates"
-          },
-          "JWTMercureSubscriberToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to publish updates"
-          },
-          "mercureHubPublicUrl": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The mercure hub url to connect for subscribing and updating"
-          },
-          "JWTMercurePublisherToken": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The JWT mercure token to subscribe for updates"
-          },
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The appointment id"
-          },
-          "newContextToken": {
-            "type": "string",
-            "description": "The new context token will be used in the header (sw-context-token) for calling the other routes"
-          },
-          "attendeeId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The created Id for the attendee"
-          },
-          "salesChannelId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$",
-            "description": "The id of the current sales channel"
-          },
-          "salesChannelName": {
-            "type": "string",
-            "description": "The name of the current sales channel"
-          },
-          "appointmentName": {
-            "type": "string",
-            "description": "The name of the appointment"
-          },
-          "presentationGuideMode": {
-            "type": "string",
-            "enum": [
-              "self",
-              "guided"
-            ],
-            "description": "The type of the appointment"
-          },
-          "isPreview": {
-            "type": "boolean",
-            "description": "To see if it's a preview appointment"
-          },
-          "attendeeName": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The name of the attendee"
-          },
-          "videoUserId": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "The video user id that attendee could use"
-          },
-          "b2bFeatures": {
+          "templateOverrides": {
+            "description": "Merchant-provided Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
             "type": "object",
-            "description": "The b2b features that available for the appointment",
-            "properties": {
-              "quoteManagement": {
-                "type": "boolean",
-                "description": "To know if the quote management is enabled for current customer"
-              }
+            "additionalProperties": {
+              "type": "string"
             }
-          }
-        },
-        "example": {
-          "mercureSubscriberTopics": [
-            "gs-guide-actions-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-client-2d2c358f1ca04098aacf12873c2eed82",
-            "gs-presentation-state-for-all-2d2c358f1ca04098aacf12873c2eed82"
-          ],
-          "mercurePublisherTopic": "gs-client-actions-2d2c358f1ca04098aacf12873c2eed82",
-          "JWTMercureSubscriberToken": "jwt token for subscribing to updates",
-          "mercureHubPublicUrl": "http://localhost:8081/.well-known/mercure",
-          "JWTMercurePublisherToken": "jwt token for publishing updates",
-          "attendeeName": "attendee name",
-          "videoUserId": null,
-          "b2bFeatures": {
-            "feature1": false,
-            "feature2": true
-          },
-          "id": "2d2c358f1ca04098aacf12873c2eed82",
-          "newContextToken": "new context token to call the other routes",
-          "attendeeId": "b6358241e4ad4a4e99d0f729d21d63be",
-          "salesChannelId": "4a791ec7f9ff46b2ad67ae2f562891d3",
-          "salesChannelName": "Storefront",
-          "appointmentName": "Test Appointment",
-          "presentationGuideMode": "guided",
-          "isPreview": false,
-          "apiAlias": "swag_digital_sales_rooms_content_appointment_struct_appointment_join_struct"
-        }
-      },
-      "WidgetProductListing": {
-        "type": "object",
-        "description": "Includes all data you will need to attend to a appointment.",
-        "properties": {
-          "extensions": {
-            "type": "array",
-            "description": "List of extensions",
-            "default": []
-          },
-          "products": {
-            "type": "array",
-            "description": "List of last seen products",
-            "items": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Product"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "customFields": {
-                      "type": "object",
-                      "properties": {
-                        "wishlistAttendeeIds": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "total": {
-            "type": "integer",
-            "description": "The total number of products"
-          },
-          "page": {
-            "type": "integer",
-            "description": "The current page"
-          },
-          "limit": {
-            "type": "integer",
-            "description": "The number of products per page"
           }
         }
       },
-      "LineItemType": {
-        "type": "string",
-        "enum": [
-          "product",
-          "credit",
-          "custom",
-          "promotion",
-          "discount",
-          "container",
-          "quantity",
-          "dsr-line-item-discount",
-          "dsr-cart-discount"
-        ]
-      },
-      "DiscountLineItemPayload": {
+      "SalesChannelFileDescriptor": {
         "type": "object",
-        "properties": {
-          "discountType": {
-            "type": "string",
-            "enum": [
-              "percentage",
-              "absolute"
-            ]
-          },
-          "discountValue": {
-            "type": "number",
-            "format": "float",
-            "maximum": 0
-          },
-          "discountPrice": {
-            "type": "number",
-            "format": "float",
-            "maximum": 0
-          }
-        }
-      },
-      "LineItem": {
-        "type": "object",
-        "properties": {
-          "children": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LineItem"
-            }
-          },
-          "cover": {
-            "$ref": "#/components/schemas/ProductMedia"
-          },
-          "dataContextHash": {
-            "type": "string"
-          },
-          "dataTimestamp": {
-            "type": "string"
-          },
-          "deliveryInformation": {
-            "$ref": "#/components/schemas/CartDeliveryInformation"
-          },
-          "description": {
-            "type": "string"
-          },
-          "good": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          },
-          "modified": {
-            "type": "boolean"
-          },
-          "modifiedByApp": {
-            "type": "boolean"
-          },
-          "payload": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ProductJsonApi"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "discountType": {
-                    "type": "string",
-                    "enum": [
-                      "percentage",
-                      "absolute"
-                    ]
-                  },
-                  "discountValue": {
-                    "type": "number",
-                    "format": "float",
-                    "maximum": 0
-                  },
-                  "discountPrice": {
-                    "type": "number",
-                    "format": "float",
-                    "maximum": 0
-                  }
-                }
-              }
-            ]
-          },
-          "extensions": {
-            "type": "object",
-            "properties": {
-              "meta": {
-                "type": "object",
-                "properties": {
-                  "attendees": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "id",
-                        "name"
-                      ],
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "id": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "price": {
-            "type": "object",
-            "properties": {
-              "apiAlias": {
-                "type": "string",
-                "enum": [
-                  "calculated_price"
-                ]
-              },
-              "calculatedTaxes": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "apiAlias": {
-                      "type": "string",
-                      "enum": [
-                        "cart_tax_calculated"
-                      ]
-                    },
-                    "tax": {
-                      "type": "number"
-                    },
-                    "taxRate": {
-                      "type": "number"
-                    },
-                    "price": {
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "apiAlias",
-                    "tax",
-                    "taxRate",
-                    "price"
-                  ]
-                }
-              },
-              "listPrice": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/CartListPrice"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              "quantity": {
-                "type": "number"
-              },
-              "referencePrice": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/CartPriceReference"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              "regulationPrice": {
-                "type": "object",
-                "properties": {
-                  "price": {
-                    "type": "number"
-                  },
-                  "apiAlias": {
-                    "type": "string",
-                    "enum": [
-                      "cart_regulation_price"
-                    ]
-                  }
-                },
-                "nullable": true
-              },
-              "totalPrice": {
-                "type": "number"
-              },
-              "unitPrice": {
-                "type": "number"
-              },
-              "taxRules": {
-                "type": "array",
-                "description": "Currently active tax rules and/or rates",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "taxRate": {
-                      "type": "number",
-                      "format": "float"
-                    },
-                    "name": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "required": [
-              "apiAlias",
-              "totalPrice",
-              "quantity",
-              "unitPrice"
-            ]
-          },
-          "priceDefinition": {
-            "$ref": "#/components/schemas/CartPriceQuantity"
-          },
-          "quantity": {
-            "type": "number"
-          },
-          "quantityInformation": {
-            "type": "object",
-            "properties": {
-              "maxPurchase": {
-                "type": "number"
-              },
-              "minPurchase": {
-                "type": "number"
-              },
-              "purchaseSteps": {
-                "type": "number"
-              }
-            }
-          },
-          "referencedId": {
-            "type": "string"
-          },
-          "removable": {
-            "type": "boolean"
-          },
-          "stackable": {
-            "type": "boolean"
-          },
-          "states": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "is-physical",
-                "is-download"
-              ]
-            }
-          },
-          "type": {
-            "$ref": "#/components/schemas/LineItemType"
-          },
-          "uniqueIdentifier": {
-            "type": "string"
-          }
-        },
         "required": [
-          "id",
-          "type"
-        ]
-      },
-      "CartDeliveryPosition": {
-        "type": "object",
-        "description": "A list of all cart errors, such as insufficient stocks, invalid addresses or vouchers.",
+          "fileFamily",
+          "fileName",
+          "contentType",
+          "configuration"
+        ],
         "properties": {
-          "deliveryDate": {
-            "type": "object",
-            "properties": {
-              "earliest": {
-                "type": "string",
-                "format": "date-time"
+          "fileFamily": {
+            "description": "File family below `Resources/views/files`.",
+            "type": "string",
+            "maxLength": 64
+          },
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "contentType": {
+            "description": "Detected response content type for the public file.",
+            "type": "string",
+            "examples": [
+              "text/plain; charset=utf-8"
+            ]
+          },
+          "configuration": {
+            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
               },
-              "latest": {
-                "type": "string",
-                "format": "date-time"
+              {
+                "type": "null"
               }
+            ]
+          }
+        }
+      },
+      "SalesChannelFileDetail": {
+        "type": "object",
+        "required": [
+          "fileFamily",
+          "fileName",
+          "templatePath",
+          "contentType",
+          "templates",
+          "supportsUserProvidedContent",
+          "configuration"
+        ],
+        "properties": {
+          "fileFamily": {
+            "description": "File family below `Resources/views/files`.",
+            "type": "string",
+            "maxLength": 64
+          },
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "templatePath": {
+            "description": "Relative Twig template path used for rendering.",
+            "type": "string",
+            "examples": [
+              "files/agentic/llms.txt.twig"
+            ]
+          },
+          "contentType": {
+            "description": "Detected response content type for the public file.",
+            "type": "string",
+            "examples": [
+              "text/plain; charset=utf-8"
+            ]
+          },
+          "templates": {
+            "description": "Contributing Twig templates in resolved inheritance order.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesChannelFileTemplate"
             }
           },
-          "identifier": {
+          "supportsUserProvidedContent": {
+            "description": "Whether the template chain exposes the `user_provided_content` block for simple appended merchant notes.",
+            "type": "boolean"
+          },
+          "configuration": {
+            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SalesChannelFileDetailResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/SalesChannelFileDetail"
+          }
+        }
+      },
+      "SalesChannelFileListResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesChannelFileDescriptor"
+            }
+          }
+        }
+      },
+      "SalesChannelFilePreviewRequest": {
+        "type": "object",
+        "required": [
+          "fileName"
+        ],
+        "properties": {
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "templateOverrides": {
+            "description": "Unsaved Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SalesChannelFilePreviewResponse": {
+        "type": "object",
+        "required": [
+          "fileName",
+          "contentType",
+          "content"
+        ],
+        "properties": {
+          "fileName": {
+            "description": "Public file path without a leading slash.",
             "type": "string"
           },
-          "lineItem": {
-            "$ref": "#/components/schemas/LineItem"
+          "contentType": {
+            "description": "Detected content type of the rendered file.",
+            "type": "string"
           },
-          "price": {
-            "$ref": "#/components/schemas/CalculatedPrice"
+          "content": {
+            "description": "Rendered file content.",
+            "type": "string"
+          }
+        }
+      },
+      "SalesChannelFileTemplate": {
+        "type": "object",
+        "required": [
+          "twigNamespace",
+          "templateName",
+          "templateContent",
+          "role"
+        ],
+        "properties": {
+          "twigNamespace": {
+            "description": "Twig namespace that contributed the template, for example `Framework` or a plugin name.",
+            "type": "string"
+          },
+          "templateName": {
+            "description": "Resolved Twig template name.",
+            "type": "string",
+            "examples": [
+              "@Framework/files/agentic/llms.txt.twig"
+            ]
+          },
+          "templateContent": {
+            "description": "Original source template content. Administration clients can use this as the default text when editing a template override.",
+            "type": "string"
+          },
+          "role": {
+            "description": "Whether this source provides the base template or extends another source in the resolved template chain.",
+            "type": "string",
+            "enum": [
+              "base",
+              "extension"
+            ]
           }
         }
       }
