@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8000/api"
+      "url": "/api"
     }
   ],
   "paths": {
@@ -5421,6 +5421,50 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/_action/translation/meta": {
+      "get": {
+        "tags": [
+          "Translation Management"
+        ],
+        "summary": "Get translation meta information",
+        "description": "Returns translation meta information that is independent of the configured locales: the built-in locales, the community translation and documentation URLs and the completeness threshold.",
+        "operationId": "translationMeta",
+        "responses": {
+          "200": {
+            "description": "The translation meta information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "builtInLocales": {
+                      "description": "Locale codes shipped with the platform and excluded from the community translation download.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "communityTranslationsUrl": {
+                      "description": "URL of the community translation platform, or null if not configured.",
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "documentationUrlSnippetKey": {
+                      "description": "Admin snippet key that resolves to the localized translation documentation URL, or null if not configured.",
+                      "type": "string"
+                    },
+                    "completenessThreshold": {
+                      "description": "Minimum translation completeness in percent considered sufficient.",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -15629,6 +15673,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "typeName": {
+                "description": "Technical name of the document type.",
+                "type": "string"
+              },
               "referencedDocumentId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -15912,6 +15960,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "typeName": {
+            "description": "Technical name of the document type.",
+            "type": "string"
+          },
           "referencedDocumentId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
@@ -16012,6 +16064,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "typeName": {
+                "description": "Technical name of the document type.",
+                "type": "string"
+              },
               "logoId": {
                 "description": "Unique identity of the company logo.",
                 "type": "string",
@@ -16028,6 +16084,9 @@
               "filenameSuffix": {
                 "description": "A suffix name added to the file name separated by an underscore.",
                 "type": "string"
+              },
+              "filenameInfixes": {
+                "type": "object"
               },
               "global": {
                 "description": "When set to `true`, the document can be used across all sales channels.",
@@ -16208,6 +16267,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "typeName": {
+            "description": "Technical name of the document type.",
+            "type": "string"
+          },
           "logoId": {
             "description": "Unique identity of the company logo.",
             "type": "string",
@@ -16224,6 +16287,9 @@
           "filenameSuffix": {
             "description": "A suffix name added to the file name separated by an underscore.",
             "type": "string"
+          },
+          "filenameInfixes": {
+            "type": "object"
           },
           "global": {
             "description": "When set to `true`, the document can be used across all sales channels.",
@@ -16333,6 +16399,10 @@
                 "description": "Unique identity of document type.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
+              },
+              "typeName": {
+                "description": "Technical name of the document type.",
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -16467,6 +16537,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "typeName": {
+            "description": "Technical name of the document type.",
+            "type": "string"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -16508,14 +16582,17 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "documentId": {
+                "description": "Unique identity of the document.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
               "mediaId": {
+                "description": "Unique identity of the media.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
               "documentFormat": {
+                "description": "Document format of the document file.",
                 "type": "string"
               },
               "createdAt": {
@@ -16610,14 +16687,17 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "documentId": {
+            "description": "Unique identity of the document.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
           "mediaId": {
+            "description": "Unique identity of the media.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
           "documentFormat": {
+            "description": "Document format of the document file.",
             "type": "string"
           },
           "createdAt": {
@@ -18771,6 +18851,10 @@
               "active": {
                 "type": "boolean"
               },
+              "translationAutoUpdate": {
+                "description": "Whether the scheduled task keeps the community translations of this language up to date. Enabled by default and only applied to linked languages.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -19255,6 +19339,10 @@
             "type": "string"
           },
           "active": {
+            "type": "boolean"
+          },
+          "translationAutoUpdate": {
+            "description": "Whether the scheduled task keeps the community translations of this language up to date. Enabled by default and only applied to linked languages.",
             "type": "boolean"
           },
           "customFields": {
@@ -41369,6 +41457,10 @@
                 "description": "This is used to toggle the language configurations, say between DE and DE-DE for instance.",
                 "type": "boolean"
               },
+              "isExternalStorefront": {
+                "description": "Whether the domain points to an external (headless) storefront.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -41612,6 +41704,10 @@
           },
           "hreflangUseOnlyLocale": {
             "description": "This is used to toggle the language configurations, say between DE and DE-DE for instance.",
+            "type": "boolean"
+          },
+          "isExternalStorefront": {
+            "description": "Whether the domain points to an external (headless) storefront.",
             "type": "boolean"
           },
           "customFields": {
@@ -43162,6 +43258,10 @@
                 "description": "Created SEO URL template can be made usable by setting `isValid` to true.",
                 "type": "boolean"
               },
+              "isHeadless": {
+                "description": "Whether the template applies to headless (API type) sales channels. Derived from the route family.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -43245,6 +43345,10 @@
           },
           "isValid": {
             "description": "Created SEO URL template can be made usable by setting `isValid` to true.",
+            "type": "boolean"
+          },
+          "isHeadless": {
+            "description": "Whether the template applies to headless (API type) sales channels. Derived from the route family.",
             "type": "boolean"
           },
           "customFields": {
@@ -51107,313 +51211,6 @@
         },
         "type": "object"
       },
-      "ConsentState": {
-        "type": "object",
-        "required": [
-          "name",
-          "scopeName",
-          "identifier",
-          "status",
-          "actor",
-          "updatedAt",
-          "acceptedUntil"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the consent"
-          },
-          "scopeName": {
-            "type": "string",
-            "description": "The scope of the consent that defines how the identifier is resolved"
-          },
-          "identifier": {
-            "type": "string",
-            "description": "The resolved identifier of the consent"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "unset",
-              "accepted",
-              "revoked"
-            ],
-            "description": "The current status of the consent (requested, accepted, revoked)"
-          },
-          "actor": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The user name of the user who made the consent decision. null if never updated"
-          },
-          "updatedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp of when the consent status was last updated. null if never updated"
-          },
-          "acceptedUntil": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp until when the consent is accepted. null if never accepted"
-          },
-          "acceptedRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
-          },
-          "latestRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
-          }
-        }
-      },
-      "SalesChannelFileConfiguration": {
-        "type": "object",
-        "required": [
-          "id",
-          "enabled",
-          "templateOverrides"
-        ],
-        "properties": {
-          "id": {
-            "description": "Identifier of the sales_channel_file row.",
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "enabled": {
-            "description": "Whether this file is served publicly for the sales channel.",
-            "type": "boolean"
-          },
-          "templateOverrides": {
-            "description": "Merchant-provided Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "SalesChannelFileDescriptor": {
-        "type": "object",
-        "required": [
-          "fileFamily",
-          "fileName",
-          "contentType",
-          "configuration"
-        ],
-        "properties": {
-          "fileFamily": {
-            "description": "File family below `Resources/views/files`.",
-            "type": "string",
-            "maxLength": 64
-          },
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
-          },
-          "contentType": {
-            "description": "Detected response content type for the public file.",
-            "type": "string",
-            "examples": [
-              "text/plain; charset=utf-8"
-            ]
-          },
-          "configuration": {
-            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "SalesChannelFileDetail": {
-        "type": "object",
-        "required": [
-          "fileFamily",
-          "fileName",
-          "templatePath",
-          "contentType",
-          "templates",
-          "supportsUserProvidedContent",
-          "configuration"
-        ],
-        "properties": {
-          "fileFamily": {
-            "description": "File family below `Resources/views/files`.",
-            "type": "string",
-            "maxLength": 64
-          },
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
-          },
-          "templatePath": {
-            "description": "Relative Twig template path used for rendering.",
-            "type": "string",
-            "examples": [
-              "files/agentic/llms.txt.twig"
-            ]
-          },
-          "contentType": {
-            "description": "Detected response content type for the public file.",
-            "type": "string",
-            "examples": [
-              "text/plain; charset=utf-8"
-            ]
-          },
-          "templates": {
-            "description": "Contributing Twig templates in resolved inheritance order.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SalesChannelFileTemplate"
-            }
-          },
-          "supportsUserProvidedContent": {
-            "description": "Whether the template chain exposes the `user_provided_content` block for simple appended merchant notes.",
-            "type": "boolean"
-          },
-          "configuration": {
-            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "SalesChannelFileDetailResponse": {
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/SalesChannelFileDetail"
-          }
-        }
-      },
-      "SalesChannelFileListResponse": {
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SalesChannelFileDescriptor"
-            }
-          }
-        }
-      },
-      "SalesChannelFilePreviewRequest": {
-        "type": "object",
-        "required": [
-          "fileName"
-        ],
-        "properties": {
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
-          },
-          "templateOverrides": {
-            "description": "Unsaved Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "SalesChannelFilePreviewResponse": {
-        "type": "object",
-        "required": [
-          "fileName",
-          "contentType",
-          "content"
-        ],
-        "properties": {
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string"
-          },
-          "contentType": {
-            "description": "Detected content type of the rendered file.",
-            "type": "string"
-          },
-          "content": {
-            "description": "Rendered file content.",
-            "type": "string"
-          }
-        }
-      },
-      "SalesChannelFileTemplate": {
-        "type": "object",
-        "required": [
-          "twigNamespace",
-          "templateName",
-          "templateContent",
-          "role"
-        ],
-        "properties": {
-          "twigNamespace": {
-            "description": "Twig namespace that contributed the template, for example `Framework` or a plugin name.",
-            "type": "string"
-          },
-          "templateName": {
-            "description": "Resolved Twig template name.",
-            "type": "string",
-            "examples": [
-              "@Framework/files/agentic/llms.txt.twig"
-            ]
-          },
-          "templateContent": {
-            "description": "Original source template content. Administration clients can use this as the default text when editing a template override.",
-            "type": "string"
-          },
-          "role": {
-            "description": "Whether this source provides the base template or extends another source in the resolved template chain.",
-            "type": "string",
-            "enum": [
-              "base",
-              "extension"
-            ]
-          }
-        }
-      },
       "Criteria": {
         "type": "object",
         "description": "Search parameters. For more information, see our documentation on [Search Queries](https://shopware.stoplight.io/docs/store-api/docs/concepts/search-queries.md#structure)",
@@ -52120,6 +51917,373 @@
           "field"
         ]
       },
+      "MeasurementUnits": {
+        "type": "object",
+        "description": "Configuration of the measurement system",
+        "properties": {
+          "system": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+          },
+          "units": {
+            "type": "object",
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
+              }
+            }
+          }
+        }
+      },
+      "MediaId": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}$",
+        "description": "Media entity ID"
+      },
+      "ExternalThumbnail": {
+        "type": "object",
+        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
+        "required": [
+          "url",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
+            "example": "https://cdn.example.com/image-200x200.jpg"
+          },
+          "width": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Width of the thumbnail in pixels",
+            "example": 200
+          },
+          "height": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Height of the thumbnail in pixels",
+            "example": 200
+          }
+        }
+      },
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "refresh_token"
+            ]
+          }
+        ]
+      },
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "description": "Unique identity of the associated currency.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "Gross price for the associated currency.",
+            "type": "number"
+          },
+          "net": {
+            "description": "Net price for the associated currency.",
+            "type": "number"
+          },
+          "linked": {
+            "description": "Whether gross and net prices are linked through the tax configuration.",
+            "type": "boolean"
+          },
+          "percentage": {
+            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "gross": {
+                "description": "Discount percentage relative to the gross list price.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Discount percentage relative to the net list price.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          },
+          "listPrice": {
+            "description": "Reference list price for displaying discounts.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross list price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net list price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net list prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          },
+          "regulationPrice": {
+            "description": "Reference price used for legal price disclosures.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross regulation price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net regulation price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
+        ]
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -52352,372 +52516,312 @@
         ],
         "additionalProperties": false
       },
-      "Price": {
+      "ConsentState": {
         "type": "object",
-        "description": "Price object",
+        "required": [
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt",
+          "acceptedUntil"
+        ],
         "properties": {
-          "currencyId": {
-            "description": "Unique identity of the associated currency.",
+          "name": {
+            "type": "string",
+            "description": "The name of the consent"
+          },
+          "scopeName": {
+            "type": "string",
+            "description": "The scope of the consent that defines how the identifier is resolved"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unset",
+              "accepted",
+              "revoked"
+            ],
+            "description": "The current status of the consent (requested, accepted, revoked)"
+          },
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          },
+          "acceptedUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp until when the consent is accepted. null if never accepted"
+          },
+          "acceptedRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
+          },
+          "latestRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
+          }
+        }
+      },
+      "SalesChannelFileConfiguration": {
+        "type": "object",
+        "required": [
+          "id",
+          "enabled",
+          "templateOverrides"
+        ],
+        "properties": {
+          "id": {
+            "description": "Identifier of the sales_channel_file row.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "gross": {
-            "description": "Gross price for the associated currency.",
-            "type": "number"
-          },
-          "net": {
-            "description": "Net price for the associated currency.",
-            "type": "number"
-          },
-          "linked": {
-            "description": "Whether gross and net prices are linked through the tax configuration.",
+          "enabled": {
+            "description": "Whether this file is served publicly for the sales channel.",
             "type": "boolean"
           },
-          "percentage": {
-            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
-            "type": [
-              "object",
-              "null"
-            ],
-            "properties": {
-              "gross": {
-                "description": "Discount percentage relative to the gross list price.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Discount percentage relative to the net list price.",
-                "type": "number"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          },
-          "listPrice": {
-            "description": "Reference list price for displaying discounts.",
+          "templateOverrides": {
+            "description": "Merchant-provided Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
             "type": "object",
-            "properties": {
-              "currencyId": {
-                "description": "Unique identity of the associated currency.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "Gross list price for the associated currency.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Net list price for the associated currency.",
-                "type": "number"
-              },
-              "linked": {
-                "description": "Whether gross and net list prices are linked through the tax configuration.",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          },
-          "regulationPrice": {
-            "description": "Reference price used for legal price disclosures.",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "description": "Unique identity of the associated currency.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "Gross regulation price for the associated currency.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Net regulation price for the associated currency.",
-                "type": "number"
-              },
-              "linked": {
-                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net",
-          "linked"
-        ]
-      },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
+            "additionalProperties": {
+              "type": "string"
             }
           }
         }
       },
-      "MeasurementUnits": {
+      "SalesChannelFileDescriptor": {
         "type": "object",
-        "description": "Configuration of the measurement system",
-        "properties": {
-          "system": {
-            "type": "string",
-            "enum": [
-              "metric",
-              "imperial"
-            ],
-            "default": "metric",
-            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
-          },
-          "units": {
-            "type": "object",
-            "description": "Units used in the measurement system.",
-            "properties": {
-              "length": {
-                "type": "string",
-                "enum": [
-                  "mm",
-                  "cm",
-                  "m",
-                  "in",
-                  "ft"
-                ],
-                "default": "mm",
-                "description": "Unit of length."
-              },
-              "weight": {
-                "type": "string",
-                "enum": [
-                  "g",
-                  "kg",
-                  "oz",
-                  "lb"
-                ],
-                "default": "kg",
-                "description": "Unit of weight."
-              }
-            }
-          }
-        }
-      },
-      "MediaId": {
-        "type": "string",
-        "pattern": "^[0-9a-f]{32}$",
-        "description": "Media entity ID"
-      },
-      "ExternalThumbnail": {
-        "type": "object",
-        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
         "required": [
-          "url",
-          "width",
-          "height"
+          "fileFamily",
+          "fileName",
+          "contentType",
+          "configuration"
         ],
         "properties": {
-          "url": {
+          "fileFamily": {
+            "description": "File family below `Resources/views/files`.",
             "type": "string",
-            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
-            "example": "https://cdn.example.com/image-200x200.jpg"
+            "maxLength": 64
           },
-          "width": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Width of the thumbnail in pixels",
-            "example": 200
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
           },
-          "height": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Height of the thumbnail in pixels",
-            "example": 200
+          "contentType": {
+            "description": "Detected response content type for the public file.",
+            "type": "string",
+            "examples": [
+              "text/plain; charset=utf-8"
+            ]
+          },
+          "configuration": {
+            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         }
       },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "SalesChannelFileDetail": {
+        "type": "object",
+        "required": [
+          "fileFamily",
+          "fileName",
+          "templatePath",
+          "contentType",
+          "templates",
+          "supportsUserProvidedContent",
+          "configuration"
+        ],
+        "properties": {
+          "fileFamily": {
+            "description": "File family below `Resources/views/files`.",
+            "type": "string",
+            "maxLength": 64
+          },
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "templatePath": {
+            "description": "Relative Twig template path used for rendering.",
+            "type": "string",
+            "examples": [
+              "files/agentic/llms.txt.twig"
+            ]
+          },
+          "contentType": {
+            "description": "Detected response content type for the public file.",
+            "type": "string",
+            "examples": [
+              "text/plain; charset=utf-8"
+            ]
+          },
+          "templates": {
+            "description": "Contributing Twig templates in resolved inheritance order.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesChannelFileTemplate"
+            }
+          },
+          "supportsUserProvidedContent": {
+            "description": "Whether the template chain exposes the `user_provided_content` block for simple appended merchant notes.",
+            "type": "boolean"
+          },
+          "configuration": {
+            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
               },
-              "description": "Extensions data of event"
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SalesChannelFileDetailResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/SalesChannelFileDetail"
+          }
+        }
+      },
+      "SalesChannelFileListResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesChannelFileDescriptor"
             }
           }
         }
       },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
+      "SalesChannelFilePreviewRequest": {
         "type": "object",
+        "required": [
+          "fileName"
+        ],
         "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "templateOverrides": {
+            "description": "Unsaved Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SalesChannelFilePreviewResponse": {
+        "type": "object",
+        "required": [
+          "fileName",
+          "contentType",
+          "content"
+        ],
+        "properties": {
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string"
+          },
+          "contentType": {
+            "description": "Detected content type of the rendered file.",
+            "type": "string"
+          },
+          "content": {
+            "description": "Rendered file content.",
             "type": "string"
           }
-        },
-        "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
-          }
         }
       },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
+      "SalesChannelFileTemplate": {
+        "type": "object",
+        "required": [
+          "twigNamespace",
+          "templateName",
+          "templateContent",
+          "role"
+        ],
+        "properties": {
+          "twigNamespace": {
+            "description": "Twig namespace that contributed the template, for example `Framework` or a plugin name.",
+            "type": "string"
           },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
+          "templateName": {
+            "description": "Resolved Twig template name.",
+            "type": "string",
+            "examples": [
+              "@Framework/files/agentic/llms.txt.twig"
+            ]
+          },
+          "templateContent": {
+            "description": "Original source template content. Administration clients can use this as the default text when editing a template override.",
+            "type": "string"
+          },
+          "role": {
+            "description": "Whether this source provides the base template or extends another source in the resolved template chain.",
+            "type": "string",
+            "enum": [
+              "base",
+              "extension"
             ]
           }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "refresh_token"
-            ]
-          }
-        ]
+        }
       }
     },
     "responses": {
