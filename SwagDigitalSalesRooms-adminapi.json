@@ -5941,43 +5941,65 @@
         ]
       }
     },
-    "/_action/translation/meta": {
-      "get": {
+    "/_action/order/document-v2/download-archive": {
+      "post": {
         "tags": [
-          "Translation Management"
+          "Document Management",
+          "Experimental"
         ],
-        "summary": "Get translation meta information",
-        "description": "Returns translation meta information that is independent of the configured locales: the built-in locales, the community translation and documentation URLs and the completeness threshold.",
-        "operationId": "translationMeta",
+        "summary": "Download one or more Document V2 documents as ZIP",
+        "description": "Downloads all persisted formats for the requested Document V2 documents as one ZIP archive. The archive contains one file per persisted format per document, and additionally includes the media of documents that were created by document generation v1. Entries are named `{orderNumber}_{fileName}.{extension}` to avoid collisions across documents. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "downloadDocumentV2Archive",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "documentIds"
+                ],
+                "properties": {
+                  "documentIds": {
+                    "description": "Identifiers of the documents to include in the archive. At most 100 per request.",
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 100,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "example": [
+                      "018f5972f9ea72a0be49f7c39f72a2a0"
+                    ]
+                  }
+                },
+                "example": {
+                  "documentIds": [
+                    "018f5972f9ea72a0be49f7c39f72a2a0"
+                  ]
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "The translation meta information.",
-            "content": {
-              "application/json": {
+            "description": "A ZIP archive containing all persisted files for the requested documents.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Contains the attachment filename.",
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "builtInLocales": {
-                      "description": "Locale codes shipped with the platform and excluded from the community translation download.",
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "communityTranslationsUrl": {
-                      "description": "URL of the community translation platform, or null if not configured.",
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "documentationUrlSnippetKey": {
-                      "description": "Admin snippet key that resolves to the localized translation documentation URL, or null if not configured.",
-                      "type": "string"
-                    },
-                    "completenessThreshold": {
-                      "description": "Minimum translation completeness in percent considered sufficient.",
-                      "type": "integer"
-                    }
-                  }
+                  "type": "string",
+                  "example": "attachment; filename=1000.zip"
+                }
+              }
+            },
+            "content": {
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -16381,17 +16403,13 @@
           {
             "required": [
               "id",
-              "documentTypeId",
               "orderId",
               "config",
-              "deepLinkCode"
+              "deepLinkCode",
+              "documentTypeId"
             ],
             "properties": {
               "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "documentTypeId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -16437,6 +16455,11 @@
               "customFields": {
                 "type": "object"
               },
+              "documentTypeId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -16449,35 +16472,6 @@
               },
               "relationships": {
                 "properties": {
-                  "documentType": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/document/0945359809dad1fbf3dea1c95a0da951/documentType"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "document_type"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "2e45fec65781ec559e2aea39372a55cd"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "order": {
                     "properties": {
                       "links": {
@@ -16655,6 +16649,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentType": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document/0945359809dad1fbf3dea1c95a0da951/documentType"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document_type"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "2e45fec65781ec559e2aea39372a55cd"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -16668,17 +16691,13 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "documentTypeId",
           "orderId",
           "config",
-          "deepLinkCode"
+          "deepLinkCode",
+          "documentTypeId"
         ],
         "properties": {
           "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "documentTypeId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -16724,6 +16743,11 @@
           "customFields": {
             "type": "object"
           },
+          "documentTypeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -16733,9 +16757,6 @@
             "type": "string",
             "format": "date-time",
             "readOnly": true
-          },
-          "documentType": {
-            "$ref": "#/components/schemas/DocumentType"
           },
           "order": {
             "$ref": "#/components/schemas/Order"
@@ -16760,6 +16781,9 @@
             "items": {
               "$ref": "#/components/schemas/DocumentFile"
             }
+          },
+          "documentType": {
+            "$ref": "#/components/schemas/DocumentType"
           }
         },
         "type": "object"
@@ -16773,16 +16797,11 @@
           {
             "required": [
               "id",
-              "documentTypeId",
-              "name"
+              "name",
+              "documentTypeId"
             ],
             "properties": {
               "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "documentTypeId": {
-                "description": "Unique identity of the document type.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -16867,6 +16886,12 @@
                 "type": "object",
                 "deprecated": true
               },
+              "documentTypeId": {
+                "description": "Unique identity of the document type.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
+              },
               "updatedAt": {
                 "type": "string",
                 "format": "date-time",
@@ -16874,35 +16899,6 @@
               },
               "relationships": {
                 "properties": {
-                  "documentType": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/document-base-config/4f8577ec262a1e35dfd795dc6bbde573/documentType"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "document_type"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "2e45fec65781ec559e2aea39372a55cd"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "logo": {
                     "description": "Logo in the document at the top-right corner.",
                     "properties": {
@@ -16963,6 +16959,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentType": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document-base-config/4f8577ec262a1e35dfd795dc6bbde573/documentType"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document_type"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "2e45fec65781ec559e2aea39372a55cd"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -16976,16 +17001,11 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "documentTypeId",
-          "name"
+          "name",
+          "documentTypeId"
         ],
         "properties": {
           "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "documentTypeId": {
-            "description": "Unique identity of the document type.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -17070,13 +17090,16 @@
             "type": "object",
             "deprecated": true
           },
+          "documentTypeId": {
+            "description": "Unique identity of the document type.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
+          },
           "updatedAt": {
             "type": "string",
             "format": "date-time",
             "readOnly": true
-          },
-          "documentType": {
-            "$ref": "#/components/schemas/DocumentType"
           },
           "logo": {
             "$ref": "#/components/schemas/Media",
@@ -17087,6 +17110,9 @@
             "items": {
               "$ref": "#/components/schemas/DocumentBaseConfigSalesChannel"
             }
+          },
+          "documentType": {
+            "$ref": "#/components/schemas/DocumentType"
           }
         },
         "type": "object"
@@ -17117,14 +17143,15 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
-              "documentTypeId": {
-                "description": "Unique identity of document type.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
               "typeName": {
                 "description": "Technical name of the document type.",
                 "type": "string"
+              },
+              "documentTypeId": {
+                "description": "Unique identity of document type.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "createdAt": {
                 "type": "string",
@@ -17138,35 +17165,6 @@
               },
               "relationships": {
                 "properties": {
-                  "documentType": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/document-base-config-sales-channel/02a1d1c4385bb5549fa51f219bb79824/documentType"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "document_type"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "2e45fec65781ec559e2aea39372a55cd"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "documentBaseConfig": {
                     "properties": {
                       "links": {
@@ -17224,6 +17222,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentType": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document-base-config-sales-channel/02a1d1c4385bb5549fa51f219bb79824/documentType"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document_type"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "2e45fec65781ec559e2aea39372a55cd"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -17254,14 +17281,15 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "documentTypeId": {
-            "description": "Unique identity of document type.",
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
           "typeName": {
             "description": "Technical name of the document type.",
             "type": "string"
+          },
+          "documentTypeId": {
+            "description": "Unique identity of document type.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -17273,14 +17301,14 @@
             "format": "date-time",
             "readOnly": true
           },
-          "documentType": {
-            "$ref": "#/components/schemas/DocumentType"
-          },
           "documentBaseConfig": {
             "$ref": "#/components/schemas/DocumentBaseConfig"
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
+          },
+          "documentType": {
+            "$ref": "#/components/schemas/DocumentType"
           }
         },
         "type": "object"
@@ -47703,6 +47731,10 @@
               "internalComment": {
                 "type": "string"
               },
+              "sourceType": {
+                "description": "Type of the API context source which triggered the transition.",
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -47927,6 +47959,10 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "internalComment": {
+            "type": "string"
+          },
+          "sourceType": {
+            "description": "Type of the API context source which triggered the transition.",
             "type": "string"
           },
           "createdAt": {
