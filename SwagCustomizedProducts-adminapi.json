@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.7.12.1"
+    "version": "6.7.13.1"
   },
   "servers": [
     {
@@ -5421,6 +5421,359 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/_action/customer-convert/{customerId}": {
+      "post": {
+        "tags": [
+          "Customer convert"
+        ],
+        "summary": "Convert guest customer to registered customer",
+        "description": "Converts an existing guest customer into a registered customer. If a password is provided, the customer can immediately log in using that password. If no password is provided, a password recovery email will be sent to the customer so they can set their password.",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "description": "The id of the customer that should be converted.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "description": "Optional data for the conversion process.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "description": "Optional password for the customer. If provided, the customer can log in immediately using this password. If omitted, a password recovery email will be sent."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Customer successfully converted to a registered customer."
+          },
+          "401": {
+            "description": "The customer with the specified ID could not be found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The customer is not a guest, or the sales channel domain could not be found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/translation/list": {
+      "get": {
+        "tags": [
+          "Translation Management"
+        ],
+        "summary": "List configured translation locales",
+        "description": "Lists every locale configured for translation download together with its locally installed metadata.",
+        "operationId": "translationList",
+        "responses": {
+          "200": {
+            "description": "The configured locales and their installed metadata.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "description": "Number of configured locales.",
+                      "type": "integer"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "locale": {
+                            "description": "The locale code, for example `de-DE`.",
+                            "type": "string"
+                          },
+                          "name": {
+                            "description": "The configured language name.",
+                            "type": "string"
+                          },
+                          "lastUpdate": {
+                            "description": "ISO-8601 timestamp of the last installation, or null if not installed.",
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "progress": {
+                            "description": "Translation completeness in percent, or null if not installed.",
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/translation/install": {
+      "post": {
+        "tags": [
+          "Translation Management"
+        ],
+        "summary": "Install translations for locales",
+        "description": "Downloads and installs translations for the given locales, or for all configured locales when `all` is set. Created languages are activated unless `activate` is set to `false`.",
+        "operationId": "translationInstall",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "locales": {
+                    "description": "Locale codes to install, for example `[\"de-DE\", \"fr-FR\"]`. Required unless `all` is true.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "all": {
+                    "description": "Install all configured locales instead of the `locales` list.",
+                    "type": "boolean"
+                  },
+                  "activate": {
+                    "description": "Whether created languages are activated. Defaults to true.",
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The locales that were updated and the ones skipped as already up to date.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "updated": {
+                      "description": "Locale codes that were downloaded and installed.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "skipped": {
+                      "description": "Locale codes that were already up to date.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "unavailable": {
+                      "description": "Requested locale codes that have no translation available and were not installed.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/translation/update": {
+      "post": {
+        "tags": [
+          "Translation Management"
+        ],
+        "summary": "Update all installed translations",
+        "description": "Updates all installed translations.",
+        "operationId": "translationUpdate",
+        "responses": {
+          "200": {
+            "description": "The locales that were updated and the ones skipped as already up to date.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "updated": {
+                      "description": "Locale codes that were downloaded and installed.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "skipped": {
+                      "description": "Locale codes that were already up to date.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "unavailable": {
+                      "description": "Requested locale codes that have no translation available and were not installed.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/translation/{locale}": {
+      "delete": {
+        "tags": [
+          "Translation Management"
+        ],
+        "summary": "Uninstall a translation",
+        "description": "Removes the downloaded translation files and the metadata entry for the given locale. The associated language, locale and snippet set records are left untouched and can be managed through their regular admin API endpoints.",
+        "operationId": "translationDelete",
+        "parameters": [
+          {
+            "name": "locale",
+            "in": "path",
+            "description": "The locale code to uninstall, for example `de-DE`.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The translation files and metadata entry were removed."
+          }
+        }
+      }
+    },
+    "/_action/media/{mediaId}/download": {
+      "get": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Download a media file",
+        "description": "Downloads a media file by its identifier.",
+        "operationId": "downloadMedia",
+        "parameters": [
+          {
+            "name": "mediaId",
+            "in": "path",
+            "description": "Identifier of the media entity.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/MediaId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The media file.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "302": {
+            "description": "Redirects to the resolved media download URL.",
+            "headers": {
+              "Location": {
+                "description": "Contains the resolved media download URL.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/media/{mediaId}/download/prepare": {
+      "get": {
+        "tags": [
+          "Asset Management"
+        ],
+        "summary": "Prepare a media download",
+        "description": "Resolves the browser download URL for a media file by its identifier.",
+        "operationId": "prepareMediaDownload",
+        "parameters": [
+          {
+            "name": "mediaId",
+            "in": "path",
+            "description": "Identifier of the media entity.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/MediaId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The resolved browser download strategy.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "type"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "external",
+                        "blob"
+                      ],
+                      "description": "Whether the frontend should trigger an external URL directly or fall back to an authenticated blob download."
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "External URL that should be used by the browser to start the download."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -12848,6 +13201,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "extensionName": {
+                "description": "Name of the plugin or app that owns this custom field set.",
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -13025,6 +13382,10 @@
             "description": "Unique identity of an app.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
+          },
+          "extensionName": {
+            "description": "Name of the plugin or app that owns this custom field set.",
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -17868,11 +18229,11 @@
             "required": [
               "id",
               "technicalName",
-              "label",
               "sourceEntity",
               "fileType",
               "delimiter",
-              "enclosure"
+              "enclosure",
+              "label"
             ],
             "properties": {
               "id": {
@@ -17880,9 +18241,6 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "technicalName": {
-                "type": "string"
-              },
-              "label": {
                 "type": "string"
               },
               "type": {
@@ -17916,6 +18274,9 @@
               },
               "config": {
                 "type": "object"
+              },
+              "label": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -17976,11 +18337,11 @@
         "required": [
           "id",
           "technicalName",
-          "label",
           "sourceEntity",
           "fileType",
           "delimiter",
-          "enclosure"
+          "enclosure",
+          "label"
         ],
         "properties": {
           "id": {
@@ -17988,9 +18349,6 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "technicalName": {
-            "type": "string"
-          },
-          "label": {
             "type": "string"
           },
           "type": {
@@ -18024,6 +18382,9 @@
           },
           "config": {
             "type": "object"
+          },
+          "label": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -35231,6 +35592,10 @@
                 "description": "When the boolean value is `true` indicating that it is for internal use only and will not appear in product stream listings.",
                 "type": "boolean"
               },
+              "displayAsGroup": {
+                "description": "When enabled, matching variants are grouped according to the product presentation setting. Disable to show them individually.",
+                "type": "boolean"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -35441,6 +35806,10 @@
           },
           "internal": {
             "description": "When the boolean value is `true` indicating that it is for internal use only and will not appear in product stream listings.",
+            "type": "boolean"
+          },
+          "displayAsGroup": {
+            "description": "When enabled, matching variants are grouped according to the product presentation setting. Disable to show them individually.",
             "type": "boolean"
           },
           "createdAt": {
@@ -39197,6 +39566,10 @@
               "measurementUnits": {
                 "$ref": "#/components/schemas/MeasurementUnits"
               },
+              "businessTimeZone": {
+                "description": "Business timezone used for sales-channel-specific rendering. Added since version: 6.7.13.0.",
+                "type": "string"
+              },
               "name": {
                 "type": "string"
               },
@@ -39227,12 +39600,18 @@
                 "description": "When `true`, it indicates that the sales channel is undergoing maintenance, and shopping is temporarily unavailable during this period.",
                 "type": "boolean"
               },
+              "maintenanceIpAllowlist": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "maintenanceIpWhitelist": {
                 "type": "array",
                 "items": {
-                  "type": "object",
-                  "additionalProperties": false
-                }
+                  "type": "string"
+                },
+                "deprecated": true
               },
               "customFields": {
                 "type": "object"
@@ -40658,6 +41037,10 @@
           "measurementUnits": {
             "$ref": "#/components/schemas/MeasurementUnits"
           },
+          "businessTimeZone": {
+            "description": "Business timezone used for sales-channel-specific rendering. Added since version: 6.7.13.0.",
+            "type": "string"
+          },
           "name": {
             "type": "string"
           },
@@ -40688,12 +41071,18 @@
             "description": "When `true`, it indicates that the sales channel is undergoing maintenance, and shopping is temporarily unavailable during this period.",
             "type": "boolean"
           },
+          "maintenanceIpAllowlist": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "maintenanceIpWhitelist": {
             "type": "array",
             "items": {
-              "type": "object",
-              "additionalProperties": false
-            }
+              "type": "string"
+            },
+            "deprecated": true
           },
           "customFields": {
             "type": "object"
@@ -49689,7 +50078,8 @@
               },
               "admin": {
                 "description": "Parameter that indicates if the user is an admin.",
-                "type": "boolean"
+                "type": "boolean",
+                "readOnly": true
               },
               "mcpAllowlist": {
                 "type": "object"
@@ -50210,7 +50600,8 @@
           },
           "admin": {
             "description": "Parameter that indicates if the user is an admin.",
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           },
           "mcpAllowlist": {
             "type": "object"
@@ -51033,6 +51424,313 @@
         },
         "type": "object"
       },
+      "SalesChannelFileConfiguration": {
+        "type": "object",
+        "required": [
+          "id",
+          "enabled",
+          "templateOverrides"
+        ],
+        "properties": {
+          "id": {
+            "description": "Identifier of the sales_channel_file row.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "enabled": {
+            "description": "Whether this file is served publicly for the sales channel.",
+            "type": "boolean"
+          },
+          "templateOverrides": {
+            "description": "Merchant-provided Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SalesChannelFileDescriptor": {
+        "type": "object",
+        "required": [
+          "fileFamily",
+          "fileName",
+          "contentType",
+          "configuration"
+        ],
+        "properties": {
+          "fileFamily": {
+            "description": "File family below `Resources/views/files`.",
+            "type": "string",
+            "maxLength": 64
+          },
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "contentType": {
+            "description": "Detected response content type for the public file.",
+            "type": "string",
+            "examples": [
+              "text/plain; charset=utf-8"
+            ]
+          },
+          "configuration": {
+            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SalesChannelFileDetail": {
+        "type": "object",
+        "required": [
+          "fileFamily",
+          "fileName",
+          "templatePath",
+          "contentType",
+          "templates",
+          "supportsUserProvidedContent",
+          "configuration"
+        ],
+        "properties": {
+          "fileFamily": {
+            "description": "File family below `Resources/views/files`.",
+            "type": "string",
+            "maxLength": 64
+          },
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "templatePath": {
+            "description": "Relative Twig template path used for rendering.",
+            "type": "string",
+            "examples": [
+              "files/agentic/llms.txt.twig"
+            ]
+          },
+          "contentType": {
+            "description": "Detected response content type for the public file.",
+            "type": "string",
+            "examples": [
+              "text/plain; charset=utf-8"
+            ]
+          },
+          "templates": {
+            "description": "Contributing Twig templates in resolved inheritance order.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesChannelFileTemplate"
+            }
+          },
+          "supportsUserProvidedContent": {
+            "description": "Whether the template chain exposes the `user_provided_content` block for simple appended merchant notes.",
+            "type": "boolean"
+          },
+          "configuration": {
+            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SalesChannelFileDetailResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/SalesChannelFileDetail"
+          }
+        }
+      },
+      "SalesChannelFileListResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesChannelFileDescriptor"
+            }
+          }
+        }
+      },
+      "SalesChannelFilePreviewRequest": {
+        "type": "object",
+        "required": [
+          "fileName"
+        ],
+        "properties": {
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "templateOverrides": {
+            "description": "Unsaved Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SalesChannelFilePreviewResponse": {
+        "type": "object",
+        "required": [
+          "fileName",
+          "contentType",
+          "content"
+        ],
+        "properties": {
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string"
+          },
+          "contentType": {
+            "description": "Detected content type of the rendered file.",
+            "type": "string"
+          },
+          "content": {
+            "description": "Rendered file content.",
+            "type": "string"
+          }
+        }
+      },
+      "SalesChannelFileTemplate": {
+        "type": "object",
+        "required": [
+          "twigNamespace",
+          "templateName",
+          "templateContent",
+          "role"
+        ],
+        "properties": {
+          "twigNamespace": {
+            "description": "Twig namespace that contributed the template, for example `Framework` or a plugin name.",
+            "type": "string"
+          },
+          "templateName": {
+            "description": "Resolved Twig template name.",
+            "type": "string",
+            "examples": [
+              "@Framework/files/agentic/llms.txt.twig"
+            ]
+          },
+          "templateContent": {
+            "description": "Original source template content. Administration clients can use this as the default text when editing a template override.",
+            "type": "string"
+          },
+          "role": {
+            "description": "Whether this source provides the base template or extends another source in the resolved template chain.",
+            "type": "string",
+            "enum": [
+              "base",
+              "extension"
+            ]
+          }
+        }
+      },
+      "ConsentState": {
+        "type": "object",
+        "required": [
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt",
+          "acceptedUntil"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the consent"
+          },
+          "scopeName": {
+            "type": "string",
+            "description": "The scope of the consent that defines how the identifier is resolved"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unset",
+              "accepted",
+              "revoked"
+            ],
+            "description": "The current status of the consent (requested, accepted, revoked)"
+          },
+          "actor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The user name of the user who made the consent decision. null if never updated"
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          },
+          "acceptedUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp until when the consent is accepted. null if never accepted"
+          },
+          "acceptedRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
+          },
+          "latestRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
+          }
+        }
+      },
       "MediaId": {
         "type": "string",
         "pattern": "^[0-9a-f]{32}$",
@@ -51066,333 +51764,49 @@
           }
         }
       },
-      "Price": {
+      "MeasurementUnits": {
         "type": "object",
-        "description": "Price object",
+        "description": "Configuration of the measurement system",
         "properties": {
-          "currencyId": {
-            "description": "Unique identity of the associated currency.",
+          "system": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "Gross price for the associated currency.",
-            "type": "number"
-          },
-          "net": {
-            "description": "Net price for the associated currency.",
-            "type": "number"
-          },
-          "linked": {
-            "description": "Whether gross and net prices are linked through the tax configuration.",
-            "type": "boolean"
-          },
-          "percentage": {
-            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
-            "type": [
-              "object",
-              "null"
+            "enum": [
+              "metric",
+              "imperial"
             ],
-            "properties": {
-              "gross": {
-                "description": "Discount percentage relative to the gross list price.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Discount percentage relative to the net list price.",
-                "type": "number"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
           },
-          "listPrice": {
-            "description": "Reference list price for displaying discounts.",
+          "units": {
             "type": "object",
+            "description": "Units used in the measurement system.",
             "properties": {
-              "currencyId": {
-                "description": "Unique identity of the associated currency.",
+              "length": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "Gross list price for the associated currency.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Net list price for the associated currency.",
-                "type": "number"
-              },
-              "linked": {
-                "description": "Whether gross and net list prices are linked through the tax configuration.",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          },
-          "regulationPrice": {
-            "description": "Reference price used for legal price disclosures.",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "description": "Unique identity of the associated currency.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "Gross regulation price for the associated currency.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Net regulation price for the associated currency.",
-                "type": "number"
-              },
-              "linked": {
-                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          }
-        },
-        "required": [
-          "currencyId",
-          "gross",
-          "net",
-          "linked"
-        ]
-      },
-      "infoConfigResponse": {
-        "type": "object",
-        "properties": {
-          "version": {
-            "type": "string",
-            "description": "Shopware version."
-          },
-          "shopId": {
-            "type": "string",
-            "description": "Unique shop identifier."
-          },
-          "versionRevision": {
-            "type": "string",
-            "description": "Shopware version revision (build hash/revision)."
-          },
-          "adminWorker": {
-            "type": "object",
-            "description": "Admin worker feature flags and transport configuration.",
-            "properties": {
-              "enableAdminWorker": {
-                "type": "boolean",
-                "description": "Whether the admin background worker is enabled."
-              },
-              "enableQueueStatsWorker": {
-                "type": "boolean",
-                "description": "Whether the queue statistics worker is enabled. Deprecated: This property will be removed in v6.8.0. The increment-based message queue statistics are deprecated.",
-                "deprecated": true
-              },
-              "enableNotificationWorker": {
-                "type": "boolean",
-                "description": "Whether the notification worker is enabled."
-              },
-              "transports": {
-                "type": "array",
-                "description": "Configured Symfony Messenger transports used by the admin workers.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            },
-            "additionalProperties": false
-          },
-          "bundles": {
-            "type": "object",
-            "description": "Active extension assets (plugins & apps) keyed by technical name.",
-            "additionalProperties": {
-              "oneOf": [
-                {
-                  "type": "object",
-                  "description": "Plugin bundle asset descriptor.",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "plugin"
-                      ]
-                    },
-                    "css": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "description": "URL to a CSS asset."
-                      }
-                    },
-                    "js": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "description": "URL to a JS asset."
-                      }
-                    },
-                    "baseUrl": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
-                      "description": "Base URL to a (micro frontend) admin entry point, if provided."
-                    }
-                  },
-                  "required": [
-                    "type"
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "description": "App bundle descriptor.",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "app"
-                      ]
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "active": {
-                      "type": "boolean"
-                    },
-                    "integrationId": {
-                      "type": "string",
-                      "description": "Lowercase hex integration id."
-                    },
-                    "baseUrl": {
-                      "type": "string"
-                    },
-                    "version": {
-                      "type": "string"
-                    },
-                    "permissions": {
-                      "type": "object",
-                      "description": "Grouped privileges: key = privilege scope, value = list of entities.",
-                      "additionalProperties": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "css": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Optional CSS assets if provided."
-                    },
-                    "js": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Optional JS assets if provided."
-                    }
-                  },
-                  "required": [
-                    "type",
-                    "name",
-                    "active",
-                    "integrationId",
-                    "baseUrl",
-                    "version",
-                    "permissions"
-                  ],
-                  "additionalProperties": false
-                }
-              ]
-            }
-          },
-          "settings": {
-            "type": "object",
-            "description": "Selected environment and feature settings consumed by the administration.",
-            "properties": {
-              "enableUrlFeature": {
-                "type": "boolean",
-                "description": "State of the URL upload feature."
-              },
-              "appUrlReachable": {
-                "type": "boolean",
-                "description": "Whether configured APP_URL is externally reachable."
-              },
-              "appsRequireAppUrl": {
-                "type": "boolean",
-                "description": "True if at least one installed app requires a reachable APP_URL."
-              },
-              "firstMigrationDate": {
-                "type": [
-                  "string",
-                  "null"
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
                 ],
-                "description": "Timestamp of the first executed migration in ISO-8601 UTC format, used for Product Analytics consent eligibility."
+                "default": "mm",
+                "description": "Unit of length."
               },
-              "private_allowed_extensions": {
-                "type": "array",
-                "description": "Whitelisted file extensions for private filesystem uploads.",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "enableHtmlSanitizer": {
-                "type": "boolean",
-                "description": "Whether HTML sanitizer is enabled."
-              },
-              "enableStagingMode": {
-                "type": "boolean",
-                "description": "Whether staging mode banner is enabled."
-              },
-              "disableExtensionManagement": {
-                "type": "boolean",
-                "description": "True if runtime extension management is disabled."
-              },
-              "presignedUploadSupported": {
-                "type": "boolean",
-                "description": "Whether presigned S3 upload is available. True when presigned upload is enabled and an S3 filesystem is configured."
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
               }
-            },
-            "required": [
-              "firstMigrationDate"
-            ],
-            "additionalProperties": false
-          },
-          "inAppPurchases": {
-            "type": "array",
-            "description": "In-app purchase meta data (structure may vary).",
-            "items": {
-              "type": "object",
-              "description": "Purchase entry.",
-              "additionalProperties": true
             }
           }
-        },
-        "required": [
-          "version",
-          "shopId",
-          "versionRevision",
-          "adminWorker",
-          "bundles",
-          "settings",
-          "inAppPurchases"
-        ],
-        "additionalProperties": false
+        }
       },
       "Criteria": {
         "type": "object",
@@ -52100,65 +52514,111 @@
           "field"
         ]
       },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "description": "Unique identity of the associated currency.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "Gross price for the associated currency.",
+            "type": "number"
+          },
+          "net": {
+            "description": "Net price for the associated currency.",
+            "type": "number"
+          },
+          "linked": {
+            "description": "Whether gross and net prices are linked through the tax configuration.",
+            "type": "boolean"
+          },
+          "percentage": {
+            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "gross": {
+                "description": "Discount percentage relative to the gross list price.",
+                "type": "number"
               },
-              "description": "Extensions data of event"
-            }
+              "net": {
+                "description": "Discount percentage relative to the net list price.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          },
+          "listPrice": {
+            "description": "Reference list price for displaying discounts.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross list price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net list price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net list prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          },
+          "regulationPrice": {
+            "description": "Reference price used for legal price disclosures.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross regulation price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net regulation price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
           }
-        }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
+        ]
       },
       "OAuthScopes": {
         "description": "OAuth scopes that should be requested.",
@@ -52284,354 +52744,295 @@
           }
         ]
       },
-      "MeasurementUnits": {
+      "infoConfigResponse": {
         "type": "object",
-        "description": "Configuration of the measurement system",
         "properties": {
-          "system": {
+          "version": {
             "type": "string",
-            "enum": [
-              "metric",
-              "imperial"
-            ],
-            "default": "metric",
-            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+            "description": "Shopware version."
           },
-          "units": {
+          "shopId": {
+            "type": "string",
+            "description": "Unique shop identifier."
+          },
+          "versionRevision": {
+            "type": "string",
+            "description": "Shopware version revision (build hash/revision)."
+          },
+          "adminWorker": {
             "type": "object",
-            "description": "Units used in the measurement system.",
+            "description": "Admin worker feature flags and transport configuration.",
             "properties": {
-              "length": {
-                "type": "string",
-                "enum": [
-                  "mm",
-                  "cm",
-                  "m",
-                  "in",
-                  "ft"
-                ],
-                "default": "mm",
-                "description": "Unit of length."
+              "enableAdminWorker": {
+                "type": "boolean",
+                "description": "Whether the admin background worker is enabled."
               },
-              "weight": {
-                "type": "string",
-                "enum": [
-                  "g",
-                  "kg",
-                  "oz",
-                  "lb"
-                ],
-                "default": "kg",
-                "description": "Unit of weight."
+              "enableQueueStatsWorker": {
+                "type": "boolean",
+                "description": "Whether the queue statistics worker is enabled. Deprecated: This property will be removed in v6.8.0. The increment-based message queue statistics are deprecated.",
+                "deprecated": true
+              },
+              "enableNotificationWorker": {
+                "type": "boolean",
+                "description": "Whether the notification worker is enabled."
+              },
+              "transports": {
+                "type": "array",
+                "description": "Configured Symfony Messenger transports used by the admin workers.",
+                "items": {
+                  "type": "string"
+                }
               }
-            }
-          }
-        }
-      },
-      "SalesChannelFileConfiguration": {
-        "type": "object",
-        "required": [
-          "id",
-          "enabled",
-          "templateOverrides"
-        ],
-        "properties": {
-          "id": {
-            "description": "Identifier of the sales_channel_file row.",
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            },
+            "additionalProperties": false
           },
-          "enabled": {
-            "description": "Whether this file is served publicly for the sales channel.",
-            "type": "boolean"
-          },
-          "templateOverrides": {
-            "description": "Merchant-provided Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
+          "bundles": {
             "type": "object",
+            "description": "Active extension assets (plugins & apps) keyed by technical name.",
             "additionalProperties": {
-              "type": "string"
+              "oneOf": [
+                {
+                  "type": "object",
+                  "description": "Plugin bundle asset descriptor.",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "plugin"
+                      ]
+                    },
+                    "css": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "URL to a CSS asset."
+                      }
+                    },
+                    "js": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "URL to a JS asset."
+                      }
+                    },
+                    "baseUrl": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "Base URL to a (micro frontend) admin entry point, if provided."
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "description": "App bundle descriptor.",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "app"
+                      ]
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "active": {
+                      "type": "boolean"
+                    },
+                    "integrationId": {
+                      "type": "string",
+                      "description": "Lowercase hex integration id."
+                    },
+                    "baseUrl": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "description": "Grouped privileges: key = privilege scope, value = list of entities.",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "css": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Optional CSS assets if provided."
+                    },
+                    "js": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Optional JS assets if provided."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "name",
+                    "active",
+                    "integrationId",
+                    "baseUrl",
+                    "version",
+                    "permissions"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
             }
-          }
-        }
-      },
-      "SalesChannelFileDescriptor": {
-        "type": "object",
-        "required": [
-          "fileFamily",
-          "fileName",
-          "contentType",
-          "configuration"
-        ],
-        "properties": {
-          "fileFamily": {
-            "description": "File family below `Resources/views/files`.",
-            "type": "string",
-            "maxLength": 64
           },
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
-          },
-          "contentType": {
-            "description": "Detected response content type for the public file.",
-            "type": "string",
-            "examples": [
-              "text/plain; charset=utf-8"
-            ]
-          },
-          "configuration": {
-            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "SalesChannelFileDetail": {
-        "type": "object",
-        "required": [
-          "fileFamily",
-          "fileName",
-          "templatePath",
-          "contentType",
-          "templates",
-          "supportsUserProvidedContent",
-          "configuration"
-        ],
-        "properties": {
-          "fileFamily": {
-            "description": "File family below `Resources/views/files`.",
-            "type": "string",
-            "maxLength": 64
-          },
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
-          },
-          "templatePath": {
-            "description": "Relative Twig template path used for rendering.",
-            "type": "string",
-            "examples": [
-              "files/agentic/llms.txt.twig"
-            ]
-          },
-          "contentType": {
-            "description": "Detected response content type for the public file.",
-            "type": "string",
-            "examples": [
-              "text/plain; charset=utf-8"
-            ]
-          },
-          "templates": {
-            "description": "Contributing Twig templates in resolved inheritance order.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SalesChannelFileTemplate"
-            }
-          },
-          "supportsUserProvidedContent": {
-            "description": "Whether the template chain exposes the `user_provided_content` block for simple appended merchant notes.",
-            "type": "boolean"
-          },
-          "configuration": {
-            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "SalesChannelFileDetailResponse": {
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/SalesChannelFileDetail"
-          }
-        }
-      },
-      "SalesChannelFileListResponse": {
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SalesChannelFileDescriptor"
-            }
-          }
-        }
-      },
-      "SalesChannelFilePreviewRequest": {
-        "type": "object",
-        "required": [
-          "fileName"
-        ],
-        "properties": {
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
-          },
-          "templateOverrides": {
-            "description": "Unsaved Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
+          "settings": {
             "type": "object",
-            "additionalProperties": {
-              "type": "string"
+            "description": "Selected environment and feature settings consumed by the administration.",
+            "properties": {
+              "enableUrlFeature": {
+                "type": "boolean",
+                "description": "State of the URL upload feature."
+              },
+              "appUrlReachable": {
+                "type": "boolean",
+                "description": "Whether configured APP_URL is externally reachable."
+              },
+              "appsRequireAppUrl": {
+                "type": "boolean",
+                "description": "True if at least one installed app requires a reachable APP_URL."
+              },
+              "firstMigrationDate": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "Timestamp of the first executed migration in ISO-8601 UTC format, used for Product Analytics consent eligibility."
+              },
+              "private_allowed_extensions": {
+                "type": "array",
+                "description": "Allowed file extensions for private filesystem uploads.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "private_allowed_mime_types_by_extension": {
+                "type": "object",
+                "description": "Known MIME types for each allowed private filesystem upload extension.",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "enableHtmlSanitizer": {
+                "type": "boolean",
+                "description": "Whether HTML sanitizer is enabled."
+              },
+              "enableStagingMode": {
+                "type": "boolean",
+                "description": "Whether staging mode banner is enabled."
+              },
+              "disableExtensionManagement": {
+                "type": "boolean",
+                "description": "True if runtime extension management is disabled."
+              },
+              "presignedUploadSupported": {
+                "type": "boolean",
+                "description": "Whether presigned S3 upload is available. True when presigned upload is enabled and an S3 filesystem is configured."
+              }
+            },
+            "required": [
+              "firstMigrationDate"
+            ],
+            "additionalProperties": false
+          },
+          "inAppPurchases": {
+            "type": "array",
+            "description": "In-app purchase meta data (structure may vary).",
+            "items": {
+              "type": "object",
+              "description": "Purchase entry.",
+              "additionalProperties": true
+            }
+          }
+        },
+        "required": [
+          "version",
+          "shopId",
+          "versionRevision",
+          "adminWorker",
+          "bundles",
+          "settings",
+          "inAppPurchases"
+        ],
+        "additionalProperties": false
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
             }
           }
         }
       },
-      "SalesChannelFilePreviewResponse": {
-        "type": "object",
-        "required": [
-          "fileName",
-          "contentType",
-          "content"
-        ],
-        "properties": {
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string"
-          },
-          "contentType": {
-            "description": "Detected content type of the rendered file.",
-            "type": "string"
-          },
-          "content": {
-            "description": "Rendered file content.",
-            "type": "string"
-          }
-        }
-      },
-      "SalesChannelFileTemplate": {
-        "type": "object",
-        "required": [
-          "twigNamespace",
-          "templateName",
-          "templateContent",
-          "role"
-        ],
-        "properties": {
-          "twigNamespace": {
-            "description": "Twig namespace that contributed the template, for example `Framework` or a plugin name.",
-            "type": "string"
-          },
-          "templateName": {
-            "description": "Resolved Twig template name.",
-            "type": "string",
-            "examples": [
-              "@Framework/files/agentic/llms.txt.twig"
-            ]
-          },
-          "templateContent": {
-            "description": "Original source template content. Administration clients can use this as the default text when editing a template override.",
-            "type": "string"
-          },
-          "role": {
-            "description": "Whether this source provides the base template or extends another source in the resolved template chain.",
-            "type": "string",
-            "enum": [
-              "base",
-              "extension"
-            ]
-          }
-        }
-      },
-      "ConsentState": {
-        "type": "object",
-        "required": [
-          "name",
-          "scopeName",
-          "identifier",
-          "status",
-          "actor",
-          "updatedAt",
-          "acceptedUntil"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the consent"
-          },
-          "scopeName": {
-            "type": "string",
-            "description": "The scope of the consent that defines how the identifier is resolved"
-          },
-          "identifier": {
-            "type": "string",
-            "description": "The resolved identifier of the consent"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "unset",
-              "accepted",
-              "revoked"
-            ],
-            "description": "The current status of the consent (requested, accepted, revoked)"
-          },
-          "actor": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The user name of the user who made the consent decision. null if never updated"
-          },
-          "updatedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp of when the consent status was last updated. null if never updated"
-          },
-          "acceptedUntil": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp until when the consent is accepted. null if never accepted"
-          },
-          "acceptedRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
-          },
-          "latestRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
           }
         }
       }
