@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8000/api"
+      "url": "/api"
     }
   ],
   "paths": {
@@ -39592,36 +39592,22 @@
         }
       }
     },
-    "/api/_admin/licensing/features/{type}": {
+    "/_admin/b2b-components/global-config": {
       "get": {
         "tags": [
           "Admin API",
-          "Licensing"
+          "B2B Employee Management"
         ],
-        "summary": "Get all the available commercial plugin features",
-        "description": "Get all the available commercial plugin features according to the installed license",
-        "operationId": "licensingFeatures",
-        "parameters": [
-          {
-            "name": "type",
-            "in": "path",
-            "description": "Commercial feature type",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Get the global B2B components configuration",
+        "description": "Returns the stored global default on/off values for the license-available B2B components, keyed by feature code. A missing code is treated as disabled.",
+        "operationId": "getGlobalB2bComponentsConfig",
         "responses": {
           "200": {
-            "description": "The available feature data.",
+            "description": "The stored global B2B components configuration.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/SwagCommercialFeature"
-                  }
+                  "$ref": "#/components/schemas/GlobalB2bComponentsConfig"
                 }
               }
             }
@@ -39630,136 +39616,15 @@
             "$ref": "#/components/responses/401"
           }
         }
-      }
-    },
-    "/_action/custom-price": {
-      "post": {
-        "tags": [
-          "Bulk Operations"
-        ],
-        "summary": "Bulk edit custom prices",
-        "description": "An emulation of Sync API implementation",
-        "operationId": "customPriceImport",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/CustomPricingUpsertOperation"
-                    },
-                    {
-                      "$ref": "#/components/schemas/CustomPricingDeleteOperation"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Returns a JSON result containing information about the updated entities",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CustomPricingResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_admin/rule-builder-preview/{orderId}": {
-      "post": {
-        "tags": [
-          "Rule Preview"
-        ],
-        "summary": "Preview results of a rule evaluating an order",
-        "description": "Evaluate the conditions of a rule based on a pre-selected order.",
-        "operationId": "rulePreview",
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "description": "Identifier of the order the preview should be generated for",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "conditions"
-                ],
-                "properties": {
-                  "conditions": {
-                    "description": "Array of nested rule condition payloads.",
-                    "items": {
-                      "type": "object"
-                    },
-                    "type": "array"
-                  },
-                  "dateTime": {
-                    "description": "A date and time to be mocked in the preview evaluation.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Returns the results of the evaluated rule conditions as an object.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "properties": {
-                      "match": {
-                        "description": "Evaluation of the condition",
-                        "type": "boolean"
-                      },
-                      "name": {
-                        "description": "The technical name of the condition",
-                        "type": "string"
-                      },
-                      "ruleReferenceId": {
-                        "description": "The id of the corresponding rule_condition entity",
-                        "type": "string"
-                      }
-                    },
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_admin/flow-builder/delayed/execute": {
+      },
       "post": {
         "tags": [
           "Admin API",
-          "Delayed Flow Action"
+          "B2B Employee Management"
         ],
-        "summary": "Execute the delayed tasks.",
-        "description": "Execute the delayed tasks.",
-        "operationId": "delayedActions",
+        "summary": "Save the global B2B components configuration",
+        "description": "Persists the global default on/off values. Unlicensed or unknown feature codes are dropped server-side and values are normalized to booleans.",
+        "operationId": "saveGlobalB2bComponentsConfig",
         "requestBody": {
           "required": true,
           "content": {
@@ -39767,15 +39632,11 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "ids"
+                  "features"
                 ],
                 "properties": {
-                  "ids": {
-                    "description": "The identifiers for delayed tasks",
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
+                  "features": {
+                    "$ref": "#/components/schemas/GlobalB2bComponentsConfigCreate"
                   }
                 }
               }
@@ -39784,695 +39645,17 @@
         },
         "responses": {
           "200": {
-            "description": "Execute the delayed tasks success.",
+            "description": "The stored global B2B components configuration after saving.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": false
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401",
-            "description": "Authorization information is missing or invalid."
-          },
-          "500": {
-            "description": "The identifiers are missing or invalid, or the commercial license check failed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_admin/flow-sharing/download/{flowId}": {
-      "get": {
-        "tags": [
-          "Admin API",
-          "Flow Sharing"
-        ],
-        "summary": "Get flow data including reference data",
-        "description": "Generate flow data and its reference data to json",
-        "operationId": "flowSharingDownload",
-        "parameters": [
-          {
-            "name": "flowId",
-            "in": "path",
-            "description": "Identifier of the flow to be exported.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The flow data.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FlowSharingResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400",
-            "description": "The flow is invalid or could not be found."
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "description": "The commercial license check failed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_admin/flow-sharing/check-requirements": {
-      "post": {
-        "tags": [
-          "Admin API",
-          "Flow Sharing"
-        ],
-        "summary": "Check an environment requirements",
-        "description": "Check an environment requirements. For example, shopware version, apps and plugins installed",
-        "operationId": "flowSharingCheckRequirements",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "requirements"
-                ],
-                "properties": {
-                  "requirements": {
-                    "$ref": "#/components/schemas/FlowSharingRequirements"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Missing requirements.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FlowSharingCheckRequirementsResponse"
+                  "$ref": "#/components/schemas/GlobalB2bComponentsConfig"
                 }
               }
             }
           },
           "401": {
             "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "description": "The commercial license check failed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_action/order/{orderId}/order-return/{orderReturnId}/add-items": {
-      "post": {
-        "tags": [
-          "Admin API",
-          "Order Return Management"
-        ],
-        "summary": "Add items to order return",
-        "description": "The merchant is able to add items to an existing return.",
-        "operationId": "addItemsToReturn",
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "description": "Identifier of the order",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "orderReturnId",
-            "in": "path",
-            "description": "Identifier of the order return",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "orderLineItems"
-                ],
-                "properties": {
-                  "orderLineItems": {
-                    "description": "A list of the order line items, which need to be added to return",
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "orderLineItemId",
-                        "quantity"
-                      ],
-                      "properties": {
-                        "orderLineItemId": {
-                          "type": "string"
-                        },
-                        "quantity": {
-                          "type": "integer"
-                        },
-                        "internalComment": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204",
-            "description": "The list of items added to return successful."
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "description": "The commercial license check failed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_proxy/order/{orderId}/return": {
-      "post": {
-        "tags": [
-          "Admin API",
-          "Order Return Management"
-        ],
-        "summary": "Proxy Store-API to create an return",
-        "description": "Create a return",
-        "operationId": "createAReturn",
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "description": "The order id of these order return line items",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "lineItems": {
-                    "description": "A list of the order line items payload",
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "orderLineItemId": {
-                          "type": "string"
-                        },
-                        "quantity": {
-                          "type": "number"
-                        },
-                        "internalComment": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The return has created successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "description": "The commercial license check failed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_action/order-line-item/state/{toState}": {
-      "post": {
-        "tags": [
-          "Admin API",
-          "Order Return Management"
-        ],
-        "summary": "Transition a list of line-item of an order to a new state",
-        "description": "Changes the order's line-items state",
-        "operationId": "orderLineItemsTransition",
-        "parameters": [
-          {
-            "name": "toState",
-            "in": "path",
-            "description": "The technical name of the state machine state.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "ids"
-                ],
-                "properties": {
-                  "ids": {
-                    "description": "A list ID of the order line items, which need to be updated",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The updated products return state.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "description": "The commercial license check failed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_action/order-return-line-item/state/{toState}": {
-      "post": {
-        "tags": [
-          "Admin API",
-          "Order Return Management"
-        ],
-        "summary": "Transition a list of the return's line-item to a new state",
-        "description": "Changes the state of the return's line-items",
-        "operationId": "orderReturnLineItemsTransition",
-        "parameters": [
-          {
-            "name": "toState",
-            "in": "path",
-            "description": "The technical name of the state machine state.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "ids"
-                ],
-                "properties": {
-                  "ids": {
-                    "description": "A list ID of the order return line items, which need to be updated",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The updated products return state.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "description": "The commercial license check failed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_action/order/return/{orderReturnId}/calculate": {
-      "post": {
-        "tags": [
-          "Admin API",
-          "Order Return Management"
-        ],
-        "summary": "Calculate Amount",
-        "description": "Calculate Amount",
-        "operationId": "calculateAmount",
-        "parameters": [
-          {
-            "name": "orderReturnId",
-            "in": "path",
-            "description": "The return id of order",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204",
-            "description": "The return has calculate amount successfully."
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "description": "The commercial license check failed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_action/customer/{customerId}/turnover": {
-      "get": {
-        "tags": [
-          "Admin API",
-          "Order Return Management"
-        ],
-        "summary": "Get turn over value of an customer",
-        "description": "Get turn over value of an customer",
-        "operationId": "customerTurnOver",
-        "parameters": [
-          {
-            "name": "customerId",
-            "in": "path",
-            "description": "The customer id you want to get the turnover",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The updated status amount of return line items.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "description": "The commercial license check failed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_admin/property-extractor/extract": {
-      "post": {
-        "tags": [
-          "Admin API",
-          "Property Extractor"
-        ],
-        "summary": "Extracts properties out of a product description.",
-        "description": "Extracts properties out of a product description.",
-        "operationId": "propertyExtractorExtract",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "description"
-                ],
-                "properties": {
-                  "description": {
-                    "description": "Product description",
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The extracted properties.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "properties": {
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "additionalProperties": true
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "description": "The commercial license check failed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/_action/generate-review-summary": {
-      "post": {
-        "summary": "Generate review summaries for products",
-        "description": "Generate review summaries using the ReviewSummary service. Request body accepts mood, productId, salesChannelId and languageIds.",
-        "operationId": "generateReviewSummary",
-        "tags": [
-          "ReviewSummary"
-        ],
-        "requestBody": {
-          "description": "Options for review summary generation.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Options"
-              },
-              "example": {
-                "mood": "positive",
-                "productId": "019970d61cf071b481145788abdb2271",
-                "salesChannelId": "01988451220e7308bdda1b32e87db12f",
-                "languageIds": [
-                  "2fbb5fe2e29a4d70aa5854ce7ce3e20b"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Array of generated summaries",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ReviewSummaryItem"
-                      }
-                    },
-                    {
-                      "$ref": "#/components/schemas/ReviewSummaryByLanguage"
-                    }
-                  ]
-                },
-                "example": {
-                  "2fbb5fe2e29a4d70aa5854ce7ce3e20b": "Review Summary of the product in the specified language."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request — validation or generation error (message returned as plain JSON string)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                },
-                "example": "License missing or generation failed: <details>"
-              }
-            }
           }
         }
       }
@@ -40548,6 +39731,13 @@
                   "roleId": {
                     "description": "Id of the role of the new employee",
                     "type": "string"
+                  },
+                  "memberships": {
+                    "description": "Typed delta of the employee's non-primary company / organisation-unit memberships to create, update, or delete.",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/B2bComponentsEmployeeMembershipDeltaItem"
+                    }
                   }
                 },
                 "type": "object"
@@ -40612,6 +39802,13 @@
                   "roleId": {
                     "description": "Id of the role of the employee",
                     "type": "string"
+                  },
+                  "memberships": {
+                    "description": "Typed delta of the employee's non-primary company / organisation-unit memberships to create, update, or delete.",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/B2bComponentsEmployeeMembershipDeltaItem"
+                    }
                   }
                 },
                 "type": "object"
@@ -40622,6 +39819,150 @@
         "responses": {
           "204": {
             "description": "No content response"
+          }
+        }
+      }
+    },
+    "/_action/employee/assign-company-employees": {
+      "post": {
+        "tags": [
+          "B2B Employee"
+        ],
+        "summary": "Assign or unassign company-wide employees",
+        "description": "Applies a company-wide membership delta: the given accounts are added as employees of the customer (company) and the others are removed. An optional per-account role map assigns a company role while adding, and re-roles an account that already has a live membership in the company. Works without the Organization Unit module and requires the EMPLOYEE_MANAGEMENT feature and license.",
+        "operationId": "assignCompanyEmployees",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsAssignCompanyEmployeesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The company-wide membership delta was applied"
+          }
+        }
+      }
+    },
+    "/_action/employee/enabled-companies": {
+      "get": {
+        "tags": [
+          "B2B Employee"
+        ],
+        "summary": "List companies that have employee management enabled",
+        "description": "Returns the identifiers of the business partner customers (companies) that currently have the EmployeeManagement feature enabled, so the company employee-assignment candidate list can be scoped to them. Requires the EMPLOYEE_MANAGEMENT feature and license.",
+        "operationId": "getEmployeeManagementEnabledCompanies",
+        "responses": {
+          "200": {
+            "description": "Identifiers of the companies with employee management enabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsEnabledCompaniesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/organization-unit/assign-employees": {
+      "post": {
+        "tags": [
+          "B2B Organization Units"
+        ],
+        "summary": "Assign or unassign employees for an organization unit",
+        "description": "Applies a membership delta for a single organization unit: the given employees are added as members and the others are removed. An optional per-account role map sets the role for that account's membership in this organization unit, independently of the account's company role. Requires the ORGANIZATION_UNITS feature and license.",
+        "operationId": "assignOrganizationUnitEmployees",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsAssignOrganizationUnitEmployeesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The membership delta was applied"
+          }
+        }
+      }
+    },
+    "/_action/organization-unit/assign-company-employees": {
+      "post": {
+        "tags": [
+          "B2B Organization Units"
+        ],
+        "summary": "Assign or unassign company-wide employees",
+        "description": "Applies a company-wide membership delta: the given accounts are added as company-wide employees of the customer and the others are removed. An optional per-account role map assigns a company role while adding, and re-roles an account that already has a live membership in the company. Requires the ORGANIZATION_UNITS feature and license.",
+        "operationId": "assignOrganizationUnitCompanyEmployees",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsAssignOrganizationUnitCompanyEmployeesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The company-wide membership delta was applied"
+          }
+        }
+      }
+    },
+    "/_action/organization-unit/assign-organization-units": {
+      "post": {
+        "tags": [
+          "B2B Organization Units"
+        ],
+        "summary": "Assign or unassign organization units for an employee",
+        "description": "Applies an organization-unit delta for a single employee: the employee is added to the given organization units and removed from the others. Requires the ORGANIZATION_UNITS feature and license.",
+        "operationId": "assignEmployeeOrganizationUnits",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsAssignEmployeeOrganizationUnitsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The organization-unit delta was applied"
+          }
+        }
+      }
+    },
+    "/_action/organization-unit/enabled-companies": {
+      "get": {
+        "tags": [
+          "B2B Organization Units"
+        ],
+        "summary": "List companies that have organization units enabled",
+        "description": "Returns the identifiers of the business partner customers (companies) that currently have the OrganizationUnit feature enabled. Requires the ORGANIZATION_UNITS feature and license.",
+        "operationId": "getOrganizationUnitEnabledCompanies",
+        "responses": {
+          "200": {
+            "description": "Identifiers of the companies with organization units enabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2bComponentsOrganizationEnabledCompaniesResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -40971,234 +40312,6 @@
         }
       }
     },
-    "/_action/text-to-image/generate": {
-      "post": {
-        "tags": [
-          "Text to Image"
-        ],
-        "summary": "Generate images based on a textual prompt",
-        "description": "Generate images based on a textual prompt",
-        "operationId": "textToImageGenerate",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "description": {
-                    "description": "The textual prompt to describe what image to generate",
-                    "type": "string",
-                    "example": "Generate a warm and inviting ambience with soft lightning and neutral tones"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The base64 string representation of the generated image",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "byte",
-                  "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJZlWElmTU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgExAAIAAAARAAAAWodpAAQAAAABAAAAbAAAAAAAAABgAAAAAQAAAGAAAAABd3d3Lmlua3NjYXBlLm9yZwAAAAOgAQADAAAAAQABAACgAgAEAAAAAQAAABCgAwAEAAAAAQAAABAAAAAAKwl1NwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAi1pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDYuMC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+d3d3Lmlua3NjYXBlLm9yZzwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj45NjwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+OTY8L3RpZmY6WFJlc29sdXRpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgryNKKqAAAC8klEQVQ4EV1Tz0tUURg99943zpvGcWaqaRTJ7CdGvzBtkVQYFLjxD3AlZFREUZv21q4f1CLBCLR2bdoVBVmbchGUiUQU0i8oNUEsG9/MOG/uvZ07Y2B9vPu473HP+c53vvsJuOi3Ev3CuO26IbtHAH1K4EBSIlvDf0rY2aQSo63JcOh6d82EO9dvrewXwoiV4Pphe1N7OJP2gaAETBV40tE6lihXCLQAAx96xVl+wZKEyaqRHbYjtg5HUjlrJkOhoSCvrC+J1voQ62q1jXnGWAvl16WkV5p/2phdc9QhKwT1Q3bQJnEquYjiZBH+mazGufYcGpMhhLDQFGqXEymJYqw24y/8nBtMrc6cFg13bZtVeB0rQ38JoXrTGtcO/0I8alAMqwKjXhVOBZAkJKsWyleLwVI7heGEiAG+ZrUUfmpnHgl+BEsSzFYBjH/38XIqypqBbNygZW1o9m2LKVMunPCorEPRnG8GcmfMojEVolQWTELvmHliyseBZ4mqkU6IM9X68uo00LPd63AEG1GGe2SEICfagf9GZcvXhghbrGwFryHkhffAj1zdRookmMxN3I0XBOYCj32vwpfowY6GIh51BGiKWLzKC4zxzG+q2LwKmAwULxDwRZCdYZzVI599KnBaq+E60Lk1j/td83hxKIeLTSE+069PLLtk8VWw/7dkHCdNgDAhEPm4BDzZH6BzS4BCSUKTy5kXUW7RZyswsxAJn/9IRd5O69ti7bDd63kYs2yjgmWVPED2e7sLOMLMriNlLVDickTOH7ZVR/2o+pkvtcu5Y+INwQMyCVWGKPJu2mZe3Z7xGI6PpPHwXS1mc16lI7GIca0trkpk1O/FcDCTyowt21UZoscqhS69AENjdFpCvicjOBOSV+BSY2i6NhVU29Y6ufBr7mkqnVm+yismMXvH3oDEeclhMizDp9u1TDHPNeN85b8He/ID3W3x/4bpX5Jd7EYfMQcJqad3iEvMNteY0daEHrq8PM6VSeQ4/wGOAT89rW8MpwAAAABJRU5ErkJggg=="
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/organization-unit/assign-employees": {
-      "post": {
-        "tags": [
-          "B2B Organization Units"
-        ],
-        "summary": "Assign or unassign employees for an organization unit",
-        "description": "Applies a membership delta for a single organization unit: the given employees are added as members and the others are removed. Requires the ORGANIZATION_UNITS feature and license.",
-        "operationId": "assignOrganizationUnitEmployees",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "organizationId"
-                ],
-                "properties": {
-                  "organizationId": {
-                    "description": "Identifier (UUID) of the organization unit whose members are changed.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "addedEmployeeIds": {
-                    "description": "Identifiers (UUID) of the employees to add as members.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "removedEmployeeIds": {
-                    "description": "Identifiers (UUID) of the employees to remove.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "The membership delta was applied"
-          }
-        }
-      }
-    },
-    "/_action/organization-unit/assign-company-employees": {
-      "post": {
-        "tags": [
-          "B2B Organization Units"
-        ],
-        "summary": "Assign or unassign company-wide employees",
-        "description": "Applies a company-wide membership delta: the given accounts are added as company-wide employees of the customer and the others are removed. Requires the ORGANIZATION_UNITS feature and license.",
-        "operationId": "assignOrganizationUnitCompanyEmployees",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "customerId"
-                ],
-                "properties": {
-                  "customerId": {
-                    "description": "Identifier (UUID) of the business partner customer (company).",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "addedAccountIds": {
-                    "description": "Identifiers (UUID) of the employee accounts to add company-wide.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "removedAccountIds": {
-                    "description": "Identifiers (UUID) of the employee accounts to remove.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "The company-wide membership delta was applied"
-          }
-        }
-      }
-    },
-    "/_action/organization-unit/assign-organization-units": {
-      "post": {
-        "tags": [
-          "B2B Organization Units"
-        ],
-        "summary": "Assign or unassign organization units for an employee",
-        "description": "Applies an organization-unit delta for a single employee: the employee is added to the given organization units and removed from the others. Requires the ORGANIZATION_UNITS feature and license.",
-        "operationId": "assignEmployeeOrganizationUnits",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "employeeId"
-                ],
-                "properties": {
-                  "employeeId": {
-                    "description": "Identifier (UUID) of the employee whose organization-unit memberships are changed.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "addedOrganizationIds": {
-                    "description": "Identifiers (UUID) of the organization units to add the employee to.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  },
-                  "removedOrganizationIds": {
-                    "description": "Identifiers (UUID) of the organization units to remove the employee from.",
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "The organization-unit delta was applied"
-          }
-        }
-      }
-    },
-    "/_action/organization-unit/enabled-companies": {
-      "get": {
-        "tags": [
-          "B2B Organization Units"
-        ],
-        "summary": "List companies that have organization units enabled",
-        "description": "Returns the identifiers of the business partner customers (companies) that currently have the OrganizationUnit feature enabled. Requires the ORGANIZATION_UNITS feature and license.",
-        "operationId": "getOrganizationUnitEnabledCompanies",
-        "responses": {
-          "200": {
-            "description": "Identifiers of the companies with organization units enabled",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ids"
-                  ],
-                  "properties": {
-                    "ids": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "pattern": "^[0-9a-f]{32}$"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/_action/share-config/download/{entity}/{id}": {
       "get": {
         "tags": [
@@ -41315,6 +40428,255 @@
           },
           "400": {
             "description": "Entity is not supported. Use flow, rule"
+          }
+        }
+      }
+    },
+    "/_action/custom-price": {
+      "post": {
+        "tags": [
+          "Bulk Operations"
+        ],
+        "summary": "Bulk edit custom prices",
+        "description": "An emulation of Sync API implementation",
+        "operationId": "customPriceImport",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CustomPricingUpsertOperation"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CustomPricingDeleteOperation"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns a JSON result containing information about the updated entities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomPricingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_admin/flow-builder/delayed/execute": {
+      "post": {
+        "tags": [
+          "Admin API",
+          "Delayed Flow Action"
+        ],
+        "summary": "Execute the delayed tasks.",
+        "description": "Execute the delayed tasks.",
+        "operationId": "delayedActions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ids"
+                ],
+                "properties": {
+                  "ids": {
+                    "description": "The identifiers for delayed tasks",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Execute the delayed tasks success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401",
+            "description": "Authorization information is missing or invalid."
+          },
+          "500": {
+            "description": "The identifiers are missing or invalid, or the commercial license check failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_admin/flow-sharing/download/{flowId}": {
+      "get": {
+        "tags": [
+          "Admin API",
+          "Flow Sharing"
+        ],
+        "summary": "Get flow data including reference data",
+        "description": "Generate flow data and its reference data to json",
+        "operationId": "flowSharingDownload",
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "description": "Identifier of the flow to be exported.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The flow data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlowSharingResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400",
+            "description": "The flow is invalid or could not be found."
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "The commercial license check failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_admin/flow-sharing/check-requirements": {
+      "post": {
+        "tags": [
+          "Admin API",
+          "Flow Sharing"
+        ],
+        "summary": "Check an environment requirements",
+        "description": "Check an environment requirements. For example, shopware version, apps and plugins installed",
+        "operationId": "flowSharingCheckRequirements",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "requirements"
+                ],
+                "properties": {
+                  "requirements": {
+                    "$ref": "#/components/schemas/FlowSharingRequirements"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Missing requirements.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlowSharingCheckRequirementsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "The commercial license check failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/text-to-image/generate": {
+      "post": {
+        "tags": [
+          "Text to Image"
+        ],
+        "summary": "Generate images based on a textual prompt",
+        "description": "Generate images based on a textual prompt",
+        "operationId": "textToImageGenerate",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "description": "The textual prompt to describe what image to generate",
+                    "type": "string",
+                    "example": "Generate a warm and inviting ambience with soft lightning and neutral tones"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The base64 string representation of the generated image",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "byte",
+                  "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJZlWElmTU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgExAAIAAAARAAAAWodpAAQAAAABAAAAbAAAAAAAAABgAAAAAQAAAGAAAAABd3d3Lmlua3NjYXBlLm9yZwAAAAOgAQADAAAAAQABAACgAgAEAAAAAQAAABCgAwAEAAAAAQAAABAAAAAAKwl1NwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAi1pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDYuMC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+d3d3Lmlua3NjYXBlLm9yZzwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj45NjwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+OTY8L3RpZmY6WFJlc29sdXRpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgryNKKqAAAC8klEQVQ4EV1Tz0tUURg99943zpvGcWaqaRTJ7CdGvzBtkVQYFLjxD3AlZFREUZv21q4f1CLBCLR2bdoVBVmbchGUiUQU0i8oNUEsG9/MOG/uvZ07Y2B9vPu473HP+c53vvsJuOi3Ev3CuO26IbtHAH1K4EBSIlvDf0rY2aQSo63JcOh6d82EO9dvrewXwoiV4Pphe1N7OJP2gaAETBV40tE6lihXCLQAAx96xVl+wZKEyaqRHbYjtg5HUjlrJkOhoSCvrC+J1voQ62q1jXnGWAvl16WkV5p/2phdc9QhKwT1Q3bQJnEquYjiZBH+mazGufYcGpMhhLDQFGqXEymJYqw24y/8nBtMrc6cFg13bZtVeB0rQ38JoXrTGtcO/0I8alAMqwKjXhVOBZAkJKsWyleLwVI7heGEiAG+ZrUUfmpnHgl+BEsSzFYBjH/38XIqypqBbNygZW1o9m2LKVMunPCorEPRnG8GcmfMojEVolQWTELvmHliyseBZ4mqkU6IM9X68uo00LPd63AEG1GGe2SEICfagf9GZcvXhghbrGwFryHkhffAj1zdRookmMxN3I0XBOYCj32vwpfowY6GIh51BGiKWLzKC4zxzG+q2LwKmAwULxDwRZCdYZzVI599KnBaq+E60Lk1j/td83hxKIeLTSE+069PLLtk8VWw/7dkHCdNgDAhEPm4BDzZH6BzS4BCSUKTy5kXUW7RZyswsxAJn/9IRd5O69ti7bDd63kYs2yjgmWVPED2e7sLOMLMriNlLVDickTOH7ZVR/2o+pkvtcu5Y+INwQMyCVWGKPJu2mZe3Z7xGI6PpPHwXS1mc16lI7GIca0trkpk1O/FcDCTyowt21UZoscqhS69AENjdFpCvicjOBOSV+BSY2i6NhVU29Y6ufBr7mkqnVm+yismMXvH3oDEeclhMizDp9u1TDHPNeN85b8He/ID3W3x/4bpX5Jd7EYfMQcJqad3iEvMNteY0daEHrq8PM6VSeQ4/wGOAT89rW8MpwAAAABJRU5ErkJggg=="
+                }
+              }
+            }
           }
         }
       }
@@ -41805,6 +41167,727 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/api/_admin/property-extractor/extract": {
+      "post": {
+        "tags": [
+          "Admin API",
+          "Property Extractor"
+        ],
+        "summary": "Extracts properties out of a product description.",
+        "description": "Extracts properties out of a product description.",
+        "operationId": "propertyExtractorExtract",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "description"
+                ],
+                "properties": {
+                  "description": {
+                    "description": "Product description",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The extracted properties.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "properties": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "The commercial license check failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_admin/licensing/features/{type}": {
+      "get": {
+        "tags": [
+          "Admin API",
+          "Licensing"
+        ],
+        "summary": "Get all the available commercial plugin features",
+        "description": "Get all the available commercial plugin features according to the installed license",
+        "operationId": "licensingFeatures",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "Commercial feature type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The available feature data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SwagCommercialFeature"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/api/_action/order/{orderId}/order-return/{orderReturnId}/add-items": {
+      "post": {
+        "tags": [
+          "Admin API",
+          "Order Return Management"
+        ],
+        "summary": "Add items to order return",
+        "description": "The merchant is able to add items to an existing return.",
+        "operationId": "addItemsToReturn",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "Identifier of the order",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "orderReturnId",
+            "in": "path",
+            "description": "Identifier of the order return",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "orderLineItems"
+                ],
+                "properties": {
+                  "orderLineItems": {
+                    "description": "A list of the order line items, which need to be added to return",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "orderLineItemId",
+                        "quantity"
+                      ],
+                      "properties": {
+                        "orderLineItemId": {
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "type": "integer"
+                        },
+                        "internalComment": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204",
+            "description": "The list of items added to return successful."
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "The commercial license check failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_proxy/order/{orderId}/return": {
+      "post": {
+        "tags": [
+          "Admin API",
+          "Order Return Management"
+        ],
+        "summary": "Proxy Store-API to create an return",
+        "description": "Create a return",
+        "operationId": "createAReturn",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "The order id of these order return line items",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lineItems": {
+                    "description": "A list of the order line items payload",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "orderLineItemId": {
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "type": "number"
+                        },
+                        "internalComment": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The return has created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "The commercial license check failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_action/order-line-item/state/{toState}": {
+      "post": {
+        "tags": [
+          "Admin API",
+          "Order Return Management"
+        ],
+        "summary": "Transition a list of line-item of an order to a new state",
+        "description": "Changes the order's line-items state",
+        "operationId": "orderLineItemsTransition",
+        "parameters": [
+          {
+            "name": "toState",
+            "in": "path",
+            "description": "The technical name of the state machine state.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ids"
+                ],
+                "properties": {
+                  "ids": {
+                    "description": "A list ID of the order line items, which need to be updated",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated products return state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "The commercial license check failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_action/order-return-line-item/state/{toState}": {
+      "post": {
+        "tags": [
+          "Admin API",
+          "Order Return Management"
+        ],
+        "summary": "Transition a list of the return's line-item to a new state",
+        "description": "Changes the state of the return's line-items",
+        "operationId": "orderReturnLineItemsTransition",
+        "parameters": [
+          {
+            "name": "toState",
+            "in": "path",
+            "description": "The technical name of the state machine state.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ids"
+                ],
+                "properties": {
+                  "ids": {
+                    "description": "A list ID of the order return line items, which need to be updated",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated products return state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "The commercial license check failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_action/order/return/{orderReturnId}/calculate": {
+      "post": {
+        "tags": [
+          "Admin API",
+          "Order Return Management"
+        ],
+        "summary": "Calculate Amount",
+        "description": "Calculate Amount",
+        "operationId": "calculateAmount",
+        "parameters": [
+          {
+            "name": "orderReturnId",
+            "in": "path",
+            "description": "The return id of order",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204",
+            "description": "The return has calculate amount successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "The commercial license check failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_action/customer/{customerId}/turnover": {
+      "get": {
+        "tags": [
+          "Admin API",
+          "Order Return Management"
+        ],
+        "summary": "Get turn over value of an customer",
+        "description": "Get turn over value of an customer",
+        "operationId": "customerTurnOver",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "description": "The customer id you want to get the turnover",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated status amount of return line items.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "The commercial license check failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_action/generate-review-summary": {
+      "post": {
+        "summary": "Generate review summaries for products",
+        "description": "Generate review summaries using the ReviewSummary service. Request body accepts mood, productId, salesChannelId and languageIds.",
+        "operationId": "generateReviewSummary",
+        "tags": [
+          "ReviewSummary"
+        ],
+        "requestBody": {
+          "description": "Options for review summary generation.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Options"
+              },
+              "example": {
+                "mood": "positive",
+                "productId": "019970d61cf071b481145788abdb2271",
+                "salesChannelId": "01988451220e7308bdda1b32e87db12f",
+                "languageIds": [
+                  "2fbb5fe2e29a4d70aa5854ce7ce3e20b"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Array of generated summaries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ReviewSummaryItem"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/ReviewSummaryByLanguage"
+                    }
+                  ]
+                },
+                "example": {
+                  "2fbb5fe2e29a4d70aa5854ce7ce3e20b": "Review Summary of the product in the specified language."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — validation or generation error (message returned as plain JSON string)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "License missing or generation failed: <details>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/_admin/rule-builder-preview/{orderId}": {
+      "post": {
+        "tags": [
+          "Rule Preview"
+        ],
+        "summary": "Preview results of a rule evaluating an order",
+        "description": "Evaluate the conditions of a rule based on a pre-selected order.",
+        "operationId": "rulePreview",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "Identifier of the order the preview should be generated for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "conditions"
+                ],
+                "properties": {
+                  "conditions": {
+                    "description": "Array of nested rule condition payloads.",
+                    "items": {
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "dateTime": {
+                    "description": "A date and time to be mocked in the preview evaluation.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the results of the evaluated rule conditions as an object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "match": {
+                        "description": "Evaluation of the condition",
+                        "type": "boolean"
+                      },
+                      "name": {
+                        "description": "The technical name of the condition",
+                        "type": "string"
+                      },
+                      "ruleReferenceId": {
+                        "description": "The id of the corresponding rule_condition entity",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/translation/meta": {
+      "get": {
+        "tags": [
+          "Translation Management"
+        ],
+        "summary": "Get translation meta information",
+        "description": "Returns translation meta information that is independent of the configured locales: the built-in locales, the community translation and documentation URLs and the completeness threshold.",
+        "operationId": "translationMeta",
+        "responses": {
+          "200": {
+            "description": "The translation meta information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "builtInLocales": {
+                      "description": "Locale codes shipped with the platform and excluded from the community translation download.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "communityTranslationsUrl": {
+                      "description": "URL of the community translation platform, or null if not configured.",
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "documentationUrlSnippetKey": {
+                      "description": "Admin snippet key that resolves to the localized translation documentation URL, or null if not configured.",
+                      "type": "string"
+                    },
+                    "completenessThreshold": {
+                      "description": "Minimum translation completeness in percent considered sufficient.",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -48636,6 +48719,34 @@
         },
         "type": "object"
       },
+      "B2bComponentsBudgetOrganizationSharing": {
+        "description": "Added since version: 6.7.4.0",
+        "required": [
+          "organizationId",
+          "budgetId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "organizationId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "budgetId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "organization": {
+            "$ref": "#/components/schemas/B2bComponentsOrganization"
+          },
+          "budget": {
+            "$ref": "#/components/schemas/B2bComponentsBudget"
+          }
+        },
+        "type": "object"
+      },
       "B2bComponentsEmployeeWishlistJsonApi": {
         "allOf": [
           {
@@ -50036,6 +50147,15 @@
                 "type": "string",
                 "readOnly": true
               },
+              "sortRank": {
+                "type": "integer",
+                "format": "int64",
+                "readOnly": true
+              },
+              "position": {
+                "type": "integer",
+                "format": "int64"
+              },
               "defaultShippingAddressId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -50646,6 +50766,15 @@
           "treeSortPath": {
             "type": "string",
             "readOnly": true
+          },
+          "sortRank": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          },
+          "position": {
+            "type": "integer",
+            "format": "int64"
           },
           "defaultShippingAddressId": {
             "type": "string",
@@ -54133,6 +54262,37 @@
                     },
                     "type": "object"
                   },
+                  "defaultForAccounts": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/defaultForAccounts"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_employee_account"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "a321d95c2743f7b553dde4b9ad4d884f"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "language": {
                     "properties": {
                       "links": {
@@ -54627,6 +54787,12 @@
           },
           "role": {
             "$ref": "#/components/schemas/B2bComponentsRole"
+          },
+          "defaultForAccounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/B2bEmployeeAccount"
+            }
           },
           "language": {
             "$ref": "#/components/schemas/Language"
@@ -68214,6 +68380,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "typeName": {
+                "description": "Technical name of the document type.",
+                "type": "string"
+              },
               "referencedDocumentId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -68497,6 +68667,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "typeName": {
+            "description": "Technical name of the document type.",
+            "type": "string"
+          },
           "referencedDocumentId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
@@ -68597,6 +68771,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "typeName": {
+                "description": "Technical name of the document type.",
+                "type": "string"
+              },
               "logoId": {
                 "description": "Unique identity of the company logo.",
                 "type": "string",
@@ -68613,6 +68791,9 @@
               "filenameSuffix": {
                 "description": "A suffix name added to the file name separated by an underscore.",
                 "type": "string"
+              },
+              "filenameInfixes": {
+                "type": "object"
               },
               "global": {
                 "description": "When set to `true`, the document can be used across all sales channels.",
@@ -68793,6 +68974,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "typeName": {
+            "description": "Technical name of the document type.",
+            "type": "string"
+          },
           "logoId": {
             "description": "Unique identity of the company logo.",
             "type": "string",
@@ -68809,6 +68994,9 @@
           "filenameSuffix": {
             "description": "A suffix name added to the file name separated by an underscore.",
             "type": "string"
+          },
+          "filenameInfixes": {
+            "type": "object"
           },
           "global": {
             "description": "When set to `true`, the document can be used across all sales channels.",
@@ -68918,6 +69106,10 @@
                 "description": "Unique identity of document type.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
+              },
+              "typeName": {
+                "description": "Technical name of the document type.",
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -69052,6 +69244,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "typeName": {
+            "description": "Technical name of the document type.",
+            "type": "string"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -69093,14 +69289,17 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "documentId": {
+                "description": "Unique identity of the document.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
               "mediaId": {
+                "description": "Unique identity of the media.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
               "documentFormat": {
+                "description": "Document format of the document file.",
                 "type": "string"
               },
               "createdAt": {
@@ -69195,14 +69394,17 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "documentId": {
+            "description": "Unique identity of the document.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
           "mediaId": {
+            "description": "Unique identity of the media.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
           "documentFormat": {
+            "description": "Document format of the document file.",
             "type": "string"
           },
           "createdAt": {
@@ -71634,6 +71836,10 @@
               "active": {
                 "type": "boolean"
               },
+              "translationAutoUpdate": {
+                "description": "Whether the scheduled task keeps the community translations of this language up to date. Enabled by default and only applied to linked languages.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -72433,6 +72639,10 @@
             "type": "string"
           },
           "active": {
+            "type": "boolean"
+          },
+          "translationAutoUpdate": {
+            "description": "Whether the scheduled task keeps the community translations of this language up to date. Enabled by default and only applied to linked languages.",
             "type": "boolean"
           },
           "customFields": {
@@ -101679,6 +101889,10 @@
                 "description": "This is used to toggle the language configurations, say between DE and DE-DE for instance.",
                 "type": "boolean"
               },
+              "isExternalStorefront": {
+                "description": "Whether the domain points to an external (headless) storefront.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -101922,6 +102136,10 @@
           },
           "hreflangUseOnlyLocale": {
             "description": "This is used to toggle the language configurations, say between DE and DE-DE for instance.",
+            "type": "boolean"
+          },
+          "isExternalStorefront": {
+            "description": "Whether the domain points to an external (headless) storefront.",
             "type": "boolean"
           },
           "customFields": {
@@ -103670,6 +103888,10 @@
                 "description": "Created SEO URL template can be made usable by setting `isValid` to true.",
                 "type": "boolean"
               },
+              "isHeadless": {
+                "description": "Whether the template applies to headless (API type) sales channels. Derived from the route family.",
+                "type": "boolean"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -103753,6 +103975,10 @@
           },
           "isValid": {
             "description": "Created SEO URL template can be made usable by setting `isValid` to true.",
+            "type": "boolean"
+          },
+          "isHeadless": {
+            "description": "Whether the template applies to headless (API type) sales channels. Derived from the route family.",
             "type": "boolean"
           },
           "customFields": {
@@ -116222,312 +116448,998 @@
         },
         "type": "object"
       },
-      "ConsentState": {
+      "GlobalB2bComponentsConfigCreate": {
         "type": "object",
-        "required": [
-          "name",
-          "scopeName",
-          "identifier",
-          "status",
-          "actor",
-          "updatedAt",
-          "acceptedUntil"
-        ],
+        "description": "B2B component feature states",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the consent"
+          "QUICK_ORDER": {
+            "type": "boolean",
+            "description": "Quick Order: customers can order quickly by entering product numbers or uploading a file."
           },
-          "scopeName": {
-            "type": "string",
-            "description": "The scope of the consent that defines how the identifier is resolved"
+          "EMPLOYEE_MANAGEMENT": {
+            "type": "boolean",
+            "description": "Employee Management: customers can create employee accounts with roles and permissions."
           },
-          "identifier": {
-            "type": "string",
-            "description": "The resolved identifier of the consent"
+          "QUOTE_MANAGEMENT": {
+            "type": "boolean",
+            "description": "Quote Management: customers can request quotes and negotiate individual prices."
           },
-          "status": {
-            "type": "string",
-            "enum": [
-              "unset",
-              "accepted",
-              "revoked"
-            ],
-            "description": "The current status of the consent (requested, accepted, revoked)"
+          "ORDER_APPROVAL": {
+            "type": "boolean",
+            "description": "Order Approval: customers can create rules to manage their employees' order permissions."
           },
-          "actor": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The user name of the user who made the consent decision. null if never updated"
+          "SHOPPING_LISTS": {
+            "type": "boolean",
+            "description": "Shopping Lists: customers can collect products to reorder at a later time."
           },
-          "updatedAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp of when the consent status was last updated. null if never updated"
+          "ORGANIZATION_UNITS": {
+            "type": "boolean",
+            "description": "Organization Units: customers can organize employees into units with roles and permissions."
           },
-          "acceptedUntil": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "description": "The timestamp until when the consent is accepted. null if never accepted"
-          },
-          "acceptedRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
-          },
-          "latestRevision": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
+          "BUDGET_MANAGEMENT": {
+            "type": "boolean",
+            "description": "Budget Management: customers can define and manage budget limits for their organization units."
           }
         }
       },
-      "SalesChannelFileConfiguration": {
+      "GlobalB2bComponentsConfig": {
+        "description": "Map of a license-available B2B component feature code to its enabled state.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GlobalB2bComponentsConfigCreate"
+          },
+          {
+            "type": "object",
+            "required": [
+              "QUICK_ORDER",
+              "EMPLOYEE_MANAGEMENT",
+              "QUOTE_MANAGEMENT",
+              "ORDER_APPROVAL",
+              "SHOPPING_LISTS",
+              "ORGANIZATION_UNITS",
+              "BUDGET_MANAGEMENT"
+            ]
+          }
+        ]
+      },
+      "B2bComponentsEmployeeMembershipDeltaItem": {
+        "description": "A single create, update, or delete operation on one of the employee's memberships other than the primary one — either a company-wide membership or a membership within an organisation unit of that company.",
         "type": "object",
         "required": [
-          "id",
-          "enabled",
-          "templateOverrides"
+          "businessPartnerCustomerId"
         ],
         "properties": {
-          "id": {
-            "description": "Identifier of the sales_channel_file row.",
+          "type": {
+            "description": "The change to apply to the membership: 'create', 'update', or 'delete'. Optional; defaults to 'create' when omitted.",
+            "type": "string"
+          },
+          "businessPartnerCustomerId": {
+            "description": "Id of the company (business partner customer) the membership belongs to.",
+            "type": "string"
+          },
+          "organizationId": {
+            "description": "Id of the organisation unit, or null for a company-wide membership.",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "roleId": {
+            "description": "Id of the role for the membership, or null.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "B2bComponentsCompanyMembershipRoleMap": {
+        "description": "Optional map of account identifier (UUID) to the role identifier (UUID) to assign for that account in this company. A null value assigns no role. The role is applied whether the account is newly added or already has a live membership in the company; accounts omitted from the map keep their current role.",
+        "type": "object",
+        "propertyNames": {
+          "description": "Identifier (UUID) of the employee account the role applies to.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "additionalProperties": {
+          "description": "Identifier (UUID) of the company role to assign, or null to assign no role.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{32}$"
+        }
+      },
+      "B2bComponentsAssignCompanyEmployeesRequest": {
+        "type": "object",
+        "required": [
+          "customerId"
+        ],
+        "properties": {
+          "customerId": {
+            "description": "Identifier (UUID) of the business partner customer (company).",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "enabled": {
-            "description": "Whether this file is served publicly for the sales channel.",
-            "type": "boolean"
-          },
-          "templateOverrides": {
-            "description": "Merchant-provided Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "SalesChannelFileDescriptor": {
-        "type": "object",
-        "required": [
-          "fileFamily",
-          "fileName",
-          "contentType",
-          "configuration"
-        ],
-        "properties": {
-          "fileFamily": {
-            "description": "File family below `Resources/views/files`.",
-            "type": "string",
-            "maxLength": 64
-          },
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
-          },
-          "contentType": {
-            "description": "Detected response content type for the public file.",
-            "type": "string",
-            "examples": [
-              "text/plain; charset=utf-8"
-            ]
-          },
-          "configuration": {
-            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "SalesChannelFileDetail": {
-        "type": "object",
-        "required": [
-          "fileFamily",
-          "fileName",
-          "templatePath",
-          "contentType",
-          "templates",
-          "supportsUserProvidedContent",
-          "configuration"
-        ],
-        "properties": {
-          "fileFamily": {
-            "description": "File family below `Resources/views/files`.",
-            "type": "string",
-            "maxLength": 64
-          },
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
-          },
-          "templatePath": {
-            "description": "Relative Twig template path used for rendering.",
-            "type": "string",
-            "examples": [
-              "files/agentic/llms.txt.twig"
-            ]
-          },
-          "contentType": {
-            "description": "Detected response content type for the public file.",
-            "type": "string",
-            "examples": [
-              "text/plain; charset=utf-8"
-            ]
-          },
-          "templates": {
-            "description": "Contributing Twig templates in resolved inheritance order.",
+          "addedAccountIds": {
+            "description": "Identifiers (UUID) of the employee accounts to add company-wide.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SalesChannelFileTemplate"
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
             }
           },
-          "supportsUserProvidedContent": {
-            "description": "Whether the template chain exposes the `user_provided_content` block for simple appended merchant notes.",
-            "type": "boolean"
-          },
-          "configuration": {
-            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "SalesChannelFileDetailResponse": {
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/SalesChannelFileDetail"
-          }
-        }
-      },
-      "SalesChannelFileListResponse": {
-        "type": "object",
-        "required": [
-          "data"
-        ],
-        "properties": {
-          "data": {
+          "removedAccountIds": {
+            "description": "Identifiers (UUID) of the employee accounts to remove.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SalesChannelFileDescriptor"
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "roles": {
+            "$ref": "#/components/schemas/B2bComponentsCompanyMembershipRoleMap"
+          }
+        }
+      },
+      "B2bComponentsEnabledCompaniesResponse": {
+        "description": "Identifiers (UUID) of the companies that currently have employee management enabled.",
+        "type": "object",
+        "required": [
+          "ids"
+        ],
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
             }
           }
         }
       },
-      "SalesChannelFilePreviewRequest": {
+      "B2bComponentsOrganizationMembershipRoleMap": {
+        "description": "Optional map of account identifier (UUID) to the role identifier (UUID) to assign for that account's membership. A null value assigns no role. The role is applied whether the account is newly added or already a live member; accounts omitted from the map keep their current role.",
+        "type": "object",
+        "propertyNames": {
+          "description": "Identifier (UUID) of the employee account the role applies to.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "additionalProperties": {
+          "description": "Identifier (UUID) of the role to assign for the membership, or null to assign no role.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{32}$"
+        }
+      },
+      "B2bComponentsAssignOrganizationUnitEmployeesRequest": {
         "type": "object",
         "required": [
-          "fileName"
+          "organizationId"
         ],
         "properties": {
-          "fileName": {
-            "description": "Public file path without a leading slash.",
+          "organizationId": {
+            "description": "Identifier (UUID) of the organization unit whose members are changed.",
             "type": "string",
-            "examples": [
-              "llms.txt",
-              ".well-known/ucp.json"
-            ]
+            "pattern": "^[0-9a-f]{32}$"
           },
-          "templateOverrides": {
-            "description": "Unsaved Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
+          "addedEmployeeIds": {
+            "description": "Identifiers (UUID) of the employees to add as members.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "removedEmployeeIds": {
+            "description": "Identifiers (UUID) of the employees to remove.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "roles": {
+            "$ref": "#/components/schemas/B2bComponentsOrganizationMembershipRoleMap"
+          }
+        }
+      },
+      "B2bComponentsAssignOrganizationUnitCompanyEmployeesRequest": {
+        "type": "object",
+        "required": [
+          "customerId"
+        ],
+        "properties": {
+          "customerId": {
+            "description": "Identifier (UUID) of the business partner customer (company).",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "addedAccountIds": {
+            "description": "Identifiers (UUID) of the employee accounts to add company-wide.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "removedAccountIds": {
+            "description": "Identifiers (UUID) of the employee accounts to remove.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "roles": {
+            "$ref": "#/components/schemas/B2bComponentsOrganizationMembershipRoleMap"
+          }
+        }
+      },
+      "B2bComponentsAssignEmployeeOrganizationUnitsRequest": {
+        "type": "object",
+        "required": [
+          "employeeId"
+        ],
+        "properties": {
+          "employeeId": {
+            "description": "Identifier (UUID) of the employee whose organization-unit memberships are changed.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "addedOrganizationIds": {
+            "description": "Identifiers (UUID) of the organization units to add the employee to.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "removedOrganizationIds": {
+            "description": "Identifiers (UUID) of the organization units to remove the employee from.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
             }
           }
         }
       },
-      "SalesChannelFilePreviewResponse": {
+      "B2bComponentsOrganizationEnabledCompaniesResponse": {
+        "description": "Identifiers (UUID) of the companies that currently have organization units enabled.",
         "type": "object",
         "required": [
-          "fileName",
-          "contentType",
-          "content"
+          "ids"
         ],
         "properties": {
-          "fileName": {
-            "description": "Public file path without a leading slash.",
-            "type": "string"
-          },
-          "contentType": {
-            "description": "Detected content type of the rendered file.",
-            "type": "string"
-          },
-          "content": {
-            "description": "Rendered file content.",
-            "type": "string"
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
           }
         }
       },
-      "SalesChannelFileTemplate": {
+      "CustomPricingDeleteOperation": {
         "type": "object",
         "required": [
-          "twigNamespace",
-          "templateName",
-          "templateContent",
-          "role"
+          "action",
+          "payload"
         ],
         "properties": {
-          "twigNamespace": {
-            "description": "Twig namespace that contributed the template, for example `Framework` or a plugin name.",
-            "type": "string"
-          },
-          "templateName": {
-            "description": "Resolved Twig template name.",
-            "type": "string",
-            "examples": [
-              "@Framework/files/agentic/llms.txt.twig"
-            ]
-          },
-          "templateContent": {
-            "description": "Original source template content. Administration clients can use this as the default text when editing a template override.",
-            "type": "string"
-          },
-          "role": {
-            "description": "Whether this source provides the base template or extends another source in the resolved template chain.",
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
             "type": "string",
             "enum": [
-              "base",
-              "extension"
+              "delete"
             ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "title": "productIds",
+                  "type": "array",
+                  "description": "An array of product entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerIds",
+                  "type": "array",
+                  "description": "An array of customer entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                },
+                {
+                  "title": "customerGroupIds",
+                  "type": "array",
+                  "description": "An array of customerGroup entity UUIDs",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                }
+              ]
+            }
           }
         }
+      },
+      "CustomPricingPrice": {
+        "type": "object",
+        "description": "An extended schema for the Custom Price 'price' column (as opposed to ProductPrice 'price' column)",
+        "required": [
+          "quantityStart",
+          "price"
+        ],
+        "properties": {
+          "quantityStart": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "quantityEnd": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "price": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "This field should house all the normal facets of the `product_price`.`price` column",
+              "required": [
+                "currencyId",
+                "gross",
+                "net",
+                "linked"
+              ],
+              "properties": {
+                "currencyId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "gross": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "net": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "linked": {
+                  "type": "boolean"
+                },
+                "listPrice": {
+                  "type": "object",
+                  "properties": {
+                    "gross": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "net": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "linked": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "regulationPrice": {
+                  "type": "object",
+                  "properties": {
+                    "gross": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "net": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "linked": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingResponse": {
+        "type": "object",
+        "required": [
+          "success",
+          "data"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "entities",
+                      "errors"
+                    ],
+                    "properties": {
+                      "entities": {
+                        "type": "array",
+                        "maxItems": 1,
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{32}$"
+                        }
+                      },
+                      "errors": {
+                        "type": "array",
+                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "extensions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomPricingUpsertOperation": {
+        "type": "object",
+        "required": [
+          "action",
+          "payload"
+        ],
+        "properties": {
+          "action": {
+            "description": "A specific verb defining what operation should be actioned for a specific data record",
+            "type": "string",
+            "enum": [
+              "upsert"
+            ]
+          },
+          "payload": {
+            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "productId",
+                "prices"
+              ],
+              "description": "A definition almost symmetric with Sync API payload",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "productVersionId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "productId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerId": {
+                  "type": "string",
+                  "description": "This parameter should be specified, or 'customerGroupId', not both",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "customerGroupId": {
+                  "type": "string",
+                  "description": "This parameter should be specified, or 'customerId', not both",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "price": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomPricingPrice"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FlowSharingResponse": {
+        "type": "object",
+        "required": [
+          "flow"
+        ],
+        "properties": {
+          "flow": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "name": {
+                "type": "string"
+              },
+              "eventName": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "integer"
+              },
+              "invalid": {
+                "type": "boolean"
+              },
+              "active": {
+                "type": "boolean"
+              },
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "customFields": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": true
+              },
+              "sequences": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "parentId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "ruleId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "appFlowActionId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "displayGroup": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "position": {
+                      "type": "integer"
+                    },
+                    "actionName": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "config": {
+                      "type": [
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    },
+                    "trueCase": {
+                      "type": "boolean"
+                    },
+                    "customFields": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "additionalProperties": true
+                    }
+                  }
+                }
+              }
+            },
+            "additionalProperties": true
+          },
+          "dataIncluded": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "referenceIncluded": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "requirements": {
+            "$ref": "#/components/schemas/FlowSharingRequirements"
+          }
+        }
+      },
+      "FlowSharingRequirements": {
+        "type": "object",
+        "additionalProperties": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "FlowSharingCheckRequirementsResponse": {
+        "oneOf": [
+          {
+            "type": "array",
+            "maxItems": 0
+          },
+          {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "BundleItemProduct": {
+        "type": "object",
+        "required": [
+          "id",
+          "productNumber"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "productNumber": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "apiAlias": {
+            "type": "string",
+            "readOnly": true
+          }
+        }
+      },
+      "BundleProductWrite": {
+        "type": "object",
+        "required": [
+          "name",
+          "bundleItems"
+        ],
+        "properties": {
+          "productNumber": {
+            "type": "string",
+            "description": "Optional. Omit to let the server reserve a number."
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "coverId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "bundleItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BundleItem"
+            },
+            "minItems": 2
+          },
+          "bundleDiscounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BundleDiscount"
+            }
+          },
+          "visibilities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "salesChannelId"
+              ],
+              "properties": {
+                "salesChannelId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                },
+                "visibility": {
+                  "type": "integer",
+                  "enum": [
+                    1,
+                    2,
+                    3
+                  ]
+                }
+              }
+            }
+          },
+          "customFields": {
+            "type": "object"
+          }
+        }
+      },
+      "BundleProduct": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BundleProductWrite"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "active": {
+                "type": "boolean"
+              },
+              "available": {
+                "type": "boolean"
+              },
+              "description": {
+                "type": "string"
+              },
+              "price": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "currencyId": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "net": {
+                      "type": "number"
+                    },
+                    "gross": {
+                      "type": "number"
+                    },
+                    "linked": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "stock": {
+                "type": "integer"
+              },
+              "sales": {
+                "type": "integer"
+              },
+              "customSearchKeywords": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "cover": {
+                "type": "object"
+              },
+              "media": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "apiAlias": {
+                "type": "string",
+                "readOnly": true
+              }
+            }
+          }
+        ]
+      },
+      "SwagCommercialFeature": {
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "description",
+          "enabled",
+          "dependencies"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Options": {
+        "type": "object",
+        "properties": {
+          "mood": {
+            "type": "string",
+            "enum": [
+              "positive",
+              "neutral"
+            ],
+            "description": "Tone/mood to guide summary generation (optional)."
+          },
+          "productId": {
+            "type": "string",
+            "description": "Product UUID (hex) identifying the product to generate summaries for. This field is required."
+          },
+          "salesChannelId": {
+            "type": "string",
+            "description": "Sales channel UUID (hex) used to scope generation and locale/context resolution. This field is required."
+          },
+          "languageIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of language UUIDs (hex). Provided language IDs will be mapped to locale codes server-side; supply this OR `locales`."
+          },
+          "locales": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of locale codes (e.g. `de-DE`, `en-GB`). Supply this OR `languageIds`. At least one of `languageIds` or `locales` must be present."
+          },
+          "length": {
+            "type": "integer",
+            "description": "Desired length of the generated summary in number of characters (optional, default: 300)."
+          },
+          "reviews": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "points": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "content",
+                "points"
+              ],
+              "description": "Array of review objects containing title, content, and points (optional, if not provided, reviews will be fetched from product)."
+            }
+          }
+        },
+        "required": [
+          "productId",
+          "salesChannelId"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "languageIds"
+            ]
+          },
+          {
+            "required": [
+              "locales"
+            ]
+          }
+        ],
+        "additionalProperties": true,
+        "description": "Options object passed to Review Summary generation."
+      },
+      "ReviewSummaryItem": {
+        "type": "object",
+        "properties": {
+          "languageId": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "ReviewSummaryByLanguage": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string",
+          "description": "Generated summary for the language id"
+        },
+        "description": "Map of languageId to generated summary string."
       },
       "Criteria": {
         "type": "object",
@@ -117235,6 +118147,373 @@
           "field"
         ]
       },
+      "MeasurementUnits": {
+        "type": "object",
+        "description": "Configuration of the measurement system",
+        "properties": {
+          "system": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+          },
+          "units": {
+            "type": "object",
+            "description": "Units used in the measurement system.",
+            "properties": {
+              "length": {
+                "type": "string",
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "default": "mm",
+                "description": "Unit of length."
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "g",
+                  "kg",
+                  "oz",
+                  "lb"
+                ],
+                "default": "kg",
+                "description": "Unit of weight."
+              }
+            }
+          }
+        }
+      },
+      "MediaId": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}$",
+        "description": "Media entity ID"
+      },
+      "ExternalThumbnail": {
+        "type": "object",
+        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
+        "required": [
+          "url",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
+            "example": "https://cdn.example.com/image-200x200.jpg"
+          },
+          "width": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Width of the thumbnail in pixels",
+            "example": 200
+          },
+          "height": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Height of the thumbnail in pixels",
+            "example": 200
+          }
+        }
+      },
+      "OAuthScopes": {
+        "description": "OAuth scopes that should be requested.",
+        "type": "string",
+        "enum": [
+          "write",
+          "user-verified",
+          "admin",
+          "write user-verified",
+          "write admin",
+          "user-verified admin",
+          "write user-verified admin"
+        ]
+      },
+      "OAuthGrant": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "discriminator": {
+          "propertyName": "grant_type",
+          "mapping": {
+            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
+            "password": "#/components/schemas/OAuthPasswordGrant",
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+          }
+        }
+      },
+      "OAuthClientCredentialsGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string"
+              },
+              "client_secret": {
+                "description": "Password of the client that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "client_secret"
+            ]
+          }
+        ]
+      },
+      "OAuthPasswordGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "username": {
+                "description": "Username of the user that should be authenticated.",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password of the user that should be authenticated.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "username",
+              "password"
+            ]
+          }
+        ]
+      },
+      "OAuthRefreshTokenGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "OAuth client id.",
+                "type": "string",
+                "enum": [
+                  "administration"
+                ]
+              },
+              "scope": {
+                "$ref": "#/components/schemas/OAuthScopes"
+              },
+              "refresh_token": {
+                "description": "The refresh token that should be used to refresh the access token.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id",
+              "scope",
+              "refresh_token"
+            ]
+          }
+        ]
+      },
+      "Price": {
+        "type": "object",
+        "description": "Price object",
+        "properties": {
+          "currencyId": {
+            "description": "Unique identity of the associated currency.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "gross": {
+            "description": "Gross price for the associated currency.",
+            "type": "number"
+          },
+          "net": {
+            "description": "Net price for the associated currency.",
+            "type": "number"
+          },
+          "linked": {
+            "description": "Whether gross and net prices are linked through the tax configuration.",
+            "type": "boolean"
+          },
+          "percentage": {
+            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "gross": {
+                "description": "Discount percentage relative to the gross list price.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Discount percentage relative to the net list price.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "gross",
+              "net"
+            ]
+          },
+          "listPrice": {
+            "description": "Reference list price for displaying discounts.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross list price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net list price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net list prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          },
+          "regulationPrice": {
+            "description": "Reference price used for legal price disclosures.",
+            "type": "object",
+            "properties": {
+              "currencyId": {
+                "description": "Unique identity of the associated currency.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "gross": {
+                "description": "Gross regulation price for the associated currency.",
+                "type": "number"
+              },
+              "net": {
+                "description": "Net regulation price for the associated currency.",
+                "type": "number"
+              },
+              "linked": {
+                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "gross",
+              "net",
+              "linked"
+            ]
+          }
+        },
+        "required": [
+          "currencyId",
+          "gross",
+          "net",
+          "linked"
+        ]
+      },
+      "businessEventsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "class": {
+              "type": "string",
+              "description": "Class name of the event"
+            },
+            "data": {
+              "type": "object",
+              "description": "Available data of event"
+            },
+            "aware": {
+              "type": "array",
+              "description": "Flow builder will base on awareness to show actions",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "description": "Extensions data of event",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "flowBuilderActionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the flow action"
+            },
+            "requirements": {
+              "type": "array",
+              "description": "When requirement fit with aware from `events.json` actions will be shown",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extensions data of event"
+            }
+          }
+        }
+      },
       "infoConfigResponse": {
         "type": "object",
         "properties": {
@@ -117467,1091 +118746,312 @@
         ],
         "additionalProperties": false
       },
-      "Price": {
+      "ConsentState": {
         "type": "object",
-        "description": "Price object",
-        "properties": {
-          "currencyId": {
-            "description": "Unique identity of the associated currency.",
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "gross": {
-            "description": "Gross price for the associated currency.",
-            "type": "number"
-          },
-          "net": {
-            "description": "Net price for the associated currency.",
-            "type": "number"
-          },
-          "linked": {
-            "description": "Whether gross and net prices are linked through the tax configuration.",
-            "type": "boolean"
-          },
-          "percentage": {
-            "description": "Discount percentage relative to the list price for the gross and net amounts. `null` when no list price is set.",
-            "type": [
-              "object",
-              "null"
-            ],
-            "properties": {
-              "gross": {
-                "description": "Discount percentage relative to the gross list price.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Discount percentage relative to the net list price.",
-                "type": "number"
-              }
-            },
-            "required": [
-              "gross",
-              "net"
-            ]
-          },
-          "listPrice": {
-            "description": "Reference list price for displaying discounts.",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "description": "Unique identity of the associated currency.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "Gross list price for the associated currency.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Net list price for the associated currency.",
-                "type": "number"
-              },
-              "linked": {
-                "description": "Whether gross and net list prices are linked through the tax configuration.",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          },
-          "regulationPrice": {
-            "description": "Reference price used for legal price disclosures.",
-            "type": "object",
-            "properties": {
-              "currencyId": {
-                "description": "Unique identity of the associated currency.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "gross": {
-                "description": "Gross regulation price for the associated currency.",
-                "type": "number"
-              },
-              "net": {
-                "description": "Net regulation price for the associated currency.",
-                "type": "number"
-              },
-              "linked": {
-                "description": "Whether gross and net regulation prices are linked through the tax configuration.",
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "gross",
-              "net",
-              "linked"
-            ]
-          }
-        },
         "required": [
-          "currencyId",
-          "gross",
-          "net",
-          "linked"
-        ]
-      },
-      "businessEventsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the event"
-            },
-            "class": {
-              "type": "string",
-              "description": "Class name of the event"
-            },
-            "data": {
-              "type": "object",
-              "description": "Available data of event"
-            },
-            "aware": {
-              "type": "array",
-              "description": "Flow builder will base on awareness to show actions",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "description": "Extensions data of event",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "MeasurementUnits": {
-        "type": "object",
-        "description": "Configuration of the measurement system",
+          "name",
+          "scopeName",
+          "identifier",
+          "status",
+          "actor",
+          "updatedAt",
+          "acceptedUntil"
+        ],
         "properties": {
-          "system": {
+          "name": {
+            "type": "string",
+            "description": "The name of the consent"
+          },
+          "scopeName": {
+            "type": "string",
+            "description": "The scope of the consent that defines how the identifier is resolved"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "The resolved identifier of the consent"
+          },
+          "status": {
             "type": "string",
             "enum": [
-              "metric",
-              "imperial"
+              "unset",
+              "accepted",
+              "revoked"
             ],
-            "default": "metric",
-            "description": "The measurement system used in the store. 'metric' for metric system, 'imperial' for imperial system."
+            "description": "The current status of the consent (requested, accepted, revoked)"
           },
-          "units": {
-            "type": "object",
-            "description": "Units used in the measurement system.",
-            "properties": {
-              "length": {
-                "type": "string",
-                "enum": [
-                  "mm",
-                  "cm",
-                  "m",
-                  "in",
-                  "ft"
-                ],
-                "default": "mm",
-                "description": "Unit of length."
-              },
-              "weight": {
-                "type": "string",
-                "enum": [
-                  "g",
-                  "kg",
-                  "oz",
-                  "lb"
-                ],
-                "default": "kg",
-                "description": "Unit of weight."
-              }
-            }
-          }
-        }
-      },
-      "MediaId": {
-        "type": "string",
-        "pattern": "^[0-9a-f]{32}$",
-        "description": "Media entity ID"
-      },
-      "ExternalThumbnail": {
-        "type": "object",
-        "description": "An external thumbnail URL with its dimensions. Used when a CDN provides pre-generated thumbnails alongside the main media file.",
-        "required": [
-          "url",
-          "width",
-          "height"
-        ],
-        "properties": {
-          "url": {
-            "type": "string",
-            "description": "Absolute HTTP/HTTPS URL of the thumbnail",
-            "example": "https://cdn.example.com/image-200x200.jpg"
-          },
-          "width": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Width of the thumbnail in pixels",
-            "example": 200
-          },
-          "height": {
-            "type": "integer",
-            "exclusiveMinimum": 0,
-            "description": "Height of the thumbnail in pixels",
-            "example": 200
-          }
-        }
-      },
-      "flowBuilderActionsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of the flow action"
-            },
-            "requirements": {
-              "type": "array",
-              "description": "When requirement fit with aware from `events.json` actions will be shown",
-              "items": {
-                "type": "string"
-              }
-            },
-            "extensions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Extensions data of event"
-            }
-          }
-        }
-      },
-      "OAuthScopes": {
-        "description": "OAuth scopes that should be requested.",
-        "type": "string",
-        "enum": [
-          "write",
-          "user-verified",
-          "admin",
-          "write user-verified",
-          "write admin",
-          "user-verified admin",
-          "write user-verified admin"
-        ]
-      },
-      "OAuthGrant": {
-        "type": "object",
-        "properties": {
-          "grant_type": {
-            "description": "OAuth grant type that should be requested. See [OAuth 2.0 grant](https://oauth2.thephpleague.com/authorization-server/which-grant/) for more information.",
-            "type": "string"
-          }
-        },
-        "required": [
-          "grant_type"
-        ],
-        "discriminator": {
-          "propertyName": "grant_type",
-          "mapping": {
-            "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
-            "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
-          }
-        }
-      },
-      "OAuthClientCredentialsGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string"
-              },
-              "client_secret": {
-                "description": "Password of the client that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "client_secret"
-            ]
-          }
-        ]
-      },
-      "OAuthPasswordGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "username": {
-                "description": "Username of the user that should be authenticated.",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password of the user that should be authenticated.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "username",
-              "password"
-            ]
-          }
-        ]
-      },
-      "OAuthRefreshTokenGrant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/OAuthGrant"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
-              },
-              "scope": {
-                "$ref": "#/components/schemas/OAuthScopes"
-              },
-              "refresh_token": {
-                "description": "The refresh token that should be used to refresh the access token.",
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_id",
-              "scope",
-              "refresh_token"
-            ]
-          }
-        ]
-      },
-      "SwagCommercialFeature": {
-        "type": "object",
-        "required": [
-          "code",
-          "name",
-          "description",
-          "enabled",
-          "dependencies"
-        ],
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "enabled": {
-            "type": "boolean"
-          },
-          "type": {
+          "actor": {
             "type": [
               "string",
               "null"
-            ]
-          },
-          "dependencies": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "CustomPricingDeleteOperation": {
-        "type": "object",
-        "required": [
-          "action",
-          "payload"
-        ],
-        "properties": {
-          "action": {
-            "description": "A specific verb defining what operation should be actioned for a specific data record",
-            "type": "string",
-            "enum": [
-              "delete"
-            ]
-          },
-          "payload": {
-            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "title": "productIds",
-                  "type": "array",
-                  "description": "An array of product entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                {
-                  "title": "customerIds",
-                  "type": "array",
-                  "description": "An array of customer entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                {
-                  "title": "customerGroupIds",
-                  "type": "array",
-                  "description": "An array of customerGroup entity UUIDs",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
-      "CustomPricingUpsertOperation": {
-        "type": "object",
-        "required": [
-          "action",
-          "payload"
-        ],
-        "properties": {
-          "action": {
-            "description": "A specific verb defining what operation should be actioned for a specific data record",
-            "type": "string",
-            "enum": [
-              "upsert"
-            ]
-          },
-          "payload": {
-            "description": "Contains a list of changesets for an entity. If the action type is `delete`,\n    a list of identifiers can be provided.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "productId",
-                "prices"
-              ],
-              "description": "A definition almost symmetric with Sync API payload",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "productVersionId": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "productId": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "customerId": {
-                  "type": "string",
-                  "description": "This parameter should be specified, or 'customerGroupId', not both",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "customerGroupId": {
-                  "type": "string",
-                  "description": "This parameter should be specified, or 'customerId', not both",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "price": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CustomPricingPrice"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "CustomPricingResponse": {
-        "type": "object",
-        "required": [
-          "success",
-          "data"
-        ],
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "entities",
-                      "errors"
-                    ],
-                    "properties": {
-                      "entities": {
-                        "type": "array",
-                        "maxItems": 1,
-                        "items": {
-                          "type": "string",
-                          "pattern": "^[0-9a-f]{32}$"
-                        }
-                      },
-                      "errors": {
-                        "type": "array",
-                        "description": "A detailed error list addressing specific points in which sync payload does not meet system expectations (data types, structure etc.)",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "extensions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "CustomPricingPrice": {
-        "type": "object",
-        "description": "An extended schema for the Custom Price 'price' column (as opposed to ProductPrice 'price' column)",
-        "required": [
-          "quantityStart",
-          "price"
-        ],
-        "properties": {
-          "quantityStart": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "quantityEnd": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 1
-          },
-          "price": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "description": "This field should house all the normal facets of the `product_price`.`price` column",
-              "required": [
-                "currencyId",
-                "gross",
-                "net",
-                "linked"
-              ],
-              "properties": {
-                "currencyId": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "gross": {
-                  "type": "number",
-                  "minimum": 0
-                },
-                "net": {
-                  "type": "number",
-                  "minimum": 0
-                },
-                "linked": {
-                  "type": "boolean"
-                },
-                "listPrice": {
-                  "type": "object",
-                  "properties": {
-                    "gross": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "net": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "linked": {
-                      "type": "boolean"
-                    }
-                  }
-                },
-                "regulationPrice": {
-                  "type": "object",
-                  "properties": {
-                    "gross": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "net": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "linked": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FlowSharingResponse": {
-        "type": "object",
-        "required": [
-          "flow"
-        ],
-        "properties": {
-          "flow": {
-            "type": "object",
-            "required": [
-              "id"
             ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "eventName": {
-                "type": "string"
-              },
-              "priority": {
-                "type": "integer"
-              },
-              "invalid": {
-                "type": "boolean"
-              },
-              "active": {
-                "type": "boolean"
-              },
-              "description": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "customFields": {
-                "type": [
-                  "object",
-                  "null"
-                ],
-                "additionalProperties": true
-              },
-              "sequences": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "parentId": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "ruleId": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "appFlowActionId": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "displayGroup": {
-                      "type": [
-                        "integer",
-                        "null"
-                      ]
-                    },
-                    "position": {
-                      "type": "integer"
-                    },
-                    "actionName": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    },
-                    "config": {
-                      "type": [
-                        "object",
-                        "array",
-                        "null"
-                      ]
-                    },
-                    "trueCase": {
-                      "type": "boolean"
-                    },
-                    "customFields": {
-                      "type": [
-                        "object",
-                        "null"
-                      ],
-                      "additionalProperties": true
-                    }
-                  }
-                }
-              }
-            },
-            "additionalProperties": true
+            "description": "The user name of the user who made the consent decision. null if never updated"
           },
-          "dataIncluded": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "referenceIncluded": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "requirements": {
-            "$ref": "#/components/schemas/FlowSharingRequirements"
-          }
-        }
-      },
-      "FlowSharingRequirements": {
-        "type": "object",
-        "additionalProperties": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              }
-            }
-          ]
-        }
-      },
-      "FlowSharingCheckRequirementsResponse": {
-        "oneOf": [
-          {
-            "type": "array",
-            "maxItems": 0
-          },
-          {
-            "type": "object",
-            "additionalProperties": {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      },
-      "Options": {
-        "type": "object",
-        "properties": {
-          "mood": {
-            "type": "string",
-            "enum": [
-              "positive",
-              "neutral"
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
             ],
-            "description": "Tone/mood to guide summary generation (optional)."
+            "format": "date-time",
+            "description": "The timestamp of when the consent status was last updated. null if never updated"
           },
-          "productId": {
-            "type": "string",
-            "description": "Product UUID (hex) identifying the product to generate summaries for. This field is required."
+          "acceptedUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The timestamp until when the consent is accepted. null if never accepted"
           },
-          "salesChannelId": {
-            "type": "string",
-            "description": "Sales channel UUID (hex) used to scope generation and locale/context resolution. This field is required."
+          "acceptedRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The accepted consent revision. null unless the consent is currently accepted for a revision-aware consent."
           },
-          "languageIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Array of language UUIDs (hex). Provided language IDs will be mapped to locale codes server-side; supply this OR `locales`."
-          },
-          "locales": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Array of locale codes (e.g. `de-DE`, `en-GB`). Supply this OR `languageIds`. At least one of `languageIds` or `locales` must be present."
-          },
-          "length": {
-            "type": "integer",
-            "description": "Desired length of the generated summary in number of characters (optional, default: 300)."
-          },
-          "reviews": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "content": {
-                  "type": "string"
-                },
-                "points": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "title",
-                "content",
-                "points"
-              ],
-              "description": "Array of review objects containing title, content, and points (optional, if not provided, reviews will be fetched from product)."
-            }
+          "latestRevision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The current latest revision defined for the consent. null when the consent does not use revisions."
           }
-        },
-        "required": [
-          "productId",
-          "salesChannelId"
-        ],
-        "anyOf": [
-          {
-            "required": [
-              "languageIds"
-            ]
-          },
-          {
-            "required": [
-              "locales"
-            ]
-          }
-        ],
-        "additionalProperties": true,
-        "description": "Options object passed to Review Summary generation."
+        }
       },
-      "ReviewSummaryItem": {
-        "type": "object",
-        "properties": {
-          "languageId": {
-            "type": "string"
-          },
-          "summary": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": true
-      },
-      "ReviewSummaryByLanguage": {
-        "type": "object",
-        "additionalProperties": {
-          "type": "string",
-          "description": "Generated summary for the language id"
-        },
-        "description": "Map of languageId to generated summary string."
-      },
-      "BundleItemProduct": {
+      "SalesChannelFileConfiguration": {
         "type": "object",
         "required": [
           "id",
-          "productNumber"
+          "enabled",
+          "templateOverrides"
         ],
         "properties": {
           "id": {
+            "description": "Identifier of the sales_channel_file row.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "name": {
-            "type": "string"
-          },
-          "productNumber": {
-            "type": "string"
-          },
-          "active": {
+          "enabled": {
+            "description": "Whether this file is served publicly for the sales channel.",
             "type": "boolean"
           },
-          "available": {
-            "type": "boolean"
-          },
-          "apiAlias": {
-            "type": "string",
-            "readOnly": true
+          "templateOverrides": {
+            "description": "Merchant-provided Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
           }
         }
       },
-      "BundleProductWrite": {
+      "SalesChannelFileDescriptor": {
         "type": "object",
         "required": [
-          "name",
-          "bundleItems"
+          "fileFamily",
+          "fileName",
+          "contentType",
+          "configuration"
         ],
         "properties": {
-          "productNumber": {
+          "fileFamily": {
+            "description": "File family below `Resources/views/files`.",
             "type": "string",
-            "description": "Optional. Omit to let the server reserve a number."
+            "maxLength": 64
           },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "coverId": {
+          "fileName": {
+            "description": "Public file path without a leading slash.",
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
           },
-          "bundleItems": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BundleItem"
-            },
-            "minItems": 2
+          "contentType": {
+            "description": "Detected response content type for the public file.",
+            "type": "string",
+            "examples": [
+              "text/plain; charset=utf-8"
+            ]
           },
-          "bundleDiscounts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BundleDiscount"
-            }
-          },
-          "visibilities": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "salesChannelId"
-              ],
-              "properties": {
-                "salesChannelId": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{32}$"
-                },
-                "visibility": {
-                  "type": "integer",
-                  "enum": [
-                    1,
-                    2,
-                    3
-                  ]
-                }
+          "configuration": {
+            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
+              },
+              {
+                "type": "null"
               }
-            }
-          },
-          "customFields": {
-            "type": "object"
+            ]
           }
         }
       },
-      "BundleProduct": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/BundleProductWrite"
+      "SalesChannelFileDetail": {
+        "type": "object",
+        "required": [
+          "fileFamily",
+          "fileName",
+          "templatePath",
+          "contentType",
+          "templates",
+          "supportsUserProvidedContent",
+          "configuration"
+        ],
+        "properties": {
+          "fileFamily": {
+            "description": "File family below `Resources/views/files`.",
+            "type": "string",
+            "maxLength": 64
           },
-          {
-            "type": "object",
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "templatePath": {
+            "description": "Relative Twig template path used for rendering.",
+            "type": "string",
+            "examples": [
+              "files/agentic/llms.txt.twig"
+            ]
+          },
+          "contentType": {
+            "description": "Detected response content type for the public file.",
+            "type": "string",
+            "examples": [
+              "text/plain; charset=utf-8"
+            ]
+          },
+          "templates": {
+            "description": "Contributing Twig templates in resolved inheritance order.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesChannelFileTemplate"
+            }
+          },
+          "supportsUserProvidedContent": {
+            "description": "Whether the template chain exposes the `user_provided_content` block for simple appended merchant notes.",
+            "type": "boolean"
+          },
+          "configuration": {
+            "description": "Stored sales-channel configuration for this file, or null when it has not been configured yet.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SalesChannelFileConfiguration"
               },
-              "active": {
-                "type": "boolean"
-              },
-              "available": {
-                "type": "boolean"
-              },
-              "description": {
-                "type": "string"
-              },
-              "price": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "currencyId": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "net": {
-                      "type": "number"
-                    },
-                    "gross": {
-                      "type": "number"
-                    },
-                    "linked": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              },
-              "stock": {
-                "type": "integer"
-              },
-              "sales": {
-                "type": "integer"
-              },
-              "customSearchKeywords": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "cover": {
-                "type": "object"
-              },
-              "media": {
-                "type": "array",
-                "items": {
-                  "type": "object"
-                }
-              },
-              "apiAlias": {
-                "type": "string",
-                "readOnly": true
+              {
+                "type": "null"
               }
+            ]
+          }
+        }
+      },
+      "SalesChannelFileDetailResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/SalesChannelFileDetail"
+          }
+        }
+      },
+      "SalesChannelFileListResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesChannelFileDescriptor"
             }
           }
-        ]
+        }
+      },
+      "SalesChannelFilePreviewRequest": {
+        "type": "object",
+        "required": [
+          "fileName"
+        ],
+        "properties": {
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string",
+            "examples": [
+              "llms.txt",
+              ".well-known/ucp.json"
+            ]
+          },
+          "templateOverrides": {
+            "description": "Unsaved Twig overrides keyed by Twig namespace. The reserved `user_provided_content` key stores plain text for the dedicated append block when supported by the template chain.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SalesChannelFilePreviewResponse": {
+        "type": "object",
+        "required": [
+          "fileName",
+          "contentType",
+          "content"
+        ],
+        "properties": {
+          "fileName": {
+            "description": "Public file path without a leading slash.",
+            "type": "string"
+          },
+          "contentType": {
+            "description": "Detected content type of the rendered file.",
+            "type": "string"
+          },
+          "content": {
+            "description": "Rendered file content.",
+            "type": "string"
+          }
+        }
+      },
+      "SalesChannelFileTemplate": {
+        "type": "object",
+        "required": [
+          "twigNamespace",
+          "templateName",
+          "templateContent",
+          "role"
+        ],
+        "properties": {
+          "twigNamespace": {
+            "description": "Twig namespace that contributed the template, for example `Framework` or a plugin name.",
+            "type": "string"
+          },
+          "templateName": {
+            "description": "Resolved Twig template name.",
+            "type": "string",
+            "examples": [
+              "@Framework/files/agentic/llms.txt.twig"
+            ]
+          },
+          "templateContent": {
+            "description": "Original source template content. Administration clients can use this as the default text when editing a template override.",
+            "type": "string"
+          },
+          "role": {
+            "description": "Whether this source provides the base template or extends another source in the resolved template chain.",
+            "type": "string",
+            "enum": [
+              "base",
+              "extension"
+            ]
+          }
+        }
       }
     },
     "responses": {
