@@ -41847,72 +41847,6 @@
           }
         }
       }
-    },
-    "/_action/order/document-v2/download-archive": {
-      "post": {
-        "tags": [
-          "Document Management",
-          "Experimental"
-        ],
-        "summary": "Download one or more Document V2 documents as ZIP",
-        "description": "Downloads all persisted formats for the requested Document V2 documents as one ZIP archive. The archive contains one file per persisted format per document, and additionally includes the media of documents that were created by document generation v1. Entries are named `{orderNumber}_{fileName}.{extension}` to avoid collisions across documents. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "downloadDocumentV2Archive",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "documentIds"
-                ],
-                "properties": {
-                  "documentIds": {
-                    "description": "Identifiers of the documents to include in the archive. At most 100 per request.",
-                    "type": "array",
-                    "minItems": 1,
-                    "maxItems": 100,
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "example": [
-                      "018f5972f9ea72a0be49f7c39f72a2a0"
-                    ]
-                  }
-                },
-                "example": {
-                  "documentIds": [
-                    "018f5972f9ea72a0be49f7c39f72a2a0"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "A ZIP archive containing all persisted files for the requested documents.",
-            "headers": {
-              "Content-Disposition": {
-                "description": "Contains the attachment filename.",
-                "schema": {
-                  "type": "string",
-                  "example": "attachment; filename=1000.zip"
-                }
-              }
-            },
-            "content": {
-              "application/zip": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -68412,11 +68346,13 @@
               },
               "documentMediaFileId": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "documentA11yMediaFileId": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "orderVersionId": {
                 "type": "string",
@@ -68454,6 +68390,42 @@
                 "type": "string",
                 "format": "date-time",
                 "readOnly": true
+              },
+              "extensions": {
+                "properties": {
+                  "quoteDocuments": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document/0945359809dad1fbf3dea1c95a0da951/quoteDocuments"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_document"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "5f9aa016c99bbfdc16be8c44d885e7e4"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
               },
               "relationships": {
                 "properties": {
@@ -68700,11 +68672,13 @@
           },
           "documentMediaFileId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "documentA11yMediaFileId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "orderVersionId": {
             "type": "string",
@@ -68742,6 +68716,42 @@
             "type": "string",
             "format": "date-time",
             "readOnly": true
+          },
+          "extensions": {
+            "properties": {
+              "quoteDocuments": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/document/0945359809dad1fbf3dea1c95a0da951/quoteDocuments"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_document"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "5f9aa016c99bbfdc16be8c44d885e7e4"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
           },
           "order": {
             "$ref": "#/components/schemas/Order"
@@ -95717,6 +95727,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "documentId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -95847,6 +95861,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "document": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-document/08e3c4797f89c301ce82e4bcfab6d266/document"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "fdc3bdefb79cec8eb8211d2499e04704"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -95915,6 +95958,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "documentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "customFields": {
             "type": "object"
           },
@@ -95939,6 +95986,9 @@
           },
           "documentA11yMediaFile": {
             "$ref": "#/components/schemas/Media"
+          },
+          "document": {
+            "$ref": "#/components/schemas/Document"
           }
         },
         "type": "object"
@@ -113635,7 +113685,8 @@
               },
               "admin": {
                 "description": "Parameter that indicates if the user is an admin.",
-                "type": "boolean"
+                "type": "boolean",
+                "readOnly": true
               },
               "mcpAllowlist": {
                 "type": "object"
@@ -114652,7 +114703,8 @@
           },
           "admin": {
             "description": "Parameter that indicates if the user is an admin.",
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           },
           "mcpAllowlist": {
             "type": "object"
