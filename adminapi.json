@@ -20035,9 +20035,10 @@
     "/document-file": {
       "get": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "List with basic information of Document File resources.",
+        "summary": "List with basic information of Document File resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "getDocumentFileList",
         "parameters": [
@@ -20146,9 +20147,10 @@
       },
       "post": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Create a new Document File resources.",
+        "summary": "Create a new Document File resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "createDocumentFile",
         "parameters": [
@@ -20222,9 +20224,10 @@
     "/search/document-file": {
       "post": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Search for the Document File resources.",
+        "summary": "Search for the Document File resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "searchDocumentFile",
         "parameters": [
@@ -20306,9 +20309,10 @@
     "/document-file/{id}": {
       "get": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Detailed information about a Document File resource.",
+        "summary": "Detailed information about a Document File resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "getDocumentFile",
         "parameters": [
@@ -20369,9 +20373,10 @@
       },
       "delete": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Delete a Document File resource.",
+        "summary": "Delete a Document File resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "deleteDocumentFile",
         "parameters": [
@@ -20409,9 +20414,10 @@
       },
       "patch": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Partially update information about a Document File resource.",
+        "summary": "Partially update information about a Document File resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "updateDocumentFile",
         "parameters": [
@@ -20496,9 +20502,10 @@
     "/aggregate/document-file": {
       "post": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Aggregate for the Document File resources.",
+        "summary": "Aggregate for the Document File resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "aggregateDocumentFile",
         "requestBody": {
@@ -95666,11 +95673,13 @@
               },
               "documentMediaFileId": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "documentA11yMediaFileId": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "orderVersionId": {
                 "type": "string",
@@ -95958,11 +95967,13 @@
           "documentMediaFileId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true,
             "description": "Unique identity of document media file."
           },
           "documentA11yMediaFileId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "orderVersionId": {
             "type": "string",
@@ -128010,7 +128021,8 @@
               },
               "admin": {
                 "description": "Parameter that indicates if the user is an admin.",
-                "type": "boolean"
+                "type": "boolean",
+                "readOnly": true
               },
               "mcpAllowlist": {
                 "type": "object"
@@ -128532,7 +128544,8 @@
           },
           "admin": {
             "description": "Parameter that indicates if the user is an admin.",
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           },
           "mcpAllowlist": {
             "type": "object"
