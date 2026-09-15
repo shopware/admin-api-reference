@@ -20035,9 +20035,10 @@
     "/document-file": {
       "get": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "List with basic information of Document File resources.",
+        "summary": "List with basic information of Document File resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "getDocumentFileList",
         "parameters": [
@@ -20146,9 +20147,10 @@
       },
       "post": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Create a new Document File resources.",
+        "summary": "Create a new Document File resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "createDocumentFile",
         "parameters": [
@@ -20222,9 +20224,10 @@
     "/search/document-file": {
       "post": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Search for the Document File resources.",
+        "summary": "Search for the Document File resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "searchDocumentFile",
         "parameters": [
@@ -20306,9 +20309,10 @@
     "/document-file/{id}": {
       "get": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Detailed information about a Document File resource.",
+        "summary": "Detailed information about a Document File resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "getDocumentFile",
         "parameters": [
@@ -20369,9 +20373,10 @@
       },
       "delete": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Delete a Document File resource.",
+        "summary": "Delete a Document File resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "deleteDocumentFile",
         "parameters": [
@@ -20409,9 +20414,10 @@
       },
       "patch": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Partially update information about a Document File resource.",
+        "summary": "Partially update information about a Document File resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "updateDocumentFile",
         "parameters": [
@@ -20496,9 +20502,10 @@
     "/aggregate/document-file": {
       "post": {
         "tags": [
-          "Document File"
+          "Document File",
+          "Experimental"
         ],
-        "summary": "Aggregate for the Document File resources.",
+        "summary": "Aggregate for the Document File resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "description": "Available since: 6.7.10.0",
         "operationId": "aggregateDocumentFile",
         "requestBody": {
@@ -78208,6 +78215,290 @@
         }
       }
     },
+    "/oauth/authorize": {
+      "get": {
+        "tags": [
+          "Authorization & Authentication"
+        ],
+        "summary": "Start an authorization code flow",
+        "description": "Authorization endpoint of the OAuth 2.0 authorization code grant with PKCE for registered public clients (for example `shopware-cli`). Open this URL in the user's browser. The user is forwarded to the Administration, asked to log in if necessary, and shown a consent page. After the decision the browser is redirected to the `redirect_uri` with either `code` and `state` or `error` and `state`. Exchange the code at `/oauth/token` with `grant_type=authorization_code` and the PKCE `code_verifier`. An unregistered redirect URI returns HTTP 400 with error code `FRAMEWORK__OAUTH_INVALID_REDIRECT_URI` and a readable `detail` message, without redirecting.",
+        "operationId": "authorize",
+        "security": [],
+        "parameters": [
+          {
+            "name": "response_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "code"
+              ]
+            }
+          },
+          {
+            "name": "client_id",
+            "in": "query",
+            "description": "Identifier of a public OAuth client registered under `shopware.api.oauth_clients`.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "redirect_uri",
+            "in": "query",
+            "description": "One of the redirect URIs registered for the client. Loopback URIs (`http://127.0.0.1`, `http://[::1]`) may use any port.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Opaque value that is returned unchanged to the client to bind the response to the request.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/OAuthScopes"
+            }
+          },
+          {
+            "name": "code_challenge",
+            "in": "query",
+            "description": "PKCE code challenge, the base64url encoded SHA-256 hash of the `code_verifier`.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 43,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "code_challenge_method",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "S256"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect to the consent page of the Administration, or back to the `redirect_uri` with an `error` parameter when the request is invalid but the redirect URI is registered for the client."
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Authorization & Authentication"
+        ],
+        "summary": "Approve or deny an authorization request",
+        "description": "Used by the consent page of the Administration. Completes the authorization request on behalf of the authenticated user and returns the redirect URI for the browser. The URI contains the authorization code, or `error=access_denied` when the user denied the request. Requires a user-bound access token; integration tokens cannot approve requests. An unregistered redirect URI returns HTTP 400 with error code `FRAMEWORK__OAUTH_INVALID_REDIRECT_URI` and a readable `detail` message, without redirecting.",
+        "operationId": "approveAuthorization",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/OAuthAuthorizationRequest"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "approved": {
+                        "description": "Whether the user granted access to the client.",
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "approved"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The authorization request was completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "redirectUri"
+                  ],
+                  "properties": {
+                    "redirectUri": {
+                      "description": "URI the browser has to be sent to. Contains `code` and `state`, or `error` and `state`.",
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    },
+    "/oauth/authorize/info": {
+      "get": {
+        "tags": [
+          "Authorization & Authentication"
+        ],
+        "summary": "Describe an authorization request",
+        "description": "Validates the authorization request and returns the information the consent page displays before the user decides. An unregistered redirect URI returns HTTP 400 with error code `FRAMEWORK__OAUTH_INVALID_REDIRECT_URI` and a readable `detail` message, without redirecting.",
+        "operationId": "authorizationInfo",
+        "parameters": [
+          {
+            "name": "response_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "code"
+              ]
+            }
+          },
+          {
+            "name": "client_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "redirect_uri",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/OAuthScopes"
+            }
+          },
+          {
+            "name": "code_challenge",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code_challenge_method",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "S256"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The authorization request is valid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "client",
+                    "redirectUri",
+                    "scopes"
+                  ],
+                  "properties": {
+                    "client": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Display name of the client.",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "redirectUri": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/_action/cache": {
       "delete": {
         "tags": [
@@ -84331,6 +84622,9 @@
                   },
                   {
                     "$ref": "#/components/schemas/OAuthClientCredentialsGrant"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OAuthAuthorizationCodeGrant"
                   }
                 ]
               }
@@ -95666,11 +95960,13 @@
               },
               "documentMediaFileId": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "documentA11yMediaFileId": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "orderVersionId": {
                 "type": "string",
@@ -95958,11 +96254,13 @@
           "documentMediaFileId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true,
             "description": "Unique identity of document media file."
           },
           "documentA11yMediaFileId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "orderVersionId": {
             "type": "string",
@@ -128010,7 +128308,8 @@
               },
               "admin": {
                 "description": "Parameter that indicates if the user is an admin.",
-                "type": "boolean"
+                "type": "boolean",
+                "readOnly": true
               },
               "mcpAllowlist": {
                 "type": "object"
@@ -128532,7 +128831,8 @@
           },
           "admin": {
             "description": "Parameter that indicates if the user is an admin.",
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           },
           "mcpAllowlist": {
             "type": "object"
@@ -130201,7 +130501,8 @@
           "mapping": {
             "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
             "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant",
+            "authorization_code": "#/components/schemas/OAuthAuthorizationCodeGrant"
           }
         }
       },
@@ -130274,11 +130575,8 @@
             "type": "object",
             "properties": {
               "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
+                "description": "OAuth client id. `administration` for tokens issued by the password grant, or the id of the public client for tokens issued by the authorization code grant.",
+                "type": "string"
               },
               "scope": {
                 "$ref": "#/components/schemas/OAuthScopes"
@@ -130294,6 +130592,84 @@
               "refresh_token"
             ]
           }
+        ]
+      },
+      "OAuthAuthorizationCodeGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "Identifier of the public OAuth client that started the authorization code flow.",
+                "type": "string"
+              },
+              "code": {
+                "description": "The authorization code received on the redirect URI.",
+                "type": "string"
+              },
+              "redirect_uri": {
+                "description": "The redirect URI used in the authorization request.",
+                "type": "string",
+                "format": "uri"
+              },
+              "code_verifier": {
+                "description": "The PKCE code verifier the `code_challenge` was derived from.",
+                "type": "string",
+                "minLength": 43,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "client_id",
+              "code",
+              "redirect_uri",
+              "code_verifier"
+            ]
+          }
+        ]
+      },
+      "OAuthAuthorizationRequest": {
+        "type": "object",
+        "description": "Parameters of an OAuth 2.0 authorization request (RFC 6749 §4.1.1) with PKCE (RFC 7636).",
+        "properties": {
+          "response_type": {
+            "type": "string",
+            "enum": [
+              "code"
+            ]
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "redirect_uri": {
+            "type": "string",
+            "format": "uri"
+          },
+          "state": {
+            "type": "string"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/OAuthScopes"
+          },
+          "code_challenge": {
+            "type": "string"
+          },
+          "code_challenge_method": {
+            "type": "string",
+            "enum": [
+              "S256"
+            ]
+          }
+        },
+        "required": [
+          "response_type",
+          "client_id",
+          "redirect_uri",
+          "code_challenge",
+          "code_challenge_method"
         ]
       },
       "Price": {
@@ -132871,6 +133247,13 @@
             }
           },
           "clientCredentials": {
+            "tokenUrl": "http://localhost:8000/api/oauth/token",
+            "scopes": {
+              "write": "Full write access"
+            }
+          },
+          "authorizationCode": {
+            "authorizationUrl": "http://localhost:8000/api/oauth/authorize",
             "tokenUrl": "http://localhost:8000/api/oauth/token",
             "scopes": {
               "write": "Full write access"
