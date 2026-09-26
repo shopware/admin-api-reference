@@ -17868,6 +17868,554 @@
         }
       }
     },
+    "/bundle-configuration": {
+      "get": {
+        "tags": [
+          "Bundle Configuration",
+          "Experimental"
+        ],
+        "summary": "List with basic information of Bundle Configuration resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "getBundleConfigurationList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Bundle Configuration resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/BundleConfiguration"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/bundle-configuration?limit=25"
+                                },
+                                "last": {
+                                  "example": "/bundle-configuration?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/bundle-configuration?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/bundle-configuration?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BundleConfiguration"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Bundle Configuration",
+          "Experimental"
+        ],
+        "summary": "Create a new Bundle Configuration resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "createBundleConfiguration",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BundleConfiguration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of BundleConfiguration",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/BundleConfiguration"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BundleConfiguration"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/bundle-configuration": {
+      "post": {
+        "tags": [
+          "Bundle Configuration",
+          "Experimental"
+        ],
+        "summary": "Search for the Bundle Configuration resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "searchBundleConfiguration",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of BundleConfiguration",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/BundleConfiguration"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BundleConfiguration"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/bundle-configuration/{id}": {
+      "get": {
+        "tags": [
+          "Bundle Configuration",
+          "Experimental"
+        ],
+        "summary": "Detailed information about a Bundle Configuration resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "getBundleConfiguration",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the bundle_configuration",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of BundleConfiguration",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/BundleConfiguration"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BundleConfiguration"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Bundle Configuration",
+          "Experimental"
+        ],
+        "summary": "Delete a Bundle Configuration resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "deleteBundleConfiguration",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the bundle_configuration",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Bundle Configuration",
+          "Experimental"
+        ],
+        "summary": "Partially update information about a Bundle Configuration resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "updateBundleConfiguration",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the bundle_configuration",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Bundle Configuration resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BundleConfiguration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of BundleConfiguration",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/BundleConfiguration"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BundleConfiguration"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/bundle-configuration": {
+      "post": {
+        "tags": [
+          "Bundle Configuration",
+          "Experimental"
+        ],
+        "summary": "Aggregate for the Bundle Configuration resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "aggregateBundleConfiguration",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of BundleConfiguration",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/BundleConfiguration"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BundleConfiguration"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/bundle-discount": {
       "get": {
         "tags": [
@@ -40686,12 +41234,14 @@
         "tags": [
           "Product Bundles"
         ],
-        "summary": "Product bundles search",
+        "summary": "Search bundles",
         "operationId": "searchProductBundles",
         "parameters": [
           {
             "name": "sw-include-search-info",
             "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "required": false,
             "schema": {
               "type": "string",
               "enum": [
@@ -40699,8 +41249,7 @@
                 "1"
               ],
               "default": "1"
-            },
-            "description": "Set to 0 to suppress aggregations and search metadata."
+            }
           }
         ],
         "requestBody": {
@@ -40715,7 +41264,7 @@
         },
         "responses": {
           "200": {
-            "description": "Search response",
+            "description": "The matching bundles.",
             "content": {
               "application/json": {
                 "schema": {
@@ -40727,11 +41276,14 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/BundleProduct"
+                        "$ref": "#/components/schemas/Bundle"
                       }
                     },
                     "aggregations": {
-                      "type": "object"
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
                     },
                     "page": {
                       "type": "integer"
@@ -40743,12 +41295,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -40758,7 +41304,7 @@
         "tags": [
           "Product Bundles"
         ],
-        "summary": "Search bundle identifiers",
+        "summary": "Search bundle ids",
         "operationId": "searchProductBundleIds",
         "requestBody": {
           "required": true,
@@ -40772,7 +41318,7 @@
         },
         "responses": {
           "200": {
-            "description": "ID search response",
+            "description": "The ids of the matching bundles.",
             "content": {
               "application/json": {
                 "schema": {
@@ -40798,12 +41344,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -40831,17 +41371,17 @@
             }
           },
           {
-            "name": "query",
+            "name": "term",
             "in": "query",
+            "description": "Search term",
             "schema": {
               "type": "string"
-            },
-            "description": "SwagQL query"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Bundle list",
+            "description": "List of bundles.",
             "content": {
               "application/json": {
                 "schema": {
@@ -40853,7 +41393,7 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/BundleProduct"
+                        "$ref": "#/components/schemas/Bundle"
                       }
                     },
                     "page": {
@@ -40866,9 +41406,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       },
@@ -40876,7 +41413,7 @@
         "tags": [
           "Product Bundles"
         ],
-        "summary": "Create bundle(s)",
+        "summary": "Create bundles",
         "operationId": "createProductBundles",
         "parameters": [
           {
@@ -40896,12 +41433,12 @@
               "schema": {
                 "oneOf": [
                   {
-                    "$ref": "#/components/schemas/BundleProductWrite"
+                    "$ref": "#/components/schemas/Bundle"
                   },
                   {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/BundleProductWrite"
+                      "$ref": "#/components/schemas/Bundle"
                     }
                   }
                 ]
@@ -40910,55 +41447,59 @@
                 "name": "Starter kit",
                 "bundleItems": [
                   {
-                    "productId": "0190311a99bd4be3a456e9a72b4d1234",
-                    "quantity": 1,
-                    "min": 1,
-                    "required": true
+                    "productId": "0190311a99bd4be3a456e9a72b4d1234"
                   },
                   {
-                    "productId": "0190311cef8a4c5d880b20a2bfe96543",
-                    "quantity": 1,
-                    "min": 1,
-                    "required": true
+                    "productId": "0190311cef8a4c5d880b20a2bfe96543"
                   }
                 ],
-                "visibilities": [
-                  {
-                    "salesChannelId": "01902f89c8a94a629e102fa97d3a5678",
-                    "visibility": 3
+                "extensions": {
+                  "bundleConfiguration": {
+                    "priority": 5
                   }
-                ]
+                }
               }
             }
           }
         },
         "responses": {
           "204": {
-            "description": "Bundles created"
+            "description": "Returns no content when the bundles were created."
           },
           "200": {
-            "description": "Created bundle payload(s) when _response is provided",
+            "description": "The created bundles, read back after the write, when `_response` is set.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/BundleProduct"
-                      }
+                      "description": "A single written bundle, or a list of them.",
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/Bundle"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Bundle"
+                          }
+                        }
+                      ]
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "limit": {
+                      "type": "integer"
                     }
                   }
                 }
               }
             }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       },
@@ -40966,7 +41507,7 @@
         "tags": [
           "Product Bundles"
         ],
-        "summary": "Update bundle(s)",
+        "summary": "Update bundles",
         "operationId": "updateProductBundles",
         "parameters": [
           {
@@ -40986,12 +41527,12 @@
               "schema": {
                 "oneOf": [
                   {
-                    "$ref": "#/components/schemas/BundleProductWrite"
+                    "$ref": "#/components/schemas/Bundle"
                   },
                   {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/BundleProductWrite"
+                      "$ref": "#/components/schemas/Bundle"
                     }
                   }
                 ]
@@ -41001,31 +41542,42 @@
         },
         "responses": {
           "204": {
-            "description": "Bundles updated"
+            "description": "Returns no content when the bundles were updated."
           },
           "200": {
-            "description": "Updated bundle payload(s) when _response is provided",
+            "description": "The updated bundles, read back after the write, when `_response` is set.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/BundleProduct"
-                      }
+                      "description": "A single written bundle, or a list of them.",
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/Bundle"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Bundle"
+                          }
+                        }
+                      ]
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "limit": {
+                      "type": "integer"
                     }
                   }
                 }
               }
             }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -41046,26 +41598,23 @@
         "tags": [
           "Product Bundles"
         ],
-        "summary": "Bundle detail",
+        "summary": "Get a bundle",
         "operationId": "getProductBundle",
         "responses": {
           "200": {
-            "description": "Bundle detail",
+            "description": "The requested bundle.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/BundleProduct"
+                      "$ref": "#/components/schemas/Bundle"
                     }
                   }
                 }
               }
             }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
           }
         }
       },
@@ -41073,17 +41622,11 @@
         "tags": [
           "Product Bundles"
         ],
-        "summary": "Delete bundle",
+        "summary": "Delete a bundle",
         "operationId": "deleteProductBundle",
         "responses": {
           "204": {
-            "description": "Bundle deleted"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
+            "description": "Returns no content when the bundle was deleted."
           }
         }
       }
@@ -41104,7 +41647,7 @@
         "tags": [
           "Product Bundles"
         ],
-        "summary": "Clone bundle",
+        "summary": "Clone a bundle",
         "operationId": "cloneProductBundle",
         "parameters": [
           {
@@ -41122,51 +41665,30 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BundleProductWrite"
+                "$ref": "#/components/schemas/BundleCloneOverrides"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Clone response",
+            "description": "The id of the copy, or the copied bundle when `_response` is set.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "type": "object",
-                      "required": [
-                        "id"
-                      ],
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "pattern": "^[0-9a-f]{32}$"
-                        }
-                      }
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
                     },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/BundleProduct"
-                        }
-                      }
+                    "data": {
+                      "$ref": "#/components/schemas/Bundle"
                     }
-                  ]
+                  }
                 }
               }
             }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -41848,65 +42370,371 @@
         }
       }
     },
-    "/_action/order/document-v2/download-archive": {
+    "/oauth/authorize": {
+      "get": {
+        "tags": [
+          "Authorization & Authentication"
+        ],
+        "summary": "Start an authorization code flow",
+        "description": "Authorization endpoint of the OAuth 2.0 authorization code grant with PKCE for registered public clients (for example `shopware-cli`). Open this URL in the user's browser. The user is forwarded to the Administration, asked to log in if necessary, and shown a consent page. After the decision the browser is redirected to the `redirect_uri` with either `code` and `state` or `error` and `state`. Exchange the code at `/oauth/token` with `grant_type=authorization_code` and the PKCE `code_verifier`. An unregistered redirect URI returns HTTP 400 with error code `FRAMEWORK__OAUTH_INVALID_REDIRECT_URI` and a readable `detail` message, without redirecting.",
+        "operationId": "authorize",
+        "security": [],
+        "parameters": [
+          {
+            "name": "response_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "code"
+              ]
+            }
+          },
+          {
+            "name": "client_id",
+            "in": "query",
+            "description": "Identifier of a public OAuth client registered under `shopware.api.oauth_clients`.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "redirect_uri",
+            "in": "query",
+            "description": "One of the redirect URIs registered for the client. Loopback URIs (`http://127.0.0.1`, `http://[::1]`) may use any port.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Opaque value that is returned unchanged to the client to bind the response to the request.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/OAuthScopes"
+            }
+          },
+          {
+            "name": "code_challenge",
+            "in": "query",
+            "description": "PKCE code challenge, the base64url encoded SHA-256 hash of the `code_verifier`.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 43,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "code_challenge_method",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "S256"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect to the consent page of the Administration, or back to the `redirect_uri` with an `error` parameter when the request is invalid but the redirect URI is registered for the client."
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
       "post": {
         "tags": [
-          "Document Management",
-          "Experimental"
+          "Authorization & Authentication"
         ],
-        "summary": "Download one or more Document V2 documents as ZIP",
-        "description": "Downloads all persisted formats for the requested Document V2 documents as one ZIP archive. The archive contains one file per persisted format per document, and additionally includes the media of documents that were created by document generation v1. Entries are named `{orderNumber}_{fileName}.{extension}` to avoid collisions across documents. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "downloadDocumentV2Archive",
+        "summary": "Approve or deny an authorization request",
+        "description": "Used by the consent page of the Administration. Completes the authorization request on behalf of the authenticated user and returns the redirect URI for the browser. The URI contains the authorization code, or `error=access_denied` when the user denied the request. Requires a user-bound access token; integration tokens cannot approve requests. An unregistered redirect URI returns HTTP 400 with error code `FRAMEWORK__OAUTH_INVALID_REDIRECT_URI` and a readable `detail` message, without redirecting.",
+        "operationId": "approveAuthorization",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "documentIds"
-                ],
-                "properties": {
-                  "documentIds": {
-                    "description": "Identifiers of the documents to include in the archive. At most 100 per request.",
-                    "type": "array",
-                    "minItems": 1,
-                    "maxItems": 100,
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/OAuthAuthorizationRequest"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "approved": {
+                        "description": "Whether the user granted access to the client.",
+                        "type": "boolean"
+                      }
                     },
-                    "example": [
-                      "018f5972f9ea72a0be49f7c39f72a2a0"
+                    "required": [
+                      "approved"
                     ]
                   }
-                },
-                "example": {
-                  "documentIds": [
-                    "018f5972f9ea72a0be49f7c39f72a2a0"
-                  ]
-                }
+                ]
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "A ZIP archive containing all persisted files for the requested documents.",
-            "headers": {
-              "Content-Disposition": {
-                "description": "Contains the attachment filename.",
+            "description": "The authorization request was completed.",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "example": "attachment; filename=1000.zip"
+                  "type": "object",
+                  "required": [
+                    "redirectUri"
+                  ],
+                  "properties": {
+                    "redirectUri": {
+                      "description": "URI the browser has to be sent to. Contains `code` and `state`, or `error` and `state`.",
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    },
+    "/oauth/authorize/info": {
+      "get": {
+        "tags": [
+          "Authorization & Authentication"
+        ],
+        "summary": "Describe an authorization request",
+        "description": "Validates the authorization request and returns the information the consent page displays before the user decides. An unregistered redirect URI returns HTTP 400 with error code `FRAMEWORK__OAUTH_INVALID_REDIRECT_URI` and a readable `detail` message, without redirecting.",
+        "operationId": "authorizationInfo",
+        "parameters": [
+          {
+            "name": "response_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "code"
+              ]
+            }
+          },
+          {
+            "name": "client_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "redirect_uri",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/OAuthScopes"
+            }
+          },
+          {
+            "name": "code_challenge",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code_challenge_method",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "S256"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The authorization request is valid.",
             "content": {
-              "application/zip": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "type": "object",
+                  "required": [
+                    "client",
+                    "redirectUri",
+                    "scopes"
+                  ],
+                  "properties": {
+                    "client": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Display name of the client.",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "redirectUri": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/notification/message": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Get notifications",
+        "description": "Returns notifications visible to the current Admin API user.",
+        "operationId": "fetchNotifications",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of notifications to return.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 5
+            }
+          },
+          {
+            "name": "latestTimestamp",
+            "in": "query",
+            "description": "Only return notifications created after this timestamp.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notifications returned successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "notifications",
+                    "timestamp"
+                  ],
+                  "properties": {
+                    "notifications": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "status",
+                          "message",
+                          "adminOnly",
+                          "requiredPrivileges"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "adminOnly": {
+                            "type": "boolean"
+                          },
+                          "requiredPrivileges": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "timestamp": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -48961,8 +49789,7 @@
             "required": [
               "id",
               "employeeWishlistId",
-              "productId",
-              "productVersionId"
+              "productId"
             ],
             "properties": {
               "id": {
@@ -49066,8 +49893,7 @@
         "required": [
           "id",
           "employeeWishlistId",
-          "productId",
-          "productVersionId"
+          "productId"
         ],
         "properties": {
           "id": {
@@ -53818,6 +54644,37 @@
               },
               "extensions": {
                 "properties": {
+                  "subscriptionEmployees": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/subscriptionEmployees"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_subscription_employee"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "b4ee45a6e3ed163cb60859b89a0c7ce6"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "quotes": {
                     "properties": {
                       "links": {
@@ -54037,7 +54894,7 @@
                     },
                     "type": "object"
                   },
-                  "subscriptionEmployees": {
+                  "wishlists": {
                     "properties": {
                       "links": {
                         "type": "object",
@@ -54045,7 +54902,7 @@
                           "related": {
                             "type": "string",
                             "format": "uri-reference",
-                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/subscriptionEmployees"
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/wishlists"
                           }
                         }
                       },
@@ -54056,11 +54913,11 @@
                           "properties": {
                             "type": {
                               "type": "string",
-                              "example": "b2b_components_subscription_employee"
+                              "example": "b2b_components_employee_wishlist"
                             },
                             "id": {
                               "type": "string",
-                              "example": "b4ee45a6e3ed163cb60859b89a0c7ce6"
+                              "example": "4ec38c6b2208529c1fadccc7d55d7947"
                             }
                           }
                         }
@@ -54424,6 +55281,37 @@
           },
           "extensions": {
             "properties": {
+              "subscriptionEmployees": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/subscriptionEmployees"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_subscription_employee"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "b4ee45a6e3ed163cb60859b89a0c7ce6"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
               "quotes": {
                 "properties": {
                   "links": {
@@ -54643,7 +55531,7 @@
                 },
                 "type": "object"
               },
-              "subscriptionEmployees": {
+              "wishlists": {
                 "properties": {
                   "links": {
                     "type": "object",
@@ -54651,7 +55539,7 @@
                       "related": {
                         "type": "string",
                         "format": "uri-reference",
-                        "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/subscriptionEmployees"
+                        "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/wishlists"
                       }
                     }
                   },
@@ -54662,11 +55550,11 @@
                       "properties": {
                         "type": {
                           "type": "string",
-                          "example": "b2b_components_subscription_employee"
+                          "example": "b2b_components_employee_wishlist"
                         },
                         "id": {
                           "type": "string",
-                          "example": "b4ee45a6e3ed163cb60859b89a0c7ce6"
+                          "example": "4ec38c6b2208529c1fadccc7d55d7947"
                         }
                       }
                     }
@@ -56055,9 +56943,39 @@
                     "readOnly": true
                   },
                   "bundleItemsCount": {
-                    "description": "Runtime-only number of bundle items used for storefront display and validation. Runtime field, cannot be used as part of the criteria.",
+                    "description": "Runtime-only number of currently available bundle items used for storefront display and validation. Runtime field, cannot be used as part of the criteria.",
                     "type": "integer",
                     "format": "int64"
+                  },
+                  "bundleConfiguration": {
+                    "description": "Bundle-level configuration row (priority, future bundle-wide attributes). 1:1 with the bundle; CASCADE-deleted with the bundle.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/bundleConfiguration"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "bundle_configuration"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "ce41f68c0fcc51db211cfe2329539393"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   },
                   "items": {
                     "description": "Products referenced as bundle items of this bundle.",
@@ -56116,6 +57034,102 @@
                             "id": {
                               "type": "string",
                               "example": "db4ef6a91ceb3a70935c07a3617ea4cd"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "bundleItemDefaults": {
+                    "description": "Bundle items whose default selectable variant points at this product (nullable FK; ON DELETE SET NULL at the SQL level).",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/bundleItemDefaults"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "bundle_item"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "293d21eabada831dc6dd5ae8a1fbb84b"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "belongToBundleItemVariantExclusions": {
+                    "description": "Exclusion rows where this product is hidden from a bundle slot's allowed children. Cascade-deleted with the product so the DAL drives the cleanup and the empty-slot guard sees a consistent post-write state.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/belongToBundleItemVariantExclusions"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "bundle_item_variant_exclusion"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "63ba56eb63d667852fc90afb746fc88c"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "excludedFromBundleItems": {
+                    "description": "Bundle items that exclude this product/variant from their allowed selection. Reverse side of BundleItemDefinition::excludedVariants — required for the DAL to resolve that association via nested criteria.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/excludedFromBundleItems"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "bundle_item"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "d9100fd2d6056e697ea03f1b33ba29d1"
                             }
                           }
                         }
@@ -57949,9 +58963,39 @@
                 "readOnly": true
               },
               "bundleItemsCount": {
-                "description": "Runtime-only number of bundle items used for storefront display and validation. Runtime field, cannot be used as part of the criteria.",
+                "description": "Runtime-only number of currently available bundle items used for storefront display and validation. Runtime field, cannot be used as part of the criteria.",
                 "type": "integer",
                 "format": "int64"
+              },
+              "bundleConfiguration": {
+                "description": "Bundle-level configuration row (priority, future bundle-wide attributes). 1:1 with the bundle; CASCADE-deleted with the bundle.",
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/product/deb10517653c255364175796ace3553f/bundleConfiguration"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "example": "bundle_configuration"
+                      },
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{32}$",
+                        "example": "ce41f68c0fcc51db211cfe2329539393"
+                      }
+                    }
+                  }
+                },
+                "type": "object"
               },
               "items": {
                 "description": "Products referenced as bundle items of this bundle.",
@@ -58010,6 +59054,102 @@
                         "id": {
                           "type": "string",
                           "example": "db4ef6a91ceb3a70935c07a3617ea4cd"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "bundleItemDefaults": {
+                "description": "Bundle items whose default selectable variant points at this product (nullable FK; ON DELETE SET NULL at the SQL level).",
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/product/deb10517653c255364175796ace3553f/bundleItemDefaults"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "bundle_item"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "293d21eabada831dc6dd5ae8a1fbb84b"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "belongToBundleItemVariantExclusions": {
+                "description": "Exclusion rows where this product is hidden from a bundle slot's allowed children. Cascade-deleted with the product so the DAL drives the cleanup and the empty-slot guard sees a consistent post-write state.",
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/product/deb10517653c255364175796ace3553f/belongToBundleItemVariantExclusions"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "bundle_item_variant_exclusion"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "63ba56eb63d667852fc90afb746fc88c"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "excludedFromBundleItems": {
+                "description": "Bundle items that exclude this product/variant from their allowed selection. Reverse side of BundleItemDefinition::excludedVariants — required for the DAL to resolve that association via nested criteria.",
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/product/deb10517653c255364175796ace3553f/excludedFromBundleItems"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "bundle_item"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "d9100fd2d6056e697ea03f1b33ba29d1"
                         }
                       }
                     }
@@ -58327,6 +59467,138 @@
         },
         "type": "object"
       },
+      "BundleConfigurationJsonApi": {
+        "description": "Added since version: 6.7.15.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "bundleId"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "versionId": {
+                "description": "Version identifier of the bundle configuration entity.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "bundleId": {
+                "description": "Bundle product this configuration belongs to.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "bundleVersionId": {
+                "description": "Version identifier of the owning bundle product.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "priority": {
+                "description": "Precedence between bundles when one product matches multiple bundles. Higher wins; ties resolve deterministically (by id ASC).",
+                "type": "integer",
+                "format": "int64"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "bundle": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/bundle-configuration/562998eeca561ce9f1118753bdea3b91/bundle"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "product"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "94377c156735b39dfa4ac607234cb87c"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "BundleConfiguration": {
+        "description": "Added since version: 6.7.15.0",
+        "required": [
+          "id",
+          "bundleId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "description": "Version identifier of the bundle configuration entity.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "bundleId": {
+            "description": "Bundle product this configuration belongs to.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "bundleVersionId": {
+            "description": "Version identifier of the owning bundle product.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "priority": {
+            "description": "Precedence between bundles when one product matches multiple bundles. Higher wins; ties resolve deterministically (by id ASC).",
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "bundle": {
+            "$ref": "#/components/schemas/Product"
+          }
+        },
+        "type": "object"
+      },
       "BundleDiscountJsonApi": {
         "description": "Added since version: 6.7.9.0",
         "allOf": [
@@ -58375,6 +59647,11 @@
               },
               "maxValue": {
                 "description": "Optional absolute ceiling for discount application.",
+                "type": "number",
+                "format": "float"
+              },
+              "minBundleValue": {
+                "description": "Optional minimum selected bundle value required for the discount to apply.",
                 "type": "number",
                 "format": "float"
               },
@@ -58479,10 +59756,10 @@
       "BundleDiscount": {
         "description": "Added since version: 6.7.9.0",
         "required": [
+          "id",
+          "bundleId",
           "type",
-          "value",
-          "active",
-          "preventCombination"
+          "value"
         ],
         "properties": {
           "id": {
@@ -58506,11 +59783,7 @@
           },
           "type": {
             "description": "Discount calculation type (absolute or percentage).",
-            "type": "string",
-            "enum": [
-              "absolute",
-              "percentage"
-            ]
+            "type": "string"
           },
           "active": {
             "description": "Indicates if the discount is currently active.",
@@ -58523,6 +59796,11 @@
           },
           "maxValue": {
             "description": "Optional absolute ceiling for discount application.",
+            "type": "number",
+            "format": "float"
+          },
+          "minBundleValue": {
+            "description": "Optional minimum selected bundle value required for the discount to apply.",
             "type": "number",
             "format": "float"
           },
@@ -58562,10 +59840,6 @@
             "items": {
               "$ref": "#/components/schemas/Rule"
             }
-          },
-          "apiAlias": {
-            "type": "string",
-            "readOnly": true
           }
         },
         "type": "object"
@@ -58649,31 +59923,46 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "defaultVariantId": {
+                "description": "Product variant pre-selected for this slot on the storefront; null means no preselection (storefront falls back to display order).",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "defaultVariantVersionId": {
+                "description": "Version identifier of the default variant.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "position": {
                 "description": "Display order for the item inside the bundle.",
                 "type": "integer",
                 "format": "int64"
               },
               "quantity": {
-                "description": "Default quantity that will be added to the cart for this item.",
+                "description": "Default quantity that will be added to the cart for this item. Must be at least 1.",
                 "type": "integer",
                 "format": "int64"
               },
               "min": {
-                "description": "Minimum selectable quantity of the item within the bundle.",
+                "description": "Minimum selectable quantity of the item within the bundle. Must be at least 1.",
                 "type": "integer",
                 "format": "int64"
               },
               "max": {
-                "description": "Maximum selectable quantity of the bundle item.",
+                "description": "Maximum selectable quantity of the bundle item. Must be at least 1 when set.",
                 "type": "integer",
                 "format": "int64"
               },
               "showBundleOnItemPdp": {
+                "description": "Indicates whether the bundle is shown on the product detail page of this bundle item.",
                 "type": "boolean"
               },
               "required": {
                 "description": "Indicates whether the item must always be part of the bundle.",
+                "type": "boolean"
+              },
+              "quantityLocked": {
+                "description": "When true (default), the customer cannot change this slot's quantity at checkout; it is locked to the configured `quantity`. When false, the customer may pick any value in [min, max ?? infinity].",
                 "type": "boolean"
               },
               "createdAt": {
@@ -58747,6 +60036,68 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "defaultVariant": {
+                    "description": "Association to the default variant product (nullable).",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/bundle-item/be65b30307aaf5570c9d71916c1c650b/defaultVariant"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "product"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "ca036d47c68bcab0da2c93a25e1cfd1f"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "excludedVariants": {
+                    "description": "Variants excluded from the slot. By default all children of the slot's product are allowed; the merchant records exclusions to hide specific children from customers.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/bundle-item/be65b30307aaf5570c9d71916c1c650b/excludedVariants"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "de3e3667429d391b162c4aed54356710"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -58759,10 +60110,9 @@
       "BundleItem": {
         "description": "Added since version: 6.7.9.0",
         "required": [
+          "id",
           "productId",
-          "quantity",
-          "min",
-          "required"
+          "bundleId"
         ],
         "properties": {
           "id": {
@@ -58794,35 +60144,46 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "defaultVariantId": {
+            "description": "Product variant pre-selected for this slot on the storefront; null means no preselection (storefront falls back to display order).",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "defaultVariantVersionId": {
+            "description": "Version identifier of the default variant.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "position": {
             "description": "Display order for the item inside the bundle.",
             "type": "integer",
-            "format": "int64",
-            "minimum": 0
+            "format": "int64"
           },
           "quantity": {
-            "description": "Default quantity that will be added to the cart for this item.",
+            "description": "Default quantity that will be added to the cart for this item. Must be at least 1.",
             "type": "integer",
-            "format": "int64",
-            "minimum": 1
+            "format": "int64"
           },
           "min": {
-            "description": "Minimum selectable quantity of the item within the bundle.",
+            "description": "Minimum selectable quantity of the item within the bundle. Must be at least 1.",
             "type": "integer",
-            "format": "int64",
-            "minimum": 1
+            "format": "int64"
           },
           "max": {
-            "description": "Maximum selectable quantity of the bundle item.",
+            "description": "Maximum selectable quantity of the bundle item. Must be at least 1 when set.",
             "type": "integer",
             "format": "int64"
           },
           "showBundleOnItemPdp": {
-            "type": "boolean",
-            "description": "Show bundle on the product detail page of this bundle item."
+            "description": "Indicates whether the bundle is shown on the product detail page of this bundle item.",
+            "type": "boolean"
           },
           "required": {
             "description": "Indicates whether the item must always be part of the bundle.",
+            "type": "boolean"
+          },
+          "quantityLocked": {
+            "description": "When true (default), the customer cannot change this slot's quantity at checkout; it is locked to the configured `quantity`. When false, the customer may pick any value in [min, max ?? infinity].",
             "type": "boolean"
           },
           "createdAt": {
@@ -58836,16 +60197,65 @@
             "readOnly": true
           },
           "product": {
-            "$ref": "#/components/schemas/BundleItemProduct",
+            "$ref": "#/components/schemas/Product",
             "description": "Association to the product entity for this bundle item."
           },
           "bundle": {
             "$ref": "#/components/schemas/Product",
             "description": "Association to the parent bundle product."
           },
-          "apiAlias": {
+          "defaultVariant": {
+            "$ref": "#/components/schemas/Product",
+            "description": "Association to the default variant product (nullable)."
+          },
+          "excludedVariants": {
+            "description": "Variants excluded from the slot. By default all children of the slot's product are allowed; the merchant records exclusions to hide specific children from customers.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "BundleItemVariantExclusion": {
+        "description": "Added since version: 6.7.15.0",
+        "required": [
+          "bundleItemId",
+          "variantId"
+        ],
+        "properties": {
+          "id": {
             "type": "string",
-            "readOnly": true
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "bundleItemId": {
+            "description": "Bundle item this exclusion belongs to.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "bundleItemVersionId": {
+            "description": "Version identifier of the bundle item.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "variantId": {
+            "description": "Product variant that the merchant excluded from the slot.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "variantVersionId": {
+            "description": "Version identifier of the excluded product variant.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "bundleItem": {
+            "$ref": "#/components/schemas/BundleItem",
+            "description": "Associated bundle item."
+          },
+          "variant": {
+            "$ref": "#/components/schemas/Product",
+            "description": "Associated excluded product variant."
           }
         },
         "type": "object"
@@ -63406,6 +64816,33 @@
                 "type": "string"
               },
               "config": {
+                "properties": {
+                  "componentName": {
+                    "type": "string"
+                  },
+                  "customFieldType": {
+                    "type": "string"
+                  },
+                  "customFieldPosition": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "dateType": {
+                    "type": "string"
+                  },
+                  "entity": {
+                    "type": "string"
+                  },
+                  "numberType": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "validation": {
+                    "type": "string"
+                  }
+                },
                 "type": "object"
               },
               "active": {
@@ -63568,6 +65005,33 @@
             "type": "string"
           },
           "config": {
+            "properties": {
+              "componentName": {
+                "type": "string"
+              },
+              "customFieldType": {
+                "type": "string"
+              },
+              "customFieldPosition": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "dateType": {
+                "type": "string"
+              },
+              "entity": {
+                "type": "string"
+              },
+              "numberType": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "validation": {
+                "type": "string"
+              }
+            },
             "type": "object"
           },
           "active": {
@@ -68412,11 +69876,13 @@
               },
               "documentMediaFileId": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "documentA11yMediaFileId": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "orderVersionId": {
                 "type": "string",
@@ -68454,6 +69920,42 @@
                 "type": "string",
                 "format": "date-time",
                 "readOnly": true
+              },
+              "extensions": {
+                "properties": {
+                  "quoteDocuments": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document/0945359809dad1fbf3dea1c95a0da951/quoteDocuments"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "quote_document"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "5f9aa016c99bbfdc16be8c44d885e7e4"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
               },
               "relationships": {
                 "properties": {
@@ -68700,11 +70202,13 @@
           },
           "documentMediaFileId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "documentA11yMediaFileId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "orderVersionId": {
             "type": "string",
@@ -68742,6 +70246,42 @@
             "type": "string",
             "format": "date-time",
             "readOnly": true
+          },
+          "extensions": {
+            "properties": {
+              "quoteDocuments": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/document/0945359809dad1fbf3dea1c95a0da951/quoteDocuments"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "quote_document"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "5f9aa016c99bbfdc16be8c44d885e7e4"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
           },
           "order": {
             "$ref": "#/components/schemas/Order"
@@ -95717,6 +97257,10 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "documentId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "customFields": {
                 "type": "object"
               },
@@ -95847,6 +97391,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "document": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/quote-document/08e3c4797f89c301ce82e4bcfab6d266/document"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "fdc3bdefb79cec8eb8211d2499e04704"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -95915,6 +97488,10 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "documentId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "customFields": {
             "type": "object"
           },
@@ -95939,6 +97516,9 @@
           },
           "documentA11yMediaFile": {
             "$ref": "#/components/schemas/Media"
+          },
+          "document": {
+            "$ref": "#/components/schemas/Document"
           }
         },
         "type": "object"
@@ -99589,6 +101169,37 @@
                     },
                     "type": "object"
                   },
+                  "employeeWishlists": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/employeeWishlists"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_employee_wishlist"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "e91afc4e24376c8b995cece3ce354b4e"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "advancedSearchConfigs": {
                     "properties": {
                       "links": {
@@ -101301,6 +102912,37 @@
                         "id": {
                           "type": "string",
                           "example": "71dea071bf87f22aaa4a5b09a93568f0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "employeeWishlists": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/sales-channel/e497ee380a9e2a5e9812e9e0bf504045/employeeWishlists"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_employee_wishlist"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "e91afc4e24376c8b995cece3ce354b4e"
                         }
                       }
                     }
@@ -113635,7 +115277,8 @@
               },
               "admin": {
                 "description": "Parameter that indicates if the user is an admin.",
-                "type": "boolean"
+                "type": "boolean",
+                "readOnly": true
               },
               "mcpAllowlist": {
                 "type": "object"
@@ -113941,6 +115584,68 @@
                             "id": {
                               "type": "string",
                               "example": "4c299d80b276c992cb135ed5a8aead32"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "createdOrganizationUnits": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdOrganizationUnits"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_organization"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "6fe2eaba7dd2e8dd0583491e5f8f9c20"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "updatedOrganizationUnits": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/updatedOrganizationUnits"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_organization"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "85233fed5fdd3919976d6b0ceea19ceb"
                             }
                           }
                         }
@@ -114652,7 +116357,8 @@
           },
           "admin": {
             "description": "Parameter that indicates if the user is an admin.",
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           },
           "mcpAllowlist": {
             "type": "object"
@@ -114958,6 +116664,68 @@
                         "id": {
                           "type": "string",
                           "example": "4c299d80b276c992cb135ed5a8aead32"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "createdOrganizationUnits": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/createdOrganizationUnits"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_organization"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "6fe2eaba7dd2e8dd0583491e5f8f9c20"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "updatedOrganizationUnits": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/user/8f9bfe9d1345237cb3b2b205864da075/updatedOrganizationUnits"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_organization"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "85233fed5fdd3919976d6b0ceea19ceb"
                         }
                       }
                     }
@@ -117176,45 +118944,77 @@
           }
         ]
       },
-      "BundleItemProduct": {
+      "Bundle": {
         "type": "object",
-        "required": [
-          "id",
-          "productNumber"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "productNumber": {
-            "type": "string"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "available": {
-            "type": "boolean"
-          },
-          "apiAlias": {
-            "type": "string",
-            "readOnly": true
-          }
-        }
-      },
-      "BundleProductWrite": {
-        "type": "object",
+        "description": "A bundle: a `product` of type `grouped_bundle` that groups other products. Only the bundle-specific fields are listed; every other product field behaves as it does on `Product`.\n\nA create needs `name` and `bundleItems` — the endpoint sets `type`, `parentId` and `price` and fills `stock`, `taxId` and a missing `productNumber`, unlike a plain `product` write which rejects a payload without them. An update needs `id` in the payload, since the path carries none, and may name fewer than two items as long as the bundle is left with two. Configuration lives under `extensions.bundleConfiguration` in both directions, and the endpoints also accept it at the top level of a write payload; an update has to carry the existing row's `id`, or the write inserts a second row and fails on the unique index. Responses carry the field list the endpoints ask for, so `cover`, `media` and DAL bookkeeping are absent and the extensions are only there once loaded — the clone endpoint loads the configuration itself, detail, list and search need `associations[bundleConfiguration]`.",
         "required": [
           "name",
           "bundleItems"
         ],
         "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Unique identifier of the bundle."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the bundle."
+          },
           "productNumber": {
             "type": "string",
-            "description": "Optional. Omit to let the server reserve a number."
+            "description": "Unique number of the bundle."
+          },
+          "price": {
+            "description": "Price of the bundle per currency, calculated from its items.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Price"
+            },
+            "readOnly": true
+          },
+          "bundleItems": {
+            "description": "The item slots the bundle is made of: which product each slot offers and in what amount.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BundleItem"
+            }
+          },
+          "bundleDiscounts": {
+            "description": "Discounts on the bundle, one entry per currency.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BundleDiscount"
+            }
+          },
+          "extensions": {
+            "type": "object",
+            "description": "Entity extensions of the bundle product.",
+            "properties": {
+              "bundleConfiguration": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/BundleConfiguration"
+                  }
+                ],
+                "description": "Bundle-level configuration: the bundle's precedence among bundles. The higher `priority` wins when one product matches several bundles, and a bundle without a configuration row sorts last. Recommended bundles break a tie by id; the cart's automatic restore takes the most recently created bundle first."
+              }
+            }
+          },
+          "apiAlias": {
+            "type": "string",
+            "const": "product_bundle",
+            "readOnly": true,
+            "description": "Entity alias of the bundle in a response."
+          }
+        }
+      },
+      "BundleCloneOverrides": {
+        "description": "Values to change on the copy. `id`, `type`, `parentId`, `active`, `bundleItems`, `bundleDiscounts`, `bundleConfiguration` and `extensions` are ignored; any other product field can be overridden, though computed values such as `stock` are recalculated from the items afterwards. A copy is never identical to its source, even with an empty body: it takes the source's name with ` Copy` appended, `active` false, a freshly reserved `productNumber`, and a priority one above the source's.",
+        "type": "object",
+        "properties": {
+          "productNumber": {
+            "type": "string"
           },
           "name": {
             "type": "string"
@@ -117225,19 +119025,6 @@
           "coverId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
-          },
-          "bundleItems": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BundleItem"
-            },
-            "minItems": 2
-          },
-          "bundleDiscounts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BundleDiscount"
-            }
           },
           "visibilities": {
             "type": "array",
@@ -117254,9 +119041,9 @@
                 "visibility": {
                   "type": "integer",
                   "enum": [
-                    1,
-                    2,
-                    3
+                    10,
+                    20,
+                    30
                   ]
                 }
               }
@@ -117266,80 +119053,6 @@
             "type": "object"
           }
         }
-      },
-      "BundleProduct": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/BundleProductWrite"
-          },
-          {
-            "type": "object",
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "active": {
-                "type": "boolean"
-              },
-              "available": {
-                "type": "boolean"
-              },
-              "description": {
-                "type": "string"
-              },
-              "price": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "currencyId": {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "net": {
-                      "type": "number"
-                    },
-                    "gross": {
-                      "type": "number"
-                    },
-                    "linked": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              },
-              "stock": {
-                "type": "integer"
-              },
-              "sales": {
-                "type": "integer"
-              },
-              "customSearchKeywords": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "cover": {
-                "type": "object"
-              },
-              "media": {
-                "type": "array",
-                "items": {
-                  "type": "object"
-                }
-              },
-              "apiAlias": {
-                "type": "string",
-                "readOnly": true
-              }
-            }
-          }
-        ]
       },
       "SwagCommercialFeature": {
         "type": "object",
@@ -118289,7 +120002,8 @@
           "mapping": {
             "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
             "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant",
+            "authorization_code": "#/components/schemas/OAuthAuthorizationCodeGrant"
           }
         }
       },
@@ -118362,11 +120076,8 @@
             "type": "object",
             "properties": {
               "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
+                "description": "OAuth client id. `administration` for tokens issued by the password grant, or the id of the public client for tokens issued by the authorization code grant.",
+                "type": "string"
               },
               "scope": {
                 "$ref": "#/components/schemas/OAuthScopes"
@@ -118382,6 +120093,84 @@
               "refresh_token"
             ]
           }
+        ]
+      },
+      "OAuthAuthorizationCodeGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "Identifier of the public OAuth client that started the authorization code flow.",
+                "type": "string"
+              },
+              "code": {
+                "description": "The authorization code received on the redirect URI.",
+                "type": "string"
+              },
+              "redirect_uri": {
+                "description": "The redirect URI used in the authorization request.",
+                "type": "string",
+                "format": "uri"
+              },
+              "code_verifier": {
+                "description": "The PKCE code verifier the `code_challenge` was derived from.",
+                "type": "string",
+                "minLength": 43,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "client_id",
+              "code",
+              "redirect_uri",
+              "code_verifier"
+            ]
+          }
+        ]
+      },
+      "OAuthAuthorizationRequest": {
+        "type": "object",
+        "description": "Parameters of an OAuth 2.0 authorization request (RFC 6749 §4.1.1) with PKCE (RFC 7636).",
+        "properties": {
+          "response_type": {
+            "type": "string",
+            "enum": [
+              "code"
+            ]
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "redirect_uri": {
+            "type": "string",
+            "format": "uri"
+          },
+          "state": {
+            "type": "string"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/OAuthScopes"
+          },
+          "code_challenge": {
+            "type": "string"
+          },
+          "code_challenge_method": {
+            "type": "string",
+            "enum": [
+              "S256"
+            ]
+          }
+        },
+        "required": [
+          "response_type",
+          "client_id",
+          "redirect_uri",
+          "code_challenge",
+          "code_challenge_method"
         ]
       },
       "Price": {
@@ -119479,6 +121268,13 @@
             "scopes": {
               "write": "Full write access"
             }
+          },
+          "authorizationCode": {
+            "authorizationUrl": "http://localhost:8000/api/oauth/authorize",
+            "tokenUrl": "http://localhost:8000/api/oauth/token",
+            "scopes": {
+              "write": "Full write access"
+            }
           }
         }
       }
@@ -119689,6 +121485,10 @@
     {
       "name": "Product",
       "description": "The endpoint for operations on Product"
+    },
+    {
+      "name": "Bundle Configuration",
+      "description": "The endpoint for operations on Bundle Configuration"
     },
     {
       "name": "Bundle Discount",
