@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.7.14.2"
+    "version": "6.7.15.0"
   },
   "servers": [
     {
@@ -5425,688 +5425,335 @@
         }
       }
     },
-    "/_action/customer-convert/{customerId}": {
-      "post": {
+    "/oauth/authorize": {
+      "get": {
         "tags": [
-          "Customer convert"
+          "Authorization & Authentication"
         ],
-        "summary": "Convert guest customer to registered customer",
-        "description": "Converts an existing guest customer into a registered customer. If a password is provided, the customer can immediately log in using that password. If no password is provided, a password recovery email will be sent to the customer so they can set their password.",
-        "operationId": "convertGuestCustomer",
+        "summary": "Start an authorization code flow",
+        "description": "Authorization endpoint of the OAuth 2.0 authorization code grant with PKCE for registered public clients (for example `shopware-cli`). Open this URL in the user's browser. The user is forwarded to the Administration, asked to log in if necessary, and shown a consent page. After the decision the browser is redirected to the `redirect_uri` with either `code` and `state` or `error` and `state`. Exchange the code at `/oauth/token` with `grant_type=authorization_code` and the PKCE `code_verifier`. An unregistered redirect URI returns HTTP 400 with error code `FRAMEWORK__OAUTH_INVALID_REDIRECT_URI` and a readable `detail` message, without redirecting.",
+        "operationId": "authorize",
+        "security": [],
         "parameters": [
           {
-            "name": "customerId",
-            "in": "path",
-            "description": "The id of the customer that should be converted.",
+            "name": "response_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "code"
+              ]
+            }
+          },
+          {
+            "name": "client_id",
+            "in": "query",
+            "description": "Identifier of a public OAuth client registered under `shopware.api.oauth_clients`.",
             "required": true,
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "redirect_uri",
+            "in": "query",
+            "description": "One of the redirect URIs registered for the client. Loopback URIs (`http://127.0.0.1`, `http://[::1]`) may use any port.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Opaque value that is returned unchanged to the client to bind the response to the request.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/OAuthScopes"
+            }
+          },
+          {
+            "name": "code_challenge",
+            "in": "query",
+            "description": "PKCE code challenge, the base64url encoded SHA-256 hash of the `code_verifier`.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 43,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "code_challenge_method",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "S256"
+              ]
+            }
           }
         ],
+        "responses": {
+          "302": {
+            "description": "Redirect to the consent page of the Administration, or back to the `redirect_uri` with an `error` parameter when the request is invalid but the redirect URI is registered for the client."
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Authorization & Authentication"
+        ],
+        "summary": "Approve or deny an authorization request",
+        "description": "Used by the consent page of the Administration. Completes the authorization request on behalf of the authenticated user and returns the redirect URI for the browser. The URI contains the authorization code, or `error=access_denied` when the user denied the request. Requires a user-bound access token; integration tokens cannot approve requests. An unregistered redirect URI returns HTTP 400 with error code `FRAMEWORK__OAUTH_INVALID_REDIRECT_URI` and a readable `detail` message, without redirecting.",
+        "operationId": "approveAuthorization",
         "requestBody": {
-          "required": false,
-          "description": "Optional data for the conversion process.",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "password": {
-                    "type": "string",
-                    "description": "Optional password for the customer. If provided, the customer can log in immediately using this password. If omitted, a password recovery email will be sent."
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/OAuthAuthorizationRequest"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "approved": {
+                        "description": "Whether the user granted access to the client.",
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "approved"
+                    ]
                   }
-                }
+                ]
               }
             }
           }
         },
         "responses": {
-          "204": {
-            "description": "Customer successfully converted to a registered customer."
-          },
-          "401": {
-            "description": "The customer with the specified ID could not be found.",
+          "200": {
+            "description": "The authorization request was completed.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/failure"
+                  "type": "object",
+                  "required": [
+                    "redirectUri"
+                  ],
+                  "properties": {
+                    "redirectUri": {
+                      "description": "URI the browser has to be sent to. Contains `code` and `state`, or `error` and `state`.",
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "The customer is not a guest, or the sales channel domain could not be found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
           }
         }
       }
     },
-    "/_action/media/{mediaId}/download": {
+    "/oauth/authorize/info": {
       "get": {
         "tags": [
-          "Asset Management"
+          "Authorization & Authentication"
         ],
-        "summary": "Download a media file",
-        "description": "Downloads a media file by its identifier.",
-        "operationId": "downloadMedia",
+        "summary": "Describe an authorization request",
+        "description": "Validates the authorization request and returns the information the consent page displays before the user decides. An unregistered redirect URI returns HTTP 400 with error code `FRAMEWORK__OAUTH_INVALID_REDIRECT_URI` and a readable `detail` message, without redirecting.",
+        "operationId": "authorizationInfo",
         "parameters": [
           {
-            "name": "mediaId",
-            "in": "path",
-            "description": "Identifier of the media entity.",
+            "name": "response_type",
+            "in": "query",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/MediaId"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The media file.",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
+              "type": "string",
+              "enum": [
+                "code"
+              ]
             }
           },
-          "302": {
-            "description": "Redirects to the resolved media download URL.",
-            "headers": {
-              "Location": {
-                "description": "Contains the resolved media download URL.",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/media/{mediaId}/download/prepare": {
-      "get": {
-        "tags": [
-          "Asset Management"
-        ],
-        "summary": "Prepare a media download",
-        "description": "Resolves the browser download URL for a media file by its identifier.",
-        "operationId": "prepareMediaDownload",
-        "parameters": [
           {
-            "name": "mediaId",
-            "in": "path",
-            "description": "Identifier of the media entity.",
+            "name": "client_id",
+            "in": "query",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/MediaId"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The resolved browser download strategy.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "type"
-                  ],
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "external",
-                        "blob"
-                      ],
-                      "description": "Whether the frontend should trigger an external URL directly or fall back to an authenticated blob download."
-                    },
-                    "url": {
-                      "type": "string",
-                      "description": "External URL that should be used by the browser to start the download."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/order/document-v2/available-types": {
-      "get": {
-        "tags": [
-          "Document Management",
-          "Experimental"
-        ],
-        "summary": "List supported document V2 types and formats",
-        "description": "Returns document types and output formats currently implemented by the Document V2 pipeline. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "documentV2AvailableTypes",
-        "responses": {
-          "200": {
-            "description": "Supported document types and their available formats.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "documentTypes"
-                  ],
-                  "properties": {
-                    "documentTypes": {
-                      "description": "Map of supported document type technical names to the formats implemented for that document type. Use these values for the `documentType`, `formats`, and `format` fields of the create, preview, and upload endpoints.",
-                      "type": "object",
-                      "additionalProperties": {
-                        "type": "object",
-                        "required": [
-                          "formats"
-                        ],
-                        "properties": {
-                          "formats": {
-                            "description": "Supported file format technical names for this document type.",
-                            "type": "array",
-                            "items": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "example": {
-                    "documentTypes": {
-                      "invoice": {
-                        "formats": [
-                          "html",
-                          "pdf",
-                          "zugferd_xml"
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/order/document-v2/create": {
-      "post": {
-        "tags": [
-          "Document Management",
-          "Experimental"
-        ],
-        "summary": "Create a document through the Document V2 pipeline",
-        "description": "Creates one document with one or more requested output formats using the Document V2 services. Get supported `documentType` and `formats` values from `/_action/order/document-v2/available-types`. Use the returned `documentId` and one of the returned `formats` to download the created file through `/_action/order/document-v2/{documentId}/download/{format}`. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "createDocumentV2",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "orderId",
-                  "documentType",
-                  "formats"
-                ],
-                "properties": {
-                  "orderId": {
-                    "description": "Identifier of the order for which the document should be created.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "documentType": {
-                    "description": "Document type technical name. Must be one of the keys returned by `/_action/order/document-v2/available-types`.",
-                    "type": "string",
-                    "example": "invoice"
-                  },
-                  "formats": {
-                    "description": "File format technical names to generate. Must be selected from `documentTypes[documentType].formats` returned by `/_action/order/document-v2/available-types`.",
-                    "type": "array",
-                    "minItems": 1,
-                    "items": {
-                      "type": "string"
-                    },
-                    "example": [
-                      "pdf",
-                      "zugferd_xml"
-                    ]
-                  },
-                  "documentNumber": {
-                    "description": "Optional document number. When omitted, the Document V2 service generates the next number.",
-                    "type": "string"
-                  },
-                  "documentComment": {
-                    "description": "Optional document comment.",
-                    "type": "string"
-                  },
-                  "documentDate": {
-                    "description": "Optional document date as an ISO 8601 date-time string.",
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2026-07-13T00:00:00.000+00:00"
-                  },
-                  "deliveryDate": {
-                    "description": "Optional delivery date as an ISO 8601 date-time string. Required by the `delivery_note` document type.",
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2026-07-15T00:00:00.000+00:00"
-                  },
-                  "referencedDocumentId": {
-                    "description": "Optional identifier of the referenced document. When omitted, the order's latest invoice is used.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                "example": {
-                  "orderId": "018f5972f9ea72a0be49f7c39f72a2a0",
-                  "documentType": "invoice",
-                  "formats": [
-                    "pdf",
-                    "zugferd_xml"
-                  ],
-                  "documentNumber": "1002",
-                  "documentDate": "2026-07-13T00:00:00.000+00:00",
-                  "documentComment": "Customer requested a copy."
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Document created successfully. Use `documentId` and one of the returned `formats` to download the created file through `/_action/order/document-v2/{documentId}/download/{format}`.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "deepLinkCode",
-                    "documentId",
-                    "formats"
-                  ],
-                  "properties": {
-                    "deepLinkCode": {
-                      "description": "A unique hash code which is required to download the generated document.",
-                      "type": "string"
-                    },
-                    "documentId": {
-                      "description": "Identifier of the document.",
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "formats": {
-                      "description": "The generated formats. Use one of these values as the `format` path parameter when downloading the document.",
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "example": {
-                    "deepLinkCode": "COp6DlWc2JgUn3XOb7QzKXWcWIVrH8XN",
-                    "documentId": "018f5972f9ea72a0be49f7c39f72a2a0",
-                    "formats": [
-                      "pdf",
-                      "zugferd_xml"
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/order/document-v2/upload": {
-      "post": {
-        "tags": [
-          "Document Management",
-          "Experimental"
-        ],
-        "summary": "Upload a document through the Document V2 pipeline",
-        "description": "Creates one static Document V2 document from either an existing media file or a raw binary file upload. Use `application/json` when the file already exists as media and pass `mediaId` in the body. Use a binary request body when uploading file bytes directly; in that case pass the document metadata as query parameters. Example binary upload: `POST /_action/order/document-v2/upload?orderId=018f5972f9ea72a0be49f7c39f72a2a0&orderVersionId=0fa91ce3e96a4bc2be4bd9ce752c3425&documentType=invoice&format=pdf&extension=pdf&fileName=invoice-1002` with header `Content-Type: application/pdf` and the PDF bytes as the request body. Get supported `documentType` and `format` values from `/_action/order/document-v2/available-types`. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "uploadDocumentV2",
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "query",
-            "description": "Required for binary uploads. Identifier of the order for which the uploaded document should be created. For JSON uploads, send this field in the request body instead.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
+              "type": "string"
             }
           },
           {
-            "name": "orderVersionId",
+            "name": "redirect_uri",
             "in": "query",
-            "description": "Required for binary uploads. Version identifier of the order for which the uploaded document should be created. For JSON uploads, send this field in the request body instead.",
-            "required": false,
+            "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
+              "format": "uri"
             }
           },
           {
-            "name": "documentType",
+            "name": "state",
             "in": "query",
-            "description": "Required for binary uploads. Document type technical name. Must be one of the keys returned by `/_action/order/document-v2/available-types`. For JSON uploads, send this field in the request body instead.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "invoice"
-            }
-          },
-          {
-            "name": "format",
-            "in": "query",
-            "description": "Required for binary uploads. Document file format to store. Must be selected from `documentTypes[documentType].formats` returned by `/_action/order/document-v2/available-types`. For JSON uploads, send this field in the request body instead.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "pdf"
-            }
-          },
-          {
-            "name": "extension",
-            "in": "query",
-            "description": "Required for binary uploads. File extension of the uploaded binary body, without a leading dot. Usually this is the same value as `format`.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "pdf"
-            }
-          },
-          {
-            "name": "fileName",
-            "in": "query",
-            "description": "Optional for binary uploads. Preferred stored media filename without the extension. If omitted, the document number or a generated identifier is used.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "invoice-1002"
-            }
-          },
-          {
-            "name": "referencedDocumentId",
-            "in": "query",
-            "description": "Optional for binary uploads. Identifier of the referenced document. For JSON uploads, send this field in the request body instead.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "documentNumber",
-            "in": "query",
-            "description": "Optional for binary uploads. Document number stored in the document configuration. For JSON uploads, send this field in the request body instead.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "1002"
-            }
-          },
-          {
-            "name": "documentComment",
-            "in": "query",
-            "description": "Optional for binary uploads. Document comment stored in the document configuration. For JSON uploads, send this field in the request body instead.",
             "required": false,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "documentDate",
+            "name": "scope",
             "in": "query",
-            "description": "Optional for binary uploads. Document date stored in the document configuration as an ISO 8601 date-time string. For JSON uploads, send this field in the request body instead.",
             "required": false,
             "schema": {
+              "$ref": "#/components/schemas/OAuthScopes"
+            }
+          },
+          {
+            "name": "code_challenge",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code_challenge_method",
+            "in": "query",
+            "required": true,
+            "schema": {
               "type": "string",
-              "format": "date-time",
-              "example": "2026-07-13T00:00:00.000+00:00"
+              "enum": [
+                "S256"
+              ]
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "The authorization request is valid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "client",
+                    "redirectUri",
+                    "scopes"
+                  ],
+                  "properties": {
+                    "client": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Display name of the client.",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "redirectUri": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/_action/order/document-v2/download-archive": {
+      "post": {
+        "tags": [
+          "Document Management",
+          "Experimental"
+        ],
+        "summary": "Download one or more Document V2 documents as ZIP",
+        "description": "Downloads all persisted formats for the requested Document V2 documents as one ZIP archive. The archive contains one file per persisted format per document, and additionally includes the media of documents that were created by document generation v1. Entries are named `{orderNumber}_{fileName}.{extension}` to avoid collisions across documents. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "downloadDocumentV2Archive",
         "requestBody": {
-          "description": "Use `application/json` to attach an existing media file by `mediaId`. Use a binary media type, for example `application/pdf`, to upload file bytes directly and provide the document metadata through query parameters. For binary uploads, the body is the raw file content, not JSON.",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
-                  "orderId",
-                  "orderVersionId",
-                  "documentType",
-                  "format",
-                  "mediaId"
+                  "documentIds"
                 ],
                 "properties": {
-                  "orderId": {
-                    "description": "Identifier of the order for which the uploaded document should be created.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "orderVersionId": {
-                    "description": "Version identifier of the order for which the uploaded document should be created.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "documentType": {
-                    "description": "Document type technical name. Must be one of the keys returned by `/_action/order/document-v2/available-types`.",
-                    "type": "string",
-                    "example": "invoice"
-                  },
-                  "format": {
-                    "description": "File format technical name. Must be selected from `documentTypes[documentType].formats` returned by `/_action/order/document-v2/available-types`.",
-                    "type": "string",
-                    "example": "pdf"
-                  },
-                  "mediaId": {
-                    "description": "Identifier of an existing media file to attach to the document. Required for JSON uploads.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "referencedDocumentId": {
-                    "description": "Optional identifier of the referenced document.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "documentNumber": {
-                    "description": "Optional document number.",
-                    "type": "string"
-                  },
-                  "documentComment": {
-                    "description": "Optional document comment.",
-                    "type": "string"
-                  },
-                  "documentDate": {
-                    "description": "Optional document date as an ISO 8601 date-time string.",
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2026-07-13T00:00:00.000+00:00"
+                  "documentIds": {
+                    "description": "Identifiers of the documents to include in the archive. At most 100 per request.",
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 100,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{32}$"
+                    },
+                    "example": [
+                      "018f5972f9ea72a0be49f7c39f72a2a0"
+                    ]
                   }
                 },
                 "example": {
-                  "orderId": "018f5972f9ea72a0be49f7c39f72a2a0",
-                  "orderVersionId": "0fa91ce3e96a4bc2be4bd9ce752c3425",
-                  "documentType": "invoice",
-                  "format": "pdf",
-                  "mediaId": "018f5972fa0773c793fb88af536e34f6",
-                  "documentNumber": "1002",
-                  "documentDate": "2026-07-13T00:00:00.000+00:00"
+                  "documentIds": [
+                    "018f5972f9ea72a0be49f7c39f72a2a0"
+                  ]
                 }
-              }
-            },
-            "application/pdf": {
-              "schema": {
-                "description": "Raw file bytes. For binary uploads, send the required document metadata as query parameters.",
-                "type": "string",
-                "format": "binary"
-              },
-              "example": "%PDF-1.7 ..."
-            },
-            "application/octet-stream": {
-              "schema": {
-                "description": "Raw file bytes. For binary uploads, send the required document metadata as query parameters.",
-                "type": "string",
-                "format": "binary"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Document uploaded successfully. Use `documentId` and one of the returned `formats` to download the uploaded file through `/_action/order/document-v2/{documentId}/download/{format}`.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "deepLinkCode",
-                    "documentId",
-                    "formats"
-                  ],
-                  "properties": {
-                    "deepLinkCode": {
-                      "description": "A unique hash code which is required to download the uploaded document.",
-                      "type": "string"
-                    },
-                    "documentId": {
-                      "description": "Identifier of the document.",
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{32}$"
-                    },
-                    "formats": {
-                      "description": "The uploaded format. Use one of these values as the `format` path parameter when downloading the document.",
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "example": {
-                    "deepLinkCode": "COp6DlWc2JgUn3XOb7QzKXWcWIVrH8XN",
-                    "documentId": "018f5972f9ea72a0be49f7c39f72a2a0",
-                    "formats": [
-                      "pdf"
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/order/document-v2/{documentId}/download/{format}": {
-      "get": {
-        "tags": [
-          "Document Management",
-          "Experimental"
-        ],
-        "summary": "Download a Document V2 file",
-        "description": "Downloads one persisted format for a Document V2 document. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "downloadDocumentV2",
-        "parameters": [
-          {
-            "name": "documentId",
-            "in": "path",
-            "description": "Identifier of the document.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "format",
-            "in": "path",
-            "description": "Persisted document format to download.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "pdf"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The requested document file.",
-            "headers": {
-              "Content-Disposition": {
-                "description": "Contains the attachment filename.",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/pdf": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              },
-              "text/html": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/order/document-v2/{documentId}/download-archive": {
-      "get": {
-        "tags": [
-          "Document Management",
-          "Experimental"
-        ],
-        "summary": "Download all Document V2 files as ZIP",
-        "description": "Downloads all persisted formats for a Document V2 document as one ZIP archive. The archive contains one file per persisted format. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "downloadDocumentV2Archive",
-        "parameters": [
-          {
-            "name": "documentId",
-            "in": "path",
-            "description": "Identifier of the document.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A ZIP archive containing all persisted files for the document.",
+            "description": "A ZIP archive containing all persisted files for the requested documents.",
             "headers": {
               "Content-Disposition": {
                 "description": "Contains the attachment filename.",
@@ -6124,367 +5771,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/_action/order/document-v2/preview": {
-      "post": {
-        "tags": [
-          "Document Management",
-          "Experimental"
-        ],
-        "summary": "Preview a document through the Document V2 pipeline",
-        "description": "Renders one requested output format through the Document V2 services without persisting the document. Get supported `documentType` and `format` values from `/_action/order/document-v2/available-types`. The response `Content-Type` depends on the requested format. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "previewDocumentV2",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "orderId",
-                  "documentType",
-                  "format"
-                ],
-                "properties": {
-                  "orderId": {
-                    "description": "Identifier of the order for which the document should be previewed.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  },
-                  "documentType": {
-                    "description": "Document type technical name. Must be one of the keys returned by `/_action/order/document-v2/available-types`.",
-                    "type": "string",
-                    "example": "invoice"
-                  },
-                  "format": {
-                    "description": "File format technical name to preview. Must be selected from `documentTypes[documentType].formats` returned by `/_action/order/document-v2/available-types`.",
-                    "type": "string",
-                    "example": "html"
-                  },
-                  "documentNumber": {
-                    "description": "Optional document number to render in the preview.",
-                    "type": "string"
-                  },
-                  "documentComment": {
-                    "description": "Optional document comment to render in the preview.",
-                    "type": "string"
-                  },
-                  "documentDate": {
-                    "description": "Optional document date as an ISO 8601 date-time string.",
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2026-07-13T00:00:00.000+00:00"
-                  },
-                  "deliveryDate": {
-                    "description": "Optional delivery date as an ISO 8601 date-time string. Required by the `delivery_note` document type.",
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2026-07-15T00:00:00.000+00:00"
-                  },
-                  "referencedDocumentId": {
-                    "description": "Optional identifier of the referenced document. When omitted, the order's latest invoice is used.",
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{32}$"
-                  }
-                },
-                "example": {
-                  "orderId": "018f5972f9ea72a0be49f7c39f72a2a0",
-                  "documentType": "invoice",
-                  "format": "html",
-                  "documentNumber": "1002",
-                  "documentDate": "2026-07-13T00:00:00.000+00:00",
-                  "documentComment": "Preview comment."
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The previewed document.",
-            "headers": {
-              "Content-Disposition": {
-                "description": "Contains the inline document filename.",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "text/html": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/pdf": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/translation/list": {
-      "get": {
-        "tags": [
-          "Translation Management"
-        ],
-        "summary": "List configured translation locales",
-        "description": "Lists every locale configured for translation download, merging its local install state with the remotely available metadata.",
-        "operationId": "translationList",
-        "responses": {
-          "200": {
-            "description": "The configured locales with their merged local install state and remote metadata.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "description": "Number of configured locales.",
-                      "type": "integer"
-                    },
-                    "items": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "locale": {
-                            "description": "The locale code, for example `de-DE`.",
-                            "type": "string"
-                          },
-                          "name": {
-                            "description": "The configured language name.",
-                            "type": "string"
-                          },
-                          "lastUpdate": {
-                            "description": "ISO-8601 timestamp of the last installation, or null if not installed.",
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "progress": {
-                            "description": "Translation completeness in percent, taken from the remote metadata. Null when the remote source is unreachable or does not offer the locale.",
-                            "type": "integer"
-                          },
-                          "updateAvailable": {
-                            "description": "Whether a newer translation than the installed one is available.",
-                            "type": "boolean"
-                          },
-                          "isPseudoLanguage": {
-                            "description": "Whether the locale is a pseudo-language used for translation testing.",
-                            "type": "boolean"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/translation/meta": {
-      "get": {
-        "tags": [
-          "Translation Management"
-        ],
-        "summary": "Get translation meta information",
-        "description": "Returns translation meta information that is independent of the configured locales: the built-in locales, the community translation and documentation URLs and the completeness threshold.",
-        "operationId": "translationMeta",
-        "responses": {
-          "200": {
-            "description": "The translation meta information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "builtInLocales": {
-                      "description": "Locale codes shipped with the platform and excluded from the community translation download.",
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "communityTranslationsUrl": {
-                      "description": "URL of the community translation platform, or null if not configured.",
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "documentationUrlSnippetKey": {
-                      "description": "Admin snippet key that resolves to the localized translation documentation URL, or null if not configured.",
-                      "type": "string"
-                    },
-                    "completenessThreshold": {
-                      "description": "Minimum translation completeness in percent considered sufficient.",
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/translation/install": {
-      "post": {
-        "tags": [
-          "Translation Management"
-        ],
-        "summary": "Install translations for locales",
-        "description": "Downloads and installs translations for the given locales, or for all configured locales when `all` is set. Created languages are activated unless `activate` is set to `false`.",
-        "operationId": "translationInstall",
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "locales": {
-                    "description": "Locale codes to install, for example `[\"de-DE\", \"fr-FR\"]`. Required unless `all` is true.",
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "all": {
-                    "description": "Install all configured locales instead of the `locales` list.",
-                    "type": "boolean"
-                  },
-                  "activate": {
-                    "description": "Whether created languages are activated. Defaults to true.",
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The locales that were updated and the ones skipped as already up to date.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "updated": {
-                      "description": "Locale codes that were downloaded and installed.",
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "skipped": {
-                      "description": "Locale codes that were already up to date.",
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "unavailable": {
-                      "description": "Requested locale codes that have no translation available and were not installed.",
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/translation/update": {
-      "post": {
-        "tags": [
-          "Translation Management"
-        ],
-        "summary": "Update all installed translations",
-        "description": "Updates all installed translations.",
-        "operationId": "translationUpdate",
-        "responses": {
-          "200": {
-            "description": "The locales that were updated and the ones skipped as already up to date.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "updated": {
-                      "description": "Locale codes that were downloaded and installed.",
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "skipped": {
-                      "description": "Locale codes that were already up to date.",
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "unavailable": {
-                      "description": "Requested locale codes that have no translation available and were not installed.",
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/translation/{locale}": {
-      "delete": {
-        "tags": [
-          "Translation Management"
-        ],
-        "summary": "Uninstall a translation",
-        "description": "Removes the downloaded translation files and the metadata entry for the given locale. The associated language, locale and snippet set records are left untouched and can be managed through their regular admin API endpoints.",
-        "operationId": "translationDelete",
-        "parameters": [
-          {
-            "name": "locale",
-            "in": "path",
-            "description": "The locale code to uninstall, for example `de-DE`.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "The translation files and metadata entry were removed."
           }
         }
       }
@@ -16679,17 +15965,13 @@
           {
             "required": [
               "id",
-              "documentTypeId",
               "orderId",
               "config",
-              "deepLinkCode"
+              "deepLinkCode",
+              "documentTypeId"
             ],
             "properties": {
               "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "documentTypeId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -16707,11 +15989,13 @@
               },
               "documentMediaFileId": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "documentA11yMediaFileId": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "orderVersionId": {
                 "type": "string",
@@ -16735,6 +16019,11 @@
               "customFields": {
                 "type": "object"
               },
+              "documentTypeId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -16747,35 +16036,6 @@
               },
               "relationships": {
                 "properties": {
-                  "documentType": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/document/0945359809dad1fbf3dea1c95a0da951/documentType"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "document_type"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "2e45fec65781ec559e2aea39372a55cd"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "order": {
                     "properties": {
                       "links": {
@@ -16953,6 +16213,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentType": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document/0945359809dad1fbf3dea1c95a0da951/documentType"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document_type"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "2e45fec65781ec559e2aea39372a55cd"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -16966,17 +16255,13 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "documentTypeId",
           "orderId",
           "config",
-          "deepLinkCode"
+          "deepLinkCode",
+          "documentTypeId"
         ],
         "properties": {
           "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "documentTypeId": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -16994,11 +16279,13 @@
           },
           "documentMediaFileId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "documentA11yMediaFileId": {
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "orderVersionId": {
             "type": "string",
@@ -17022,6 +16309,11 @@
           "customFields": {
             "type": "object"
           },
+          "documentTypeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -17031,9 +16323,6 @@
             "type": "string",
             "format": "date-time",
             "readOnly": true
-          },
-          "documentType": {
-            "$ref": "#/components/schemas/DocumentType"
           },
           "order": {
             "$ref": "#/components/schemas/Order"
@@ -17058,6 +16347,9 @@
             "items": {
               "$ref": "#/components/schemas/DocumentFile"
             }
+          },
+          "documentType": {
+            "$ref": "#/components/schemas/DocumentType"
           }
         },
         "type": "object"
@@ -17071,16 +16363,11 @@
           {
             "required": [
               "id",
-              "documentTypeId",
-              "name"
+              "name",
+              "documentTypeId"
             ],
             "properties": {
               "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "documentTypeId": {
-                "description": "Unique identity of the document type.",
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
@@ -17165,6 +16452,12 @@
                 "type": "object",
                 "deprecated": true
               },
+              "documentTypeId": {
+                "description": "Unique identity of the document type.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
+              },
               "updatedAt": {
                 "type": "string",
                 "format": "date-time",
@@ -17172,35 +16465,6 @@
               },
               "relationships": {
                 "properties": {
-                  "documentType": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/document-base-config/4f8577ec262a1e35dfd795dc6bbde573/documentType"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "document_type"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "2e45fec65781ec559e2aea39372a55cd"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "logo": {
                     "description": "Logo in the document at the top-right corner.",
                     "properties": {
@@ -17261,6 +16525,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentType": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document-base-config/4f8577ec262a1e35dfd795dc6bbde573/documentType"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document_type"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "2e45fec65781ec559e2aea39372a55cd"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -17274,16 +16567,11 @@
         "description": "Added since version: 6.0.0.0",
         "required": [
           "id",
-          "documentTypeId",
-          "name"
+          "name",
+          "documentTypeId"
         ],
         "properties": {
           "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "documentTypeId": {
-            "description": "Unique identity of the document type.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
@@ -17368,13 +16656,16 @@
             "type": "object",
             "deprecated": true
           },
+          "documentTypeId": {
+            "description": "Unique identity of the document type.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
+          },
           "updatedAt": {
             "type": "string",
             "format": "date-time",
             "readOnly": true
-          },
-          "documentType": {
-            "$ref": "#/components/schemas/DocumentType"
           },
           "logo": {
             "$ref": "#/components/schemas/Media",
@@ -17385,6 +16676,9 @@
             "items": {
               "$ref": "#/components/schemas/DocumentBaseConfigSalesChannel"
             }
+          },
+          "documentType": {
+            "$ref": "#/components/schemas/DocumentType"
           }
         },
         "type": "object"
@@ -17415,14 +16709,15 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
-              "documentTypeId": {
-                "description": "Unique identity of document type.",
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
               "typeName": {
                 "description": "Technical name of the document type.",
                 "type": "string"
+              },
+              "documentTypeId": {
+                "description": "Unique identity of document type.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$",
+                "deprecated": true
               },
               "createdAt": {
                 "type": "string",
@@ -17436,35 +16731,6 @@
               },
               "relationships": {
                 "properties": {
-                  "documentType": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/document-base-config-sales-channel/02a1d1c4385bb5549fa51f219bb79824/documentType"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "document_type"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "2e45fec65781ec559e2aea39372a55cd"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "documentBaseConfig": {
                     "properties": {
                       "links": {
@@ -17522,6 +16788,35 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "documentType": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/document-base-config-sales-channel/02a1d1c4385bb5549fa51f219bb79824/documentType"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "document_type"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "2e45fec65781ec559e2aea39372a55cd"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -17552,14 +16847,15 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
-          "documentTypeId": {
-            "description": "Unique identity of document type.",
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
           "typeName": {
             "description": "Technical name of the document type.",
             "type": "string"
+          },
+          "documentTypeId": {
+            "description": "Unique identity of document type.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -17571,14 +16867,14 @@
             "format": "date-time",
             "readOnly": true
           },
-          "documentType": {
-            "$ref": "#/components/schemas/DocumentType"
-          },
           "documentBaseConfig": {
             "$ref": "#/components/schemas/DocumentBaseConfig"
           },
           "salesChannel": {
             "$ref": "#/components/schemas/SalesChannel"
+          },
+          "documentType": {
+            "$ref": "#/components/schemas/DocumentType"
           }
         },
         "type": "object"
@@ -45752,6 +45048,10 @@
               "internalComment": {
                 "type": "string"
               },
+              "sourceType": {
+                "description": "Type of the API context source which triggered the transition.",
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -45976,6 +45276,10 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "internalComment": {
+            "type": "string"
+          },
+          "sourceType": {
+            "description": "Type of the API context source which triggered the transition.",
             "type": "string"
           },
           "createdAt": {
@@ -53045,7 +52349,8 @@
           "mapping": {
             "client_credentials": "#/components/schemas/OAuthClientCredentialsGrant",
             "password": "#/components/schemas/OAuthPasswordGrant",
-            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant"
+            "refresh_token": "#/components/schemas/OAuthRefreshTokenGrant",
+            "authorization_code": "#/components/schemas/OAuthAuthorizationCodeGrant"
           }
         }
       },
@@ -53118,11 +52423,8 @@
             "type": "object",
             "properties": {
               "client_id": {
-                "description": "OAuth client id.",
-                "type": "string",
-                "enum": [
-                  "administration"
-                ]
+                "description": "OAuth client id. `administration` for tokens issued by the password grant, or the id of the public client for tokens issued by the authorization code grant.",
+                "type": "string"
               },
               "scope": {
                 "$ref": "#/components/schemas/OAuthScopes"
@@ -53138,6 +52440,84 @@
               "refresh_token"
             ]
           }
+        ]
+      },
+      "OAuthAuthorizationCodeGrant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OAuthGrant"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "description": "Identifier of the public OAuth client that started the authorization code flow.",
+                "type": "string"
+              },
+              "code": {
+                "description": "The authorization code received on the redirect URI.",
+                "type": "string"
+              },
+              "redirect_uri": {
+                "description": "The redirect URI used in the authorization request.",
+                "type": "string",
+                "format": "uri"
+              },
+              "code_verifier": {
+                "description": "The PKCE code verifier the `code_challenge` was derived from.",
+                "type": "string",
+                "minLength": 43,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "client_id",
+              "code",
+              "redirect_uri",
+              "code_verifier"
+            ]
+          }
+        ]
+      },
+      "OAuthAuthorizationRequest": {
+        "type": "object",
+        "description": "Parameters of an OAuth 2.0 authorization request (RFC 6749 §4.1.1) with PKCE (RFC 7636).",
+        "properties": {
+          "response_type": {
+            "type": "string",
+            "enum": [
+              "code"
+            ]
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "redirect_uri": {
+            "type": "string",
+            "format": "uri"
+          },
+          "state": {
+            "type": "string"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/OAuthScopes"
+          },
+          "code_challenge": {
+            "type": "string"
+          },
+          "code_challenge_method": {
+            "type": "string",
+            "enum": [
+              "S256"
+            ]
+          }
+        },
+        "required": [
+          "response_type",
+          "client_id",
+          "redirect_uri",
+          "code_challenge",
+          "code_challenge_method"
         ]
       },
       "Price": {
@@ -54231,6 +53611,13 @@
             }
           },
           "clientCredentials": {
+            "tokenUrl": "http://localhost:8000/api/oauth/token",
+            "scopes": {
+              "write": "Full write access"
+            }
+          },
+          "authorizationCode": {
+            "authorizationUrl": "http://localhost:8000/api/oauth/authorize",
             "tokenUrl": "http://localhost:8000/api/oauth/token",
             "scopes": {
               "write": "Full write access"
