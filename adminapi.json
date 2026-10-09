@@ -82949,6 +82949,7 @@
                   "required": [
                     "deepLinkCode",
                     "documentId",
+                    "documentNumber",
                     "formats"
                   ],
                   "properties": {
@@ -82961,6 +82962,10 @@
                       "type": "string",
                       "pattern": "^[0-9a-f]{32}$"
                     },
+                    "documentNumber": {
+                      "description": "The document number assigned to the generated document.",
+                      "type": "string"
+                    },
                     "formats": {
                       "description": "The generated formats. Use one of these values as the `format` path parameter when downloading the document.",
                       "type": "array",
@@ -82972,6 +82977,7 @@
                   "example": {
                     "deepLinkCode": "COp6DlWc2JgUn3XOb7QzKXWcWIVrH8XN",
                     "documentId": "018f5972f9ea72a0be49f7c39f72a2a0",
+                    "documentNumber": "1002",
                     "formats": [
                       "pdf",
                       "zugferd_xml"
@@ -101984,6 +101990,37 @@
                     },
                     "type": "object"
                   },
+                  "productGuaranteeTerms": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media/3b563524fdb17b4a86590470d40bef74/productGuaranteeTerms"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "94a91e5530cec09b7cd0273d98155671"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "orderLineItems": {
                     "properties": {
                       "links": {
@@ -102531,6 +102568,12 @@
             }
           },
           "productOpenGraphImages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "productGuaranteeTerms": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Product"
@@ -111210,6 +111253,11 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "guaranteeTermsMediaId": {
+                "description": "Unique identity of the document with the producer commercial durability guarantee terms.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "price": {
                 "type": "array",
                 "items": {
@@ -111283,6 +111331,10 @@
               "guaranteeConfirmed": {
                 "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
                 "type": "boolean"
+              },
+              "guaranteeTermsUrl": {
+                "description": "URL of the producer commercial durability guarantee terms.",
+                "type": "string"
               },
               "ean": {
                 "description": "Indicates EAN of the product.",
@@ -111765,6 +111817,36 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "bbda52d941a3452369a00f2880f4f358"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "guaranteeTermsMedia": {
+                    "description": "Document with the producer commercial durability guarantee terms",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/guaranteeTermsMedia"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "3fc45449285ba5bcff3deb7f04eef0d6"
                           }
                         }
                       }
@@ -112564,6 +112646,11 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "guaranteeTermsMediaId": {
+            "description": "Unique identity of the document with the producer commercial durability guarantee terms.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "price": {
             "type": "array",
             "items": {
@@ -112642,6 +112729,10 @@
           "guaranteeConfirmed": {
             "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
             "type": "boolean"
+          },
+          "guaranteeTermsUrl": {
+            "description": "URL of the producer commercial durability guarantee terms.",
+            "type": "string"
           },
           "ean": {
             "description": "Indicates EAN of the product.",
@@ -112915,6 +113006,10 @@
           "openGraphMedia": {
             "$ref": "#/components/schemas/Media",
             "description": "Open Graph image for social media sharing"
+          },
+          "guaranteeTermsMedia": {
+            "$ref": "#/components/schemas/Media",
+            "description": "Document with the producer commercial durability guarantee terms"
           },
           "featureSet": {
             "$ref": "#/components/schemas/ProductFeatureSet"
@@ -128054,10 +128149,12 @@
                 "type": "string"
               },
               "labels": {
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "helpTexts": {
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "customFields": {
                 "type": "object"
@@ -128259,10 +128356,12 @@
           },
           "labels": {
             "type": "object",
+            "deprecated": true,
             "description": "Identification label given to theme."
           },
           "helpTexts": {
             "type": "object",
+            "deprecated": true,
             "description": "Texts from config element."
           },
           "customFields": {
