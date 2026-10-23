@@ -24381,6 +24381,554 @@
         }
       }
     },
+    "/product-spatial-scene": {
+      "get": {
+        "tags": [
+          "Product Spatial Scene",
+          "Experimental"
+        ],
+        "summary": "List with basic information of Product Spatial Scene resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "",
+        "operationId": "getProductSpatialSceneList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Product Spatial Scene resources.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/ProductSpatialScene"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/product-spatial-scene?limit=25"
+                                },
+                                "last": {
+                                  "example": "/product-spatial-scene?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/product-spatial-scene?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/product-spatial-scene?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProductSpatialScene"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product Spatial Scene",
+          "Experimental"
+        ],
+        "summary": "Create a new Product Spatial Scene resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "",
+        "operationId": "createProductSpatialScene",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductSpatialScene"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of ProductSpatialScene",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ProductSpatialScene"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductSpatialScene"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/product-spatial-scene": {
+      "post": {
+        "tags": [
+          "Product Spatial Scene",
+          "Experimental"
+        ],
+        "summary": "Search for the Product Spatial Scene resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "",
+        "operationId": "searchProductSpatialScene",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of ProductSpatialScene",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ProductSpatialScene"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProductSpatialScene"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/product-spatial-scene/{id}": {
+      "get": {
+        "tags": [
+          "Product Spatial Scene",
+          "Experimental"
+        ],
+        "summary": "Detailed information about a Product Spatial Scene resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "",
+        "operationId": "getProductSpatialScene",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the product_spatial_scene",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of ProductSpatialScene",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ProductSpatialScene"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductSpatialScene"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product Spatial Scene",
+          "Experimental"
+        ],
+        "summary": "Delete a Product Spatial Scene resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "",
+        "operationId": "deleteProductSpatialScene",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the product_spatial_scene",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Product Spatial Scene",
+          "Experimental"
+        ],
+        "summary": "Partially update information about a Product Spatial Scene resource. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "",
+        "operationId": "updateProductSpatialScene",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the product_spatial_scene",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Product Spatial Scene resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductSpatialScene"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of ProductSpatialScene",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ProductSpatialScene"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductSpatialScene"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/product-spatial-scene": {
+      "post": {
+        "tags": [
+          "Product Spatial Scene",
+          "Experimental"
+        ],
+        "summary": "Aggregate for the Product Spatial Scene resources. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Available since: 6.6.10.0",
+        "operationId": "aggregateProductSpatialScene",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of ProductSpatialScene",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ProductSpatialScene"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProductSpatialScene"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/product-warehouse": {
       "get": {
         "tags": [
@@ -45266,99 +45814,6 @@
                       }
                     },
                     "type": "object"
-                  },
-                  "mcpTools": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpTools"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_tool"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "6fd6afdbb8880347183b3fd75e779316"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "mcpPrompts": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpPrompts"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_prompt"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "dc6c2e9bc841c62a89cf5b3aa42f83d3"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "mcpResources": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpResources"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_resource"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "8357adcc66e1f74c8b7f688333874068"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -45582,24 +46037,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AppShippingMethod"
-            }
-          },
-          "mcpTools": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpTool"
-            }
-          },
-          "mcpPrompts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpPrompt"
-            }
-          },
-          "mcpResources": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpResource"
             }
           }
         },
@@ -46416,440 +46853,6 @@
             "items": {
               "$ref": "#/components/schemas/Flow"
             }
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpPromptJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-prompt/0f7619363286401a53877794cfb6ebbb/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpPrompt": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpResourceJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "uri",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "uri": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "mimeType": {
-                "type": "string"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-resource/30e270c9edfb6e58051d304c6e69e7bf/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpResource": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "uri",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "uri": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "mimeType": {
-            "type": "string"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpToolJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "inputSchema": {
-                "type": "object"
-              },
-              "requiredPrivileges": {
-                "type": "object"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-tool/0d217ec15d0377a62d13caf5899f0212/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpTool": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "inputSchema": {
-            "type": "object"
-          },
-          "requiredPrivileges": {
-            "type": "object"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
           }
         },
         "type": "object"
@@ -51931,6 +51934,39 @@
               },
               "extensions": {
                 "properties": {
+                  "organizationId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  },
+                  "organization": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/organization"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_organization"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "b4c1948c087fafc89a88450fcbb64c77"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "budgetId": {
                     "type": "string",
                     "pattern": "^[0-9a-f]{32}$"
@@ -52602,6 +52638,39 @@
           },
           "extensions": {
             "properties": {
+              "organizationId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "organization": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/organization"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "example": "b2b_components_organization"
+                      },
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{32}$",
+                        "example": "b4c1948c087fafc89a88450fcbb64c77"
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
               "budgetId": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
@@ -55941,6 +56010,11 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "guaranteeTermsMediaId": {
+                "description": "Unique identity of the document with the producer commercial durability guarantee terms.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "price": {
                 "type": "array",
                 "items": {
@@ -56014,6 +56088,10 @@
               "guaranteeConfirmed": {
                 "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
                 "type": "boolean"
+              },
+              "guaranteeTermsUrl": {
+                "description": "URL of the producer commercial durability guarantee terms.",
+                "type": "string"
               },
               "ean": {
                 "description": "Indicates EAN of the product.",
@@ -56472,6 +56550,37 @@
                             "id": {
                               "type": "string",
                               "example": "6b1c17ad551ef636e491ab6848f68420"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "spatialScenes": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/spatialScenes"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product_spatial_scene"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "f4c640f3ddeb086f30c58c5fb0a969ec"
                             }
                           }
                         }
@@ -57200,6 +57309,36 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "bbda52d941a3452369a00f2880f4f358"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "guaranteeTermsMedia": {
+                    "description": "Document with the producer commercial durability guarantee terms",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/guaranteeTermsMedia"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "3fc45449285ba5bcff3deb7f04eef0d6"
                           }
                         }
                       }
@@ -57992,6 +58131,11 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "guaranteeTermsMediaId": {
+            "description": "Unique identity of the document with the producer commercial durability guarantee terms.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "price": {
             "type": "array",
             "items": {
@@ -58065,6 +58209,10 @@
           "guaranteeConfirmed": {
             "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
             "type": "boolean"
+          },
+          "guaranteeTermsUrl": {
+            "description": "URL of the producer commercial durability guarantee terms.",
+            "type": "string"
           },
           "ean": {
             "description": "Indicates EAN of the product.",
@@ -58523,6 +58671,37 @@
                         "id": {
                           "type": "string",
                           "example": "6b1c17ad551ef636e491ab6848f68420"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "spatialScenes": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/product/deb10517653c255364175796ace3553f/spatialScenes"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "product_spatial_scene"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "f4c640f3ddeb086f30c58c5fb0a969ec"
                         }
                       }
                     }
@@ -59022,6 +59201,10 @@
           "openGraphMedia": {
             "$ref": "#/components/schemas/Media",
             "description": "Open Graph image for social media sharing"
+          },
+          "guaranteeTermsMedia": {
+            "$ref": "#/components/schemas/Media",
+            "description": "Document with the producer commercial durability guarantee terms"
           },
           "featureSet": {
             "$ref": "#/components/schemas/ProductFeatureSet"
@@ -68773,17 +68956,12 @@
           {
             "required": [
               "id",
-              "hash",
               "customerId"
             ],
             "properties": {
               "id": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
-              },
-              "hash": {
-                "description": "Password hash for customer's account recovery.",
-                "type": "string"
               },
               "customerId": {
                 "description": "Unique identity of the customer.",
@@ -68843,17 +69021,12 @@
         "description": "Added since version: 6.1.0.0",
         "required": [
           "id",
-          "hash",
           "customerId"
         ],
         "properties": {
           "id": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
-          },
-          "hash": {
-            "description": "Password hash for customer's account recovery.",
-            "type": "string"
           },
           "customerId": {
             "description": "Unique identity of the customer.",
@@ -76429,6 +76602,37 @@
                     },
                     "type": "object"
                   },
+                  "productGuaranteeTerms": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media/3b563524fdb17b4a86590470d40bef74/productGuaranteeTerms"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "94a91e5530cec09b7cd0273d98155671"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "orderLineItems": {
                     "properties": {
                       "links": {
@@ -77121,6 +77325,12 @@
             }
           },
           "productOpenGraphImages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "productGuaranteeTerms": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Product"
@@ -91403,6 +91613,170 @@
           },
           "translated": {
             "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "ProductSpatialSceneJsonApi": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "productId",
+              "spatialSceneId"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "versionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "productId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "productVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "spatialSceneId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "position": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "product": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product-spatial-scene/563ebde512760efbc3ad2588316f15e0/product"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "product"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "f5bf48aa40cad7891eb709fcf1fde128"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "spatialScene": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product-spatial-scene/563ebde512760efbc3ad2588316f15e0/spatialScene"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "spatial_scene"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "416ac24f280929f02537d49e9cb1aabd"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "ProductSpatialScene": {
+        "required": [
+          "id",
+          "productId",
+          "spatialSceneId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "productId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "productVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "spatialSceneId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "spatialScene": {
+            "$ref": "#/components/schemas/SpatialScene"
           }
         },
         "type": "object"
@@ -107231,6 +107605,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "productSpatialScenes": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/spatial-scene/fbe2b606c76b0075eced631365324623/productSpatialScenes"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product_spatial_scene"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "353b14573ea47fb88d8042f38674c7cc"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -107306,6 +107711,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SpatialScenePrimitive"
+            }
+          },
+          "productSpatialScenes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductSpatialScene"
             }
           }
         },
@@ -114691,10 +115102,12 @@
                 "type": "string"
               },
               "labels": {
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "helpTexts": {
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "customFields": {
                 "type": "object"
@@ -114890,10 +115303,12 @@
             "type": "string"
           },
           "labels": {
-            "type": "object"
+            "type": "object",
+            "deprecated": true
           },
           "helpTexts": {
-            "type": "object"
+            "type": "object",
+            "deprecated": true
           },
           "customFields": {
             "type": "object"
@@ -117810,28 +118225,43 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "name": {
+                "description": "Name of the webhook.",
                 "type": "string"
               },
               "eventName": {
+                "description": "The event the webhook is sent for, e.g. `product.written`. Its owner's roles must allow the event.",
                 "type": "string"
               },
               "url": {
+                "description": "URL the webhook is sent to.",
                 "type": "string"
               },
               "onlyLiveVersion": {
+                "description": "When `true`, the webhook is only sent for changes to the live version, not for drafts.",
                 "type": "boolean"
               },
               "errorCount": {
+                "description": "Number of failed deliveries since the last successful one. With the default failure strategy, the webhook is switched off when it reaches 10.",
                 "type": "integer",
                 "format": "int64",
                 "readOnly": true
               },
               "active": {
+                "description": "When `false`, the webhook is not sent. It is switched off automatically after too many failed deliveries.",
                 "type": "boolean"
               },
               "appId": {
+                "description": "The app that registered the webhook in its manifest. Such webhooks cannot be changed through the API, except for `active` by an admin.",
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "readOnly": true
+              },
+              "aclRoleIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                }
               },
               "createdAt": {
                 "type": "string",
@@ -117896,28 +118326,43 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "name": {
+            "description": "Name of the webhook.",
             "type": "string"
           },
           "eventName": {
+            "description": "The event the webhook is sent for, e.g. `product.written`. Its owner's roles must allow the event.",
             "type": "string"
           },
           "url": {
+            "description": "URL the webhook is sent to.",
             "type": "string"
           },
           "onlyLiveVersion": {
+            "description": "When `true`, the webhook is only sent for changes to the live version, not for drafts.",
             "type": "boolean"
           },
           "errorCount": {
+            "description": "Number of failed deliveries since the last successful one. With the default failure strategy, the webhook is switched off when it reaches 10.",
             "type": "integer",
             "format": "int64",
             "readOnly": true
           },
           "active": {
+            "description": "When `false`, the webhook is not sent. It is switched off automatically after too many failed deliveries.",
             "type": "boolean"
           },
           "appId": {
+            "description": "The app that registered the webhook in its manifest. Such webhooks cannot be changed through the API, except for `active` by an admin.",
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "readOnly": true
+          },
+          "aclRoleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
           },
           "createdAt": {
             "type": "string",
@@ -120436,6 +120881,13 @@
                 "type": "boolean",
                 "description": "Whether configured APP_URL is externally reachable."
               },
+              "appUrlStatusCode": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "description": "HTTP status code APP_URL answered the failed verification request with, null when the verification passed or got no response."
+              },
               "appsRequireAppUrl": {
                 "type": "boolean",
                 "description": "True if at least one installed app requires a reachable APP_URL."
@@ -121299,18 +121751,6 @@
       "description": "The endpoint for operations on App Flow Event"
     },
     {
-      "name": "App Mcp Prompt",
-      "description": "The endpoint for operations on App Mcp Prompt"
-    },
-    {
-      "name": "App Mcp Resource",
-      "description": "The endpoint for operations on App Mcp Resource"
-    },
-    {
-      "name": "App Mcp Tool",
-      "description": "The endpoint for operations on App Mcp Tool"
-    },
-    {
       "name": "App Payment Method",
       "description": "The endpoint for operations on App Payment Method"
     },
@@ -121801,6 +122241,10 @@
     {
       "name": "Product Sorting",
       "description": "The endpoint for operations on Product Sorting"
+    },
+    {
+      "name": "Product Spatial Scene",
+      "description": "The endpoint for operations on Product Spatial Scene"
     },
     {
       "name": "Product Stream",
