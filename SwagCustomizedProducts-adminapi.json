@@ -5424,6 +5424,151 @@
           }
         }
       }
+    },
+    "/_action/order/document-v2/number-range-pattern-collisions": {
+      "get": {
+        "tags": [
+          "Document Management",
+          "Experimental"
+        ],
+        "summary": "List document number ranges whose pattern collides",
+        "description": "Lists the number ranges of the given document number range type that use exactly the given pattern. Document numbers are unique per document type, so two such ranges generate colliding numbers once they reach the same value. Only number range types whose technical name starts with `document_` are considered, for any other type the list is empty. Pass `numberRangeId` to leave that number range out of the result, for example to check the pattern of an existing number range against all others. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "operationId": "documentV2NumberRangePatternCollisions",
+        "parameters": [
+          {
+            "name": "numberRangeTypeId",
+            "in": "query",
+            "description": "Identifier of the number range type.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "pattern",
+            "in": "query",
+            "description": "The pattern to check, for example `INV-{n}`.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "numberRangeId",
+            "in": "query",
+            "description": "Identifier of a number range to leave out of the result.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The colliding number ranges.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "collisions"
+                  ],
+                  "properties": {
+                    "collisions": {
+                      "description": "Number ranges of the given document number range type that use the pattern.",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$"
+                          },
+                          "name": {
+                            "description": "Translated name of the number range.",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A required query parameter is missing or invalid."
+          }
+        }
+      }
+    },
+    "/_action/sales-channel/{salesChannelId}/product-assignment": {
+      "post": {
+        "tags": [
+          "Sales Channel"
+        ],
+        "summary": "Assign products to a sales channel",
+        "description": "Makes products visible in a sales channel. Products can be given explicitly by id, through dynamic product groups or through categories. The matching products are resolved on the server, so the number of products is not limited by the API search limit. Products that are already visible in the sales channel are skipped. Categories only contribute main products, dynamic product groups contribute every matching product including variants. A single call writes a bounded number of products and reports `complete: false` when products are left. Repeat the same request until `complete` is `true`, every call continues with the products that are not visible yet.",
+        "operationId": "assignSalesChannelProducts",
+        "parameters": [
+          {
+            "name": "salesChannelId",
+            "in": "path",
+            "description": "Identifier of the sales channel the products are assigned to.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Sources of the products to assign. At least one list should be given, an empty request assigns nothing.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalesChannelProductAssignmentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The products were assigned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesChannelProductAssignmentResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing privileges. The route requires `product_visibility:create` and `product:read`, plus `product_stream:read` for `productStreamIds` and `category:read` for `categoryIds`."
+          },
+          "404": {
+            "description": "The sales channel or a dynamic product group was not found.",
+            "$ref": "#/components/responses/404"
+          },
+          "422": {
+            "description": "Validation error. An id is not a UUID, a list exceeds its `maxItems` or `visibility` is not one of `10`, `20` and `30`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failure"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -6535,99 +6680,6 @@
                       }
                     },
                     "type": "object"
-                  },
-                  "mcpTools": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpTools"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_tool"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "6fd6afdbb8880347183b3fd75e779316"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "mcpPrompts": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpPrompts"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_prompt"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "dc6c2e9bc841c62a89cf5b3aa42f83d3"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "mcpResources": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpResources"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_resource"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "8357adcc66e1f74c8b7f688333874068"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -6851,24 +6903,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AppShippingMethod"
-            }
-          },
-          "mcpTools": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpTool"
-            }
-          },
-          "mcpPrompts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpPrompt"
-            }
-          },
-          "mcpResources": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpResource"
             }
           }
         },
@@ -7685,440 +7719,6 @@
             "items": {
               "$ref": "#/components/schemas/Flow"
             }
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpPromptJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-prompt/0f7619363286401a53877794cfb6ebbb/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpPrompt": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpResourceJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "uri",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "uri": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "mimeType": {
-                "type": "string"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-resource/30e270c9edfb6e58051d304c6e69e7bf/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpResource": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "uri",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "uri": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "mimeType": {
-            "type": "string"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpToolJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "inputSchema": {
-                "type": "object"
-              },
-              "requiredPrivileges": {
-                "type": "object"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-tool/0d217ec15d0377a62d13caf5899f0212/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpTool": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "inputSchema": {
-            "type": "object"
-          },
-          "requiredPrivileges": {
-            "type": "object"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
           }
         },
         "type": "object"
@@ -14752,6 +14352,14 @@
                 "description": "If boolean value is `true` gross value is displayed else, net value will be displayed to the customer.",
                 "type": "boolean"
               },
+              "priceBasis": {
+                "description": "Defines which stored price value is authoritative when the tax display shows the other one. With `net` the gross is derived from the stored net value, with `gross` the net is derived from the stored gross value. Added since version: 6.7.17.0.",
+                "type": "string",
+                "enum": [
+                  "net",
+                  "gross"
+                ]
+              },
               "customFields": {
                 "type": "object"
               },
@@ -14905,6 +14513,14 @@
             "description": "If boolean value is `true` gross value is displayed else, net value will be displayed to the customer.",
             "type": "boolean"
           },
+          "priceBasis": {
+            "description": "Defines which stored price value is authoritative when the tax display shows the other one. With `net` the gross is derived from the stored net value, with `gross` the net is derived from the stored gross value. Added since version: 6.7.17.0.",
+            "type": "string",
+            "enum": [
+              "net",
+              "gross"
+            ]
+          },
           "customFields": {
             "type": "object"
           },
@@ -15000,17 +14616,12 @@
           {
             "required": [
               "id",
-              "hash",
               "customerId"
             ],
             "properties": {
               "id": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
-              },
-              "hash": {
-                "description": "Password hash for customer's account recovery.",
-                "type": "string"
               },
               "customerId": {
                 "description": "Unique identity of the customer.",
@@ -15070,17 +14681,12 @@
         "description": "Added since version: 6.1.0.0",
         "required": [
           "id",
-          "hash",
           "customerId"
         ],
         "properties": {
           "id": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
-          },
-          "hash": {
-            "description": "Password hash for customer's account recovery.",
-            "type": "string"
           },
           "customerId": {
             "description": "Unique identity of the customer.",
@@ -21448,6 +21054,37 @@
                     },
                     "type": "object"
                   },
+                  "productGuaranteeTerms": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media/3b563524fdb17b4a86590470d40bef74/productGuaranteeTerms"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "94a91e5530cec09b7cd0273d98155671"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "orderLineItems": {
                     "properties": {
                       "links": {
@@ -22018,6 +21655,12 @@
             }
           },
           "productOpenGraphImages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "productGuaranteeTerms": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Product"
@@ -30389,6 +30032,11 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "guaranteeTermsMediaId": {
+                "description": "Unique identity of the document with the producer commercial durability guarantee terms.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "price": {
                 "type": "array",
                 "items": {
@@ -30462,6 +30110,10 @@
               "guaranteeConfirmed": {
                 "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
                 "type": "boolean"
+              },
+              "guaranteeTermsUrl": {
+                "description": "URL of the producer commercial durability guarantee terms.",
+                "type": "string"
               },
               "ean": {
                 "description": "Indicates EAN of the product.",
@@ -30986,6 +30638,36 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "bbda52d941a3452369a00f2880f4f358"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "guaranteeTermsMedia": {
+                    "description": "Document with the producer commercial durability guarantee terms",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/guaranteeTermsMedia"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "3fc45449285ba5bcff3deb7f04eef0d6"
                           }
                         }
                       }
@@ -31778,6 +31460,11 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "guaranteeTermsMediaId": {
+            "description": "Unique identity of the document with the producer commercial durability guarantee terms.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "price": {
             "type": "array",
             "items": {
@@ -31851,6 +31538,10 @@
           "guaranteeConfirmed": {
             "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
             "type": "boolean"
+          },
+          "guaranteeTermsUrl": {
+            "description": "URL of the producer commercial durability guarantee terms.",
+            "type": "string"
           },
           "ean": {
             "description": "Indicates EAN of the product.",
@@ -32146,6 +31837,10 @@
           "openGraphMedia": {
             "$ref": "#/components/schemas/Media",
             "description": "Open Graph image for social media sharing"
+          },
+          "guaranteeTermsMedia": {
+            "$ref": "#/components/schemas/Media",
+            "description": "Document with the producer commercial durability guarantee terms"
           },
           "featureSet": {
             "$ref": "#/components/schemas/ProductFeatureSet"
@@ -36343,10 +36038,6 @@
                 "format": "int64",
                 "readOnly": true
               },
-              "ordersPerCustomerCount": {
-                "type": "object",
-                "readOnly": true
-              },
               "exclusionIds": {
                 "type": "array",
                 "items": {
@@ -36356,6 +36047,11 @@
               },
               "customFields": {
                 "type": "object"
+              },
+              "ordersPerCustomerCount": {
+                "type": "object",
+                "readOnly": true,
+                "deprecated": true
               },
               "createdAt": {
                 "type": "string",
@@ -36740,10 +36436,6 @@
             "format": "int64",
             "readOnly": true
           },
-          "ordersPerCustomerCount": {
-            "type": "object",
-            "readOnly": true
-          },
           "exclusionIds": {
             "type": "array",
             "items": {
@@ -36753,6 +36445,11 @@
           },
           "customFields": {
             "type": "object"
+          },
+          "ordersPerCustomerCount": {
+            "type": "object",
+            "readOnly": true,
+            "deprecated": true
           },
           "createdAt": {
             "type": "string",
@@ -49501,10 +49198,12 @@
                 "type": "string"
               },
               "labels": {
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "helpTexts": {
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "customFields": {
                 "type": "object"
@@ -49700,10 +49399,12 @@
             "type": "string"
           },
           "labels": {
-            "type": "object"
+            "type": "object",
+            "deprecated": true
           },
           "helpTexts": {
-            "type": "object"
+            "type": "object",
+            "deprecated": true
           },
           "customFields": {
             "type": "object"
@@ -51063,28 +50764,43 @@
                 "pattern": "^[0-9a-f]{32}$"
               },
               "name": {
+                "description": "Name of the webhook.",
                 "type": "string"
               },
               "eventName": {
+                "description": "The event the webhook is sent for, e.g. `product.written`. Its owner's roles must allow the event.",
                 "type": "string"
               },
               "url": {
+                "description": "URL the webhook is sent to.",
                 "type": "string"
               },
               "onlyLiveVersion": {
+                "description": "When `true`, the webhook is only sent for changes to the live version, not for drafts.",
                 "type": "boolean"
               },
               "errorCount": {
+                "description": "Number of failed deliveries since the last successful one. With the default failure strategy, the webhook is switched off when it reaches 10.",
                 "type": "integer",
                 "format": "int64",
                 "readOnly": true
               },
               "active": {
+                "description": "When `false`, the webhook is not sent. It is switched off automatically after too many failed deliveries.",
                 "type": "boolean"
               },
               "appId": {
+                "description": "The app that registered the webhook in its manifest. Such webhooks cannot be changed through the API, except for `active` by an admin.",
                 "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
+                "pattern": "^[0-9a-f]{32}$",
+                "readOnly": true
+              },
+              "aclRoleIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{32}$"
+                }
               },
               "createdAt": {
                 "type": "string",
@@ -51149,28 +50865,43 @@
             "pattern": "^[0-9a-f]{32}$"
           },
           "name": {
+            "description": "Name of the webhook.",
             "type": "string"
           },
           "eventName": {
+            "description": "The event the webhook is sent for, e.g. `product.written`. Its owner's roles must allow the event.",
             "type": "string"
           },
           "url": {
+            "description": "URL the webhook is sent to.",
             "type": "string"
           },
           "onlyLiveVersion": {
+            "description": "When `true`, the webhook is only sent for changes to the live version, not for drafts.",
             "type": "boolean"
           },
           "errorCount": {
+            "description": "Number of failed deliveries since the last successful one. With the default failure strategy, the webhook is switched off when it reaches 10.",
             "type": "integer",
             "format": "int64",
             "readOnly": true
           },
           "active": {
+            "description": "When `false`, the webhook is not sent. It is switched off automatically after too many failed deliveries.",
             "type": "boolean"
           },
           "appId": {
+            "description": "The app that registered the webhook in its manifest. Such webhooks cannot be changed through the API, except for `active` by an admin.",
             "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
+            "pattern": "^[0-9a-f]{32}$",
+            "readOnly": true
+          },
+          "aclRoleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
           },
           "createdAt": {
             "type": "string",
@@ -51267,6 +50998,11 @@
                 "format": "int64",
                 "readOnly": true
               },
+              "webhookId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$",
+                "readOnly": true
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -51354,6 +51090,11 @@
           "sequence": {
             "type": "integer",
             "format": "int64",
+            "readOnly": true
+          },
+          "webhookId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
             "readOnly": true
           },
           "createdAt": {
@@ -52679,6 +52420,13 @@
                 "type": "boolean",
                 "description": "Whether configured APP_URL is externally reachable."
               },
+              "appUrlStatusCode": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "description": "HTTP status code APP_URL answered the failed verification request with, null when the verification passed or got no response."
+              },
               "appsRequireAppUrl": {
                 "type": "boolean",
                 "description": "True if at least one installed app requires a reachable APP_URL."
@@ -53054,6 +52802,65 @@
               "base",
               "extension"
             ]
+          }
+        }
+      },
+      "SalesChannelProductAssignmentRequest": {
+        "type": "object",
+        "properties": {
+          "productIds": {
+            "description": "Identifiers of products to assign.",
+            "type": "array",
+            "maxItems": 1000,
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "productStreamIds": {
+            "description": "Identifiers of dynamic product groups whose current products are assigned. The assignment is a snapshot, later changes to the group do not affect it.",
+            "type": "array",
+            "maxItems": 25,
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "categoryIds": {
+            "description": "Identifiers of categories whose main products are assigned. The assignment is a snapshot, later changes to the category do not affect it.",
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "visibility": {
+            "description": "Visibility of the assigned products in the sales channel. `10` hides them in listings and search, `20` hides them in listings, `30` shows them everywhere.",
+            "type": "integer",
+            "enum": [
+              10,
+              20,
+              30
+            ],
+            "default": 30
+          }
+        }
+      },
+      "SalesChannelProductAssignmentResponse": {
+        "type": "object",
+        "required": [
+          "assigned",
+          "complete"
+        ],
+        "properties": {
+          "assigned": {
+            "description": "Number of products that received a new visibility in this call. Products that were already visible in the sales channel are not counted.",
+            "type": "integer"
+          },
+          "complete": {
+            "description": "`true` when every matching product is visible now. `false` when the call stopped at its page budget, repeat the same request to continue.",
+            "type": "boolean"
           }
         }
       }
@@ -53500,18 +53307,6 @@
     {
       "name": "App Flow Event",
       "description": "The endpoint for operations on App Flow Event"
-    },
-    {
-      "name": "App Mcp Prompt",
-      "description": "The endpoint for operations on App Mcp Prompt"
-    },
-    {
-      "name": "App Mcp Resource",
-      "description": "The endpoint for operations on App Mcp Resource"
-    },
-    {
-      "name": "App Mcp Tool",
-      "description": "The endpoint for operations on App Mcp Tool"
     },
     {
       "name": "App Payment Method",
