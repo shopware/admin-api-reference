@@ -65,7 +65,7 @@ Request headers provide information about your request to a REST API service tha
 | Request header              | Key                                    | Description                                                                                |
 | --------------------------- | ---------------------------------------|--------------------------------------------------------------------------------------------|
 | Content-Type                | application/json or application/vnd.api+json                       | Indicate the format of the request body                                                    |
-| Accept                      | application/json                       | Indicate the format in which the response will be returned                                 |
+| Accept                      | application/json or application/vnd.api+json                       | Indicate the format in which the response will be returned                                 |
 
 Refer to the docs for more information on other [response headers](https://developer.shopware.com/docs/guides/integrations-api/general-concepts/request-headers.html#request-headers).
 
@@ -91,19 +91,24 @@ To derive stable IDs from external keys during imports (for example, using `md5(
 
 ### Response headers
 
-The Admin API generally supports two response body formats. A simple json format to no explicit specification and the [JSON:API](http://jsonapi.org/) standard format. By default, the response will be in JSON:API format. You can control the response format using the `Accept` header.
+The Admin API supports simplified JSON and the [JSON:API](https://jsonapi.org/) standard format.
+Use the `Accept` header to select the response format.
 
-| Accept                      | Format                                    |
-| --------------------------- | ----------------------------------------- |
-| `application/vnd.api+json`  | JSON:API formatted response **(default)** |
-| `application/json`          | Simplified JSON format                    |
+Starting with Shopware 6.8, simplified JSON is the default when the `Accept` header is missing or set to `*/*`.
+In Shopware 6.7 and earlier, `Accept: */*` selects JSON:API by default.
+Send an explicit `Accept` header if your integration expects a particular response format; both media types remain supported in 6.8.
+
+| Accept                     | Format                     | Default in                 |
+| -------------------------- | -------------------------- | -------------------------- |
+| `application/vnd.api+json`  | JSON:API formatted response | Shopware 6.7 and earlier   |
+| `application/json`         | Simplified JSON format     | Shopware 6.8 and later     |
 
 ### Sample response JSON:API
 
 The format has a rich structure that makes discovering the API easier, even without documentation. Some libraries can even generate user interfaces from it. It provides relationships to other resources and additional information about the resource. You can see a shortened example response below
 
 ```javascript
-// Accept: application/vnd.api+json (default)
+// Accept: application/vnd.api+json
 
 {
     "data": [
