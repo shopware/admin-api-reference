@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.7.15.1"
+    "version": "6.7.16.0"
   },
   "servers": [
     {
@@ -5424,6 +5424,120 @@
           }
         }
       }
+    },
+    "/notification/message": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Get notifications",
+        "description": "Returns notifications visible to the current Admin API user.",
+        "operationId": "fetchNotifications",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of notifications to return.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 5
+            }
+          },
+          {
+            "name": "latestTimestamp",
+            "in": "query",
+            "description": "Only return notifications created after this timestamp.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notifications returned successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "notifications",
+                    "timestamp"
+                  ],
+                  "properties": {
+                    "notifications": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "status",
+                          "message",
+                          "adminOnly",
+                          "requiredPrivileges"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "adminOnly": {
+                            "type": "boolean"
+                          },
+                          "requiredPrivileges": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "timestamp": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_action/system-config/get-schema": {
+      "get": {
+        "tags": [
+          "System Config"
+        ],
+        "summary": "Get configuration schema",
+        "description": "Returns the configuration schema for the given domain.",
+        "operationId": "getSchema",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "The configuration domain.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the configuration schema."
+          }
+        }
+      }
     }
   },
   "components": {
@@ -6535,99 +6649,6 @@
                       }
                     },
                     "type": "object"
-                  },
-                  "mcpTools": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpTools"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_tool"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "6fd6afdbb8880347183b3fd75e779316"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "mcpPrompts": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpPrompts"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_prompt"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "dc6c2e9bc841c62a89cf5b3aa42f83d3"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "mcpResources": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpResources"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_resource"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "8357adcc66e1f74c8b7f688333874068"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -6851,24 +6872,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AppShippingMethod"
-            }
-          },
-          "mcpTools": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpTool"
-            }
-          },
-          "mcpPrompts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpPrompt"
-            }
-          },
-          "mcpResources": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpResource"
             }
           }
         },
@@ -7685,440 +7688,6 @@
             "items": {
               "$ref": "#/components/schemas/Flow"
             }
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpPromptJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-prompt/0f7619363286401a53877794cfb6ebbb/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpPrompt": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpResourceJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "uri",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "uri": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "mimeType": {
-                "type": "string"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-resource/30e270c9edfb6e58051d304c6e69e7bf/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpResource": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "uri",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "uri": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "mimeType": {
-            "type": "string"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpToolJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "inputSchema": {
-                "type": "object"
-              },
-              "requiredPrivileges": {
-                "type": "object"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-tool/0d217ec15d0377a62d13caf5899f0212/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpTool": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "inputSchema": {
-            "type": "object"
-          },
-          "requiredPrivileges": {
-            "type": "object"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
           }
         },
         "type": "object"
@@ -12625,6 +12194,33 @@
                 "type": "string"
               },
               "config": {
+                "properties": {
+                  "componentName": {
+                    "type": "string"
+                  },
+                  "customFieldType": {
+                    "type": "string"
+                  },
+                  "customFieldPosition": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "dateType": {
+                    "type": "string"
+                  },
+                  "entity": {
+                    "type": "string"
+                  },
+                  "numberType": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "validation": {
+                    "type": "string"
+                  }
+                },
                 "type": "object"
               },
               "active": {
@@ -12751,6 +12347,33 @@
             "type": "string"
           },
           "config": {
+            "properties": {
+              "componentName": {
+                "type": "string"
+              },
+              "customFieldType": {
+                "type": "string"
+              },
+              "customFieldPosition": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "dateType": {
+                "type": "string"
+              },
+              "entity": {
+                "type": "string"
+              },
+              "numberType": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "validation": {
+                "type": "string"
+              }
+            },
             "type": "object"
           },
           "active": {
@@ -14946,17 +14569,12 @@
           {
             "required": [
               "id",
-              "hash",
               "customerId"
             ],
             "properties": {
               "id": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
-              },
-              "hash": {
-                "description": "Password hash for customer's account recovery.",
-                "type": "string"
               },
               "customerId": {
                 "description": "Unique identity of the customer.",
@@ -15016,17 +14634,12 @@
         "description": "Added since version: 6.1.0.0",
         "required": [
           "id",
-          "hash",
           "customerId"
         ],
         "properties": {
           "id": {
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
-          },
-          "hash": {
-            "description": "Password hash for customer's account recovery.",
-            "type": "string"
           },
           "customerId": {
             "description": "Unique identity of the customer.",
@@ -21394,6 +21007,37 @@
                     },
                     "type": "object"
                   },
+                  "productGuaranteeTerms": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media/3b563524fdb17b4a86590470d40bef74/productGuaranteeTerms"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "94a91e5530cec09b7cd0273d98155671"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "orderLineItems": {
                     "properties": {
                       "links": {
@@ -21964,6 +21608,12 @@
             }
           },
           "productOpenGraphImages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "productGuaranteeTerms": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Product"
@@ -24458,6 +24108,14 @@
                       "price": {
                         "type": "number",
                         "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
                       }
                     },
                     "type": "object"
@@ -25301,6 +24959,14 @@
               "regulationPrice": {
                 "properties": {
                   "price": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
                     "type": "number",
                     "format": "float"
                   }
@@ -26343,6 +26009,14 @@
                       "price": {
                         "type": "number",
                         "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
                       }
                     },
                     "type": "object"
@@ -26667,6 +26341,14 @@
                   "price": {
                     "type": "number",
                     "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -26802,6 +26484,14 @@
                   "regulationPrice": {
                     "properties": {
                       "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
                         "type": "number",
                         "format": "float"
                       }
@@ -26989,6 +26679,14 @@
               "regulationPrice": {
                 "properties": {
                   "price": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
                     "type": "number",
                     "format": "float"
                   }
@@ -27181,6 +26879,14 @@
                   "regulationPrice": {
                     "properties": {
                       "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
                         "type": "number",
                         "format": "float"
                       }
@@ -27667,6 +27373,14 @@
                   "price": {
                     "type": "number",
                     "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -28079,6 +27793,14 @@
                       "price": {
                         "type": "number",
                         "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
                       }
                     },
                     "type": "object"
@@ -28349,6 +28071,14 @@
                   "price": {
                     "type": "number",
                     "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -28489,6 +28219,14 @@
                   "regulationPrice": {
                     "properties": {
                       "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
                         "type": "number",
                         "format": "float"
                       }
@@ -28695,6 +28433,14 @@
                   "price": {
                     "type": "number",
                     "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -28822,6 +28568,14 @@
                   "regulationPrice": {
                     "properties": {
                       "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
                         "type": "number",
                         "format": "float"
                       }
@@ -29032,6 +28786,14 @@
                   "price": {
                     "type": "number",
                     "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -29168,6 +28930,14 @@
                   "regulationPrice": {
                     "properties": {
                       "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
                         "type": "number",
                         "format": "float"
                       }
@@ -29354,6 +29124,14 @@
               "regulationPrice": {
                 "properties": {
                   "price": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
                     "type": "number",
                     "format": "float"
                   }
@@ -30207,6 +29985,11 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "guaranteeTermsMediaId": {
+                "description": "Unique identity of the document with the producer commercial durability guarantee terms.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "price": {
                 "type": "array",
                 "items": {
@@ -30280,6 +30063,10 @@
               "guaranteeConfirmed": {
                 "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
                 "type": "boolean"
+              },
+              "guaranteeTermsUrl": {
+                "description": "URL of the producer commercial durability guarantee terms.",
+                "type": "string"
               },
               "ean": {
                 "description": "Indicates EAN of the product.",
@@ -30804,6 +30591,36 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "bbda52d941a3452369a00f2880f4f358"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "guaranteeTermsMedia": {
+                    "description": "Document with the producer commercial durability guarantee terms",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/guaranteeTermsMedia"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "3fc45449285ba5bcff3deb7f04eef0d6"
                           }
                         }
                       }
@@ -31596,6 +31413,11 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "guaranteeTermsMediaId": {
+            "description": "Unique identity of the document with the producer commercial durability guarantee terms.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "price": {
             "type": "array",
             "items": {
@@ -31669,6 +31491,10 @@
           "guaranteeConfirmed": {
             "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
             "type": "boolean"
+          },
+          "guaranteeTermsUrl": {
+            "description": "URL of the producer commercial durability guarantee terms.",
+            "type": "string"
           },
           "ean": {
             "description": "Indicates EAN of the product.",
@@ -31964,6 +31790,10 @@
           "openGraphMedia": {
             "$ref": "#/components/schemas/Media",
             "description": "Open Graph image for social media sharing"
+          },
+          "guaranteeTermsMedia": {
+            "$ref": "#/components/schemas/Media",
+            "description": "Document with the producer commercial durability guarantee terms"
           },
           "featureSet": {
             "$ref": "#/components/schemas/ProductFeatureSet"
@@ -49319,10 +49149,12 @@
                 "type": "string"
               },
               "labels": {
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "helpTexts": {
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "customFields": {
                 "type": "object"
@@ -49518,10 +49350,12 @@
             "type": "string"
           },
           "labels": {
-            "type": "object"
+            "type": "object",
+            "deprecated": true
           },
           "helpTexts": {
-            "type": "object"
+            "type": "object",
+            "deprecated": true
           },
           "customFields": {
             "type": "object"
@@ -53318,18 +53152,6 @@
     {
       "name": "App Flow Event",
       "description": "The endpoint for operations on App Flow Event"
-    },
-    {
-      "name": "App Mcp Prompt",
-      "description": "The endpoint for operations on App Mcp Prompt"
-    },
-    {
-      "name": "App Mcp Resource",
-      "description": "The endpoint for operations on App Mcp Resource"
-    },
-    {
-      "name": "App Mcp Tool",
-      "description": "The endpoint for operations on App Mcp Tool"
     },
     {
       "name": "App Payment Method",
