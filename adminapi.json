@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.7.15.1"
+    "version": "6.7.16.0"
   },
   "servers": [
     {
@@ -3786,1629 +3786,6 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/AppFlowEvent"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/app-mcp-prompt": {
-      "get": {
-        "tags": [
-          "App Mcp Prompt"
-        ],
-        "summary": "List with basic information of App Mcp Prompt resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "getAppMcpPromptList",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max amount of resources to be returned in a page",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page to be returned",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Encoded SwagQL in JSON",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of App Mcp Prompt resources.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/data"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/AppMcpPrompt"
-                              }
-                            }
-                          ]
-                        },
-                        "links": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/pagination"
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "first": {
-                                  "example": "/app-mcp-prompt?limit=25"
-                                },
-                                "last": {
-                                  "example": "/app-mcp-prompt?limit=25&page=11"
-                                },
-                                "next": {
-                                  "example": "/app-mcp-prompt?limit=25&page=4"
-                                },
-                                "prev": {
-                                  "example": "/app-mcp-prompt?limit=25&page=2"
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppMcpPrompt"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "App Mcp Prompt"
-        ],
-        "summary": "Create a new App Mcp Prompt resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "createAppMcpPrompt",
-        "parameters": [
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "basic",
-                "detail"
-              ]
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppMcpPrompt"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of AppMcpPrompt",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppMcpPrompt"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AppMcpPrompt"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/search/app-mcp-prompt": {
-      "post": {
-        "tags": [
-          "App Mcp Prompt"
-        ],
-        "summary": "Search for the App Mcp Prompt resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "searchAppMcpPrompt",
-        "parameters": [
-          {
-            "name": "sw-include-search-info",
-            "in": "header",
-            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "0",
-                "1"
-              ],
-              "default": "1"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Criteria"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of AppMcpPrompt",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/AppMcpPrompt"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppMcpPrompt"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/app-mcp-prompt/{id}": {
-      "get": {
-        "tags": [
-          "App Mcp Prompt"
-        ],
-        "summary": "Detailed information about a App Mcp Prompt resource.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "getAppMcpPrompt",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_mcp_prompt",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Detail of AppMcpPrompt",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppMcpPrompt"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AppMcpPrompt"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "App Mcp Prompt"
-        ],
-        "summary": "Delete a App Mcp Prompt resource.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "deleteAppMcpPrompt",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_mcp_prompt",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "App Mcp Prompt"
-        ],
-        "summary": "Partially update information about a App Mcp Prompt resource.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "updateAppMcpPrompt",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_mcp_prompt",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Partially update information about a App Mcp Prompt resource.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppMcpPrompt"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of AppMcpPrompt",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppMcpPrompt"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AppMcpPrompt"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/aggregate/app-mcp-prompt": {
-      "post": {
-        "tags": [
-          "App Mcp Prompt"
-        ],
-        "summary": "Aggregate for the App Mcp Prompt resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "aggregateAppMcpPrompt",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "aggregations": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Aggregation"
-                    }
-                  }
-                },
-                "required": [
-                  "aggregations"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of AppMcpPrompt",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/AppMcpPrompt"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppMcpPrompt"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/app-mcp-resource": {
-      "get": {
-        "tags": [
-          "App Mcp Resource"
-        ],
-        "summary": "List with basic information of App Mcp Resource resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "getAppMcpResourceList",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max amount of resources to be returned in a page",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page to be returned",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Encoded SwagQL in JSON",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of App Mcp Resource resources.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/data"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/AppMcpResource"
-                              }
-                            }
-                          ]
-                        },
-                        "links": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/pagination"
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "first": {
-                                  "example": "/app-mcp-resource?limit=25"
-                                },
-                                "last": {
-                                  "example": "/app-mcp-resource?limit=25&page=11"
-                                },
-                                "next": {
-                                  "example": "/app-mcp-resource?limit=25&page=4"
-                                },
-                                "prev": {
-                                  "example": "/app-mcp-resource?limit=25&page=2"
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppMcpResource"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "App Mcp Resource"
-        ],
-        "summary": "Create a new App Mcp Resource resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "createAppMcpResource",
-        "parameters": [
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "basic",
-                "detail"
-              ]
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppMcpResource"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of AppMcpResource",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppMcpResource"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AppMcpResource"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/search/app-mcp-resource": {
-      "post": {
-        "tags": [
-          "App Mcp Resource"
-        ],
-        "summary": "Search for the App Mcp Resource resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "searchAppMcpResource",
-        "parameters": [
-          {
-            "name": "sw-include-search-info",
-            "in": "header",
-            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "0",
-                "1"
-              ],
-              "default": "1"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Criteria"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of AppMcpResource",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/AppMcpResource"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppMcpResource"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/app-mcp-resource/{id}": {
-      "get": {
-        "tags": [
-          "App Mcp Resource"
-        ],
-        "summary": "Detailed information about a App Mcp Resource resource.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "getAppMcpResource",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_mcp_resource",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Detail of AppMcpResource",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppMcpResource"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AppMcpResource"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "App Mcp Resource"
-        ],
-        "summary": "Delete a App Mcp Resource resource.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "deleteAppMcpResource",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_mcp_resource",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "App Mcp Resource"
-        ],
-        "summary": "Partially update information about a App Mcp Resource resource.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "updateAppMcpResource",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_mcp_resource",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Partially update information about a App Mcp Resource resource.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppMcpResource"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of AppMcpResource",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppMcpResource"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AppMcpResource"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/aggregate/app-mcp-resource": {
-      "post": {
-        "tags": [
-          "App Mcp Resource"
-        ],
-        "summary": "Aggregate for the App Mcp Resource resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "aggregateAppMcpResource",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "aggregations": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Aggregation"
-                    }
-                  }
-                },
-                "required": [
-                  "aggregations"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of AppMcpResource",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/AppMcpResource"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppMcpResource"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/app-mcp-tool": {
-      "get": {
-        "tags": [
-          "App Mcp Tool"
-        ],
-        "summary": "List with basic information of App Mcp Tool resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "getAppMcpToolList",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max amount of resources to be returned in a page",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page to be returned",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Encoded SwagQL in JSON",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of App Mcp Tool resources.",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/data"
-                            },
-                            {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/AppMcpTool"
-                              }
-                            }
-                          ]
-                        },
-                        "links": {
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/pagination"
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "first": {
-                                  "example": "/app-mcp-tool?limit=25"
-                                },
-                                "last": {
-                                  "example": "/app-mcp-tool?limit=25&page=11"
-                                },
-                                "next": {
-                                  "example": "/app-mcp-tool?limit=25&page=4"
-                                },
-                                "prev": {
-                                  "example": "/app-mcp-tool?limit=25&page=2"
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppMcpTool"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "App Mcp Tool"
-        ],
-        "summary": "Create a new App Mcp Tool resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "createAppMcpTool",
-        "parameters": [
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "basic",
-                "detail"
-              ]
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppMcpTool"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of AppMcpTool",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppMcpTool"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AppMcpTool"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/search/app-mcp-tool": {
-      "post": {
-        "tags": [
-          "App Mcp Tool"
-        ],
-        "summary": "Search for the App Mcp Tool resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "searchAppMcpTool",
-        "parameters": [
-          {
-            "name": "sw-include-search-info",
-            "in": "header",
-            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "0",
-                "1"
-              ],
-              "default": "1"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Criteria"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of AppMcpTool",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/AppMcpTool"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppMcpTool"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/app-mcp-tool/{id}": {
-      "get": {
-        "tags": [
-          "App Mcp Tool"
-        ],
-        "summary": "Detailed information about a App Mcp Tool resource.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "getAppMcpTool",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_mcp_tool",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Detail of AppMcpTool",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppMcpTool"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AppMcpTool"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "App Mcp Tool"
-        ],
-        "summary": "Delete a App Mcp Tool resource.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "deleteAppMcpTool",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_mcp_tool",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "$ref": "#/components/responses/204"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "App Mcp Tool"
-        ],
-        "summary": "Partially update information about a App Mcp Tool resource.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "updateAppMcpTool",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Identifier for the app_mcp_tool",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "_response",
-            "in": "query",
-            "description": "Data format for response. Empty if none is provided.",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Partially update information about a App Mcp Tool resource.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AppMcpTool"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Detail of AppMcpTool",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/AppMcpTool"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "data"
-                  ],
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AppMcpTool"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/aggregate/app-mcp-tool": {
-      "post": {
-        "tags": [
-          "App Mcp Tool"
-        ],
-        "summary": "Aggregate for the App Mcp Tool resources.",
-        "description": "Available since: 6.7.11.0",
-        "operationId": "aggregateAppMcpTool",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "aggregations": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Aggregation"
-                    }
-                  }
-                },
-                "required": [
-                  "aggregations"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of AppMcpTool",
-            "content": {
-              "application/vnd.api+json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/success"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/AppMcpTool"
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "total": {
-                      "type": "integer"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AppMcpTool"
                       }
                     }
                   }
@@ -80779,7 +79156,7 @@
           "Experimental"
         ],
         "summary": "Save MCP allowlist for an integration",
-        "description": "Saves the per-integration MCP allowlist covering tools, resources, and prompts. Pass `null` as the top-level value to allow all capabilities unrestricted. Pass an object with `tools`, `resources`, and `prompts` keys where each key is either `null` (unrestricted for that type) or a list of allowed names/URIs (empty array = deny all of that type). Requires `integration_mcp.editor` privilege. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Saves the per-integration MCP allowlist covering tools, resources, and prompts. Pass an object with `tools`, `resources`, and `prompts` keys, each a list of allowed names/URIs; an empty array denies that type. Integrations have no administrator bypass, so anything not listed is denied: `null` as the top-level value, a missing key and an explicit `null` per-type value all deny that type. Requires `integration_mcp.editor` privilege. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "operationId": "saveMcpAllowlist",
         "parameters": [
           {
@@ -80814,7 +79191,7 @@
                     "oneOf": [
                       {
                         "type": "object",
-                        "description": "Per-type allowlist. Each key is null (unrestricted) or a list of allowed names/URIs.",
+                        "description": "Per-type allowlist. Each key is a list of allowed names/URIs. A missing key or an explicit null denies that type, except for administrator users, who bypass the allowlist.",
                         "properties": {
                           "tools": {
                             "oneOf": [
@@ -80827,7 +79204,7 @@
                               },
                               {
                                 "type": "null",
-                                "description": "Null = all tools allowed."
+                                "description": "Null denies all tools, except for administrator users, who bypass the allowlist."
                               }
                             ]
                           },
@@ -80842,7 +79219,7 @@
                               },
                               {
                                 "type": "null",
-                                "description": "Null = all resources allowed."
+                                "description": "Null denies all resources, except for administrator users, who bypass the allowlist."
                               }
                             ]
                           },
@@ -80857,7 +79234,7 @@
                               },
                               {
                                 "type": "null",
-                                "description": "Null = all prompts allowed."
+                                "description": "Null denies all prompts, except for administrator users, who bypass the allowlist."
                               }
                             ]
                           }
@@ -80865,7 +79242,7 @@
                       },
                       {
                         "type": "null",
-                        "description": "Null = all capabilities unrestricted."
+                        "description": "Null = no explicit selection. Administrator users bypass the allowlist and keep every capability; every other principal is denied all capabilities."
                       }
                     ]
                   }
@@ -80900,7 +79277,7 @@
           "Experimental"
         ],
         "summary": "Save MCP allowlist for a user",
-        "description": "Saves the per-user MCP allowlist covering tools, resources, and prompts. Pass `null` as the top-level value to allow all capabilities unrestricted. Pass an object with `tools`, `resources`, and `prompts` keys where each key is either `null` (unrestricted for that type) or a list of allowed names/URIs (empty array = deny all of that type). Requires `users_and_permissions.editor` privilege. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
+        "description": "Saves the per-user MCP allowlist covering tools, resources, and prompts. Pass an object with `tools`, `resources`, and `prompts` keys, each a list of allowed names/URIs; an empty array denies that type. For a non-administrator user anything not listed is denied: `null` as the top-level value, a missing key and an explicit `null` per-type value all deny that type. Administrator users bypass the allowlist entirely. Requires `users_and_permissions.editor` privilege. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
         "operationId": "saveMcpAllowlistUser",
         "parameters": [
           {
@@ -80935,7 +79312,7 @@
                     "oneOf": [
                       {
                         "type": "object",
-                        "description": "Per-type allowlist. Each key is null (unrestricted) or a list of allowed names/URIs.",
+                        "description": "Per-type allowlist. Each key is a list of allowed names/URIs. A missing key or an explicit null denies that type, except for administrator users, who bypass the allowlist.",
                         "properties": {
                           "tools": {
                             "oneOf": [
@@ -80948,7 +79325,7 @@
                               },
                               {
                                 "type": "null",
-                                "description": "Null = all tools allowed."
+                                "description": "Null denies all tools, except for administrator users, who bypass the allowlist."
                               }
                             ]
                           },
@@ -80963,7 +79340,7 @@
                               },
                               {
                                 "type": "null",
-                                "description": "Null = all resources allowed."
+                                "description": "Null denies all resources, except for administrator users, who bypass the allowlist."
                               }
                             ]
                           },
@@ -80978,7 +79355,7 @@
                               },
                               {
                                 "type": "null",
-                                "description": "Null = all prompts allowed."
+                                "description": "Null denies all prompts, except for administrator users, who bypass the allowlist."
                               }
                             ]
                           }
@@ -80986,7 +79363,7 @@
                       },
                       {
                         "type": "null",
-                        "description": "Null = all capabilities unrestricted."
+                        "description": "Null = no explicit selection. Administrator users bypass the allowlist and keep every capability; every other principal is denied all capabilities."
                       }
                     ]
                   }
@@ -81295,6 +79672,15 @@
             "in": "header",
             "required": false,
             "description": "Integration secret access key. Required when `sw-access-key` is provided.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toolsets",
+            "in": "query",
+            "required": false,
+            "description": "Comma-separated toolsets whose tools `tools/list` advertises from the first request of the connection, for example `order,media`. `all` selects every toolset, and unknown names are ignored. It is part of the URL the client connects to, so it applies to every request of the session. `shopware-toolsets-list` reports these toolsets as enabled.",
             "schema": {
               "type": "string"
             }
@@ -82447,6 +80833,94 @@
         }
       }
     },
+    "/notification/message": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Get notifications",
+        "description": "Returns notifications visible to the current Admin API user.",
+        "operationId": "fetchNotifications",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of notifications to return.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 5
+            }
+          },
+          {
+            "name": "latestTimestamp",
+            "in": "query",
+            "description": "Only return notifications created after this timestamp.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notifications returned successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "notifications",
+                    "timestamp"
+                  ],
+                  "properties": {
+                    "notifications": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "status",
+                          "message",
+                          "adminOnly",
+                          "requiredPrivileges"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "adminOnly": {
+                            "type": "boolean"
+                          },
+                          "requiredPrivileges": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "timestamp": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/_action/number-range/reserve/{type}/{saleschannel}": {
       "get": {
         "tags": [
@@ -82861,6 +81335,7 @@
                   "required": [
                     "deepLinkCode",
                     "documentId",
+                    "documentNumber",
                     "formats"
                   ],
                   "properties": {
@@ -82873,6 +81348,10 @@
                       "type": "string",
                       "pattern": "^[0-9a-f]{32}$"
                     },
+                    "documentNumber": {
+                      "description": "The document number assigned to the generated document.",
+                      "type": "string"
+                    },
                     "formats": {
                       "description": "The generated formats. Use one of these values as the `format` path parameter when downloading the document.",
                       "type": "array",
@@ -82884,6 +81363,7 @@
                   "example": {
                     "deepLinkCode": "COp6DlWc2JgUn3XOb7QzKXWcWIVrH8XN",
                     "documentId": "018f5972f9ea72a0be49f7c39f72a2a0",
+                    "documentNumber": "1002",
                     "formats": [
                       "pdf",
                       "zugferd_xml"
@@ -84538,9 +83018,36 @@
         "tags": [
           "System Config"
         ],
+        "summary": "Get configuration schema (deprecated)",
+        "description": "Returns the configuration schema for the given domain.\n\n**Deprecated:** This endpoint is deprecated and will be removed in v6.8.0. Use `GET /_action/system-config/get-schema` instead.",
+        "operationId": "getConfiguration",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "The configuration domain.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the configuration schema."
+          }
+        }
+      }
+    },
+    "/_action/system-config/get-schema": {
+      "get": {
+        "tags": [
+          "System Config"
+        ],
         "summary": "Get configuration schema",
         "description": "Returns the configuration schema for the given domain.",
-        "operationId": "getConfiguration",
+        "operationId": "getSchema",
         "parameters": [
           {
             "name": "domain",
@@ -86674,99 +85181,6 @@
                       }
                     },
                     "type": "object"
-                  },
-                  "mcpTools": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpTools"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_tool"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "6fd6afdbb8880347183b3fd75e779316"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "mcpPrompts": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpPrompts"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_prompt"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "dc6c2e9bc841c62a89cf5b3aa42f83d3"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "mcpResources": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app/ac863f346e618f9a959b5c95d5d28941/mcpResources"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "app_mcp_resource"
-                            },
-                            "id": {
-                              "type": "string",
-                              "example": "8357adcc66e1f74c8b7f688333874068"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -87000,24 +85414,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AppShippingMethod"
-            }
-          },
-          "mcpTools": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpTool"
-            }
-          },
-          "mcpPrompts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpPrompt"
-            }
-          },
-          "mcpResources": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppMcpResource"
             }
           }
         },
@@ -87857,440 +86253,6 @@
             "items": {
               "$ref": "#/components/schemas/Flow"
             }
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpPromptJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-prompt/0f7619363286401a53877794cfb6ebbb/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpPrompt": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpResourceJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "uri",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "uri": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "mimeType": {
-                "type": "string"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-resource/30e270c9edfb6e58051d304c6e69e7bf/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpResource": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "uri",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "uri": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "mimeType": {
-            "type": "string"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
-          }
-        },
-        "type": "object"
-      },
-      "AppMcpToolJsonApi": {
-        "description": "Added since version: 6.7.11.0",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/resource"
-          },
-          {
-            "required": [
-              "id",
-              "name",
-              "url",
-              "appId",
-              "label"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "name": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "inputSchema": {
-                "type": "object"
-              },
-              "requiredPrivileges": {
-                "type": "object"
-              },
-              "appId": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{32}$"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true
-              },
-              "translated": {
-                "type": "object"
-              },
-              "relationships": {
-                "properties": {
-                  "app": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/app-mcp-tool/0d217ec15d0377a62d13caf5899f0212/app"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "app"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "d2a57dc1d883fd21fb9951699df71cc7"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ]
-      },
-      "AppMcpTool": {
-        "description": "Added since version: 6.7.11.0",
-        "required": [
-          "id",
-          "name",
-          "url",
-          "appId",
-          "label"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "inputSchema": {
-            "type": "object"
-          },
-          "requiredPrivileges": {
-            "type": "object"
-          },
-          "appId": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{32}$"
-          },
-          "label": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "translated": {
-            "type": "object"
-          },
-          "app": {
-            "$ref": "#/components/schemas/App"
           }
         },
         "type": "object"
@@ -92900,6 +90862,33 @@
                 "type": "string"
               },
               "config": {
+                "properties": {
+                  "componentName": {
+                    "type": "string"
+                  },
+                  "customFieldType": {
+                    "type": "string"
+                  },
+                  "customFieldPosition": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "dateType": {
+                    "type": "string"
+                  },
+                  "entity": {
+                    "type": "string"
+                  },
+                  "numberType": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "validation": {
+                    "type": "string"
+                  }
+                },
                 "type": "object"
               },
               "active": {
@@ -93027,6 +91016,33 @@
             "type": "string"
           },
           "config": {
+            "properties": {
+              "componentName": {
+                "type": "string"
+              },
+              "customFieldType": {
+                "type": "string"
+              },
+              "customFieldPosition": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "dateType": {
+                "type": "string"
+              },
+              "entity": {
+                "type": "string"
+              },
+              "numberType": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "validation": {
+                "type": "string"
+              }
+            },
             "type": "object",
             "description": "Specifies detailed information about the component."
           },
@@ -95255,17 +93271,12 @@
           {
             "required": [
               "id",
-              "hash",
               "customerId"
             ],
             "properties": {
               "id": {
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
-              },
-              "hash": {
-                "description": "Password hash for customer's account recovery.",
-                "type": "string"
               },
               "customerId": {
                 "description": "Unique identity of the customer.",
@@ -95325,7 +93336,6 @@
         "description": "Added since version: 6.1.0.0",
         "required": [
           "id",
-          "hash",
           "customerId"
         ],
         "properties": {
@@ -95333,10 +93343,6 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
             "description": "Unique identity of the customer recovery account."
-          },
-          "hash": {
-            "description": "Password hash for customer's account recovery.",
-            "type": "string"
           },
           "customerId": {
             "description": "Unique identity of the customer.",
@@ -95355,6 +93361,9 @@
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
+          },
+          "hash": {
+            "description": "Password hash for customer's account recovery."
           }
         },
         "type": "object"
@@ -101815,6 +99824,37 @@
                     },
                     "type": "object"
                   },
+                  "productGuaranteeTerms": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/media/3b563524fdb17b4a86590470d40bef74/productGuaranteeTerms"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "94a91e5530cec09b7cd0273d98155671"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "orderLineItems": {
                     "properties": {
                       "links": {
@@ -102362,6 +100402,12 @@
             }
           },
           "productOpenGraphImages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "productGuaranteeTerms": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Product"
@@ -104889,6 +102935,14 @@
                       "price": {
                         "type": "number",
                         "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
                       }
                     },
                     "type": "object"
@@ -105755,6 +103809,14 @@
                     "type": "number",
                     "format": "float",
                     "description": "Contains cheapest price from last 30 days as per EU law."
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -106812,6 +104874,14 @@
                       "price": {
                         "type": "number",
                         "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
                       }
                     },
                     "type": "object"
@@ -107151,6 +105221,14 @@
                     "type": "number",
                     "format": "float",
                     "description": "Contains cheapest price from last 30 days as per EU law."
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -107287,6 +105365,14 @@
                   "regulationPrice": {
                     "properties": {
                       "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
                         "type": "number",
                         "format": "float"
                       }
@@ -107490,6 +105576,14 @@
                     "type": "number",
                     "format": "float",
                     "description": "Contains cheapest price from last 30 days as per EU law."
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -107681,6 +105775,14 @@
                   "regulationPrice": {
                     "properties": {
                       "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
                         "type": "number",
                         "format": "float"
                       }
@@ -108184,6 +106286,14 @@
                     "type": "number",
                     "format": "float",
                     "description": "Contains cheapest price from last 30 days as per EU law."
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -108607,6 +106717,14 @@
                       "price": {
                         "type": "number",
                         "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
+                        "type": "number",
+                        "format": "float"
                       }
                     },
                     "type": "object"
@@ -108883,6 +107001,14 @@
                   "price": {
                     "type": "number",
                     "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -109057,6 +107183,14 @@
                   "regulationPrice": {
                     "properties": {
                       "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
                         "type": "number",
                         "format": "float"
                       }
@@ -109269,6 +107403,14 @@
                   "price": {
                     "type": "number",
                     "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -109430,6 +107572,14 @@
                   "regulationPrice": {
                     "properties": {
                       "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
                         "type": "number",
                         "format": "float"
                       }
@@ -109646,6 +107796,14 @@
                   "price": {
                     "type": "number",
                     "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
+                    "type": "number",
+                    "format": "float"
                   }
                 },
                 "type": "object"
@@ -109816,6 +107974,14 @@
                   "regulationPrice": {
                     "properties": {
                       "price": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "percentage": {
                         "type": "number",
                         "format": "float"
                       }
@@ -110009,6 +108175,14 @@
               "regulationPrice": {
                 "properties": {
                   "price": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "discount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "percentage": {
                     "type": "number",
                     "format": "float"
                   }
@@ -110913,6 +109087,11 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{32}$"
               },
+              "guaranteeTermsMediaId": {
+                "description": "Unique identity of the document with the producer commercial durability guarantee terms.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
               "price": {
                 "type": "array",
                 "items": {
@@ -110986,6 +109165,10 @@
               "guaranteeConfirmed": {
                 "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
                 "type": "boolean"
+              },
+              "guaranteeTermsUrl": {
+                "description": "URL of the producer commercial durability guarantee terms.",
+                "type": "string"
               },
               "ean": {
                 "description": "Indicates EAN of the product.",
@@ -111468,6 +109651,36 @@
                             "type": "string",
                             "pattern": "^[0-9a-f]{32}$",
                             "example": "bbda52d941a3452369a00f2880f4f358"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "guaranteeTermsMedia": {
+                    "description": "Document with the producer commercial durability guarantee terms",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/guaranteeTermsMedia"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "3fc45449285ba5bcff3deb7f04eef0d6"
                           }
                         }
                       }
@@ -112267,6 +110480,11 @@
             "type": "string",
             "pattern": "^[0-9a-f]{32}$"
           },
+          "guaranteeTermsMediaId": {
+            "description": "Unique identity of the document with the producer commercial durability guarantee terms.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
           "price": {
             "type": "array",
             "items": {
@@ -112345,6 +110563,10 @@
           "guaranteeConfirmed": {
             "description": "Merchant confirmation that the producer commercial durability guarantee information is accurate and has been made available.",
             "type": "boolean"
+          },
+          "guaranteeTermsUrl": {
+            "description": "URL of the producer commercial durability guarantee terms.",
+            "type": "string"
           },
           "ean": {
             "description": "Indicates EAN of the product.",
@@ -112618,6 +110840,10 @@
           "openGraphMedia": {
             "$ref": "#/components/schemas/Media",
             "description": "Open Graph image for social media sharing"
+          },
+          "guaranteeTermsMedia": {
+            "$ref": "#/components/schemas/Media",
+            "description": "Document with the producer commercial durability guarantee terms"
           },
           "featureSet": {
             "$ref": "#/components/schemas/ProductFeatureSet"
@@ -127757,10 +125983,12 @@
                 "type": "string"
               },
               "labels": {
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "helpTexts": {
-                "type": "object"
+                "type": "object",
+                "deprecated": true
               },
               "customFields": {
                 "type": "object"
@@ -127962,10 +126190,12 @@
           },
           "labels": {
             "type": "object",
+            "deprecated": true,
             "description": "Identification label given to theme."
           },
           "helpTexts": {
             "type": "object",
+            "deprecated": true,
             "description": "Texts from config element."
           },
           "customFields": {
@@ -133304,18 +131534,6 @@
     {
       "name": "App Flow Event",
       "description": "The endpoint for operations on App Flow Event"
-    },
-    {
-      "name": "App Mcp Prompt",
-      "description": "The endpoint for operations on App Mcp Prompt"
-    },
-    {
-      "name": "App Mcp Resource",
-      "description": "The endpoint for operations on App Mcp Resource"
-    },
-    {
-      "name": "App Mcp Tool",
-      "description": "The endpoint for operations on App Mcp Tool"
     },
     {
       "name": "App Payment Method",
