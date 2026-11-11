@@ -13540,6 +13540,547 @@
         }
       }
     },
+    "/b2b-components-pending-order-history": {
+      "get": {
+        "tags": [
+          "B2b Components Pending Order History"
+        ],
+        "summary": "List with basic information of B2b Components Pending Order History resources.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "getB2bComponentsPendingOrderHistoryList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of B2b Components Pending Order History resources.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                      }
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/b2b-components-pending-order-history?limit=25"
+                                },
+                                "last": {
+                                  "example": "/b2b-components-pending-order-history?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/b2b-components-pending-order-history?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/b2b-components-pending-order-history?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "B2b Components Pending Order History"
+        ],
+        "summary": "Create a new B2b Components Pending Order History resources.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "createB2bComponentsPendingOrderHistory",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsPendingOrderHistory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/b2b-components-pending-order-history": {
+      "post": {
+        "tags": [
+          "B2b Components Pending Order History"
+        ],
+        "summary": "Search for the B2b Components Pending Order History resources.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "searchB2bComponentsPendingOrderHistory",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsPendingOrderHistory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                      }
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/b2b-components-pending-order-history/{id}": {
+      "get": {
+        "tags": [
+          "B2b Components Pending Order History"
+        ],
+        "summary": "Detailed information about a B2b Components Pending Order History resource.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "getB2bComponentsPendingOrderHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_pending_order_history",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsPendingOrderHistory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "B2b Components Pending Order History"
+        ],
+        "summary": "Delete a B2b Components Pending Order History resource.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "deleteB2bComponentsPendingOrderHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_pending_order_history",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "B2b Components Pending Order History"
+        ],
+        "summary": "Partially update information about a B2b Components Pending Order History resource.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "updateB2bComponentsPendingOrderHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the b2b_components_pending_order_history",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a B2b Components Pending Order History resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of B2bComponentsPendingOrderHistory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/b2b-components-pending-order-history": {
+      "post": {
+        "tags": [
+          "B2b Components Pending Order History"
+        ],
+        "summary": "Aggregate for the B2b Components Pending Order History resources.",
+        "description": "Available since: 6.7.15.0",
+        "operationId": "aggregateB2bComponentsPendingOrderHistory",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of B2bComponentsPendingOrderHistory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                      }
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/b2b-components-role": {
       "get": {
         "tags": [
@@ -51993,6 +52534,9 @@
               "cartPayload": {
                 "type": "string"
               },
+              "originalCartPayload": {
+                "type": "string"
+              },
               "price": {
                 "required": [
                   "netPrice",
@@ -52596,6 +53140,37 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "history": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order/e87c4279c6f83e4de2543a63bf59b373/history"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_pending_order_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "3cd15f8f2940aff879df34df4e5c2cd1"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
                   }
                 },
                 "type": "object"
@@ -52695,6 +53270,9 @@
             "type": "string"
           },
           "cartPayload": {
+            "type": "string"
+          },
+          "originalCartPayload": {
             "type": "string"
           },
           "price": {
@@ -52934,6 +53512,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/B2bComponentsPendingOrderAddress"
+            }
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/B2bComponentsPendingOrderHistory"
             }
           }
         },
@@ -53280,6 +53864,160 @@
             "items": {
               "$ref": "#/components/schemas/B2bComponentsPendingOrder"
             }
+          }
+        },
+        "type": "object"
+      },
+      "B2bComponentsPendingOrderHistoryJsonApi": {
+        "description": "Added since version: 6.7.15.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "pendingOrderId",
+              "action"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "pendingOrderId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "employeeId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "action": {
+                "type": "string"
+              },
+              "payload": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "relationships": {
+                "properties": {
+                  "pendingOrder": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order-history/c5861f12005c599b3bc8eb9414921e26/pendingOrder"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_components_pending_order"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "1fd94955ea55110a2cf95eeb6fb1679f"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "employee": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-components-pending-order-history/c5861f12005c599b3bc8eb9414921e26/employee"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "b2b_employee"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "fa5473530e4d1a5a1e1eb53d2fedb10c"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "B2bComponentsPendingOrderHistory": {
+        "description": "Added since version: 6.7.15.0",
+        "required": [
+          "id",
+          "pendingOrderId",
+          "action"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "pendingOrderId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "employeeId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "action": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "pendingOrder": {
+            "$ref": "#/components/schemas/B2bComponentsPendingOrder"
+          },
+          "employee": {
+            "$ref": "#/components/schemas/B2bEmployee"
           }
         },
         "type": "object"
@@ -54874,6 +55612,37 @@
                     },
                     "type": "object"
                   },
+                  "b2bPendingOrderHistories": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/b2bPendingOrderHistories"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "b2b_components_pending_order_history"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "4ea6c044c9020c93dc116dd8bf1d9e6a"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "shoppingLists": {
                     "properties": {
                       "links": {
@@ -55504,6 +56273,37 @@
                         "id": {
                           "type": "string",
                           "example": "c231abdb725547458353efbf48c35d43"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "object"
+              },
+              "b2bPendingOrderHistories": {
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string",
+                        "format": "uri-reference",
+                        "example": "/b2b-employee/1131eb0b1859b37129289fe3bcc9e70b/b2bPendingOrderHistories"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "b2b_components_pending_order_history"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "4ea6c044c9020c93dc116dd8bf1d9e6a"
                         }
                       }
                     }
@@ -121254,6 +122054,38 @@
               "description": "Purchase entry.",
               "additionalProperties": true
             }
+          },
+          "versionHistory": {
+            "type": "array",
+            "description": "Shopware versions this shop was installed with or updated to, oldest first, at most 24 entries.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "version": {
+                  "type": "string",
+                  "description": "Shopware version."
+                },
+                "recordedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Time the install or update finished."
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "install",
+                    "update"
+                  ],
+                  "description": "Whether the version was installed or reached by an update."
+                }
+              },
+              "required": [
+                "version",
+                "recordedAt",
+                "type"
+              ],
+              "additionalProperties": false
+            }
           }
         },
         "required": [
@@ -122192,6 +123024,10 @@
     {
       "name": "B2b Components Pending Order Address",
       "description": "The endpoint for operations on B2b Components Pending Order Address"
+    },
+    {
+      "name": "B2b Components Pending Order History",
+      "description": "The endpoint for operations on B2b Components Pending Order History"
     },
     {
       "name": "B2b Components Role",
