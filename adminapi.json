@@ -7,7 +7,7 @@
       "name": "MIT",
       "url": "https://github.com/shopware/shopware/blob/trunk/LICENSE"
     },
-    "version": "6.7.16.0"
+    "version": "6.7.16.1"
   },
   "servers": [
     {
@@ -92128,35 +92128,6 @@
                     },
                     "type": "object"
                   },
-                  "recoveryCustomer": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/recoveryCustomer"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "customer_recovery"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "ce9d8d13e51bf43bc70a4be38950823b"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "requestedGroup": {
                     "properties": {
                       "links": {
@@ -92610,9 +92581,6 @@
             "items": {
               "$ref": "#/components/schemas/ProductReview"
             }
-          },
-          "recoveryCustomer": {
-            "$ref": "#/components/schemas/CustomerRecovery"
           },
           "requestedGroup": {
             "$ref": "#/components/schemas/CustomerGroup"
@@ -126853,35 +126821,6 @@
                     },
                     "type": "object"
                   },
-                  "recoveryUser": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/recoveryUser"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "user_recovery"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "bf6cdb5c30f0f0d234b96e50f2953109"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "createdOrders": {
                     "properties": {
                       "links": {
@@ -127172,9 +127111,6 @@
             "items": {
               "$ref": "#/components/schemas/AclRole"
             }
-          },
-          "recoveryUser": {
-            "$ref": "#/components/schemas/UserRecovery"
           },
           "createdOrders": {
             "type": "array",
