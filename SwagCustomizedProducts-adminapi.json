@@ -5424,190 +5424,6 @@
           }
         }
       }
-    },
-    "/_action/order/document-v2/number-range-pattern-collisions": {
-      "get": {
-        "tags": [
-          "Document Management",
-          "Experimental"
-        ],
-        "summary": "List document number ranges whose pattern collides",
-        "description": "Lists the number ranges of the given document number range type that use exactly the given pattern. Document numbers are unique per document type, so two such ranges generate colliding numbers once they reach the same value. Only number range types whose technical name starts with `document_` are considered, for any other type the list is empty. Pass `numberRangeId` to leave that number range out of the result, for example to check the pattern of an existing number range against all others. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "documentV2NumberRangePatternCollisions",
-        "parameters": [
-          {
-            "name": "numberRangeTypeId",
-            "in": "query",
-            "description": "Identifier of the number range type.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "pattern",
-            "in": "query",
-            "description": "The pattern to check, for example `INV-{n}`.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "numberRangeId",
-            "in": "query",
-            "description": "Identifier of a number range to leave out of the result.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The colliding number ranges.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "collisions"
-                  ],
-                  "properties": {
-                    "collisions": {
-                      "description": "Number ranges of the given document number range type that use the pattern.",
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "required": [
-                          "id",
-                          "name"
-                        ],
-                        "properties": {
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$"
-                          },
-                          "name": {
-                            "description": "Translated name of the number range.",
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "A required query parameter is missing or invalid."
-          }
-        }
-      }
-    },
-    "/_action/sales-channel/{salesChannelId}/product-assignment": {
-      "post": {
-        "tags": [
-          "Sales Channel"
-        ],
-        "summary": "Assign products to a sales channel",
-        "description": "Makes products visible in a sales channel. Products can be given explicitly by id, through dynamic product groups or through categories. The matching products are resolved on the server, so the number of products is not limited by the API search limit. Products that are already visible in the sales channel are skipped. Categories only contribute main products, dynamic product groups contribute every matching product including variants. A single call writes a bounded number of products and reports `complete: false` when products are left. Repeat the same request until `complete` is `true`, every call continues with the products that are not visible yet.",
-        "operationId": "assignSalesChannelProducts",
-        "parameters": [
-          {
-            "name": "salesChannelId",
-            "in": "path",
-            "description": "Identifier of the sales channel the products are assigned to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Sources of the products to assign. At least one list should be given, an empty request assigns nothing.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SalesChannelProductAssignmentRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The products were assigned.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SalesChannelProductAssignmentResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Missing privileges. The route requires `product_visibility:create` and `product:read`, plus `product_stream:read` for `productStreamIds` and `category:read` for `categoryIds`."
-          },
-          "404": {
-            "description": "The sales channel or a dynamic product group was not found.",
-            "$ref": "#/components/responses/404"
-          },
-          "422": {
-            "description": "Validation error. An id is not a UUID, a list exceeds its `maxItems` or `visibility` is not one of `10`, `20` and `30`.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/unit/unece-codes": {
-      "get": {
-        "tags": [
-          "Unit"
-        ],
-        "summary": "List the unit codes",
-        "description": "Returns all UN/ECE Recommendation 20 and 21 unit codes that can be saved as `uneceCode` on a unit, with their English name.",
-        "operationId": "getUnitUneceCodes",
-        "responses": {
-          "200": {
-            "description": "List of unit codes.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "code",
-                      "name"
-                    ],
-                    "properties": {
-                      "code": {
-                        "type": "string",
-                        "example": "KGM"
-                      },
-                      "name": {
-                        "type": "string",
-                        "example": "kilogram"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -13525,35 +13341,6 @@
                     },
                     "type": "object"
                   },
-                  "recoveryCustomer": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/recoveryCustomer"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "customer_recovery"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "ce9d8d13e51bf43bc70a4be38950823b"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "requestedGroup": {
                     "properties": {
                       "links": {
@@ -14003,9 +13790,6 @@
             "items": {
               "$ref": "#/components/schemas/ProductReview"
             }
-          },
-          "recoveryCustomer": {
-            "$ref": "#/components/schemas/CustomerRecovery"
           },
           "requestedGroup": {
             "$ref": "#/components/schemas/CustomerGroup"
@@ -50108,35 +49892,6 @@
                     },
                     "type": "object"
                   },
-                  "recoveryUser": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/recoveryUser"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "user_recovery"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "bf6cdb5c30f0f0d234b96e50f2953109"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "createdOrders": {
                     "properties": {
                       "links": {
@@ -50425,9 +50180,6 @@
             "items": {
               "$ref": "#/components/schemas/AclRole"
             }
-          },
-          "recoveryUser": {
-            "$ref": "#/components/schemas/UserRecovery"
           },
           "createdOrders": {
             "type": "array",
@@ -50876,6 +50628,11 @@
                 "pattern": "^[0-9a-f]{32}$",
                 "readOnly": true
               },
+              "ownerType": {
+                "description": "Who the webhook belongs to: `user`, `integration`, `app` for a webhook from an app's manifest, or `app_integration` for a webhook an app created through the API. It is set automatically and cannot be changed.",
+                "type": "string",
+                "readOnly": true
+              },
               "aclRoleIds": {
                 "type": "array",
                 "items": {
@@ -51045,6 +50802,11 @@
             "description": "The integration that created the webhook through the API. It is set automatically and cannot be changed.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
+            "readOnly": true
+          },
+          "ownerType": {
+            "description": "Who the webhook belongs to: `user`, `integration`, `app` for a webhook from an app's manifest, or `app_integration` for a webhook an app created through the API. It is set automatically and cannot be changed.",
+            "type": "string",
             "readOnly": true
           },
           "aclRoleIds": {
@@ -52162,6 +51924,11 @@
               "refresh_token": {
                 "description": "The refresh token that should be used to refresh the access token.",
                 "type": "string"
+              },
+              "resource": {
+                "description": "RFC 8707 resource indicator. A refresh keeps the resource of the original grant; when sent, it must equal that resource, otherwise the OAuth error `invalid_target` is returned.",
+                "type": "string",
+                "format": "uri"
               }
             },
             "required": [
@@ -52198,6 +51965,11 @@
                 "type": "string",
                 "minLength": 43,
                 "maxLength": 128
+              },
+              "resource": {
+                "description": "RFC 8707 resource indicator. The tokens are bound to the resource of the authorization request; when sent, it must equal that resource, otherwise the OAuth error `invalid_target` is returned.",
+                "type": "string",
+                "format": "uri"
               }
             },
             "required": [
@@ -52231,6 +52003,11 @@
           },
           "scope": {
             "$ref": "#/components/schemas/OAuthScopes"
+          },
+          "resource": {
+            "description": "RFC 8707 resource indicator, an absolute URI. The only accepted value is the MCP endpoint of the shop, for example `https://shop.example/api/_mcp`; any other value gives the OAuth error `invalid_target`.",
+            "type": "string",
+            "format": "uri"
           },
           "code_challenge": {
             "type": "string"
