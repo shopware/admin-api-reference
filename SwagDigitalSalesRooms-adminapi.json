@@ -4884,6 +4884,547 @@
         }
       }
     },
+    "/product-document": {
+      "get": {
+        "tags": [
+          "Product Document"
+        ],
+        "summary": "List with basic information of Product Document resources.",
+        "description": "Available since: 6.7.17.0",
+        "operationId": "getProductDocumentList",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max amount of resources to be returned in a page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to be returned",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Encoded SwagQL in JSON",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Product Document resources.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProductDocument"
+                      }
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/data"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/ProductDocument"
+                              }
+                            }
+                          ]
+                        },
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/pagination"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "first": {
+                                  "example": "/product-document?limit=25"
+                                },
+                                "last": {
+                                  "example": "/product-document?limit=25&page=11"
+                                },
+                                "next": {
+                                  "example": "/product-document?limit=25&page=4"
+                                },
+                                "prev": {
+                                  "example": "/product-document?limit=25&page=2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product Document"
+        ],
+        "summary": "Create a new Product Document resources.",
+        "description": "Available since: 6.7.17.0",
+        "operationId": "createProductDocument",
+        "parameters": [
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detail"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of ProductDocument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductDocument"
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ProductDocument"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/search/product-document": {
+      "post": {
+        "tags": [
+          "Product Document"
+        ],
+        "summary": "Search for the Product Document resources.",
+        "description": "Available since: 6.7.17.0",
+        "operationId": "searchProductDocument",
+        "parameters": [
+          {
+            "name": "sw-include-search-info",
+            "in": "header",
+            "description": "Controls whether API search information is included in the response. Default is 1 (enabled), will be 0 (disabled) in the next major version.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ],
+              "default": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Criteria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of ProductDocument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProductDocument"
+                      }
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ProductDocument"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/product-document/{id}": {
+      "get": {
+        "tags": [
+          "Product Document"
+        ],
+        "summary": "Detailed information about a Product Document resource.",
+        "description": "Available since: 6.7.17.0",
+        "operationId": "getProductDocument",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the product_document",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail of ProductDocument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductDocument"
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ProductDocument"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product Document"
+        ],
+        "summary": "Delete a Product Document resource.",
+        "description": "Available since: 6.7.17.0",
+        "operationId": "deleteProductDocument",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the product_document",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Product Document"
+        ],
+        "summary": "Partially update information about a Product Document resource.",
+        "description": "Available since: 6.7.17.0",
+        "operationId": "updateProductDocument",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identifier for the product_document",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          {
+            "name": "_response",
+            "in": "query",
+            "description": "Data format for response. Empty if none is provided.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Partially update information about a Product Document resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detail of ProductDocument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductDocument"
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ProductDocument"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/aggregate/product-document": {
+      "post": {
+        "tags": [
+          "Product Document"
+        ],
+        "summary": "Aggregate for the Product Document resources.",
+        "description": "Available since: 6.7.17.0",
+        "operationId": "aggregateProductDocument",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aggregations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aggregation"
+                    }
+                  }
+                },
+                "required": [
+                  "aggregations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of ProductDocument",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProductDocument"
+                      }
+                    }
+                  }
+                }
+              },
+              "application/vnd.api+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/success"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ProductDocument"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/_action/dsr/appointment/{appointmentId}/join-as-guide": {
       "post": {
         "tags": [
@@ -5939,190 +6480,6 @@
             "ApiKey": []
           }
         ]
-      }
-    },
-    "/_action/order/document-v2/number-range-pattern-collisions": {
-      "get": {
-        "tags": [
-          "Document Management",
-          "Experimental"
-        ],
-        "summary": "List document number ranges whose pattern collides",
-        "description": "Lists the number ranges of the given document number range type that use exactly the given pattern. Document numbers are unique per document type, so two such ranges generate colliding numbers once they reach the same value. Only number range types whose technical name starts with `document_` are considered, for any other type the list is empty. Pass `numberRangeId` to leave that number range out of the result, for example to check the pattern of an existing number range against all others. Experimental API, not part of our backwards compatibility promise, thus this API can introduce breaking changes at any time.",
-        "operationId": "documentV2NumberRangePatternCollisions",
-        "parameters": [
-          {
-            "name": "numberRangeTypeId",
-            "in": "query",
-            "description": "Identifier of the number range type.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          },
-          {
-            "name": "pattern",
-            "in": "query",
-            "description": "The pattern to check, for example `INV-{n}`.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "numberRangeId",
-            "in": "query",
-            "description": "Identifier of a number range to leave out of the result.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The colliding number ranges.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "collisions"
-                  ],
-                  "properties": {
-                    "collisions": {
-                      "description": "Number ranges of the given document number range type that use the pattern.",
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "required": [
-                          "id",
-                          "name"
-                        ],
-                        "properties": {
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$"
-                          },
-                          "name": {
-                            "description": "Translated name of the number range.",
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "A required query parameter is missing or invalid."
-          }
-        }
-      }
-    },
-    "/_action/sales-channel/{salesChannelId}/product-assignment": {
-      "post": {
-        "tags": [
-          "Sales Channel"
-        ],
-        "summary": "Assign products to a sales channel",
-        "description": "Makes products visible in a sales channel. Products can be given explicitly by id, through dynamic product groups or through categories. The matching products are resolved on the server, so the number of products is not limited by the API search limit. Products that are already visible in the sales channel are skipped. Categories only contribute main products, dynamic product groups contribute every matching product including variants. A single call writes a bounded number of products and reports `complete: false` when products are left. Repeat the same request until `complete` is `true`, every call continues with the products that are not visible yet.",
-        "operationId": "assignSalesChannelProducts",
-        "parameters": [
-          {
-            "name": "salesChannelId",
-            "in": "path",
-            "description": "Identifier of the sales channel the products are assigned to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{32}$"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Sources of the products to assign. At least one list should be given, an empty request assigns nothing.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SalesChannelProductAssignmentRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The products were assigned.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SalesChannelProductAssignmentResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Missing privileges. The route requires `product_visibility:create` and `product:read`, plus `product_stream:read` for `productStreamIds` and `category:read` for `categoryIds`."
-          },
-          "404": {
-            "description": "The sales channel or a dynamic product group was not found.",
-            "$ref": "#/components/responses/404"
-          },
-          "422": {
-            "description": "Validation error. An id is not a UUID, a list exceeds its `maxItems` or `visibility` is not one of `10`, `20` and `30`.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/failure"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/_action/unit/unece-codes": {
-      "get": {
-        "tags": [
-          "Unit"
-        ],
-        "summary": "List the unit codes",
-        "description": "Returns all UN/ECE Recommendation 20 and 21 unit codes that can be saved as `uneceCode` on a unit, with their English name.",
-        "operationId": "getUnitUneceCodes",
-        "responses": {
-          "200": {
-            "description": "List of unit codes.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "code",
-                      "name"
-                    ],
-                    "properties": {
-                      "code": {
-                        "type": "string",
-                        "example": "KGM"
-                      },
-                      "name": {
-                        "type": "string",
-                        "example": "kilogram"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     }
   },
@@ -14216,35 +14573,6 @@
                     },
                     "type": "object"
                   },
-                  "recoveryCustomer": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/customer/ce26601dac0dea138b7295f02b7620a7/recoveryCustomer"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "customer_recovery"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "ce9d8d13e51bf43bc70a4be38950823b"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "requestedGroup": {
                     "properties": {
                       "links": {
@@ -14725,9 +15053,6 @@
             "items": {
               "$ref": "#/components/schemas/ProductReview"
             }
-          },
-          "recoveryCustomer": {
-            "$ref": "#/components/schemas/CustomerRecovery"
           },
           "requestedGroup": {
             "$ref": "#/components/schemas/CustomerGroup"
@@ -33393,6 +33718,38 @@
                     },
                     "type": "object"
                   },
+                  "documents": {
+                    "description": "Documents of the product per language, such as manuals, datasheets or certificates",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product/deb10517653c255364175796ace3553f/documents"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "product_document"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "21f64da1e5792c8295b964d159a14491"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
                   "parent": {
                     "description": "Unique identity of the product.",
                     "properties": {
@@ -34822,6 +35179,13 @@
               "$ref": "#/components/schemas/ProductDownload"
             }
           },
+          "documents": {
+            "description": "Documents of the product per language, such as manuals, datasheets or certificates",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductDocument"
+            }
+          },
           "parent": {
             "$ref": "#/components/schemas/Product",
             "description": "Unique identity of the product."
@@ -35746,6 +36110,200 @@
           },
           "customFieldSet": {
             "$ref": "#/components/schemas/CustomFieldSet"
+          }
+        },
+        "type": "object"
+      },
+      "ProductDocumentJsonApi": {
+        "description": "Added since version: 6.7.17.0",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/resource"
+          },
+          {
+            "required": [
+              "id",
+              "productId",
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "versionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "productId": {
+                "description": "Unique identity of the product.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "productVersionId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "position": {
+                "description": "The order in which the documents of a product are displayed.",
+                "type": "integer",
+                "format": "int64"
+              },
+              "title": {
+                "description": "Display name of the document in this language.",
+                "type": "string"
+              },
+              "mediaId": {
+                "description": "Unique identity of the file of the document in this language.",
+                "type": "string",
+                "pattern": "^[0-9a-f]{32}$"
+              },
+              "customFields": {
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "translated": {
+                "type": "object"
+              },
+              "relationships": {
+                "properties": {
+                  "product": {
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product-document/fbdd397b0b7da882f44dafec494a3d92/product"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "product"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "f5bf48aa40cad7891eb709fcf1fde128"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "media": {
+                    "description": "File of the document in the current language. Only set by the product documents route and the CMS slot; `null` when documents are loaded as an association.",
+                    "properties": {
+                      "links": {
+                        "type": "object",
+                        "properties": {
+                          "related": {
+                            "type": "string",
+                            "format": "uri-reference",
+                            "example": "/product-document/fbdd397b0b7da882f44dafec494a3d92/media"
+                          }
+                        }
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "media"
+                          },
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{32}$",
+                            "example": "62933a2951ef01f4eafd9bdf4d3cd2f0"
+                          }
+                        }
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "ProductDocument": {
+        "description": "Added since version: 6.7.17.0",
+        "required": [
+          "id",
+          "productId",
+          "title"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "versionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "productId": {
+            "description": "Unique identity of the product.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "productVersionId": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "position": {
+            "description": "The order in which the documents of a product are displayed.",
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "description": "Display name of the document in this language.",
+            "type": "string"
+          },
+          "mediaId": {
+            "description": "Unique identity of the file of the document in this language.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "customFields": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "translated": {
+            "type": "object"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "media": {
+            "$ref": "#/components/schemas/Media",
+            "description": "File of the document in the current language. Only set by the product documents route and the CMS slot; `null` when documents are loaded as an association."
           }
         },
         "type": "object"
@@ -50929,35 +51487,6 @@
                     },
                     "type": "object"
                   },
-                  "recoveryUser": {
-                    "properties": {
-                      "links": {
-                        "type": "object",
-                        "properties": {
-                          "related": {
-                            "type": "string",
-                            "format": "uri-reference",
-                            "example": "/user/8f9bfe9d1345237cb3b2b205864da075/recoveryUser"
-                          }
-                        }
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "user_recovery"
-                          },
-                          "id": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{32}$",
-                            "example": "bf6cdb5c30f0f0d234b96e50f2953109"
-                          }
-                        }
-                      }
-                    },
-                    "type": "object"
-                  },
                   "createdOrders": {
                     "properties": {
                       "links": {
@@ -51433,9 +51962,6 @@
               "$ref": "#/components/schemas/AclRole"
             }
           },
-          "recoveryUser": {
-            "$ref": "#/components/schemas/UserRecovery"
-          },
           "createdOrders": {
             "type": "array",
             "items": {
@@ -51883,6 +52409,11 @@
                 "pattern": "^[0-9a-f]{32}$",
                 "readOnly": true
               },
+              "ownerType": {
+                "description": "Who the webhook belongs to: `user`, `integration`, `app` for a webhook from an app's manifest, or `app_integration` for a webhook an app created through the API. It is set automatically and cannot be changed.",
+                "type": "string",
+                "readOnly": true
+              },
               "aclRoleIds": {
                 "type": "array",
                 "items": {
@@ -52052,6 +52583,11 @@
             "description": "The integration that created the webhook through the API. It is set automatically and cannot be changed.",
             "type": "string",
             "pattern": "^[0-9a-f]{32}$",
+            "readOnly": true
+          },
+          "ownerType": {
+            "description": "Who the webhook belongs to: `user`, `integration`, `app` for a webhook from an app's manifest, or `app_integration` for a webhook an app created through the API. It is set automatically and cannot be changed.",
+            "type": "string",
             "readOnly": true
           },
           "aclRoleIds": {
@@ -55363,6 +55899,11 @@
               "refresh_token": {
                 "description": "The refresh token that should be used to refresh the access token.",
                 "type": "string"
+              },
+              "resource": {
+                "description": "RFC 8707 resource indicator. A refresh keeps the resource of the original grant; when sent, it must equal that resource, otherwise the OAuth error `invalid_target` is returned.",
+                "type": "string",
+                "format": "uri"
               }
             },
             "required": [
@@ -55399,6 +55940,11 @@
                 "type": "string",
                 "minLength": 43,
                 "maxLength": 128
+              },
+              "resource": {
+                "description": "RFC 8707 resource indicator. The tokens are bound to the resource of the authorization request; when sent, it must equal that resource, otherwise the OAuth error `invalid_target` is returned.",
+                "type": "string",
+                "format": "uri"
               }
             },
             "required": [
@@ -55432,6 +55978,11 @@
           },
           "scope": {
             "$ref": "#/components/schemas/OAuthScopes"
+          },
+          "resource": {
+            "description": "RFC 8707 resource indicator, an absolute URI. The only accepted value is the MCP endpoint of the shop, for example `https://shop.example/api/_mcp`; any other value gives the OAuth error `invalid_target`.",
+            "type": "string",
+            "format": "uri"
           },
           "code_challenge": {
             "type": "string"
@@ -57033,6 +57584,10 @@
     {
       "name": "Product Cross Selling Assigned Products",
       "description": "The endpoint for operations on Product Cross Selling Assigned Products"
+    },
+    {
+      "name": "Product Document",
+      "description": "The endpoint for operations on Product Document"
     },
     {
       "name": "Product Download",
