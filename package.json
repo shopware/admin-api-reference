@@ -1,0 +1,9 @@
+{
+  "name": "shopware/admin-api-reference",
+  "version": "0.0.1",
+  "scripts": {
+    "docs:env": "[ -d \"../nextgen-portal\" ] && ../nextgen-portal/docs-cli.cjs pull || (git clone git@github.com:shopware/nextgen-portal.git ../nextgen-portal && pnpm i -C ../nextgen-portal)",
+    "docs:link": "../nextgen-portal/docs-cli.cjs link --src docs --dst resources/admin-api --symlink",
+    "docs:preview": "../nextgen-portal/docs-cli.cjs preview"
+  }
+}
