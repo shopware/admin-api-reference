@@ -46,15 +46,15 @@ jobs:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: download api schema
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{needs.generate-schema.outputs.api_schema}}
 
       - name: install yq
-        uses: cachix/install-nix-action@v18
+        uses: cachix/install-nix-action@v32
 
       - name: Prettify
         run: |
@@ -69,7 +69,7 @@ jobs:
           ./.github/scripts/extract.sh ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.summary.json
 
       - name: Create DSR PR
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           add-paths: |
             ${{ needs.vars.outputs.PLUGIN_NAME }}-adminapi.json
